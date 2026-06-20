@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0071)file:///C:/Users/34634/Downloads/SAINT_FORTUNE_dashboard_CORREGIDO.html -->
+<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(4).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -834,6 +834,38 @@ table.data-table tr:hover td{background:var(--bg2);}
 
   /* Ocultar elementos solo-desktop */
   .nav-badge{ display:none; }
+
+  /* ── Rendimiento: "Detalle por Día" — apila tabla y calendario en columna única ── */
+  #page-equity [style*="grid-template-columns:1fr 280px"],
+  #page-equity [style*="grid-template-columns: 1fr 280px"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* El mini-calendario ocupa ancho completo en móvil */
+  #page-equity [style*="grid-template-columns:1fr 280px"] > div:last-child,
+  #page-equity [style*="grid-template-columns: 1fr 280px"] > div:last-child {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Botones de rango de días — envuelven en móvil */
+  #eqd-range-btns {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* SVGs de gráficos — asegurar que no desborden */
+  #page-equity svg {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Sección semanal: tabla sin desbordamiento */
+  #weekly-section [style*="overflow-x:auto"] {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1036,7 +1068,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
-      <div class="page-sub" id="overview-date">Sesión activa · sábado, 20 de junio de 2026</div>
+      <div class="page-sub" id="overview-date">Sesión activa · domingo, 21 de junio de 2026</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;calendar&#39;)">📅 Calendario</button>
@@ -2004,7 +2036,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="upload-preview-name" id="prev-name"></div>
             <button class="upload-remove" onclick="clearFile(event)">✕</button>
           </div>
-          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/SAINT_FORTUNE_dashboard_CORREGIDO.html" alt="preview"></div>
+          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index%20(4).html" alt="preview"></div>
         </div>
       </div>
     </div>
@@ -2277,7 +2309,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <button class="modal-close" onclick="closeModal(&#39;imgModal&#39;)">✕</button>
     <div class="modal-title" id="img-modal-title">Captura</div>
     <div style="margin-top:1rem;text-align:center">
-      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/SAINT_FORTUNE_dashboard_CORREGIDO.html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
+      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index%20(4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
     </div>
   </div>
 </div>
@@ -2298,7 +2330,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div class="upload-sub">Imagen del pago · máx 8MB</div>
         </div>
         <div id="cert-preview-wrap" class="hidden">
-          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/SAINT_FORTUNE_dashboard_CORREGIDO.html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
+          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index%20(4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
         </div>
       </div>
     </div>
