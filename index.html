@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(7).html -->
+<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(8).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1008,8 +1008,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">📊 Vistas</div>
-    <div class="nav-item" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
-    <div class="nav-item active" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
+    <div class="nav-item active" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
+    <div class="nav-item" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
     <div class="nav-item" onclick="showPage(&#39;calendar&#39;)"><div class="dot dot-blue"></div> Calendario</div>
     <div class="nav-item" onclick="showPage(&#39;certificates&#39;)"><div class="dot dot-green"></div> Certificados de Pago</div>
     <div class="nav-item" onclick="showPage(&#39;groups&#39;)"><div class="dot dot-amber"></div> Grupos &amp; Estrategias</div>
@@ -1018,7 +1018,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="nav-section">
     <div class="nav-label">🔵 CFDs · MT5</div>
     <div id="cfd-nav-items"></div>
-    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
   </div>
 
@@ -1064,7 +1064,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <main class="main">
 
 <!-- ───────── PAGE: OVERVIEW ───────── -->
-<div id="page-overview" class="page hidden">
+<div id="page-overview" class="page">
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
@@ -1081,18 +1081,18 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.584,85</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">83%</div><div class="stat-hint" id="s-wr-hint">15W / 3L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$6742,45</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value red" id="s-wr">58%</div><div class="stat-hint" id="s-wr-hint">15W / 11L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">18</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
-    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">26</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px">—</div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
   <!-- CFD Section -->
   <div class="group-header"><div class="dot dot-blue"></div> CFDs · MT5 <div class="group-line"></div></div>
   <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
       <div class="acc-head">
-        <div class="acc-name">BACKTESTING</div>
+        <div class="acc-name">BACKTESTING<span style="font-size:9px;color:var(--amber);margin-left:4px">🧪 BT</span></div>
         <div class="acc-badges">
           <span class="acc-platform tag-mt5">MT5</span>
           <span class="acc-platform type-cfd-instant">⚡ Instant</span>
@@ -1100,10 +1100,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-pnl red">-$142,4</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>—</span></div>
-        <div class="acc-meta-item">Ops <span>0</span></div>
+        <div class="acc-meta-item">WR <span>0%</span></div>
+        <div class="acc-meta-item">Ops <span>2</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1118,10 +1118,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROXP TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$3273</div>
+      <div class="acc-pnl green">+$2373</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>83%</span></div>
-        <div class="acc-meta-item">Ops <span>6</span></div>
+        <div class="acc-meta-item">WR <span>71%</span></div>
+        <div class="acc-meta-item">Ops <span>7</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1136,10 +1136,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROP XP TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$4678,85</div>
+      <div class="acc-pnl green">+$4078,85</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>100%</span></div>
-        <div class="acc-meta-item">Ops <span>5</span></div>
+        <div class="acc-meta-item">WR <span>83%</span></div>
+        <div class="acc-meta-item">Ops <span>6</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1159,18 +1159,18 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$1083</div>
+      <div class="acc-pnl green">+$483</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>67%</span></div>
-        <div class="acc-meta-item">Ops <span>3</span></div>
+        <div class="acc-meta-item">WR <span>50%</span></div>
+        <div class="acc-meta-item">Ops <span>4</span></div>
         <div class="acc-meta-item">DD <span>$2000</span></div>
       </div>
       <div style="margin-top:6px">
         <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px">
-          <span>Progreso eval</span><span>$1083 / $3000</span>
+          <span>Progreso eval</span><span>$483 / $3000</span>
         </div>
         <div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">
-          <div style="height:100%;width:36.1%;background:var(--blue);border-radius:2px;transition:width 0.4s"></div>
+          <div style="height:100%;width:16.1%;background:var(--blue);border-radius:2px;transition:width 0.4s"></div>
         </div>
       </div>
     </div><div class="acc-card purple-accent" onclick="showPage(&#39;FUTUROS TRADE 2&#39;)">
@@ -1184,10 +1184,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$400</div>
+      <div class="acc-pnl red">-$200</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>100%</span></div>
-        <div class="acc-meta-item">Ops <span>1</span></div>
+        <div class="acc-meta-item">WR <span>50%</span></div>
+        <div class="acc-meta-item">Ops <span>2</span></div>
         <div class="acc-meta-item">DD <span>$2000</span></div>
       </div>
       
@@ -1202,10 +1202,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS ACELERATOR +++&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$1150</div>
+      <div class="acc-pnl green">+$150</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>67%</span></div>
-        <div class="acc-meta-item">Ops <span>3</span></div>
+        <div class="acc-meta-item">WR <span>40%</span></div>
+        <div class="acc-meta-item">Ops <span>5</span></div>
         <div class="acc-meta-item">DD <span>$2000</span></div>
       </div>
       
@@ -1219,40 +1219,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <button class="btn btn-ghost btn-xs" onclick="openFirmEditModal()">✏ Editar / Ajustar</button>
     </div>
     <div id="firm-summary-content"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
-      <!-- Firm header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
-        <div style="font-size:13px;font-weight:800;color:var(--text)">META QUOTES</div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--green-dim);color:var(--green);font-weight:700">✅ 0 pasadas</span>
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--red-dim);color:var(--red);font-weight:700">💀 0 perdidas</span>
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber);font-weight:700">⚡ 1 activas</span>
-          
-          
-        </div>
-      </div>
-      <!-- Account rows -->
-      <div style="padding:8px 14px;display:flex;flex-direction:column;gap:8px"><div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">
-        <!-- Account header row -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg1);gap:8px;flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;font-weight:700;color:var(--text)">BACKTESTING</span>
-            <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">Instant</span>
-            
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            
-            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;BACKTESTING&#39;)">→ Ver cuenta</button>
-          </div>
-        </div>
-        <!-- Cycles -->
-        <div style="padding:6px 12px 8px">
-          
-          <div style="display:flex;align-items:center;gap:8px;margin-top:5px;padding:5px 8px;background:rgba(39,217,122,0.05);border:1px dashed var(--green-dim);border-radius:6px;font-size:11px">
-            <span style="color:var(--muted);font-weight:700;white-space:nowrap">Ciclo 1 (abierto)</span>
-            <span style="color:var(--green)">—</span>
-          </div>
-        </div>
-      </div></div></div><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
       <!-- Firm header -->
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
         <div style="font-size:13px;font-weight:800;color:var(--text)">LUCID</div>
@@ -1289,7 +1255,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             
           </div>
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:10px;color:var(--green)">P&amp;L activo: <strong>+$3400</strong></span>
+            <span style="font-size:10px;color:var(--green)">P&amp;L activo: <strong>+$2800</strong></span>
             <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;FUTUROS TRADE 2&#39;)">→ Ver cuenta</button>
           </div>
         </div>
@@ -1298,7 +1264,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           
           <div style="display:flex;align-items:center;gap:8px;margin-top:5px;padding:5px 8px;background:rgba(39,217,122,0.05);border:1px dashed var(--green-dim);border-radius:6px;font-size:11px">
             <span style="color:var(--muted);font-weight:700;white-space:nowrap">Ciclo 1 (abierto)</span>
-            <span style="color:var(--green)">+$3400</span>
+            <span style="color:var(--green)">+$2800</span>
           </div>
         </div>
       </div></div></div></div>
@@ -1307,7 +1273,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
 
 <!-- ───────── PAGE: EQUITY ───────── -->
-<div id="page-equity" class="page" style="position:relative;">
+<div id="page-equity" class="page hidden" style="position:relative;">
 <div class="sf-watermark"><span>Saint Fortune</span></div>
 
   <div class="topbar">
@@ -1316,7 +1282,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="page-sub">Equity, rachas, P&amp;L por día de la semana y distribución de resultados</div>
     </div>
     <div class="topbar-actions" style="gap:8px;flex-wrap:wrap;">
-      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="FTMO">FTMO  [Funded]</option><option value="LUCID TRADE 1">LUCID TRADE 1  [Eval]</option><option value="LUCID TRADE 2">LUCID TRADE 2  [Live]</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="LUCID ACELERATOR +++">LUCID ACELERATOR +++  [Live]</option></select>
+      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1  [Eval]</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2  [Live]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++  [Live]</option><option value="BACKTESTING">BACKTESTING  [Instant]</option></select>
       <select id="equity-range-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;">
         <option value="all">Todo el historial</option>
         <option value="30">Últimos 30 días</option>
@@ -1328,10 +1294,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Stats row -->
   <div class="stat-row stat-row-4" style="margin-bottom:1.5rem;" id="equity-stats-row">
-    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$10.884,85</div><div class="stat-hint" id="eq-total-hint">6 días · 19 ops</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$7600,05</div><div class="stat-hint" id="eq-total-hint">6 días · 26 ops</div></div>
     <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eq-best-day">+$2960,00</div><div class="stat-hint" id="eq-best-hint">2026-06-17</div></div>
-    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">+$300,00</div><div class="stat-hint" id="eq-worst-hint">2026-06-22</div></div>
-    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">$0</div><div class="stat-hint" id="eq-dd-hint">sin drawdown</div></div>
+    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">$2984,80</div><div class="stat-hint" id="eq-worst-hint">2026-06-22</div></div>
+    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">-$2984,80</div><div class="stat-hint" id="eq-dd-hint">desde el pico</div></div>
   </div>
 
   <!-- Chart card -->
@@ -1359,14 +1325,14 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </clippath>
     </defs>
     <line x1="70" y1="280" x2="898" y2="280" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="230" x2="898" y2="230" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="180" x2="898" y2="180" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="129.99999999999997" x2="898" y2="129.99999999999997" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="80" x2="898" y2="80" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="29.999999999999943" x2="898" y2="29.999999999999943" stroke="#ffffff0a" stroke-width="0.5"></line>
-    <text x="62" y="284" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="234" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="184" text-anchor="end" fill="#55556a" font-size="10">+4.4k</text><text x="62" y="133.99999999999997" text-anchor="end" fill="#55556a" font-size="10">+6.5k</text><text x="62" y="84" text-anchor="end" fill="#55556a" font-size="10">+8.7k</text><text x="62" y="33.99999999999994" text-anchor="end" fill="#55556a" font-size="10">+10.9k</text>
+    <text x="62" y="284" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="234" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><text x="62" y="184" text-anchor="end" fill="#55556a" font-size="10">+4.2k</text><text x="62" y="133.99999999999997" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><text x="62" y="84" text-anchor="end" fill="#55556a" font-size="10">+8.5k</text><text x="62" y="33.99999999999994" text-anchor="end" fill="#55556a" font-size="10">+10.6k</text>
     <text x="70" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-12</text><text x="235.60000000000002" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-15</text><text x="401.20000000000005" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-16</text><text x="566.8" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-17</text><text x="732.4000000000001" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-18</text><text x="898" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-22</text>
-    <path d="M70.0,234.2 L235.6,202.5 L401.2,158.7 L566.8,90.7 L732.4,36.9 L898.0,30.0 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
-    <path d="M70.0,234.2 L235.6,202.5 L401.2,158.7 L566.8,90.7 L732.4,36.9 L898.0,30.0 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
-    <path d="M70.0,234.2 L235.6,202.5 L401.2,158.7 L566.8,90.7 L732.4,36.9 L898.0,30.0" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,100.5 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,100.5 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,100.5" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
     <line x1="70" y1="280.0" x2="898" y2="280.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <circle cx="70.0" cy="234.2" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="235.6" cy="202.5" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="401.2" cy="158.7" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="566.8" cy="90.7" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="732.4" cy="36.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="898.0" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
-    <circle cx="70.0" cy="234.2" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="234.2" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="235.6" cy="202.5" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="235.6" data-y="202.5" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="401.2" cy="158.7" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="401.2" data-y="158.7" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="566.8" cy="90.7" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="566.8" data-y="90.7" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="732.4" cy="36.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="732.4" data-y="36.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="898.0" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-22 | Día: +$300,00 | Acum: +$10.884,85 | 1 ops" data-x="898.0" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
+    <circle cx="70.0" cy="232.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="235.6" cy="200.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="401.2" cy="155.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="566.8" cy="85.4" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="732.4" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="898.0" cy="100.5" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
+    <circle cx="70.0" cy="232.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="232.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="235.6" cy="200.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="235.6" data-y="200.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="401.2" cy="155.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="401.2" data-y="155.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="566.8" cy="85.4" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="566.8" data-y="85.4" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="732.4" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="732.4" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="898.0" cy="100.5" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-22 | Día: $2984,80 | Acum: +$7600,05 | 8 ops" data-x="898.0" data-y="100.5" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
   </svg>
       <div id="equity-tooltip" style="position: absolute; pointer-events: none; background: rgb(26, 26, 40); border-color: rgb(39, 217, 122); border-top-style: ; border-top-width: ; border-right-style: ; border-right-width: ; border-bottom-style: ; border-bottom-width: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; left: 456.051px; top: 53.9px;">2026-06-16<br>Día: +$3513,10<br>Acum: +$6835,95 · 10 ops</div>
     </div>
@@ -1388,12 +1354,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div style="display:grid;grid-template-columns:1fr 280px;gap:1.25rem;align-items:start;">
       <!-- Left: summary + table for selected range/day -->
       <div style="min-width:0;">
-        <div id="eqd-summary-label" style="font-size:11px;color:var(--muted2);margin-bottom:8px;">Semana: 15/06 – 19/06</div>
+        <div id="eqd-summary-label" style="font-size:11px;color:var(--muted2);margin-bottom:8px;">Semana: 22/06 – 26/06</div>
         <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value green" id="eqd-sum-pnl">+$8590,40</div><div class="stat-hint" id="eqd-sum-pnl-hint">4 días</div></div>
-          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">+$2960,00</div><div class="stat-hint" id="eqd-sum-best-hint">2026-06-17</div></div>
-          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">+$1378,40</div><div class="stat-hint" id="eqd-sum-worst-hint">2026-06-15</div></div>
-          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">16</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 81% · 13W / 3L</div></div>
+          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value red" id="eqd-sum-pnl">$2984,80</div><div class="stat-hint" id="eqd-sum-pnl-hint">1 día</div></div>
+          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">$2984,80</div><div class="stat-hint" id="eqd-sum-best-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">$2984,80</div><div class="stat-hint" id="eqd-sum-worst-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">8</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 0% · 0W / 8L</div></div>
         </div>
         <div style="overflow-x:auto;" id="eqd-table-wrap" class="">
           <table style="width:100%;border-collapse:collapse;font-size:12.5px;" id="equity-table">
@@ -1407,29 +1373,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
               </tr>
             </thead>
             <tbody id="equity-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
-        <td style="padding:7px 10px;color:var(--muted2);">2026-06-18</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600;">+$2345,00</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$10.584,85</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">7</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">5W / 2L</td>
-      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
-        <td style="padding:7px 10px;color:var(--muted2);">2026-06-17</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600;">+$2960,00</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$8239,85</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">5</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">4W / 1L</td>
-      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
-        <td style="padding:7px 10px;color:var(--muted2);">2026-06-16</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600;">+$1907,00</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$5279,85</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">2</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">2W / 0L</td>
-      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
-        <td style="padding:7px 10px;color:var(--muted2);">2026-06-15</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:600;">+$1378,40</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$3372,85</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">2</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">2W / 0L</td>
+        <td style="padding:7px 10px;color:var(--muted2);">2026-06-22</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:600;">$2984,80</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$7600,05</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">8</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0W / 8L</td>
       </tr></tbody>
           </table>
         </div>
@@ -1445,7 +1393,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:9.5px;color:var(--muted);text-align:center;margin-bottom:4px;">
           <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
         </div>
-        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
+        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell has-data loss" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
         <div id="eqd-day-selected-wrap" class="hidden" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
           <div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Día seleccionado</div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -1461,20 +1409,20 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;" id="weekly-section">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
       <div style="font-size:13px;font-weight:600;color:var(--text);">📅 Análisis Semanal</div>
-      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"><span style="background:var(--green-dim);color:var(--green);border:1px solid #0a3020;padding:3px 10px;border-radius:6px;font-weight:700;">🔥 3 semanas ganadoras seguidas</span></div>
+      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"></div>
     </div>
     <!-- KPIs semanales -->
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">3</div><div class="stat-hint" id="wk-wins-hint">de 3 semanas</div></div>
-      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">0</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">2</div><div class="stat-hint" id="wk-wins-hint">de 3 semanas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">1</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
       <div class="stat-card"><div class="stat-label">Mejor semana</div><div class="stat-value green" id="wk-best">+$8590,40</div><div class="stat-hint" id="wk-best-hint">15 jun – 19 jun</div></div>
-      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">+$300,00</div><div class="stat-hint" id="wk-worst-hint">22 jun – 26 jun</div></div>
+      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">$2984,80</div><div class="stat-hint" id="wk-worst-hint">22 jun – 26 jun</div></div>
     </div>
     <!-- Gráfico de barras semanal -->
     <div style="position:relative;width:100%;overflow:hidden;margin-bottom:1rem;" id="weekly-chart-wrap">
-      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 918 220"><line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff22" stroke-width="1"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">0</text><line x1="70" y1="143.0" x2="898" y2="143.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><line x1="70" y1="102.0" x2="898" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+4.3k</text><line x1="70" y1="61.0" x2="898" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><line x1="70" y1="20.0" x2="898" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="97.6" y="145.9" width="220.8" height="38.1" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="373.6" y="20.0" width="220.8" height="164.0" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="649.6" y="178.3" width="220.8" height="5.7" rx="3" fill="#27d97a" opacity="0.8" style=""></rect>
-      <line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
-      <text x="208.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="484.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><text x="760.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S26</text><rect x="97.6" y="20" width="220.8" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="373.6" y="20" width="220.8" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="649.6" y="20" width="220.8" height="164" fill="transparent" data-tip="22 jun – 26 jun | +$300,00 | 1 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
+      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 918 220"><line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">-3.0k</text><line x1="70" y1="143.0" x2="898" y2="143.0" stroke="#ffffff22" stroke-width="1"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">-91</text><line x1="70" y1="102.0" x2="898" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+2.8k</text><line x1="70" y1="61.0" x2="898" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+5.7k</text><line x1="70" y1="20.0" x2="898" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="97.6" y="113.5" width="220.8" height="28.3" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="373.6" y="20.0" width="220.8" height="121.7" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="649.6" y="141.7" width="220.8" height="42.3" rx="3" fill="#ff4f4f" opacity="0.8" style=""></rect>
+      <line x1="70" y1="141.7" x2="898" y2="141.7" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
+      <text x="208.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="484.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><text x="760.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S26</text><rect x="97.6" y="20" width="220.8" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="373.6" y="20" width="220.8" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="649.6" y="20" width="220.8" height="164" fill="transparent" data-tip="22 jun – 26 jun | $2984,80 | 8 ops | WR 0%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
       <div id="weekly-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 435.333px; top: 112px;">22 jun – 26 jun | +$1500,00 | 2 ops | WR 100%</div>
     </div>
     <!-- Tabla de semanas -->
@@ -1492,12 +1440,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </thead>
         <tbody id="weekly-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
         <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">22 jun – 26 jun</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$300,00</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:700;">$2984,80</td>
         <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
-        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">100%</td>
-        <td style="padding:7px 10px;text-align:right;"><span style="background:var(--green-dim);color:var(--green);border:1px solid #0a3020;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">GANADORA</span></td>
-      </tr><tr style="border-bottom: 1px solid var(--border); transition: background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">8</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0%</td>
+        <td style="padding:7px 10px;text-align:right;"><span style="background:var(--red-dim);color:var(--red);border:1px solid #3a0000;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">PERDEDORA</span></td>
+      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
         <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">15 jun – 19 jun</td>
         <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$8590,40</td>
         <td style="padding:7px 10px;text-align:right;color:var(--muted2);">4</td>
@@ -1527,22 +1475,24 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="streak-stats-row">
-      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value green" id="st-current">+5</div><div class="stat-hint" id="st-current-hint">5 operaciones · ganando 🔥</div></div>
+      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value red" id="st-current">-8</div><div class="stat-hint" id="st-current-hint">8 operaciones · perdiendo ⚠️</div></div>
       <div class="stat-card"><div class="stat-label">Mejor racha (wins)</div><div class="stat-value green" id="st-best-win">7</div><div class="stat-hint" id="st-best-win-hint">+$5679,85 · 2026-06-12 → 2026-06-17</div></div>
-      <div class="stat-card"><div class="stat-label">Peor racha (losses)</div><div class="stat-value red" id="st-worst-loss">2</div><div class="stat-hint" id="st-worst-loss-hint">-$1300 · 2026-06-18</div></div>
-      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">3.8</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
+      <div class="stat-card"><div class="stat-label">Peor racha (losses)</div><div class="stat-value red" id="st-worst-loss">8</div><div class="stat-hint" id="st-worst-loss-hint">-$2984,8 · 2026-06-22</div></div>
+      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">4.3</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
     </div>
     <div style="overflow-x:auto;padding-bottom:4px;">
-      <div id="streak-strip" style="display:flex;align-items:flex-end;gap:3px;min-height:60px;"><div title="🟢 Racha ganadora · 7 op · +$5679,85 · 2026-06-12 → 2026-06-17" style="flex:0 0 auto;width:14px;height:56px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
-      <div style="width:100%;height:54px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+      <div id="streak-strip" style="display:flex;align-items:flex-end;gap:3px;min-height:60px;"><div title="🟢 Racha ganadora · 7 op · +$5679,85 · 2026-06-12 → 2026-06-17" style="flex:0 0 auto;width:14px;height:49px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:47px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
     </div><div title="🔴 Racha perdedora · 1 op · -$450 · 2026-06-17" style="flex:0 0 auto;width:14px;height:14px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
       <div style="width:100%;height:12px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
-    </div><div title="🟢 Racha ganadora · 4 op · +$4210 · 2026-06-17 → 2026-06-18" style="flex:0 0 auto;width:14px;height:32px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
-      <div style="width:100%;height:30px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
-    </div><div title="🔴 Racha perdedora · 2 op · -$1300 · 2026-06-18" style="flex:0 0 auto;width:14px;height:16px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
-      <div style="width:100%;height:14px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
-    </div><div title="🟢 Racha ganadora · 5 op · +$2745 · 2026-06-18 → 2026-06-22" style="flex:0 0 auto;width:14px;height:40px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
-      <div style="width:100%;height:38px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🟢 Racha ganadora · 4 op · +$4210 · 2026-06-17 → 2026-06-18" style="flex:0 0 auto;width:14px;height:28px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:26px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🔴 Racha perdedora · 2 op · -$1300 · 2026-06-18" style="flex:0 0 auto;width:14px;height:14px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:12px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🟢 Racha ganadora · 4 op · +$2445 · 2026-06-18" style="flex:0 0 auto;width:14px;height:28px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:26px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🔴 Racha perdedora · 8 op · -$2984,8 · 2026-06-22" style="flex:0 0 auto;width:14px;height:56px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:54px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
     </div></div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Cada bloque es una sesión registrada, en orden cronológico (más reciente a la derecha). El tamaño indica el largo de la racha en curso.</div>
@@ -1555,9 +1505,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div id="dow-legend" style="font-size:11px;color:var(--muted2);">¿Qué días rindes mejor y peor?</div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dow-chart-wrap">
-      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 918 280"><line x1="70" y1="240" x2="898" y2="240" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="187.5" x2="898" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="898" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="898" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="898" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">+740</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="129.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="247.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="365.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="484.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="602.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="720.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="838.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="80.6" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="198.9" y="120.9" width="97.0" height="119.1" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="317.2" y="104.7" width="97.0" height="135.3" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="435.5" y="30.0" width="97.0" height="210.0" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="553.8" y="73.6" width="97.0" height="166.4" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="672.1" y="98.5" width="97.0" height="141.5" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="790.4" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
-    <line x1="70" y1="240.0" x2="898" y2="240.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <rect x="80.6" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="198.9" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Lun · +$1678,4 · 3 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="317.2" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="435.5" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="553.8" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="672.1" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="790.4" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
+      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 918 280"><line x1="70" y1="240" x2="898" y2="240" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="187.5" x2="898" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="898" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="898" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="898" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">-1.6k</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">-465</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+677</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+1.8k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="129.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="247.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="365.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="484.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="602.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="720.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="838.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="80.6" y="166.1" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="198.9" y="166.1" width="97.0" height="73.9" rx="4" fill="#ff4f4f" opacity="0.85"></rect><rect x="317.2" y="78.4" width="97.0" height="87.7" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="435.5" y="30.0" width="97.0" height="136.1" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="553.8" y="58.3" width="97.0" height="107.8" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="672.1" y="74.4" width="97.0" height="91.7" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="790.4" y="166.1" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
+    <line x1="70" y1="166.1" x2="898" y2="166.1" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
+    <rect x="80.6" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="198.9" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Lun · -$1606,4 · 10 op · WR 20%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="317.2" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="435.5" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="553.8" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="672.1" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="790.4" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
       <div id="dow-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 613.333px; top: 208.667px;">Jue · +$750 · 1 op · WR 100%</div>
     </div>
   </div>
@@ -1572,15 +1522,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="dist-stats-row">
-      <div class="stat-card"><div class="stat-label">Ganancia media</div><div class="stat-value green" id="dist-avg-win">+$789,68</div></div>
-      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$583,33</div></div>
-      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.35x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
-      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$572,89</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
+      <div class="stat-card"><div class="stat-label">Ganancia media</div><div class="stat-value green" id="dist-avg-win">+$822,32</div></div>
+      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$430,44</div></div>
+      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.91x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
+      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$292,31</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dist-chart-wrap">
-      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 918 260"><rect x="58.5" y="186.7" width="124.4" height="33.3" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="199.8" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="341.1" y="220.0" width="124.4" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="482.5" y="86.7" width="124.4" height="133.3" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="623.8" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="765.1" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="396.1" y1="20" x2="396.1" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="120.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="262.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">$532</text><text x="403.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">$165</text><text x="544.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$203</text><text x="686.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$570</text><text x="827.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$938</text>
+      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 918 260"><rect x="57.3" y="20.0" width="106.6" height="200.0" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="178.4" y="140.0" width="106.6" height="80.0" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="299.6" y="60.0" width="106.6" height="160.0" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="420.7" y="220.0" width="106.6" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="541.8" y="20.0" width="106.6" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="663.0" y="20.0" width="106.6" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="784.1" y="20.0" width="106.6" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="396.1" y1="20" x2="396.1" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="110.6" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="352.9" y="238" text-anchor="middle" fill="#55556a" font-size="9">$270</text><text x="595.1" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$360</text><text x="837.4" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$990</text>
     <line x1="50" y1="220" x2="898" y2="220" stroke="#ffffff18" stroke-width="1"></line>
-    <rect x="58.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$532,43 · 1 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="199.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$532,43 a -$164,85 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="341.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$164,85 a +$202,72 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="482.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$202,72 a +$570,3 · 4 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="623.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$570,3 a +$937,88 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="765.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$937,88 a +$1305,45 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
+    <rect x="57.3" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$584,94 · 5 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="178.4" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="-$584,94 a -$269,87 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="299.6" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="-$269,87 a +$45,19 · 4 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="420.7" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="+$45,19 a +$360,26 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="541.8" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="+$360,26 a +$675,32 · 5 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="663.0" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="+$675,32 a +$990,39 · 5 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="784.1" y="20" width="106.6" height="200" fill="transparent" class="dist-hit" data-tip="+$990,39 a +$1305,45 · 5 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
       <div id="dist-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 469.333px; top: 66.3333px;">-$164,85 a +$202,72 · 0 op</div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Una distribución sana suele mostrar pérdidas agrupadas y controladas, con una cola de ganancias que se extiende más lejos.</div>
@@ -1649,7 +1599,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Group ABCDE tabs -->
-  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn active">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
+  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn active">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
     <div class="group-panel-header">
@@ -1733,8 +1683,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
-      <div class="page-title" id="detail-title">FTMO <span class="acc-platform type-cfd-funded" style="font-size:13px;vertical-align:middle">🏆 Funded</span></div>
-      <div class="page-sub" id="detail-sub">CFD funded $100.000 · </div>
+      <div class="page-title" id="detail-title">PROP XP TRADE 2 <span class="acc-platform type-cfd-instant" style="font-size:13px;vertical-align:middle">⚡ Instant</span></div>
+      <div class="page-sub" id="detail-sub">CFD instant $100.000 · PROP XP</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" id="detail-rename-btn" onclick="openRenameAccountModal()">✏ Renombrar</button>
@@ -1755,12 +1705,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: STATS -->
-  <div class="tab-content active" id="dtab-stats">
+  <div class="tab-content" id="dtab-stats">
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="d-pnl">+$2800</div></div>
-      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value green" id="d-wr">100%</div></div>
-      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">+$1500</div></div>
-      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">2</div></div>
+      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="d-pnl">+$4078,85</div></div>
+      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value green" id="d-wr">83%</div></div>
+      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">+$1305,45</div></div>
+      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">6</div></div>
     </div>
     <div id="d-stats-extra"></div>
   </div>
@@ -1769,31 +1719,31 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="tab-content" id="dtab-fuel">
     <div id="fuel-content">
     <div class="phase-separator">
-      <span class="phase-separator-label phase-live">🏆 FUNDED</span>
+      <span class="phase-separator-label phase-live">⚡ INSTANT FUNDED</span>
       <div class="phase-sep-line phase-sep-live" style="background:var(--green-dim)"></div>
     </div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fuel-wrap">
-        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 100%)</div>
+        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 20%)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>100%</span><span style="margin-top:auto">0%</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:0%;background:var(--green)"></div>
-            <div class="fuel-gauge-line" style="bottom:100%;border-color:rgba(255,174,48,0.6)">
-              <div style="position:absolute;right:-48px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Límite 100%</div>
+            <div class="fuel-gauge-fill" style="height:100%;background:var(--red)"></div>
+            <div class="fuel-gauge-line" style="bottom:20%;border-color:rgba(255,174,48,0.6)">
+              <div style="position:absolute;right:-48px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Límite 20%</div>
             </div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--green)">53.6%</div>
+            <div class="fuel-pct" style="color:var(--red)">27.9%</div>
             <div class="fuel-sub">del total es tu mejor trade</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$1500</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$2800</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">100%</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$2240</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$1305,45</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$4078,85</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">20%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$4444,91</span></div>
             </div>
-            <div class="fuel-status ok">✓ Consistencia OK</div>
+            <div class="fuel-status danger">✗ Excede límite</div>
           </div>
         </div>
       </div>
@@ -1802,29 +1752,29 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>5</span><span style="margin-top:auto">0</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:40%;background:var(--blue)"></div>
+            <div class="fuel-gauge-fill" style="height:100%;background:var(--green)"></div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--blue)">2</div>
+            <div class="fuel-pct" style="color:var(--green)">5</div>
             <div class="fuel-sub">de 5 días requeridos</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">2 / 5</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">5 / 5</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Mín/día:</span><span class="fuel-item-val green">$500</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-10%</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-5%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-6%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-3%</span></div>
             </div>
-            <div class="fuel-status warn">⏳ Faltan 3 día(s)</div>
+            <div class="fuel-status ok">✓ Días cumplidos</div>
           </div>
         </div>
       </div>
     </div>
     
     <div class="cobro-btn-wrap">
-      <div class="cobro-btn-title">Solicitud de cobro · Funded</div>
+      <div class="cobro-btn-title">Solicitud de cobro · Instant</div>
       <button class="cobro-btn disabled" onclick="void(0)">
-        🔒 Cobro bloqueado · Completa consistencia y días rentables (2/5)
+        🔒 Cobro bloqueado · Completa consistencia y días rentables (5/5)
       </button>
-      <div class="cobro-hint">Necesitas: consistencia ≤100% Y 5 días rentables</div>
+      <div class="cobro-hint">Necesitas: consistencia ≤20% Y 5 días rentables</div>
     </div>
   </div>
   </div>
@@ -1834,12 +1784,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div id="roi-content">
     
     <div class="roi-grid">
-      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value green">+$2800</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
-      <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$2240</div></div>
+      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value green">+$4078,85</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
+      <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$3874,91</div></div>
       <div class="roi-card"><div class="roi-label">Costo evaluación <span style="color:var(--muted);font-size:9px">editable</span></div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;FTMO&#39;)">
-          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;FTMO&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
+          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;PROP XP TRADE 2&#39;)">
+          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;PROP XP TRADE 2&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
         </div>
         <div style="font-size:10px;color:var(--red);margin-top:3px">Sin costo</div>
       </div>
@@ -1855,9 +1805,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="payout-bar">
       <div class="section-title">Ciclo de cobro <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(fecha de solicitud/pago, no de carga del certificado)</span></div>
       <div class="payout-grid">
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;FTMO&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
-        <div class="payout-opt active" onclick="setPayoutCycle(&#39;FTMO&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;FTMO&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;PROP XP TRADE 2&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
+        <div class="payout-opt active" onclick="setPayoutCycle(&#39;PROP XP TRADE 2&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;PROP XP TRADE 2&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
       </div>
     </div>
     <div class="info-box">Sin cobros registrados · Usa la pestaña de Consistencia para solicitar cuando estés habilitado</div>
@@ -1867,12 +1817,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: PARAMS -->
   <div class="tab-content" id="dtab-params">
     <div id="params-content">
-      <div class="section-header"><div class="section-title">Parámetros de gestión · Funded CFDs</div></div>
+      <div class="section-header"><div class="section-title">Parámetros de gestión · Instant CFDs</div></div>
       <div class="lot-params-grid">
         <div class="lot-param"><div class="lot-param-label">Lotaje sugerido</div><div class="lot-param-value blue">0.1</div><div class="lot-param-sub">lotes estándar</div></div>
         <div class="lot-param"><div class="lot-param-label">Lotaje máximo</div><div class="lot-param-value">1</div><div class="lot-param-sub">límite recomendado</div></div>
-        <div class="lot-param"><div class="lot-param-label">Max pérdida/día</div><div class="lot-param-value red">5% · $5000</div><div class="lot-param-sub">SL diario estático</div></div>
-        <div class="lot-param"><div class="lot-param-label">Drawdown máx</div><div class="lot-param-value red">10%</div><div class="lot-param-sub">estático del saldo</div></div>
+        <div class="lot-param"><div class="lot-param-label">Max pérdida/día</div><div class="lot-param-value red">3% · $3000</div><div class="lot-param-sub">SL diario estático</div></div>
+        <div class="lot-param"><div class="lot-param-label">Drawdown máx</div><div class="lot-param-value red">6%</div><div class="lot-param-sub">estático del saldo</div></div>
       </div>
       
       <div class="divider"></div>
@@ -1889,10 +1839,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
       <div class="form-row-2">
         <div class="form-group"><label class="form-label">% Cobro (split)</label>
-          <input class="form-input" type="number" id="p-payoutpct" value="80" step="1">
+          <input class="form-input" type="number" id="p-payoutpct" value="95" step="1">
         </div>
         <div class="form-group"><label class="form-label">📉 Max DD %</label>
-          <input class="form-input" type="number" id="p-maxddpct" value="10" step="0.1">
+          <input class="form-input" type="number" id="p-maxddpct" value="6" step="0.1">
         </div>
       </div>
       <div class="form-row-2">
@@ -1924,15 +1874,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;FTMO&#39;)">Guardar parámetros</button>
-        <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;FTMO&#39;)">⬇ Importar ahora</button>
-        <span id="mt5-status-FTMO" style="font-size:11px;color:var(--muted)">Sin importar todavía</span>
+        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;PROP XP TRADE 2&#39;)">Guardar parámetros</button>
+        <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;PROP XP TRADE 2&#39;)">⬇ Importar ahora</button>
+        <span id="mt5-status-PROP_XP_TRADE_2" style="font-size:11px;color:var(--muted)">Sin importar todavía</span>
       </div>
     </div>
   </div>
 
   <!-- TAB: TRADES -->
-  <div class="tab-content" id="dtab-trades">
+  <div class="tab-content active" id="dtab-trades">
     <div class="section-header" style="margin-bottom:0.75rem">
       <div class="section-title">Operaciones</div>
       <div style="display:flex;gap:6px">
@@ -1946,33 +1896,93 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <div class="entry-list" id="detail-entries">
     <div class="entry-item" style="">
-      <div class="entry-date">2026-06-20</div>
+      <div class="entry-date">2026-06-22</div>
       
-      <div class="entry-result pill-win">WIN</div>
-      <div class="entry-pnl green">+$1300</div>
+      <div class="entry-result pill-loss">LOSS</div>
+      <div class="entry-pnl red">-$600</div>
       <div class="entry-source source-manual">XAUUSD</div>
-      <div class="entry-source source-mt5">0.4</div>
+      <div class="entry-source source-mt5">0.6</div>
       <div class="entry-source source-ninja">ny</div>
       <div class="entry-note">—</div>
       
       <div class="entry-actions">
-        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781965335650_1xhe&#39;)">✏</button>
-        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781965335650_1xhe&#39;)">✕</button>
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1782150252843_3y3w&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1782150252843_3y3w&#39;)">✕</button>
+      </div>
+    </div>
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-18</div>
+      
+      <div class="entry-result pill-win">WIN</div>
+      <div class="entry-pnl green">+$658</div>
+      <div class="entry-source source-manual">XAUUSD</div>
+      <div class="entry-source source-mt5">0.6</div>
+      <div class="entry-source source-ninja">ny</div>
+      <div class="entry-note">—</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781790410632_1uik&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781790410632_1uik&#39;)">✕</button>
+      </div>
+    </div>
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-17</div>
+      
+      <div class="entry-result pill-win">WIN</div>
+      <div class="entry-pnl green">+$937</div>
+      <div class="entry-source source-manual">XAUUSD</div>
+      <div class="entry-source source-mt5">0.9</div>
+      <div class="entry-source source-ninja">ny</div>
+      <div class="entry-note">—</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781790394242_oe61&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781790394242_oe61&#39;)">✕</button>
       </div>
     </div>
     <div class="entry-item" style="">
       <div class="entry-date">2026-06-16</div>
       
       <div class="entry-result pill-win">WIN</div>
-      <div class="entry-pnl green">+$1500</div>
+      <div class="entry-pnl green">+$1005</div>
       <div class="entry-source source-manual">XAUUSD</div>
-      <div class="entry-source source-mt5">0.5</div>
+      <div class="entry-source source-mt5">0.9</div>
       <div class="entry-source source-ninja">london</div>
       <div class="entry-note">—</div>
       
       <div class="entry-actions">
-        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781965316719_8d1w&#39;)">✏</button>
-        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781965316719_8d1w&#39;)">✕</button>
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781790371227_ae7q&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781790371227_ae7q&#39;)">✕</button>
+      </div>
+    </div>
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-15</div>
+      
+      <div class="entry-result pill-win">WIN</div>
+      <div class="entry-pnl green">+$773,4</div>
+      <div class="entry-source source-manual">XAUUSD</div>
+      <div class="entry-source source-mt5">0.6</div>
+      <div class="entry-source source-ninja">london</div>
+      <div class="entry-note">—</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781790341836_9r9g&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781790341836_9r9g&#39;)">✕</button>
+      </div>
+    </div>
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-12</div>
+      
+      <div class="entry-result pill-win">WIN</div>
+      <div class="entry-pnl green">+$1305,45</div>
+      <div class="entry-source source-manual">XAUUSD</div>
+      <div class="entry-source source-mt5">1.2</div>
+      <div class="entry-source source-ninja">london</div>
+      <div class="entry-note">—</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1781790322602_64mm&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1781790322602_64mm&#39;)">✕</button>
       </div>
     </div></div>
   </div>
@@ -1987,8 +1997,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <div class="modal-backdrop" id="addModal" onclick="closeModal(&#39;addModal&#39;,event)">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal(&#39;addModal&#39;)">✕</button>
-    <div class="modal-title" id="modal-title">📝 Nueva entrada</div>
-    <div class="modal-sub" id="modal-sub">Registra el resultado de la sesión</div>
+    <div class="modal-title" id="modal-title">✏ Editar entrada</div>
+    <div class="modal-sub" id="modal-sub">Modifica los datos de la operación</div>
 
     <div class="form-row-2">
       <div class="form-group">
@@ -10400,15 +10410,13 @@ const LIC_ADMIN_KEYS = [
 ];
 
 // ══════════════════════════════════════════════════════════════════
-// ☁ SINCRONIZACIÓN EN LA NUBE (Supabase) — invisible para el cliente
-// El navegador NUNCA toca la tabla client_data directamente.
-// Habla con la Edge Function "client-sync", que solo devuelve la fila
-// exacta de la clave enviada — nadie puede pedir "todas las filas".
+// ☁ SINCRONIZACIÓN EN LA NUBE (Supabase REST directo)
+// Usa la tabla client_data con RLS — cada licencia solo ve su fila.
 // ══════════════════════════════════════════════════════════════════
 const SB_URL = 'https://qkuimdilzxhhxpnvlnjb.supabase.co';
 const SB_KEY = 'sb_publishable_CP_kH-61i8DKEBa53qOA3Q_iH35VORs';
-const SB_FUNCTION_URL = SB_URL + '/functions/v1/client-sync';
-const SB_DEVICE_FUNCTION_URL = SB_URL + '/functions/v1/device-check';
+const SB_FUNCTION_URL  = null; // no se usa — reemplazado por REST directo
+const SB_DEVICE_FUNCTION_URL = null; // no se usa
 
 // Detecta si el dispositivo actual es "pc" o "mobile" a partir del navegador
 function licDetectarTipoDispositivo() {
@@ -10420,65 +10428,79 @@ const SB_LAST_SYNC_PREFIX = 'fp_sb_last_sync_sale_';
 
 let sbSyncTimer = null;
 
-// Sube el estado actual del cliente vía la Edge Function (no toca la tabla directo)
+// Sube el estado actual del cliente directo a Supabase REST (upsert)
 async function sbPush(clave){
   if (!clave) return;
   try {
     const payload = buildBackupPayload();
-    const resp = await fetch(SB_FUNCTION_URL, {
+    const now = new Date().toISOString();
+    const resp = await fetch(SB_URL + '/rest/v1/client_data', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
-      body: JSON.stringify({ action: 'push', license_key: clave, data: payload })
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ license_key: clave, data: payload, updated_at: now })
     });
-    const json = await resp.json();
-    if (resp.ok && json.ok) {
-      _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
+    if (resp.ok || resp.status === 201) {
+      _lsSet(SB_LAST_SYNC_PREFIX + clave, now);
     } else {
-      console.warn('Supabase push error:', json.error || resp.status);
+      const err = await resp.text();
+      console.warn('Supabase push error:', resp.status, err);
     }
   } catch(e) { console.warn('Supabase push falló:', e); }
 }
 
-// Descarga el estado del cliente vía la Edge Function. Devuelve true si había datos y se aplicaron.
+// Descarga el estado del cliente directo desde Supabase REST
 async function sbPull(clave){
   if (!clave) return false;
   try {
-    const resp = await fetch(SB_FUNCTION_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
-      body: JSON.stringify({ action: 'pull', license_key: clave })
-    });
-    const json = await resp.json();
-    if (!resp.ok || !json.data) return false;
-    applyBackupPayload(json.data);
-    if (json.updated_at) _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
+    const resp = await fetch(
+      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(clave) + '&select=data,updated_at&limit=1',
+      {
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY
+        }
+      }
+    );
+    if (!resp.ok) return false;
+    const rows = await resp.json();
+    if (!rows || rows.length === 0 || !rows[0].data) return false;
+    applyBackupPayload(rows[0].data);
+    if (rows[0].updated_at) _lsSet(SB_LAST_SYNC_PREFIX + clave, rows[0].updated_at);
     return true;
   } catch(e) { console.warn('Supabase pull falló:', e); return false; }
 }
 
-// Al cargar una sesión ya activa: si la nube tiene una versión más nueva
-// que la última vez que este dispositivo sincronizó, la aplica y recarga.
+// Al cargar: compara updated_at de la nube con el último sync local
 async function sbSyncOnLoad(clave){
   if (!clave) return;
-  // Evitar bucle: si acabamos de recargar por sync, no volver a recargar
   const reloadFlag = sessionStorage.getItem('sb_just_reloaded');
   if (reloadFlag === clave) {
     sessionStorage.removeItem('sb_just_reloaded');
     return;
   }
   try {
-    const resp = await fetch(SB_FUNCTION_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
-      body: JSON.stringify({ action: 'pull', license_key: clave })
-    });
-    const json = await resp.json();
-    if (!resp.ok || !json.data) return;
+    const resp = await fetch(
+      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(clave) + '&select=data,updated_at&limit=1',
+      {
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY
+        }
+      }
+    );
+    if (!resp.ok) return;
+    const rows = await resp.json();
+    if (!rows || rows.length === 0 || !rows[0].data) return;
     const lastSync = _lsGet(SB_LAST_SYNC_PREFIX + clave) || '';
-    if (json.updated_at && json.updated_at !== lastSync) {
-      applyBackupPayload(json.data);
-      _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
-      sessionStorage.setItem('sb_just_reloaded', clave); // marca para no recargar al volver
+    if (rows[0].updated_at && rows[0].updated_at !== lastSync) {
+      applyBackupPayload(rows[0].data);
+      _lsSet(SB_LAST_SYNC_PREFIX + clave, rows[0].updated_at);
+      sessionStorage.setItem('sb_just_reloaded', clave);
       location.reload();
     }
   } catch(e) { console.warn('Sincronización inicial falló:', e); }
@@ -10567,7 +10589,7 @@ const LIC_OWNER_HASHES = [
   '9ffb563b92a2d8880d8cb08ae88a3e7ec74bbeaa42a6761e4f109e051fe2ed7d'
 ];
 
-// ── Comprobación de dispositivos contra Supabase Edge Function ────
+// ── Comprobación de dispositivos contra Supabase REST directo ────
 // Máximo 2 dispositivos por clave (1 PC + 1 celular).
 // Devuelve: { ok, msg } — si falla la red, deja pasar con aviso.
 async function licComprobarDispositivo(clave, deviceId) {
@@ -10577,19 +10599,37 @@ async function licComprobarDispositivo(clave, deviceId) {
 
   try {
     const deviceType = licDetectarTipoDispositivo();
-    const resp = await fetch(SB_DEVICE_FUNCTION_URL, {
+
+    // 1. Registrar/confirmar este dispositivo
+    const upsertResp = await fetch(SB_URL + '/rest/v1/device_registry', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Prefer': 'resolution=ignore-duplicates'
       },
       body: JSON.stringify({ license_key: clave, device_id: deviceId, device_type: deviceType })
     });
-    const data = await resp.json();
-    if (!resp.ok) {
-      return { ok: false, msg: data.error || '❌ Esta clave ya está activada en el máximo de dispositivos permitidos (1 PC + 1 celular).' };
+
+    // 2. Contar cuántos dispositivos tiene esta licencia
+    const countResp = await fetch(
+      SB_URL + '/rest/v1/device_registry?license_key=eq.' + encodeURIComponent(clave) + '&select=device_id',
+      {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      }
+    );
+    const devices = await countResp.json();
+
+    // Si este device ya estaba registrado, siempre pasa
+    const yaRegistrado = devices.some(d => d.device_id === deviceId);
+    if (yaRegistrado) return { ok: true };
+
+    // Si hay más de 2 dispositivos distintos y este no estaba, bloquear
+    if (devices.length > 2) {
+      return { ok: false, msg: '❌ Esta clave ya está activada en el máximo de dispositivos permitidos (1 PC + 1 celular).' };
     }
+
     return { ok: true };
   } catch (e) {
     console.warn('No se pudo verificar el dispositivo (sin conexión):', e);
