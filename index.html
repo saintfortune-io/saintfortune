@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(9).html -->
+<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(10).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1008,7 +1008,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">📊 Vistas</div>
-    <div class="nav-item" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
+    <div class="nav-item active" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
     <div class="nav-item" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
     <div class="nav-item" onclick="showPage(&#39;calendar&#39;)"><div class="dot dot-blue"></div> Calendario</div>
     <div class="nav-item" onclick="showPage(&#39;certificates&#39;)"><div class="dot dot-green"></div> Certificados de Pago</div>
@@ -1018,7 +1018,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="nav-section">
     <div class="nav-label">🔵 CFDs · MT5</div>
     <div id="cfd-nav-items"></div>
-    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="backtesting 1"><div class="dot dot-cyan"></div> backtesting 1 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
   </div>
 
@@ -1064,7 +1064,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <main class="main">
 
 <!-- ───────── PAGE: OVERVIEW ───────── -->
-<div id="page-overview" class="page hidden">
+<div id="page-overview" class="page">
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
@@ -1122,6 +1122,24 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="acc-meta">
         <div class="acc-meta-item">WR <span>71%</span></div>
         <div class="acc-meta-item">Ops <span>7</span></div>
+        <div class="acc-meta-item">DD <span>6%</span></div>
+        
+        
+      </div>
+    </div><div class="acc-card blue-accent" onclick="showPage(&#39;backtesting 1&#39;)">
+      <div class="acc-head">
+        <div class="acc-name">backtesting 1</div>
+        <div class="acc-badges">
+          <span class="acc-platform tag-mt5">MT5</span>
+          <span class="acc-platform type-cfd-instant">⚡ Instant</span>
+          
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;backtesting 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+        </div>
+      </div>
+      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-meta">
+        <div class="acc-meta-item">WR <span>—</span></div>
+        <div class="acc-meta-item">Ops <span>0</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1219,6 +1237,40 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <button class="btn btn-ghost btn-xs" onclick="openFirmEditModal()">✏ Editar / Ajustar</button>
     </div>
     <div id="firm-summary-content"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
+      <!-- Firm header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;font-weight:800;color:var(--text)">prop 1</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--green-dim);color:var(--green);font-weight:700">✅ 0 pasadas</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--red-dim);color:var(--red);font-weight:700">💀 0 perdidas</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber);font-weight:700">⚡ 1 activas</span>
+          
+          
+        </div>
+      </div>
+      <!-- Account rows -->
+      <div style="padding:8px 14px;display:flex;flex-direction:column;gap:8px"><div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden">
+        <!-- Account header row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg1);gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:12px;font-weight:700;color:var(--text)">backtesting 1</span>
+            <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">Instant</span>
+            
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            
+            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;backtesting 1&#39;)">→ Ver cuenta</button>
+          </div>
+        </div>
+        <!-- Cycles -->
+        <div style="padding:6px 12px 8px">
+          
+          <div style="display:flex;align-items:center;gap:8px;margin-top:5px;padding:5px 8px;background:rgba(39,217,122,0.05);border:1px dashed var(--green-dim);border-radius:6px;font-size:11px">
+            <span style="color:var(--muted);font-weight:700;white-space:nowrap">Ciclo 1 (abierto)</span>
+            <span style="color:var(--green)">—</span>
+          </div>
+        </div>
+      </div></div></div><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
       <!-- Firm header -->
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
         <div style="font-size:13px;font-weight:800;color:var(--text)">LUCID</div>
@@ -1547,7 +1599,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="topbar-actions">
       <select class="form-input btn-sm" id="cal-month-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5" selected="">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select>
       <select class="form-input btn-sm" id="cal-year-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
-      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="backtesting 1">backtesting 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
     </div>
   </div>
   <div id="cal-body"><div class="cal-container">
@@ -1679,7 +1731,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 </div>
 
 <!-- ───────── PAGE: ACCOUNT DETAIL ───────── -->
-<div id="page-account" class="page">
+<div id="page-account" class="page hidden">
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
@@ -1867,9 +1919,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <input class="form-input" type="number" id="p-import-interval" value="2" min="1" max="60" step="1">
         </div>
       </div>
-              <input type="hidden" id="p-sheeturl" value="https://script.google.com/macros/s/AKfycby6monVmawsgWKJfwK_mXOqddDa8OWla85WE3PEVn_YJZm8WMd_kXXjUh7UcJtlK8pn/exec">
-        <div style="font-size:10px;color:var(--muted);margin-top:4px">
-        </div>
       
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;PROP XP TRADE 2&#39;)">Guardar parámetros</button>
@@ -2001,7 +2050,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="form-row-2">
       <div class="form-group">
         <label class="form-label">Cuenta</label>
-        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="backtesting 1">backtesting 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Fecha</label>
@@ -4862,10 +4911,6 @@ function renderParamsContent(acc, cfg) {
           <input class="form-input" type="number" id="p-import-interval" value="${cfg.importInterval||2}" min="1" max="60" step="1">
         </div>
       </div>
-              <input type="hidden" id="p-sheeturl" value="https://script.google.com/macros/s/AKfycby6monVmawsgWKJfwK_mXOqddDa8OWla85WE3PEVn_YJZm8WMd_kXXjUh7UcJtlK8pn/exec">
-        <div style="font-size:10px;color:var(--muted);margin-top:4px">
-        </div>
-      </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams('${acc}')">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarMT5Ahora('${acc}')">⬇ Importar ahora</button>
@@ -4967,7 +5012,6 @@ function saveParams(acc) {
     if(document.getElementById('p-target2')) cfg.phase2Target = parseFloat(document.getElementById('p-target2').value) || cfg.phase2Target;
     // MT5 auto-import fields
     if(document.getElementById('p-userid')) cfg.mt5UserID = document.getElementById('p-userid').value.trim();
-    if(document.getElementById('p-sheeturl')) cfg.sheetUrl = document.getElementById('p-sheeturl').value.trim();
     if(document.getElementById('p-import-interval')) cfg.importInterval = parseInt(document.getElementById('p-import-interval').value)||2;
     scheduleMT5AutoImport(acc);
   } else {
@@ -5052,36 +5096,49 @@ async function importarMT5Ahora(acc, silent) {
   if (!cfg) return;
   const statusEl = fpMT5StatusEl(acc);
 
-  if (!cfg.sheetUrl) {
-    if (statusEl) { statusEl.textContent = '⚠ Falta la URL del Sheet'; statusEl.style.color = 'var(--red)'; }
-    if (!silent) toast('Configura el número de cuenta MT5 primero', true);
-    return;
-  }
+  // Necesitamos el número de cuenta MT5 que el cliente escribió en Parámetros
   if (!cfg.mt5UserID) {
     if (statusEl) { statusEl.textContent = '⚠ Falta el número de cuenta MT5'; statusEl.style.color = 'var(--red)'; }
-    if (!silent) toast('Configura el número de cuenta MT5 primero', true);
+    if (!silent) toast('Escribe el número de cuenta MT5 en Parámetros primero', true);
     return;
   }
 
-  if (statusEl) { statusEl.textContent = '⏳ Importando...'; statusEl.style.color = 'var(--muted2)'; }
+  // La licencia viene del localStorage (la que usó para entrar al dashboard)
+  const licData = licLoad();
+  const userLicencia = licData ? (licData.key || '') : '';
+  if (!userLicencia) {
+    if (statusEl) { statusEl.textContent = '⚠ Sin licencia activa'; statusEl.style.color = 'var(--red)'; }
+    if (!silent) toast('No hay licencia activa', true);
+    return;
+  }
+
+  if (statusEl) { statusEl.textContent = '⏳ Importando desde Supabase...'; statusEl.style.color = 'var(--muted2)'; }
 
   try {
-    const sep = cfg.sheetUrl.includes('?') ? '&' : '?';
-    const url = cfg.sheetUrl + sep + 'cachebust=' + Date.now();
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    const rows = fpParseCSV(text);
+    // Filtro: user_id = licencia + account = número de cuenta MT5
+    const accountNum = cfg.mt5UserID.trim();
+    const url = SB_URL + '/rest/v1/trades'
+      + '?user_id=eq.' + encodeURIComponent(userLicencia)
+      + '&account=eq.' + encodeURIComponent(accountNum)
+      + '&order=close_time.asc'
+      + '&limit=1000';
 
-    const targetUser = cfg.mt5UserID.trim().toLowerCase();
+    const res = await fetch(url, {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = await res.json();
+
     const existingTickets = new Set(
       entries.filter(e => e.account === acc && e.eaTicket).map(e => String(e.eaTicket))
     );
 
     let added = 0, skipped = 0;
     rows.forEach(row => {
-      const rowUser = (row.user_id || '').trim().toLowerCase();
-      if (rowUser !== targetUser) return;
       const ticket = String(row.ticket || '').trim();
       if (!ticket) return;
       if (existingTickets.has(ticket)) { skipped++; return; }
@@ -5139,7 +5196,7 @@ async function importarMT5Ahora(acc, silent) {
 function scheduleMT5AutoImport(acc) {
   const cfg = accounts[acc];
   if (mt5ImportTimers[acc]) { clearInterval(mt5ImportTimers[acc]); delete mt5ImportTimers[acc]; }
-  if (!cfg || cfg.type !== 'cfd' || !cfg.sheetUrl || !cfg.mt5UserID) return;
+  if (!cfg || cfg.type !== 'cfd' || !cfg.mt5UserID) return;
   const minutes = Math.max(1, parseInt(cfg.importInterval) || 2);
   mt5ImportTimers[acc] = setInterval(() => importarMT5Ahora(acc, true), minutes * 60 * 1000);
 }
@@ -5147,7 +5204,7 @@ function scheduleMT5AutoImport(acc) {
 function scheduleAllMT5AutoImports() {
   Object.keys(accounts).forEach(acc => {
     const cfg = accounts[acc];
-    if (cfg && cfg.type === 'cfd' && cfg.sheetUrl && cfg.mt5UserID) {
+    if (cfg && cfg.type === 'cfd' && cfg.mt5UserID) {
       scheduleMT5AutoImport(acc);
     }
   });
