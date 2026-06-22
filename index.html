@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(5).html -->
+<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(7).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1018,13 +1018,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="nav-section">
     <div class="nav-label">🔵 CFDs · MT5</div>
     <div id="cfd-nav-items"></div>
-    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="FTMO"><div class="dot dot-cyan"></div> FTMO <span class="nav-badge badge-funded" style="">FUNDED</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
   </div>
 
   <div class="nav-section">
     <div class="nav-label">🟣 Futuros · NinjaTrader</div>
-    <div id="futures-nav-items"><div class="nav-item" data-acc-id="LUCID TRADE 1"><div class="dot" style="background:#4a9eff"></div> LUCID TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="LUCID TRADE 2"><div class="dot" style="background:#a07aff"></div> LUCID TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="LUCID ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> LUCID ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="futures-nav-items"><div class="nav-item" data-acc-id="FUTUROS TRADE 1"><div class="dot" style="background:#4a9eff"></div> FUTUROS TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="FUTUROS TRADE 2"><div class="dot" style="background:#a07aff"></div> FUTUROS TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="FUTUROS ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> FUTUROS ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div id="extra-futures-nav"></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;futures&#39;)" style="color:var(--purple);font-size:11.5px;">+ Agregar cuenta Futuros</div>
   </div>
@@ -1068,7 +1068,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
-      <div class="page-sub" id="overview-date">Sesión activa · domingo, 21 de junio de 2026</div>
+      <div class="page-sub" id="overview-date">Sesión activa · lunes, 22 de junio de 2026</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;calendar&#39;)">📅 Calendario</button>
@@ -1081,31 +1081,31 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$16.084,85</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">86%</div><div class="stat-hint" id="s-wr-hint">19W / 3L</div></div>
-    <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$4407</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">22</div><div class="stat-hint" id="s-days-hint">7 días con datos</div></div>
-    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$4580</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.584,85</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">83%</div><div class="stat-hint" id="s-wr-hint">15W / 3L</div></div>
+    <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">18</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
   <!-- CFD Section -->
   <div class="group-header"><div class="dot dot-blue"></div> CFDs · MT5 <div class="group-line"></div></div>
-  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FTMO&#39;)">
+  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
       <div class="acc-head">
-        <div class="acc-name">FTMO<span style="font-size:9px;color:var(--muted);margin-left:4px">Ciclo 2</span></div>
+        <div class="acc-name">BACKTESTING</div>
         <div class="acc-badges">
           <span class="acc-platform tag-mt5">MT5</span>
-          <span class="acc-platform type-cfd-funded">🏆 Funded</span>
+          <span class="acc-platform type-cfd-instant">⚡ Instant</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FTMO&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$5500</div>
+      <div class="acc-pnl neutral">+$0</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>100%</span></div>
-        <div class="acc-meta-item">Ops <span>4</span></div>
-        <div class="acc-meta-item">DD <span>10%</span></div>
-        <div class="acc-meta-item">Cobros <span style="color:var(--green)">1</span></div>
+        <div class="acc-meta-item">WR <span>—</span></div>
+        <div class="acc-meta-item">Ops <span>0</span></div>
+        <div class="acc-meta-item">DD <span>6%</span></div>
+        
         
       </div>
     </div><div class="acc-card blue-accent" onclick="showPage(&#39;PROXP TRADE 1&#39;)">
@@ -1148,15 +1148,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Futures Section -->
   <div class="group-header"><div class="dot dot-purple"></div> Futuros · NinjaTrader <div class="group-line"></div></div>
-  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;LUCID TRADE 1&#39;)">
+  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
       <div class="acc-head">
-        <div class="acc-name">LUCID TRADE 1</div>
+        <div class="acc-name">FUTUROS TRADE 1</div>
         <div class="acc-badges">
           <span class="acc-platform tag-ninja">NinjaTrader</span>
           <span class="acc-platform type-futures-eval">🎯 EVAL</span>
           <span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:#0a1a35;color:#4a9eff">🔵 GA</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;LUCID TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
       <div class="acc-pnl green">+$1083</div>
@@ -1173,15 +1173,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div style="height:100%;width:36.1%;background:var(--blue);border-radius:2px;transition:width 0.4s"></div>
         </div>
       </div>
-    </div><div class="acc-card purple-accent" onclick="showPage(&#39;LUCID TRADE 2&#39;)">
+    </div><div class="acc-card purple-accent" onclick="showPage(&#39;FUTUROS TRADE 2&#39;)">
       <div class="acc-head">
-        <div class="acc-name">LUCID TRADE 2</div>
+        <div class="acc-name">FUTUROS TRADE 2</div>
         <div class="acc-badges">
           <span class="acc-platform tag-ninja">NinjaTrader</span>
           <span class="acc-platform type-futures-live">✅ LIVE</span>
           <span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:#160f30;color:#a07aff">🟣 GB</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;LUCID TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
       <div class="acc-pnl green">+$400</div>
@@ -1191,15 +1191,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="acc-meta-item">DD <span>$2000</span></div>
       </div>
       
-    </div><div class="acc-card green-accent" onclick="showPage(&#39;LUCID ACELERATOR +++&#39;)">
+    </div><div class="acc-card green-accent" onclick="showPage(&#39;FUTUROS ACELERATOR +++&#39;)">
       <div class="acc-head">
-        <div class="acc-name">LUCID ACELERATOR +++</div>
+        <div class="acc-name">FUTUROS ACELERATOR +++</div>
         <div class="acc-badges">
           <span class="acc-platform tag-ninja">NinjaTrader</span>
           <span class="acc-platform type-futures-live">✅ LIVE</span>
           <span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:#071a0f;color:#27d97a">🟢 GC</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;LUCID ACELERATOR +++&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS ACELERATOR +++&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
       <div class="acc-pnl green">+$1150</div>
@@ -1221,13 +1221,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div id="firm-summary-content"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
       <!-- Firm header -->
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
-        <div style="font-size:13px;font-weight:800;color:var(--text)">FTMO</div>
+        <div style="font-size:13px;font-weight:800;color:var(--text)">META QUOTES</div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--green-dim);color:var(--green);font-weight:700">✅ 1 pasadas</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--green-dim);color:var(--green);font-weight:700">✅ 0 pasadas</span>
           <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--red-dim);color:var(--red);font-weight:700">💀 0 perdidas</span>
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber);font-weight:700">⚡ 0 activas</span>
-          <span style="font-size:11px;padding:2px 10px;border-radius:4px;background:var(--bg2);color:var(--green);font-weight:700;border:1px solid var(--green)">Ratio 100%</span>
-          <span style="font-size:11px;padding:2px 10px;border-radius:4px;background:var(--green-dim);color:var(--green);font-weight:700;border:1px solid var(--green)">💰 $4160</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber);font-weight:700">⚡ 1 activas</span>
+          
+          
         </div>
       </div>
       <!-- Account rows -->
@@ -1235,27 +1235,21 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <!-- Account header row -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg1);gap:8px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;font-weight:700;color:var(--text)">FTMO</span>
-            <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">Funded</span>
+            <span style="font-size:12px;font-weight:700;color:var(--text)">BACKTESTING</span>
+            <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">Instant</span>
             
           </div>
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:10px;color:var(--green)">P&amp;L activo: <strong>+$5500</strong></span>
-            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;FTMO&#39;)">→ Ver cuenta</button>
+            
+            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;BACKTESTING&#39;)">→ Ver cuenta</button>
           </div>
         </div>
         <!-- Cycles -->
         <div style="padding:6px 12px 8px">
-          <div style="display:flex;align-items:center;gap:8px;margin-top:5px;padding:5px 8px;background:var(--bg1);border-radius:6px;font-size:11px">
-            <span style="color:var(--amber);font-weight:700;white-space:nowrap">Ciclo 1</span>
-            <span style="color:var(--muted)">2026-06-21</span>
-            <span style="color:var(--green);font-weight:700">$4160</span>
-            <span style="color:var(--blue);font-size:10px">ROI 8.3%</span>
-            
-          </div>
+          
           <div style="display:flex;align-items:center;gap:8px;margin-top:5px;padding:5px 8px;background:rgba(39,217,122,0.05);border:1px dashed var(--green-dim);border-radius:6px;font-size:11px">
-            <span style="color:var(--muted);font-weight:700;white-space:nowrap">Ciclo 2 (abierto)</span>
-            <span style="color:var(--green)">+$5500</span>
+            <span style="color:var(--muted);font-weight:700;white-space:nowrap">Ciclo 1 (abierto)</span>
+            <span style="color:var(--green)">—</span>
           </div>
         </div>
       </div></div></div><div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
@@ -1275,13 +1269,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <!-- Account header row -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg1);gap:8px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;font-weight:700;color:var(--text)">LUCID TRADE 1</span>
+            <span style="font-size:12px;font-weight:700;color:var(--text)">FUTUROS TRADE 1</span>
             <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">EVAL</span>
             
           </div>
           <div style="display:flex;align-items:center;gap:8px">
             
-            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;LUCID TRADE 1&#39;)">→ Ver cuenta</button>
+            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">→ Ver cuenta</button>
           </div>
         </div>
         <!-- Cycles -->
@@ -1290,13 +1284,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <!-- Account header row -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg1);gap:8px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;font-weight:700;color:var(--text)">LUCID TRADE 2</span>
+            <span style="font-size:12px;font-weight:700;color:var(--text)">FUTUROS TRADE 2</span>
             <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--muted)">LIVE</span>
             
           </div>
           <div style="display:flex;align-items:center;gap:8px">
             <span style="font-size:10px;color:var(--green)">P&amp;L activo: <strong>+$3400</strong></span>
-            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;LUCID TRADE 2&#39;)">→ Ver cuenta</button>
+            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;FUTUROS TRADE 2&#39;)">→ Ver cuenta</button>
           </div>
         </div>
         <!-- Cycles -->
@@ -1603,7 +1597,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="topbar-actions">
       <select class="form-input btn-sm" id="cal-month-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5" selected="">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select>
       <select class="form-input btn-sm" id="cal-year-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
-      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="FTMO">FTMO</option><option value="LUCID TRADE 1">LUCID TRADE 1</option><option value="LUCID TRADE 2">LUCID TRADE 2</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="LUCID ACELERATOR +++">LUCID ACELERATOR +++</option></select>
+      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
     </div>
   </div>
   <div id="cal-body"><div class="cal-container">
@@ -1999,7 +1993,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="form-row-2">
       <div class="form-group">
         <label class="form-label">Cuenta</label>
-        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="FTMO">FTMO</option><option value="LUCID TRADE 1">LUCID TRADE 1</option><option value="LUCID TRADE 2">LUCID TRADE 2</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="LUCID ACELERATOR +++">LUCID ACELERATOR +++</option></select>
+        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Fecha</label>
@@ -2075,7 +2069,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="upload-preview-name" id="prev-name"></div>
             <button class="upload-remove" onclick="clearFile(event)">✕</button>
           </div>
-          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="./index_files/index (4).html" alt="preview"></div>
+          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" alt="preview"></div>
         </div>
       </div>
     </div>
@@ -2348,7 +2342,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <button class="modal-close" onclick="closeModal(&#39;imgModal&#39;)">✕</button>
     <div class="modal-title" id="img-modal-title">Captura</div>
     <div style="margin-top:1rem;text-align:center">
-      <img id="img-modal-src" src="./index_files/index (4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
+      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
     </div>
   </div>
 </div>
@@ -2369,7 +2363,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div class="upload-sub">Imagen del pago · máx 8MB</div>
         </div>
         <div id="cert-preview-wrap" class="hidden">
-          <img id="cert-preview-img" src="./index_files/index (4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
+          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
         </div>
       </div>
     </div>
@@ -3254,14 +3248,14 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <span class="goal-drag-handle" title="Arrastrar para reordenar">⠿⠿</span>
       <div class="faqs-goal-head">
         <div class="faqs-goal-title">🏃 Sprint · $0 → $20K</div>
-        <div class="faqs-goal-amount" id="goal-sprint-amount">$4160 / $20.000</div>
+        <div class="faqs-goal-amount" id="goal-sprint-amount">$0 / $20.000</div>
       </div>
-      <div class="faqs-goal-track" id="goal-sprint-track"><div class="faqs-goal-fill" style="width:20.8%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div><div class="faqs-goal-step" style="left:0%;border-color:var(--green);background:var(--green)"></div><div class="faqs-goal-marker" style="left:25%"></div>
+      <div class="faqs-goal-track" id="goal-sprint-track"><div class="faqs-goal-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div><div class="faqs-goal-step" style="left:0%;border-color:var(--green);background:var(--green)"></div><div class="faqs-goal-marker" style="left:25%"></div>
                  <div class="faqs-goal-marker-label" style="left:25%">$5K</div><div class="faqs-goal-step" style="left:25%;"></div><div class="faqs-goal-marker" style="left:50%"></div>
                  <div class="faqs-goal-marker-label" style="left:50%">$10K</div><div class="faqs-goal-step" style="left:50%;"></div><div class="faqs-goal-marker" style="left:75%"></div>
                  <div class="faqs-goal-marker-label" style="left:75%">$15K</div><div class="faqs-goal-step" style="left:75%;"></div><div class="faqs-goal-marker" style="left:100%"></div>
-                 <div class="faqs-goal-marker-label" style="left:100%">$20K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:20.8%">🚶</div></div>
-      <div class="faqs-goal-foot" id="goal-sprint-foot">Llevas retirados $4160 · Faltan $840 para los $5000</div>
+                 <div class="faqs-goal-marker-label" style="left:100%">$20K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%">🚶</div></div>
+      <div class="faqs-goal-foot" id="goal-sprint-foot">Llevas retirados $0 · Faltan $5000 para los $5000</div>
       <div class="faqs-goal-milestones" id="goal-sprint-milestones"><div class="goal-milestone-item ">
         <span class="gm-icon">🔒</span>
         <span class="gm-emoji">💪</span>
@@ -3294,7 +3288,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
                  <div class="faqs-goal-marker-label" style="left:37.5%">$50K</div><div class="faqs-goal-step" style="left:37.5%;"></div><div class="faqs-goal-marker" style="left:62.5%"></div>
                  <div class="faqs-goal-marker-label" style="left:62.5%">$70K</div><div class="faqs-goal-step" style="left:62.5%;"></div><div class="faqs-goal-marker" style="left:100%"></div>
                  <div class="faqs-goal-marker-label" style="left:100%">$100K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%">🚶</div></div>
-      <div class="faqs-goal-foot" id="goal-100k-foot">Llevas retirados $4160 · Faltan $15.840 para los $20.000</div>
+      <div class="faqs-goal-foot" id="goal-100k-foot">Llevas retirados $0 · Faltan $20.000 para los $20.000</div>
       <div class="faqs-goal-milestones" id="goal-100k-milestones"><div class="goal-milestone-item ">
         <span class="gm-icon">🔒</span>
         <span class="gm-emoji">📈</span>
@@ -3327,7 +3321,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
                  <div class="faqs-goal-marker-label" style="left:41.66666666666667%">$170K</div><div class="faqs-goal-step" style="left:41.66666666666667%;"></div><div class="faqs-goal-marker" style="left:66.66666666666666%"></div>
                  <div class="faqs-goal-marker-label" style="left:66.66666666666666%">$200K</div><div class="faqs-goal-step" style="left:66.66666666666666%;"></div><div class="faqs-goal-marker" style="left:100%"></div>
                  <div class="faqs-goal-marker-label" style="left:100%">$240K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%">🚶</div></div>
-      <div class="faqs-goal-foot" id="goal-240k-foot">Llevas retirados $4160 · Faltan $115.840 para los $120.000</div>
+      <div class="faqs-goal-foot" id="goal-240k-foot">Llevas retirados $0 · Faltan $120.000 para los $120.000</div>
       <div class="faqs-goal-milestones" id="goal-240k-milestones"><div class="goal-milestone-item ">
         <span class="gm-icon">🔒</span>
         <span class="gm-emoji">💎</span>
@@ -3360,7 +3354,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="adv-goal-title">Escala Superior</div>
         <div class="adv-goal-desc">Objetivo: Superar la barrera de seis cifras y consolidar la consistencia.</div>
         <div class="adv-goal-track" id="adv-track-120000"><div class="adv-goal-fill" id="adv-fill-120000" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-        <div class="adv-goal-foot" id="adv-foot-120000">Llevas retirados $4160 · Faltan $115.840 para esta meta</div>
+        <div class="adv-goal-foot" id="adv-foot-120000">Llevas retirados $0 · Faltan $120.000 para esta meta</div>
       </div>
       <div class="faqs-goal-card adv-goal-card goal-card-advanced" draggable="true" data-goal-id="adv-150000" data-goal-threshold="150000">
         <span class="goal-drag-handle" title="Arrastrar para reordenar">⠿⠿</span>
@@ -3372,7 +3366,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="adv-goal-title">Constructor de Riqueza</div>
         <div class="adv-goal-desc">Objetivo: Incrementar activos y patrimonio de largo plazo.</div>
         <div class="adv-goal-track" id="adv-track-150000"><div class="adv-goal-fill" id="adv-fill-150000" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-        <div class="adv-goal-foot" id="adv-foot-150000">Llevas retirados $4160 · Faltan $145.840 para esta meta</div>
+        <div class="adv-goal-foot" id="adv-foot-150000">Llevas retirados $0 · Faltan $150.000 para esta meta</div>
       </div>
       <div class="faqs-goal-card adv-goal-card goal-card-advanced" draggable="true" data-goal-id="adv-170000" data-goal-threshold="170000">
         <span class="goal-drag-handle" title="Arrastrar para reordenar">⠿⠿</span>
@@ -3384,7 +3378,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="adv-goal-title">Generador de Activos</div>
         <div class="adv-goal-desc">Objetivo: Construir fuentes de ingresos fuera del trading.</div>
         <div class="adv-goal-track" id="adv-track-170000"><div class="adv-goal-fill" id="adv-fill-170000" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-        <div class="adv-goal-foot" id="adv-foot-170000">Llevas retirados $4160 · Faltan $165.840 para esta meta</div>
+        <div class="adv-goal-foot" id="adv-foot-170000">Llevas retirados $0 · Faltan $170.000 para esta meta</div>
       </div>
       <div class="faqs-goal-card adv-goal-card goal-card-advanced" draggable="true" data-goal-id="adv-200000" data-goal-threshold="200000">
         <span class="goal-drag-handle" title="Arrastrar para reordenar">⠿⠿</span>
@@ -3396,7 +3390,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="adv-goal-title">Libertad Financiera</div>
         <div class="adv-goal-desc">Objetivo: Capacidad de cubrir gastos sin depender exclusivamente del trading.</div>
         <div class="adv-goal-track" id="adv-track-200000"><div class="adv-goal-fill" id="adv-fill-200000" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-        <div class="adv-goal-foot" id="adv-foot-200000">Llevas retirados $4160 · Faltan $195.840 para esta meta</div>
+        <div class="adv-goal-foot" id="adv-foot-200000">Llevas retirados $0 · Faltan $200.000 para esta meta</div>
       </div>
       <div class="faqs-goal-card adv-goal-card goal-card-advanced" draggable="true" data-goal-id="adv-240000" data-goal-threshold="240000">
         <span class="goal-drag-handle" title="Arrastrar para reordenar">⠿⠿</span>
@@ -3408,7 +3402,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="adv-goal-title">Imperio Personal</div>
         <div class="adv-goal-desc">Objetivo: Construir una estructura financiera sólida y escalable.</div>
         <div class="adv-goal-track" id="adv-track-240000"><div class="adv-goal-fill" id="adv-fill-240000" style="width:0%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-        <div class="adv-goal-foot" id="adv-foot-240000">Llevas retirados $4160 · Faltan $235.840 para esta meta</div>
+        <div class="adv-goal-foot" id="adv-foot-240000">Llevas retirados $0 · Faltan $240.000 para esta meta</div>
       </div>
     </div>
     <div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:-4px">
@@ -3683,15 +3677,51 @@ const DEFAULT_GROUPS = {
   ]
 };
 
+// ══════════════════════════════════════════════════════════════════
+// 🔑 AISLAMIENTO POR LICENCIA — cada cliente usa su propio namespace en localStorage
+// Las claves de datos se prefiijan con un hash corto de su clave de licencia.
+// Así dos clientes que abran el mismo archivo HTML nunca ven datos del otro.
+// ══════════════════════════════════════════════════════════════════
+(function() {
+  function _licPrefix() {
+    try {
+      const raw = localStorage.getItem('fp_lic_v1_sale');
+      if (!raw) return '';
+      const obj = JSON.parse(raw);
+      const key = (obj && obj.key) ? obj.key : '';
+      if (!key) return '';
+      // Hash djb2 corto (8 hex chars) — suficiente para aislar namespaces
+      let h = 5381;
+      for (let i = 0; i < key.length; i++) { h = ((h << 5) + h) ^ key.charCodeAt(i); h >>>= 0; }
+      return 'u' + h.toString(16).padStart(8,'0') + '_';
+    } catch(e) { return ''; }
+  }
+  window._lsGet  = function(k)    { return localStorage.getItem(_licPrefix() + k); };
+  window._lsSet  = function(k, v) { try { localStorage.setItem(_licPrefix() + k, v); } catch(e) {} };
+  window._lsRem  = function(k)    { try { localStorage.removeItem(_licPrefix() + k); } catch(e) {} };
+  // Itera claves que pertenecen al usuario actual
+  window._lsKeys = function(prefix) {
+    const p = _licPrefix();
+    const out = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(p + prefix)) out.push(k.slice(p.length));
+    }
+    return out;
+  };
+  // Prefijo público (para backup/restore)
+  window._lsPrefix = _licPrefix;
+})();
+
 // ═══════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════
-let entries    = JSON.parse(localStorage.getItem('fp_entries_v4_sale') || '[]');
-let accounts   = JSON.parse(localStorage.getItem('fp_accounts_v4_sale') || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-let groups     = JSON.parse(localStorage.getItem('fp_groups_v4_sale')   || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-let certs      = JSON.parse(localStorage.getItem('fp_certs_v4_sale')    || '[]');
+let entries    = JSON.parse(_lsGet('fp_entries_v4_sale') || '[]');
+let accounts   = JSON.parse(_lsGet('fp_accounts_v4_sale') || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+let groups     = JSON.parse(_lsGet('fp_groups_v4_sale')   || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+let certs      = JSON.parse(_lsGet('fp_certs_v4_sale')    || '[]');
 // firmStats: {firmName: {extraPassed:0, extraLost:0, extraNotes:''}} — manual overrides
-let firmStats  = JSON.parse(localStorage.getItem('fp_firmstats_v4_sale') || '{}');
+let firmStats  = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
 let editingId  = null;
 let currentAccount = null;
 let activeDetailTab = 'stats';
@@ -3705,11 +3735,11 @@ let editingGroupAssign = null;
 let blownTargetAccount = null; // for blown modal
 
 function save() {
-  localStorage.setItem('fp_entries_v4_sale', JSON.stringify(entries));
-  localStorage.setItem('fp_accounts_v4_sale', JSON.stringify(accounts));
-  localStorage.setItem('fp_groups_v4_sale', JSON.stringify(groups));
-  localStorage.setItem('fp_certs_v4_sale', JSON.stringify(certs));
-  localStorage.setItem('fp_firmstats_v4_sale', JSON.stringify(firmStats));
+  _lsSet('fp_entries_v4_sale', JSON.stringify(entries));
+  _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+  _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
+  _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
+  _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -7756,56 +7786,53 @@ function hideEquityTip() {
 function buildBackupPayload(){
   const notesKeys = ['rules','goals','free'];
   const notesData = {};
-  notesKeys.forEach(k => { notesData[k] = localStorage.getItem('fondeo_notes_sale_'+k) || ''; });
+  notesKeys.forEach(k => { notesData[k] = _lsGet('fondeo_notes_sale_'+k) || ''; });
 
   // Control del Trader: todas las claves diarias tp_sem_sale_/tp_check_sale_ + trades fuera de plan + archivo mensual
   const tpDaily = {};
-  for (let i=0;i<localStorage.length;i++) {
-    const k = localStorage.key(i);
-    if (k && (k.indexOf('tp_sem_sale_')===0 || k.indexOf('tp_check_sale_')===0)) {
-      tpDaily[k] = localStorage.getItem(k);
-    }
-  }
+  _lsKeys('tp_sem_sale_').concat(_lsKeys('tp_check_sale_')).forEach(k => {
+    tpDaily[k] = _lsGet(k);
+  });
 
   return {
-    fp_entries_v4_sale:         JSON.parse(localStorage.getItem('fp_entries_v4_sale')         || '[]'),
-    fp_accounts_v4_sale:        JSON.parse(localStorage.getItem('fp_accounts_v4_sale')        || 'null'),
-    fp_groups_v4_sale:          JSON.parse(localStorage.getItem('fp_groups_v4_sale')          || 'null'),
-    fp_certs_v4_sale:           JSON.parse(localStorage.getItem('fp_certs_v4_sale')           || '[]'),
-    fp_firmstats_v4_sale:       JSON.parse(localStorage.getItem('fp_firmstats_v4_sale')       || '{}'),
-    fp_goal_milestones_v1_sale: JSON.parse(localStorage.getItem('fp_goal_milestones_v1_sale') || 'null'),
-    fp_goals_position_sale:     localStorage.getItem('fp_goals_position_sale') || 'bottom',
-    fondeo_diary_sale:          JSON.parse(localStorage.getItem('fondeo_diary_sale')          || '{}'),
-    fondeo_quotes_sale:         JSON.parse(localStorage.getItem('fondeo_quotes_sale')         || '[]'),
+    fp_entries_v4_sale:         JSON.parse(_lsGet('fp_entries_v4_sale')         || '[]'),
+    fp_accounts_v4_sale:        JSON.parse(_lsGet('fp_accounts_v4_sale')        || 'null'),
+    fp_groups_v4_sale:          JSON.parse(_lsGet('fp_groups_v4_sale')          || 'null'),
+    fp_certs_v4_sale:           JSON.parse(_lsGet('fp_certs_v4_sale')           || '[]'),
+    fp_firmstats_v4_sale:       JSON.parse(_lsGet('fp_firmstats_v4_sale')       || '{}'),
+    fp_goal_milestones_v1_sale: JSON.parse(_lsGet('fp_goal_milestones_v1_sale') || 'null'),
+    fp_goals_position_sale:     _lsGet('fp_goals_position_sale') || 'bottom',
+    fondeo_diary_sale:          JSON.parse(_lsGet('fondeo_diary_sale')          || '{}'),
+    fondeo_quotes_sale:         JSON.parse(_lsGet('fondeo_quotes_sale')         || '[]'),
     fondeo_notes:          notesData,
     tp_daily:              tpDaily,
-    tp_badtrades_sale:          JSON.parse(localStorage.getItem('tp_badtrades_sale')          || '[]'),
-    tp_month_archive_v1_sale:   JSON.parse(localStorage.getItem('tp_month_archive_v1_sale')   || '{}')
+    tp_badtrades_sale:          JSON.parse(_lsGet('tp_badtrades_sale')          || '[]'),
+    tp_month_archive_v1_sale:   JSON.parse(_lsGet('tp_month_archive_v1_sale')   || '{}')
   };
 }
 
 // ── Aplica un objeto de datos (de backup o de la nube) al localStorage ──
 function applyBackupPayload(d){
   if(!d) return;
-  if(d.fp_entries_v4_sale         !== undefined) localStorage.setItem('fp_entries_v4_sale',          JSON.stringify(d.fp_entries_v4_sale));
-  if(d.fp_accounts_v4_sale        !== undefined) localStorage.setItem('fp_accounts_v4_sale',         JSON.stringify(d.fp_accounts_v4_sale));
-  if(d.fp_groups_v4_sale          !== undefined) localStorage.setItem('fp_groups_v4_sale',           JSON.stringify(d.fp_groups_v4_sale));
-  if(d.fp_certs_v4_sale           !== undefined) localStorage.setItem('fp_certs_v4_sale',            JSON.stringify(d.fp_certs_v4_sale));
-  if(d.fp_firmstats_v4_sale       !== undefined) localStorage.setItem('fp_firmstats_v4_sale',        JSON.stringify(d.fp_firmstats_v4_sale));
-  if(d.fp_goal_milestones_v1_sale !== undefined) localStorage.setItem('fp_goal_milestones_v1_sale', JSON.stringify(d.fp_goal_milestones_v1_sale));
-  if(d.fp_goals_position_sale     !== undefined) localStorage.setItem('fp_goals_position_sale',      d.fp_goals_position_sale);
-  if(d.fondeo_diary_sale          !== undefined) localStorage.setItem('fondeo_diary_sale',           JSON.stringify(d.fondeo_diary_sale));
-  if(d.fondeo_quotes_sale         !== undefined) localStorage.setItem('fondeo_quotes_sale',          JSON.stringify(d.fondeo_quotes_sale));
+  if(d.fp_entries_v4_sale         !== undefined) _lsSet('fp_entries_v4_sale',          JSON.stringify(d.fp_entries_v4_sale));
+  if(d.fp_accounts_v4_sale        !== undefined) _lsSet('fp_accounts_v4_sale',         JSON.stringify(d.fp_accounts_v4_sale));
+  if(d.fp_groups_v4_sale          !== undefined) _lsSet('fp_groups_v4_sale',           JSON.stringify(d.fp_groups_v4_sale));
+  if(d.fp_certs_v4_sale           !== undefined) _lsSet('fp_certs_v4_sale',            JSON.stringify(d.fp_certs_v4_sale));
+  if(d.fp_firmstats_v4_sale       !== undefined) _lsSet('fp_firmstats_v4_sale',        JSON.stringify(d.fp_firmstats_v4_sale));
+  if(d.fp_goal_milestones_v1_sale !== undefined) _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(d.fp_goal_milestones_v1_sale));
+  if(d.fp_goals_position_sale     !== undefined) _lsSet('fp_goals_position_sale',      d.fp_goals_position_sale);
+  if(d.fondeo_diary_sale          !== undefined) _lsSet('fondeo_diary_sale',           JSON.stringify(d.fondeo_diary_sale));
+  if(d.fondeo_quotes_sale         !== undefined) _lsSet('fondeo_quotes_sale',          JSON.stringify(d.fondeo_quotes_sale));
   if(d.fondeo_notes) {
     ['rules','goals','free'].forEach(k => {
-      if(d.fondeo_notes[k] !== undefined) localStorage.setItem('fondeo_notes_sale_'+k, d.fondeo_notes[k]);
+      if(d.fondeo_notes[k] !== undefined) _lsSet('fondeo_notes_sale_'+k, d.fondeo_notes[k]);
     });
   }
   if(d.tp_daily) {
-    Object.keys(d.tp_daily).forEach(k => localStorage.setItem(k, d.tp_daily[k]));
+    Object.keys(d.tp_daily).forEach(k => _lsSet(k, d.tp_daily[k]));
   }
-  if(d.tp_badtrades_sale        !== undefined) localStorage.setItem('tp_badtrades_sale',        JSON.stringify(d.tp_badtrades_sale));
-  if(d.tp_month_archive_v1_sale !== undefined) localStorage.setItem('tp_month_archive_v1_sale', JSON.stringify(d.tp_month_archive_v1_sale));
+  if(d.tp_badtrades_sale        !== undefined) _lsSet('tp_badtrades_sale',        JSON.stringify(d.tp_badtrades_sale));
+  if(d.tp_month_archive_v1_sale !== undefined) _lsSet('tp_month_archive_v1_sale', JSON.stringify(d.tp_month_archive_v1_sale));
 }
 
 function backupCompleto(){
@@ -8197,8 +8224,8 @@ const GOAL_MILESTONE_DEFAULTS = {
   200000: {emoji:'🌍', label:'Libertad Financiera'},
   240000: {emoji:'👑', label:'Imperio Personal'}
 };
-let goalMilestones = JSON.parse(localStorage.getItem('fp_goal_milestones_v1_sale') || 'null') || JSON.parse(JSON.stringify(GOAL_MILESTONE_DEFAULTS));
-function saveGoalMilestonesLS() { localStorage.setItem('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); }
+let goalMilestones = JSON.parse(_lsGet('fp_goal_milestones_v1_sale') || 'null') || JSON.parse(JSON.stringify(GOAL_MILESTONE_DEFAULTS));
+function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); }
 
 function getTotalWithdrawn() {
   return certs.reduce((s,c) => s + (c.amount || 0), 0);
@@ -8366,14 +8393,14 @@ function persistGoalsOrder(card) {
   const groupCls = card.classList.contains('goal-card-main') ? 'goal-card-main' : 'goal-card-advanced';
   const ids = [...container.children].filter(c => c.classList.contains(groupCls)).map(c => c.dataset.goalId);
   const key = groupCls === 'goal-card-main' ? 'fp_goals_order_main_v2' : 'fp_goals_order_advanced_v1';
-  try { localStorage.setItem(key, JSON.stringify(ids)); } catch (err) {}
+  try { _lsSet(key, JSON.stringify(ids)); } catch (err) {}
 }
 
 function applyStoredGoalsOrder() {
   ['goal-card-main', 'goal-card-advanced'].forEach(groupCls => {
     const key = groupCls === 'goal-card-main' ? 'fp_goals_order_main_v2' : 'fp_goals_order_advanced_v1';
     let order = [];
-    try { order = JSON.parse(localStorage.getItem(key) || '[]'); } catch (err) { order = []; }
+    try { order = JSON.parse(_lsGet(key) || '[]'); } catch (err) { order = []; }
     const all = [...document.querySelectorAll('.' + groupCls)];
     if (!all.length) return;
     const allIds = all.map(c => c.dataset.goalId);
@@ -8395,7 +8422,7 @@ function initGoalsDragDrop() {
 }
 
 // ─── GOALS POSITION TOGGLE ───
-let goalsPosition = localStorage.getItem('fp_goals_position_sale') || 'bottom'; // 'top' | 'bottom'
+let goalsPosition = _lsGet('fp_goals_position_sale') || 'bottom'; // 'top' | 'bottom'
 
 function applyGoalsPosition() {
   const topBlock    = document.getElementById('goals-block-top');
@@ -8425,7 +8452,7 @@ function applyGoalsPosition() {
 
 function toggleGoalsPosition() {
   goalsPosition = goalsPosition === 'top' ? 'bottom' : 'top';
-  localStorage.setItem('fp_goals_position_sale', goalsPosition);
+  _lsSet('fp_goals_position_sale', goalsPosition);
   applyGoalsPosition();
   toast(goalsPosition === 'top' ? '🎯 Metas movidas al inicio ✓' : '🎯 Metas movidas abajo ✓');
 }
@@ -8479,10 +8506,10 @@ function switchFaqInner(tab) {
 // ═══════════════════════════════════════════
 // DIARIO EMOCIONAL
 // ═══════════════════════════════════════════
-let diaryData = JSON.parse(localStorage.getItem('fondeo_diary_sale') || '{}');
+let diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
 let selectedDiaryMood = '';
 
-function saveDiaryLS() { localStorage.setItem('fondeo_diary_sale', JSON.stringify(diaryData)); }
+function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); }
 
 function localDateStr(d) {
   const dt = d ? new Date(d) : new Date();
@@ -8587,14 +8614,14 @@ function renderWeeklySummary(dateStr) {
 function loadNotes() {
   ['rules','goals','free'].forEach(k => {
     const el = document.getElementById('notes-'+k);
-    if(el) el.value = localStorage.getItem('fondeo_notes_sale_'+k) || '';
+    if(el) el.value = _lsGet('fondeo_notes_sale_'+k) || '';
   });
 }
 
 function saveNotes(key) {
   const el = document.getElementById('notes-'+key);
   if(!el) return;
-  localStorage.setItem('fondeo_notes_sale_'+key, el.value);
+  _lsSet('fondeo_notes_sale_'+key, el.value);
   const msg = document.getElementById('notes-saved-msg');
   if(msg) { msg.textContent = '✅ Notas guardadas'; setTimeout(()=>{ msg.textContent=''; },2000); }
   toast('Notas guardadas ✓');
@@ -8621,7 +8648,7 @@ const BUILT_IN_QUOTES = [
   {emoji:'💡',text:'Tu peor enemigo en el trading eres tú mismo. Domínate a ti mismo antes de dominar el mercado.',author:'Anónimo'},
 ];
 
-let customQuotes = JSON.parse(localStorage.getItem('fondeo_quotes_sale') || '[]');
+let customQuotes = JSON.parse(_lsGet('fondeo_quotes_sale') || '[]');
 let currentQuoteIdx = 0;
 
 function initQuotes() {
@@ -8651,7 +8678,7 @@ function addCustomQuote() {
   const author = document.getElementById('custom-quote-author').value.trim();
   if(!text) { toast('Escribe una frase primero', true); return; }
   customQuotes.push({emoji:'✍️', text, author});
-  localStorage.setItem('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
   document.getElementById('custom-quote-text').value = '';
   document.getElementById('custom-quote-author').value = '';
   renderCustomQuotes();
@@ -8660,7 +8687,7 @@ function addCustomQuote() {
 
 function deleteCustomQuote(idx) {
   customQuotes.splice(idx, 1);
-  localStorage.setItem('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
   renderCustomQuotes();
   toast('Frase eliminada', false, 'red');
 }
@@ -8914,8 +8941,8 @@ function tpMigrateOldDateKeys() {
   toMigrate.forEach(item => {
     const newKey = item.prefix + item.y + '-' + item.mo + '-' + item.d;
     try {
-      if (localStorage.getItem(newKey) === null) {
-        localStorage.setItem(newKey, localStorage.getItem(item.oldKey));
+      if (_lsGet(newKey) === null) {
+        _lsSet(newKey, localStorage.getItem(item.oldKey)); // oldKey has no prefix (legacy format)
       }
       localStorage.removeItem(item.oldKey);
     } catch(e) {}
@@ -8936,7 +8963,7 @@ function tpMonthStart() {
 
 // ── Semáforo ──
 window.tpSetSemaforo = function(val) {
-  try { localStorage.setItem(tpTodayKey('tp_sem_sale_'), val); } catch(e) {}
+  try { _lsSet(tpTodayKey('tp_sem_sale_'), val); } catch(e) {}
   tpRenderSemaforo(val);
   tpRenderHistory30();
 };
@@ -9012,12 +9039,12 @@ window.tpUpdateChecklist = function() {
   let autoSem = 'rojo';
   if (checked >= total) autoSem = 'verde';
   else if (checked >= Math.ceil(total / 2)) autoSem = 'amarillo';
-  try { localStorage.setItem(tpTodayKey('tp_sem_sale_'), autoSem); } catch(e) {}
+  try { _lsSet(tpTodayKey('tp_sem_sale_'), autoSem); } catch(e) {}
   tpRenderSemaforo(autoSem);
 
   // Save
   const state = Array.from(items).map(i => i.checked);
-  try { localStorage.setItem(tpTodayKey('tp_check_sale_'), JSON.stringify(state)); } catch(e) {}
+  try { _lsSet(tpTodayKey('tp_check_sale_'), JSON.stringify(state)); } catch(e) {}
   tpRenderHistory30();
 };
 
@@ -9069,7 +9096,7 @@ window.tpConfirmRegisterBadTrade = function() {
   const today = localDateStr();
 
   let log = [];
-  try { log = JSON.parse(localStorage.getItem('tp_badtrades_sale') || '[]'); } catch(e) {}
+  try { log = JSON.parse(_lsGet('tp_badtrades_sale') || '[]'); } catch(e) {}
 
   const entry = { date: today };
   if (account) {
@@ -9078,7 +9105,7 @@ window.tpConfirmRegisterBadTrade = function() {
     if (gName) entry.groupName = gName;
   }
   log.push(entry);
-  try { localStorage.setItem('tp_badtrades_sale', JSON.stringify(log)); } catch(e) {}
+  try { _lsSet('tp_badtrades_sale', JSON.stringify(log)); } catch(e) {}
 
   const modal = document.getElementById('tp-badtrade-modal');
   if (modal) modal.remove();
@@ -9103,28 +9130,28 @@ function tpEarliestActivityDate() {
     }
   }
   let log = [];
-  try { log = JSON.parse(localStorage.getItem('tp_badtrades_sale') || '[]'); } catch(e) {}
+  try { log = JSON.parse(_lsGet('tp_badtrades_sale') || '[]'); } catch(e) {}
   log.forEach(e => { const dt = tpNormalizeBadTrade(e).date; if (!earliest || dt < earliest) earliest = dt; });
   return earliest; // 'YYYY-MM-DD' o null si nunca se usó
 }
 
 window.tpUndoLastBadTrade = function() {
   let log = [];
-  try { log = JSON.parse(localStorage.getItem('tp_badtrades_sale') || '[]'); } catch(e) {}
+  try { log = JSON.parse(_lsGet('tp_badtrades_sale') || '[]'); } catch(e) {}
   if (!log.length) return;
   const last = tpNormalizeBadTrade(log[log.length - 1]);
   const niceDate = new Date(last.date + 'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
   const detail = last.account ? ' — ' + last.account + (last.groupName ? ' (' + last.groupName + ')' : '') : '';
   if (!confirm('¿Deshacer el registro del ' + niceDate + detail + '? Esta acción no se puede revertir.')) return;
   log.pop();
-  try { localStorage.setItem('tp_badtrades_sale', JSON.stringify(log)); } catch(e) {}
+  try { _lsSet('tp_badtrades_sale', JSON.stringify(log)); } catch(e) {}
   tpRenderBadTrades();
   toast('Registro eliminado ✓');
 };
 
 function tpRenderBadTrades() {
   let rawLog = [];
-  try { rawLog = JSON.parse(localStorage.getItem('tp_badtrades_sale') || '[]'); } catch(e) {}
+  try { rawLog = JSON.parse(_lsGet('tp_badtrades_sale') || '[]'); } catch(e) {}
   const log = rawLog.map(tpNormalizeBadTrade);
   const today = localDateStr();
   const monthStart = tpMonthStart();
@@ -9197,16 +9224,16 @@ function tpRenderBadTrades() {
   }
 
   // ── Guardar récord máximo en localStorage ──────────────────────────────────
-  const storedMax = parseInt(localStorage.getItem('tp_max_streak_sale') || '0');
+  const storedMax = parseInt(_lsGet('tp_max_streak_sale') || '0');
   const isNewRecord = maxStreak > storedMax && maxStreak > 0;
   if (isNewRecord) {
-    localStorage.setItem('tp_max_streak_sale', String(maxStreak));
-    if (bestRunStart) localStorage.setItem('tp_max_streak_start_sale', bestRunStart);
-    if (bestRunEnd)   localStorage.setItem('tp_max_streak_end_sale',   bestRunEnd);
+    _lsSet('tp_max_streak_sale', String(maxStreak));
+    if (bestRunStart) _lsSet('tp_max_streak_start_sale', bestRunStart);
+    if (bestRunEnd)   _lsSet('tp_max_streak_end_sale',   bestRunEnd);
   } else {
     maxStreak    = storedMax;
-    bestRunStart = localStorage.getItem('tp_max_streak_start_sale') || bestRunStart;
-    bestRunEnd   = localStorage.getItem('tp_max_streak_end_sale')   || bestRunEnd;
+    bestRunStart = _lsGet('tp_max_streak_start_sale') || bestRunStart;
+    bestRunEnd   = _lsGet('tp_max_streak_end_sale')   || bestRunEnd;
   }
 
   const weekCount = log.filter(e => e.date >= tpWeekStart()).length;
@@ -9286,7 +9313,7 @@ function tpRenderHistory30() {
 
   if (semEl) {
     semEl.innerHTML = days.map(ds => {
-      const val = localStorage.getItem(tpDateKey('tp_sem_sale_', ds));
+      const val = _lsGet(tpDateKey('tp_sem_sale_', ds));
       const dayNum = Number(ds.slice(8, 10));
       const c = SEM_COLORS[val] || { bg:'var(--bg3)', border:'var(--border2)' };
       const niceDate = new Date(ds + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' });
@@ -9297,7 +9324,7 @@ function tpRenderHistory30() {
 
   if (checkEl) {
     checkEl.innerHTML = days.map(ds => {
-      const raw = localStorage.getItem(tpDateKey('tp_check_sale_', ds));
+      const raw = _lsGet(tpDateKey('tp_check_sale_', ds));
       const dayNum = Number(ds.slice(8, 10));
       const niceDate = new Date(ds + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' });
       let icon = '·', state = 'Sin registro', bg = 'var(--bg3)', border = 'var(--border2)';
@@ -9320,7 +9347,7 @@ function tpRenderHistory30() {
   // ── Disciplina del Día ──
   if (ddEl) {
     ddEl.innerHTML = days.map(ds => {
-      const raw = localStorage.getItem('tp_dd_sale_' + ds);
+      const raw = _lsGet('tp_dd_sale_' + ds);
       const dayNum = Number(ds.slice(8, 10));
       const niceDate = new Date(ds + 'T12:00:00').toLocaleDateString('es-ES', { day:'numeric', month:'short' });
       let scoreLabel = 'Sin registro', bg = 'var(--bg3)', border = 'var(--border2)', numColor = 'var(--muted2)';
@@ -9349,7 +9376,7 @@ function tpComputeMonthSummary(ym) { // ym = 'YYYY-MM'
 
   for (let day = 1; day <= daysInMonth; day++) {
     const ds = ym + '-' + String(day).padStart(2, '0');
-    const checkRaw = localStorage.getItem('tp_check_sale_' + ds);
+    const checkRaw = _lsGet('tp_check_sale_' + ds);
     if (checkRaw) {
       try {
         const arr = JSON.parse(checkRaw);
@@ -9357,7 +9384,7 @@ function tpComputeMonthSummary(ym) { // ym = 'YYYY-MM'
         if (arr.length > 0 && n === arr.length) cumplidos++; else fallados++;
       } catch(e) { fallados++; }
     }
-    const sem = localStorage.getItem('tp_sem_sale_' + ds);
+    const sem = _lsGet('tp_sem_sale_' + ds);
     if (sem === 'verde') verde++;
     else if (sem === 'amarillo') amarillo++;
     else if (sem === 'rojo') rojo++;
@@ -9372,7 +9399,7 @@ function tpComputeMonthSummary(ym) { // ym = 'YYYY-MM'
 // guardado, y conserva como máximo los últimos 6 meses.
 function tpArchiveCompletedMonths() {
   let archive = {};
-  try { archive = JSON.parse(localStorage.getItem('tp_month_archive_v1_sale') || '{}'); } catch(e) { archive = {}; }
+  try { archive = JSON.parse(_lsGet('tp_month_archive_v1_sale') || '{}'); } catch(e) { archive = {}; }
 
   const now = new Date();
   const curYM = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
@@ -9404,7 +9431,7 @@ function tpArchiveCompletedMonths() {
     while (keys.length > 6) {
       delete archive[keys.shift()];
     }
-    try { localStorage.setItem('tp_month_archive_v1_sale', JSON.stringify(archive)); } catch(e) {}
+    try { _lsSet('tp_month_archive_v1_sale', JSON.stringify(archive)); } catch(e) {}
   }
 
   return archive;
@@ -9462,7 +9489,7 @@ function tpRenderCurrentMonthLabel() {
 window.initTraderPage = function() {
   // Checklist (carga estado guardado y recalcula semáforo automáticamente)
   let checkState = null;
-  try { checkState = JSON.parse(localStorage.getItem(tpTodayKey('tp_check_sale_')) || 'null'); } catch(e) {}
+  try { checkState = JSON.parse(_lsGet(tpTodayKey('tp_check_sale_')) || 'null'); } catch(e) {}
   if(checkState) {
     document.querySelectorAll('#tp-checklist input[type=checkbox]').forEach((inp,i) => {
       if(checkState[i]) { inp.checked = true; }
@@ -9557,7 +9584,7 @@ window.ddUpdate = function() {
   }
 
   // Guardar y refrescar historial
-  try { localStorage.setItem(ddTodayKey(), JSON.stringify(state)); } catch(e) {}
+  try { _lsSet(ddTodayKey(), JSON.stringify(state)); } catch(e) {}
   if (typeof tpRenderHistory30 === 'function') tpRenderHistory30();
 };
 
@@ -9566,9 +9593,9 @@ window.ddAddBonus = function(pts) {
   // Marca el primer checkbox vacío equivalente según bonus, o aplica sobre la meditación (+10)
   // Implementación: guardamos un bonus separado y lo sumamos al render
   let bonus = 0;
-  try { bonus = parseInt(localStorage.getItem(ddTodayKey() + '_bonus') || '0'); } catch(e) {}
+  try { bonus = parseInt(_lsGet(ddTodayKey() + '_bonus') || '0'); } catch(e) {}
   bonus = Math.min(bonus + pts, 10); // máx +10 de bonus por rutina
-  try { localStorage.setItem(ddTodayKey() + '_bonus', String(bonus)); } catch(e) {}
+  try { _lsSet(ddTodayKey() + '_bonus', String(bonus)); } catch(e) {}
   // Marca automáticamente la meditación si la rutina da +10
   const med = document.querySelector('#dd-items input[data-dd="0"]');
   if (med && !med.checked) { med.checked = true; }
@@ -9577,7 +9604,7 @@ window.ddAddBonus = function(pts) {
 
 function ddInit() {
   let state = null;
-  try { state = JSON.parse(localStorage.getItem(ddTodayKey()) || 'null'); } catch(e) {}
+  try { state = JSON.parse(_lsGet(ddTodayKey()) || 'null'); } catch(e) {}
   if (state) {
     document.querySelectorAll('#dd-items input[type=checkbox]').forEach((inp, i) => {
       if (state[i]) inp.checked = true;
@@ -9622,7 +9649,7 @@ function pmActivateStep(idx) {
 
 window.pmStart = function() {
   // Si ya completó hoy, no relanzar
-  if (localStorage.getItem(pmTodayKey()) === 'done') return;
+  if (_lsGet(pmTodayKey()) === 'done') return;
 
   document.getElementById('pm-start-view').style.display = 'none';
   document.getElementById('pm-routine-view').style.display = 'block';
@@ -9679,13 +9706,13 @@ function pmComplete() {
   }, 600);
 
   // Guardar y sumar puntos a Disciplina
-  try { localStorage.setItem(pmTodayKey(), 'done'); } catch(e) {}
+  try { _lsSet(pmTodayKey(), 'done'); } catch(e) {}
   ddAddBonus(10);
   toast('🧠 Rutina completada · +10 puntos de Disciplina ✓');
 }
 
 function pmInit() {
-  const done = localStorage.getItem(pmTodayKey()) === 'done';
+  const done = _lsGet(pmTodayKey()) === 'done';
   if (done) {
     document.getElementById('pm-done-view').style.display = 'block';
     const btn = document.querySelector('#pm-start-view button');
@@ -9710,10 +9737,10 @@ const RETO_HITOS = [
 ];
 
 function retoLoad() {
-  try { return JSON.parse(localStorage.getItem(RETO_KEY) || '{}'); } catch(e) { return {}; }
+  try { return JSON.parse(_lsGet(RETO_KEY) || '{}'); } catch(e) { return {}; }
 }
 function retoSave(data) {
-  try { localStorage.setItem(RETO_KEY, JSON.stringify(data)); } catch(e) {}
+  try { _lsSet(RETO_KEY, JSON.stringify(data)); } catch(e) {}
 }
 
 function retoUpdate() {
@@ -9833,10 +9860,10 @@ function retoInit() {
 const RETO_PNL_KEY = 'fp_reto_pnl_v1';
 
 function retoPnlLoad() {
-  try { return JSON.parse(localStorage.getItem(RETO_PNL_KEY) || '[]'); } catch(e) { return []; }
+  try { return JSON.parse(_lsGet(RETO_PNL_KEY) || '[]'); } catch(e) { return []; }
 }
 function retoPnlSave(arr) {
-  try { localStorage.setItem(RETO_PNL_KEY, JSON.stringify(arr)); } catch(e) {}
+  try { _lsSet(RETO_PNL_KEY, JSON.stringify(arr)); } catch(e) {}
 }
 
 window.retoPnlAdd = function() {
@@ -10052,10 +10079,10 @@ window.retoPnlGoPage = function(p) {
 const RETO_DIAS_FUERA_KEY = 'fp_reto_diasfuera_v1';
 
 function retoDiasFueraLoad() {
-  try { return JSON.parse(localStorage.getItem(RETO_DIAS_FUERA_KEY) || '[]'); } catch(e) { return []; }
+  try { return JSON.parse(_lsGet(RETO_DIAS_FUERA_KEY) || '[]'); } catch(e) { return []; }
 }
 function retoDiasFueraSave(arr) {
-  try { localStorage.setItem(RETO_DIAS_FUERA_KEY, JSON.stringify(arr)); } catch(e) {}
+  try { _lsSet(RETO_DIAS_FUERA_KEY, JSON.stringify(arr)); } catch(e) {}
 }
 function retoDiasFueraCount() {
   return retoDiasFueraLoad().length;
@@ -10216,9 +10243,9 @@ window.retoReflectionConfirm = function() {
 
   // Guardar reflexión en localStorage para registro
   try {
-    const refs = JSON.parse(localStorage.getItem('fp_reto_reflections_sale') || '[]');
+    const refs = JSON.parse(_lsGet('fp_reto_reflections_sale') || '[]');
     refs.push({ date: localDateStr(), ts: Date.now(), why: why.trim(), change: change.trim() });
-    localStorage.setItem('fp_reto_reflections_sale', JSON.stringify(refs));
+    _lsSet('fp_reto_reflections_sale', JSON.stringify(refs));
   } catch(e) {}
 
   const modal = document.getElementById('reto-reflection-modal');
@@ -10304,18 +10331,14 @@ window.fdExportBackup = function() {
 
   // Claves fijas
   FD_BACKUP_PREFIXES.forEach(k => {
-    const v = localStorage.getItem(k);
+    const v = _lsGet(k);
     if (v !== null) data.keys[k] = v;
   });
 
   // Claves dinámicas (por fecha: tp_sem_sale_YYYY-MM-DD, etc.)
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (!k) continue;
-    if (FD_BACKUP_DYNAMIC_PREFIXES.some(p => k.startsWith(p))) {
-      data.keys[k] = localStorage.getItem(k);
-    }
-  }
+  FD_BACKUP_DYNAMIC_PREFIXES.forEach(prefix => {
+    _lsKeys(prefix).forEach(k => { data.keys[k] = _lsGet(k); });
+  });
 
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
@@ -10345,7 +10368,7 @@ window.fdImportBackup = function(event) {
       }
       let imported = 0;
       Object.entries(data.keys).forEach(([k, v]) => {
-        try { localStorage.setItem(k, v); imported++; } catch(err) {}
+        try { _lsSet(k, v); imported++; } catch(err) {}
       });
       event.target.value = '';
       toast(`✅ ${imported} registros restaurados — recargando…`);
@@ -10409,7 +10432,7 @@ async function sbPush(clave){
     });
     const json = await resp.json();
     if (resp.ok && json.ok) {
-      localStorage.setItem(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
+      _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
     } else {
       console.warn('Supabase push error:', json.error || resp.status);
     }
@@ -10428,7 +10451,7 @@ async function sbPull(clave){
     const json = await resp.json();
     if (!resp.ok || !json.data) return false;
     applyBackupPayload(json.data);
-    if (json.updated_at) localStorage.setItem(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
+    if (json.updated_at) _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
     return true;
   } catch(e) { console.warn('Supabase pull falló:', e); return false; }
 }
@@ -10451,10 +10474,10 @@ async function sbSyncOnLoad(clave){
     });
     const json = await resp.json();
     if (!resp.ok || !json.data) return;
-    const lastSync = localStorage.getItem(SB_LAST_SYNC_PREFIX + clave) || '';
+    const lastSync = _lsGet(SB_LAST_SYNC_PREFIX + clave) || '';
     if (json.updated_at && json.updated_at !== lastSync) {
       applyBackupPayload(json.data);
-      localStorage.setItem(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
+      _lsSet(SB_LAST_SYNC_PREFIX + clave, json.updated_at);
       sessionStorage.setItem('sb_just_reloaded', clave); // marca para no recargar al volver
       location.reload();
     }
@@ -10711,8 +10734,8 @@ window.migrarDesdControl = function() {
     ['tp_month_archive_v1',   'tp_month_archive_v1_sale'],
   ];
 
-  const tieneEntradas = localStorage.getItem('fp_entries_v4');
-  const tieneCuentas  = localStorage.getItem('fp_accounts_v4');
+  const tieneEntradas = localStorage.getItem('fp_entries_v4'); // fuente antigua (sin prefijo)
+  const tieneCuentas  = localStorage.getItem('fp_accounts_v4');  // fuente antigua (sin prefijo)
   if (!tieneEntradas && !tieneCuentas) {
     alert('⚠️ No se encontraron datos del dashboard Control en este navegador.\n\nAsegúrate de abrir este archivo en el mismo navegador donde usas el Control.');
     return;
@@ -10724,14 +10747,14 @@ window.migrarDesdControl = function() {
   let copiados = 0;
 
   mapeo.forEach(([origen, destino]) => {
-    const val = localStorage.getItem(origen);
-    if (val !== null) { localStorage.setItem(destino, val); copiados++; }
+    const val = localStorage.getItem(origen); // leer fuente antigua (sin prefijo de usuario)
+    if (val !== null) { _lsSet(destino, val); copiados++; } // guardar en namespace del usuario
   });
 
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
     if (k && k.startsWith('fondeo_notes_') && !k.startsWith('fondeo_notes_sale_')) {
-      localStorage.setItem(k.replace('fondeo_notes_', 'fondeo_notes_sale_'), localStorage.getItem(k));
+      _lsSet(k.replace('fondeo_notes_', 'fondeo_notes_sale_'), localStorage.getItem(k));
       copiados++;
     }
   }
@@ -10739,7 +10762,7 @@ window.migrarDesdControl = function() {
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
     if (k && k.startsWith('tp_daily_')) {
-      localStorage.setItem(k, localStorage.getItem(k));
+      _lsSet(k, localStorage.getItem(k)); // migrar al namespace del usuario actual
       copiados++;
     }
   }
