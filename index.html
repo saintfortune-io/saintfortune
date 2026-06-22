@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)file:///C:/Users/34634/Desktop/index.html -->
+<!-- saved from url=(0049)file:///C:/Users/34634/Downloads/index%20(9).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1008,7 +1008,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">📊 Vistas</div>
-    <div class="nav-item active" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
+    <div class="nav-item" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
     <div class="nav-item" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
     <div class="nav-item" onclick="showPage(&#39;calendar&#39;)"><div class="dot dot-blue"></div> Calendario</div>
     <div class="nav-item" onclick="showPage(&#39;certificates&#39;)"><div class="dot dot-green"></div> Certificados de Pago</div>
@@ -1064,7 +1064,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <main class="main">
 
 <!-- ───────── PAGE: OVERVIEW ───────── -->
-<div id="page-overview" class="page">
+<div id="page-overview" class="page hidden">
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
@@ -1599,7 +1599,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Group ABCDE tabs -->
-  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn active">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
+  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn active">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
     <div class="group-panel-header">
@@ -1679,7 +1679,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 </div>
 
 <!-- ───────── PAGE: ACCOUNT DETAIL ───────── -->
-<div id="page-account" class="page hidden">
+<div id="page-account" class="page">
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
@@ -1815,7 +1815,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: PARAMS -->
-  <div class="tab-content" id="dtab-params">
+  <div class="tab-content active" id="dtab-params">
     <div id="params-content">
       <div class="section-header"><div class="section-title">Parámetros de gestión · Instant CFDs</div></div>
       <div class="lot-params-grid">
@@ -1857,22 +1857,20 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="section-header"><div class="section-title">🤖 Importación automática MT5</div></div>
       <div class="info-box" style="border-color:#1a3060;background:var(--blue-dim);">
         <strong style="color:var(--blue)">Conecta esta cuenta a tu EA Logger de MT5</strong><br>
-        Los trades cerrados se importarán automáticamente desde Google Sheets cada X minutos.
+        Los trades cerrados se importarán automáticamente desde Supabase cada X minutos.
       </div>
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">👤 UserID del EA (tu nombre/email)</label>
-          <input class="form-input" type="text" id="p-userid" value="" placeholder="Ej: OLI o tu@email.com">
+        <div class="form-group"><label class="form-label">👤 Número de cuenta MT5</label>
+          <input class="form-input" type="text" id="p-userid" value="" placeholder="Ej: 12345678">
         </div>
         <div class="form-group"><label class="form-label">⏱ Intervalo auto-import (min)</label>
           <input class="form-input" type="number" id="p-import-interval" value="2" min="1" max="60" step="1">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">🔗 URL pública de Google Sheets (CSV)</label>
-        <input class="form-input" type="text" id="p-sheeturl" value="" placeholder="https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&amp;gid=0">
+              <input type="hidden" id="p-sheeturl" value="https://script.google.com/macros/s/AKfycby6monVmawsgWKJfwK_mXOqddDa8OWla85WE3PEVn_YJZm8WMd_kXXjUh7UcJtlK8pn/exec">
         <div style="font-size:10px;color:var(--muted);margin-top:4px">
-          En tu Google Sheet: Archivo → Compartir → Publicar en la web → CSV → Copiar URL
         </div>
-      </div>
+      
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;PROP XP TRADE 2&#39;)">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;PROP XP TRADE 2&#39;)">⬇ Importar ahora</button>
@@ -1882,7 +1880,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: TRADES -->
-  <div class="tab-content active" id="dtab-trades">
+  <div class="tab-content" id="dtab-trades">
     <div class="section-header" style="margin-bottom:0.75rem">
       <div class="section-title">Operaciones</div>
       <div style="display:flex;gap:6px">
@@ -4854,20 +4852,18 @@ function renderParamsContent(acc, cfg) {
       <div class="section-header"><div class="section-title">🤖 Importación automática MT5</div></div>
       <div class="info-box" style="border-color:#1a3060;background:var(--blue-dim);">
         <strong style="color:var(--blue)">Conecta esta cuenta a tu EA Logger de MT5</strong><br>
-        Los trades cerrados se importarán automáticamente desde Google Sheets cada X minutos.
+        Los trades cerrados se importarán automáticamente desde Supabase cada X minutos.
       </div>
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">👤 UserID del EA (tu nombre/email)</label>
-          <input class="form-input" type="text" id="p-userid" value="${cfg.mt5UserID||''}" placeholder="Ej: OLI o tu@email.com">
+        <div class="form-group"><label class="form-label">👤 Número de cuenta MT5</label>
+          <input class="form-input" type="text" id="p-userid" value="${cfg.mt5UserID||''}" placeholder="Ej: 12345678">
         </div>
         <div class="form-group"><label class="form-label">⏱ Intervalo auto-import (min)</label>
           <input class="form-input" type="number" id="p-import-interval" value="${cfg.importInterval||2}" min="1" max="60" step="1">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">🔗 URL pública de Google Sheets (CSV)</label>
-        <input class="form-input" type="text" id="p-sheeturl" value="${cfg.sheetUrl||''}" placeholder="https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=0">
+              <input type="hidden" id="p-sheeturl" value="https://script.google.com/macros/s/AKfycby6monVmawsgWKJfwK_mXOqddDa8OWla85WE3PEVn_YJZm8WMd_kXXjUh7UcJtlK8pn/exec">
         <div style="font-size:10px;color:var(--muted);margin-top:4px">
-          En tu Google Sheet: Archivo → Compartir → Publicar en la web → CSV → Copiar URL
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
@@ -5058,12 +5054,12 @@ async function importarMT5Ahora(acc, silent) {
 
   if (!cfg.sheetUrl) {
     if (statusEl) { statusEl.textContent = '⚠ Falta la URL del Sheet'; statusEl.style.color = 'var(--red)'; }
-    if (!silent) toast('Configura la URL del Google Sheet primero', true);
+    if (!silent) toast('Configura el número de cuenta MT5 primero', true);
     return;
   }
   if (!cfg.mt5UserID) {
-    if (statusEl) { statusEl.textContent = '⚠ Falta el UserID del EA'; statusEl.style.color = 'var(--red)'; }
-    if (!silent) toast('Configura el UserID del EA primero', true);
+    if (statusEl) { statusEl.textContent = '⚠ Falta el número de cuenta MT5'; statusEl.style.color = 'var(--red)'; }
+    if (!silent) toast('Configura el número de cuenta MT5 primero', true);
     return;
   }
 
