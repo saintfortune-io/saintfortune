@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(25).html -->
+<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(13).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1388,7 +1388,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">📊 Vistas</div>
-    <div class="nav-item" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
+    <div class="nav-item active" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
     <div class="nav-item" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
     <div class="nav-item" onclick="showPage(&#39;calendar&#39;)"><div class="dot dot-blue"></div> Calendario</div>
     <div class="nav-item" onclick="showPage(&#39;certificates&#39;)"><div class="dot dot-green"></div> Certificados de Pago</div>
@@ -1448,7 +1448,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <main class="main">
 
 <!-- ───────── PAGE: OVERVIEW ───────── -->
-<div id="page-overview" class="page hidden">
+<div id="page-overview" class="page">
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
@@ -2264,7 +2264,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 </div>
 
 <!-- ───────── PAGE: ACCOUNT DETAIL ───────── -->
-<div id="page-account" class="page">
+<div id="page-account" class="page hidden">
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
@@ -2288,6 +2288,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <button class="tab-btn" onclick="switchDetailTab(&#39;params&#39;)">⚙ Parámetros</button>
     <button class="tab-btn" onclick="switchDetailTab(&#39;trades&#39;)">📋 Operaciones</button>
     <button class="tab-btn" onclick="switchDetailTab(&#39;plan&#39;)">🎯 Plan de Trading</button>
+    <button class="tab-btn" onclick="switchDetailTab(&#39;intelligence&#39;)">🧠 Intelligence</button>
   </div>
 
   <!-- TAB: STATS -->
@@ -2465,6 +2466,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: PLAN DE TRADING -->
   <div class="tab-content" id="dtab-plan">
     <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · BACKTESTING</div><div class="tp-card-sub">Sin plan guardado todavía</div></div><span class="tp-badge ">Sin configurar</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="2" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk"><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup."></textarea></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div><div class="tp-stats-row"><div class="tp-stat"><div class="tp-stat-val blue">2.0</div><div class="tp-stat-label">Ops/día media</div></div><div class="tp-stat"><div class="tp-stat-val green">1</div><div class="tp-stat-label">Posible revancha</div></div><div class="tp-stat"><div class="tp-stat-val purple">Asia</div><div class="tp-stat-label">Sesión frecuente</div></div></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;BACKTESTING&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · BACKTESTING</div><div class="cd-section-line"></div></div><div id="cd-block-BACKTESTING"><div class="cd-no-data">Define primero el Plan de Trading para activar la detección.</div></div></div></div>
+  </div>
+
+  <!-- TAB: INTELLIGENCE -->
+  <div class="tab-content" id="dtab-intelligence">
+    <div id="ie-account-content"></div>
   </div>
 
   <!-- TAB: TRADES -->
@@ -3023,7 +3029,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="upload-preview-name" id="prev-name"></div>
             <button class="upload-remove" onclick="clearFile(event)">✕</button>
           </div>
-          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" alt="preview"></div>
+          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index%20(13).html" alt="preview"></div>
         </div>
       </div>
     </div>
@@ -3296,7 +3302,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <button class="modal-close" onclick="closeModal(&#39;imgModal&#39;)">✕</button>
     <div class="modal-title" id="img-modal-title">Captura</div>
     <div style="margin-top:1rem;text-align:center">
-      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
+      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index%20(13).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
     </div>
   </div>
 </div>
@@ -3317,7 +3323,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div class="upload-sub">Imagen del pago · máx 8MB</div>
         </div>
         <div id="cert-preview-wrap" class="hidden">
-          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
+          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index%20(13).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
         </div>
       </div>
     </div>
@@ -4195,7 +4201,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">🏆 ¡Nuevo récord! 2 días de trading limpios</span></div>
 
 <!-- ══════════════ SUPABASE (sincronización en la nube) ══════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="./index_files/supabase.min.js.descarga"></script>
 
 <!-- ══════════════ SCRIPT ══════════════ -->
 <script>
@@ -5764,10 +5770,13 @@ function switchDetailTab(tab) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('dtab-'+tab)?.classList.add('active');
-  const tabs = ['stats','fuel','roi','params','trades','plan'];
+  const tabs = ['stats','fuel','roi','params','trades','plan','intelligence'];
   const idx = tabs.indexOf(tab);
   const tabBtns = document.querySelectorAll('.tab-btn');
   if(tabBtns[idx]) tabBtns[idx].classList.add('active');
+  if(tab === 'intelligence' && typeof currentAccount !== 'undefined' && currentAccount) {
+    renderIntelligenceTab(currentAccount);
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -14652,16 +14661,67 @@ window.getAllTradingPlans = function() {
         if (hasEsc) escalation = lotsSeq;
       }
 
+      // ── Detección de revenge trading ──────────────────────────────────────
+      // Señal: 2+ operaciones perdedoras seguidas en el día → op siguiente
+      // abre en menos de 5 min con igual o mayor size
+      var revenge = false;
+      if (dayTrades.length >= 3) {
+        for (var ri = 1; ri < dayTrades.length - 1; ri++) {
+          var prev = dayTrades[ri-1]; var cur = dayTrades[ri]; var nxt = dayTrades[ri+1];
+          var prevLoss = parseFloat(prev.pnl)||0;
+          var curLoss  = parseFloat(cur.pnl)||0;
+          var nxtLots  = parseFloat(nxt.lots)||0;
+          var curLots  = parseFloat(cur.lots)||0;
+          if (prevLoss < 0 && curLoss < 0 && nxtLots >= curLots * 0.95) {
+            revenge = true; break;
+          }
+        }
+      }
+      // Fallback: 3+ stops seguidos en el día
+      if (!revenge && dayTrades.length >= 3) {
+        var stops = dayTrades.filter(function(t){ return (parseFloat(t.pnl)||0) < 0; });
+        if (stops.length >= 3) revenge = true;
+      }
+
+      // ── Detección de racha peligrosa (en ventana de 5 días) ──────────────
+      // Se calcula fuera del loop por día — marcado al procesar el historial
+
+      // ── Detección de operación fuera de sesión declarada ─────────────────
+      var outOfSession = false;
+      if (plan.sessions && plan.sessions.length && !plan.sessions.includes('flexible')) {
+        var outTrades = dayTrades.filter(function(t) {
+          if (!t.session) return false;
+          return !plan.sessions.some(function(ps) {
+            return ps === t.session || ps.replace('-','') === t.session;
+          });
+        });
+        if (outTrades.length > 0) outOfSession = outTrades.length;
+      }
+
       var isClean = !opsViol && !riskViol;
       if (isClean) cleanDays++;
 
       dayDetails.push({ date:date, ops:opsCount, effectiveOps:effectiveOps,
         opsViol:opsViol, riskViol:riskViol, riskUsed:riskUsed,
-        dayLoss:dayLoss, escalation:escalation, clean:isClean });
+        dayLoss:dayLoss, escalation:escalation, revenge:revenge,
+        outOfSession:outOfSession, clean:isClean });
 
-      if (opsViol)  violations.push({ type:'ops',  date:date, ops:opsCount, effOps:effectiveOps, max:maxOps, split:splitRisk });
-      if (riskViol) violations.push({ type:'risk', date:date, riskUsed:riskUsed, maxRisk:maxRisk, loss:dayLoss });
+      if (opsViol)      violations.push({ type:'ops',     date:date, ops:opsCount, effOps:effectiveOps, max:maxOps, split:splitRisk });
+      if (riskViol)     violations.push({ type:'risk',    date:date, riskUsed:riskUsed, maxRisk:maxRisk, loss:dayLoss });
+      if (revenge)      violations.push({ type:'revenge', date:date, stops: dayTrades.filter(function(t){return (parseFloat(t.pnl)||0)<0;}).length });
+      if (outOfSession) violations.push({ type:'session', date:date, count:outOfSession, declared:plan.sessions });
     });
+
+    // ── Detección de rachas peligrosas (ventana deslizante 5 días) ───────────
+    var dangerStreaks = [];
+    for (var si = 2; si < dayDetails.length; si++) {
+      var last3 = dayDetails.slice(si-2, si+1);
+      var allLoss = last3.every(function(d){ return d.dayLoss < 0; });
+      var totalStreakLoss = last3.reduce(function(s,d){ return s + (d.dayLoss||0); }, 0);
+      if (allLoss && balance > 0 && Math.abs(totalStreakLoss)/balance*100 > (plan.maxDailyRisk||2)*2) {
+        dangerStreaks.push({ dates: last3.map(function(d){return d.date;}), loss: totalStreakLoss });
+      }
+    }
 
     var complianceScore = totalDays > 0 ? Math.round((cleanDays / totalDays) * 100) : 100;
 
@@ -14681,7 +14741,8 @@ window.getAllTradingPlans = function() {
 
     return { plan:plan, noData:false, totalDays:totalDays, cleanDays:cleanDays,
       complianceScore:complianceScore, violations:violations,
-      dayDetails:dayDetails, sessionMismatch:sessionMismatch, balance:balance };
+      dayDetails:dayDetails, sessionMismatch:sessionMismatch,
+      dangerStreaks:dangerStreaks, balance:balance };
   }
 
   // ── Render del bloque ─────────────────────────────────────────────────────
@@ -14846,7 +14907,634 @@ window.getAllTradingPlans = function() {
 
 
 
-// ── Comprobar licencia al cargar ──────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · INTELLIGENCE ENGINE — Etapa 3
+// Vista por cuenta con selector Hoy / Semana / Mes
+// ═══════════════════════════════════════════════════════════════════════════════
+(function() {
+
+var _ie3Period = {}; // periodo activo por cuenta: 'today' | 'week' | 'month'
+
+function _ie3InjectCSS() {
+  if (document.getElementById('sf-ie3-css')) return;
+  var s = document.createElement('style');
+  s.id = 'sf-ie3-css';
+  s.textContent = [
+    '.ie3-wrap{padding:0 0 1.5rem;}',
+    // Sin plan / sin datos
+    '.ie3-empty-state{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:12px;line-height:1.7;}',
+    '.ie3-empty-icon{font-size:32px;margin-bottom:10px;}',
+    '.ie3-empty-title{font-size:13px;font-weight:700;color:var(--muted2);margin-bottom:6px;}',
+    // Selector de período
+    '.ie3-period-tabs{display:flex;gap:6px;margin-bottom:16px;}',
+    '.ie3-period-btn{flex:1;padding:7px 0;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(--border2);background:var(--bg2);color:var(--muted2);transition:all 0.15s;text-align:center;}',
+    '.ie3-period-btn.active{background:rgba(74,158,255,0.12);border-color:rgba(74,158,255,0.4);color:var(--blue);}',
+    '.ie3-period-btn:hover:not(.active){border-color:var(--border2);color:var(--text);}',
+    // Score ring
+    '.ie3-score-row{display:flex;align-items:center;gap:16px;padding:16px;background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;}',
+    '.ie3-score-ring{width:68px;height:68px;flex-shrink:0;position:relative;}',
+    '.ie3-score-ring svg{transform:rotate(-90deg);}',
+    '.ie3-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;}',
+    '.ie3-score-info{flex:1;min-width:0;}',
+    '.ie3-score-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}',
+    '.ie3-score-sub{font-size:11px;color:var(--muted2);line-height:1.6;}',
+    '.ie3-score-badge{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:3px 10px;border-radius:20px;margin-top:7px;display:inline-block;}',
+    '.ie3-score-badge.high{background:rgba(39,217,122,0.12);color:var(--green);border:1px solid rgba(39,217,122,0.3);}',
+    '.ie3-score-badge.mid{background:rgba(255,174,48,0.10);color:var(--amber);border:1px solid rgba(255,174,48,0.3);}',
+    '.ie3-score-badge.low{background:rgba(255,79,79,0.10);color:var(--red);border:1px solid rgba(255,79,79,0.3);}',
+    // Alertas
+    '.ie3-alert{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-radius:9px;margin-bottom:7px;}',
+    '.ie3-alert.ok{background:rgba(39,217,122,0.07);border:1px solid rgba(39,217,122,0.2);}',
+    '.ie3-alert.viol{background:rgba(255,79,79,0.07);border:1px solid rgba(255,79,79,0.22);}',
+    '.ie3-alert.warn{background:rgba(255,174,48,0.07);border:1px solid rgba(255,174,48,0.2);}',
+    '.ie3-alert.info{background:var(--bg2);border:1px solid var(--border);}',
+    '.ie3-alert-icon{font-size:16px;flex-shrink:0;line-height:1.4;}',
+    '.ie3-alert-body{flex:1;min-width:0;}',
+    '.ie3-alert-title{font-size:11.5px;font-weight:700;line-height:1.4;}',
+    '.ie3-alert.ok .ie3-alert-title{color:var(--green);}',
+    '.ie3-alert.viol .ie3-alert-title{color:var(--red);}',
+    '.ie3-alert.warn .ie3-alert-title{color:var(--amber);}',
+    '.ie3-alert.info .ie3-alert-title{color:var(--muted2);}',
+    '.ie3-alert-sub{font-size:10.5px;color:var(--muted2);margin-top:3px;line-height:1.5;}',
+    '.ie3-alert-days{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;}',
+    '.ie3-day-chip{font-size:10px;padding:2px 8px;border-radius:5px;background:rgba(255,79,79,0.1);color:var(--red);border:1px solid rgba(255,79,79,0.2);}',
+    // Sin actividad en período
+    '.ie3-no-activity{text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:11px;line-height:1.7;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);}',
+  ].join('');
+  document.head.appendChild(s);
+}
+
+function _ie3FilterStreaks(streaks, period) {
+  var now = new Date();
+  var todayStr = now.toISOString().slice(0,10);
+  var weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  var weekStartStr = weekStart.toISOString().slice(0,10);
+  var monthStartStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-01';
+
+  return streaks.filter(function(s) {
+    var lastDate = s.dates[s.dates.length - 1];
+    if (period === 'today') return lastDate === todayStr;
+    if (period === 'week')  return lastDate >= weekStartStr && lastDate <= todayStr;
+    if (period === 'month') return lastDate >= monthStartStr && lastDate <= todayStr;
+    return true;
+  });
+}
+
+// ── Filtrar dayDetails por período ────────────────────────────────────────────
+function _ie3FilterDays(dayDetails, period) {
+  var now = new Date();
+  var todayStr = now.toISOString().slice(0,10);
+
+  // Inicio de semana (lunes)
+  var weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  var weekStartStr = weekStart.toISOString().slice(0,10);
+
+  // Inicio de mes
+  var monthStartStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-01';
+
+  return dayDetails.filter(function(d) {
+    if (period === 'today') return d.date === todayStr;
+    if (period === 'week')  return d.date >= weekStartStr && d.date <= todayStr;
+    if (period === 'month') return d.date >= monthStartStr && d.date <= todayStr;
+    return true;
+  });
+}
+
+// ── Período legible ───────────────────────────────────────────────────────────
+function _ie3PeriodLabel(period) {
+  var now = new Date();
+  if (period === 'today') return 'hoy, ' + now.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+  if (period === 'week') {
+    var weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    return 'semana del ' + weekStart.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
+  }
+  if (period === 'month') return now.toLocaleDateString('es-ES', {month:'long', year:'numeric'});
+  return '';
+}
+
+// ── Render principal ──────────────────────────────────────────────────────────
+window.renderIntelligenceTab = function(acc, period) {
+  var container = document.getElementById('ie-account-content');
+  if (!container) return;
+  _ie3InjectCSS();
+
+  // Determinar período activo
+  if (!period) period = _ie3Period[acc] || 'week';
+  _ie3Period[acc] = period;
+
+  // Sin plan
+  var plan = window.getTradingPlan ? window.getTradingPlan(acc) : null;
+  if (!plan) {
+    container.innerHTML = '<div class="ie3-wrap">' + _ie3NoPlan() + '</div>';
+    return;
+  }
+
+  // Obtener análisis completo
+  var r = window.getConductualAnalysis ? window.getConductualAnalysis(acc) : null;
+  if (!r || r.noData) {
+    container.innerHTML = '<div class="ie3-wrap">' + _ie3Tabs(acc, period) + _ie3NoData() + '</div>';
+    return;
+  }
+
+  // Filtrar por período
+  var days = _ie3FilterDays(r.dayDetails, period);
+  var periodLabel = _ie3PeriodLabel(period);
+
+  var html = '<div class="ie3-wrap">';
+  html += _ie3Tabs(acc, period);
+
+  // Sin actividad en el período
+  if (!days.length) {
+    html += '<div class="ie3-no-activity">📭 Sin operaciones registradas ' + periodLabel + '.</div>';
+    html += '</div>';
+    container.innerHTML = html;
+    return;
+  }
+
+  // Calcular métricas del período
+  var totalDays  = days.length;
+  var cleanDays  = days.filter(function(d){ return d.clean; }).length;
+  var score      = Math.round(cleanDays / totalDays * 100);
+  var opsViols   = days.filter(function(d){ return d.opsViol; });
+  var riskViols  = days.filter(function(d){ return d.riskViol; });
+  var escDays    = days.filter(function(d){ return d.escalation; });
+
+  var scoreColor = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--amber)' : 'var(--red)';
+  var scoreClass = score >= 80 ? 'high' : score >= 50 ? 'mid' : 'low';
+  var scoreLabel = score >= 80 ? '✓ Plan respetado' : score >= 50 ? '⚠ Cumplimiento parcial' : '✗ Plan roto';
+  var circ = 2 * Math.PI * 24;
+  var dash = circ - (circ * score / 100);
+
+  // Score ring
+  html += '<div class="ie3-score-row">'
+    + '<div class="ie3-score-ring"><svg width="68" height="68" viewBox="0 0 68 68">'
+    + '<circle cx="34" cy="34" r="24" fill="none" stroke="var(--bg3)" stroke-width="5"/>'
+    + '<circle cx="34" cy="34" r="24" fill="none" stroke="' + scoreColor + '" stroke-width="5" '
+    + 'stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + dash.toFixed(1) + '" stroke-linecap="round"/>'
+    + '</svg><div class="ie3-score-num" style="color:' + scoreColor + '">' + score + '%</div></div>'
+    + '<div class="ie3-score-info">'
+    + '<div class="ie3-score-title">' + _ie3Cap(periodLabel) + '</div>'
+    + '<div class="ie3-score-sub">'
+    + totalDays + ' día' + (totalDays !== 1 ? 's' : '') + ' operado' + (totalDays !== 1 ? 's' : '') + ' · '
+    + cleanDays + ' dentro del plan'
+    + (opsViols.length + riskViols.length > 0 ? ' · <span style="color:var(--red)">' + (opsViols.length + riskViols.length) + ' con desviación</span>' : '')
+    + '</div>'
+    + '<div class="ie3-score-badge ' + scoreClass + '">' + scoreLabel + '</div>'
+    + '</div></div>';
+
+  // Alertas
+  if (!opsViols.length && !riskViols.length && !escDays.length) {
+    html += '<div class="ie3-alert ok"><div class="ie3-alert-icon">✅</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Todo dentro del plan</div>'
+      + '<div class="ie3-alert-sub">El engine no detecta ninguna desviación en este período. Operaciones y riesgo dentro de los límites declarados.</div>'
+      + '</div></div>';
+  }
+
+  if (opsViols.length) {
+    var worst = opsViols.slice().sort(function(a,b){ return b.ops - a.ops; })[0];
+    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">⚡</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Overtrading — límite superado en ' + opsViols.length + ' día' + (opsViols.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">Tu plan: máx <b>' + plan.maxOpsPerDay + ' op/día</b>. '
+      + 'Peor día: <b>' + worst.ops + ' operaciones</b> el ' + worst.date + '.</div>'
+      + '<div class="ie3-alert-days">' + opsViols.slice(0,5).map(function(d){
+          return '<span class="ie3-day-chip">' + d.date + ' · ' + d.ops + ' ops</span>';
+        }).join('') + '</div>'
+      + '</div></div>';
+  }
+
+  if (riskViols.length) {
+    var worstR = riskViols.slice().sort(function(a,b){ return b.riskUsed - a.riskUsed; })[0];
+    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">📉</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Riesgo excedido en ' + riskViols.length + ' día' + (riskViols.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">Límite: <b>' + plan.maxDailyRisk + '%</b>. '
+      + 'Peor día: <b style="color:var(--red)">' + (worstR.riskUsed ? worstR.riskUsed.toFixed(1) + '%' : '—') + '</b> el ' + worstR.date + '.</div>'
+      + '<div class="ie3-alert-days">' + riskViols.slice(0,5).map(function(d){
+          return '<span class="ie3-day-chip">' + d.date + (d.riskUsed ? ' · ' + d.riskUsed.toFixed(1) + '%' : '') + '</span>';
+        }).join('') + '</div>'
+      + '</div></div>';
+  }
+
+  if (escDays.length) {
+    html += '<div class="ie3-alert warn"><div class="ie3-alert-icon">📈</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Lotaje aumentó tras pérdida en ' + escDays.length + ' día' + (escDays.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">Observación: el size de la siguiente entrada fue mayor tras un stop. Contrástalo con tu estrategia.</div>'
+      + '</div></div>';
+  }
+
+  // Revenge trading
+  var revengeDays = days.filter(function(d){ return d.revenge; });
+  if (revengeDays.length) {
+    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">😤</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Posible revenge trading en ' + revengeDays.length + ' día' + (revengeDays.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">El engine detectó 3 o más stops consecutivos o aumento de size tras pérdidas seguidas. Señal de operar desde la emoción, no desde el plan.</div>'
+      + '<div class="ie3-alert-days">' + revengeDays.slice(0,5).map(function(d){
+          return '<span class="ie3-day-chip">' + d.date + '</span>';
+        }).join('') + '</div>'
+      + '</div></div>';
+  }
+
+  // Fuera de sesión
+  var outDays = days.filter(function(d){ return d.outOfSession; });
+  if (outDays.length) {
+    html += '<div class="ie3-alert warn"><div class="ie3-alert-icon">🕐</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Operaciones fuera de sesión en ' + outDays.length + ' día' + (outDays.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">Tu plan declara sesiones: <b>' + (plan.sessions || []).join(', ') + '</b>. Se detectaron entradas en sesiones no declaradas.</div>'
+      + '<div class="ie3-alert-days">' + outDays.slice(0,5).map(function(d){
+          return '<span class="ie3-day-chip" style="background:rgba(255,174,48,0.1);color:var(--amber);border-color:rgba(255,174,48,0.2);">' + d.date + ' · ' + d.outOfSession + ' op</span>';
+        }).join('') + '</div>'
+      + '</div></div>';
+  }
+
+  // Rachas peligrosas
+  var streaks = r.dangerStreaks ? _ie3FilterStreaks(r.dangerStreaks, period) : [];
+  if (streaks.length) {
+    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">🔴</div>'
+      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Racha peligrosa detectada — ' + streaks.length + ' episodio' + (streaks.length !== 1 ? 's' : '') + '</div>'
+      + '<div class="ie3-alert-sub">3 días consecutivos con pérdida acumulando más del doble de tu riesgo diario máximo. Señal de no tomar el stop global del día.</div>'
+      + '<div class="ie3-alert-days">' + streaks.slice(0,3).map(function(s){
+          return '<span class="ie3-day-chip">' + s.dates[0] + ' → ' + s.dates[2] + '</span>';
+        }).join('') + '</div>'
+      + '</div></div>';
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+};
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function _ie3Tabs(acc, active) {
+  var periods = [['today','Hoy'],['week','Semana'],['month','Mes']];
+  return '<div class="ie3-period-tabs">'
+    + periods.map(function(p){
+        return '<div class="ie3-period-btn' + (p[0] === active ? ' active' : '') + '" '
+          + 'onclick="renderIntelligenceTab(\'' + acc.replace(/'/g,"\\'") + '\',\'' + p[0] + '\')">'
+          + p[1] + '</div>';
+      }).join('')
+    + '</div>';
+}
+
+function _ie3NoPlan() {
+  return '<div class="ie3-empty-state"><div class="ie3-empty-icon">🎯</div>'
+    + '<div class="ie3-empty-title">Sin Plan de Trading definido</div>'
+    + '<div>Ve a la pestaña <b style="color:var(--blue)">Plan de Trading</b> y define tus límites.<br>'
+    + 'El engine necesita el plan para detectar desviaciones.</div></div>';
+}
+
+function _ie3NoData() {
+  return '<div class="ie3-empty-state"><div class="ie3-empty-icon">📊</div>'
+    + '<div class="ie3-empty-title">Sin operaciones registradas</div>'
+    + '<div>Importa datos desde el EA para activar el análisis.</div></div>';
+}
+
+function _ie3Cap(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+})();
+// ── FIN INTELLIGENCE ENGINE ETAPA 3 · Saint Fortune™ ─────────────────────────
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE · INTELLIGENCE ENGINE — Etapa 4
+// Cruce Coach Emocional x Engine · Doble Fuente
+// ═══════════════════════════════════════════════════════════════════════════════
+(function() {
+
+  function _ie4InjectCSS() {
+    if (document.getElementById('sf-ie4-css')) return;
+    var s = document.createElement('style');
+    s.id = 'sf-ie4-css';
+    s.textContent = [
+      '.ie4-wrap{margin-top:14px;}',
+      '.ie4-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}',
+      '.ie4-header-line{flex:1;height:1px;background:var(--border);}',
+      '.ie4-header-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);white-space:nowrap;padding:0 8px;}',
+      '.ie4-card{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-radius:10px;margin-bottom:7px;border:1.5px solid;position:relative;overflow:hidden;}',
+      '.ie4-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;}',
+      '.ie4-card.confirmed{background:rgba(255,79,79,0.07);border-color:rgba(255,79,79,0.3);}',
+      '.ie4-card.confirmed::before{background:var(--red);}',
+      '.ie4-card.open{background:rgba(255,174,48,0.06);border-color:rgba(255,174,48,0.25);}',
+      '.ie4-card.open::before{background:var(--amber);}',
+      '.ie4-card.self-only{background:rgba(74,158,255,0.06);border-color:rgba(74,158,255,0.2);}',
+      '.ie4-card.self-only::before{background:var(--blue);}',
+      '.ie4-card.hidden{background:rgba(160,122,255,0.07);border-color:rgba(160,122,255,0.28);}',
+      '.ie4-card.hidden::before{background:var(--purple);}',
+      '.ie4-card.clean{background:rgba(39,217,122,0.06);border-color:rgba(39,217,122,0.2);}',
+      '.ie4-card.clean::before{background:var(--green);}',
+      '.ie4-icon{font-size:17px;line-height:1.3;flex-shrink:0;}',
+      '.ie4-body{flex:1;min-width:0;}',
+      '.ie4-title{font-size:11.5px;font-weight:700;line-height:1.4;margin-bottom:3px;}',
+      '.ie4-card.confirmed .ie4-title{color:var(--red);}',
+      '.ie4-card.open .ie4-title{color:var(--amber);}',
+      '.ie4-card.self-only .ie4-title{color:var(--blue);}',
+      '.ie4-card.hidden .ie4-title{color:var(--purple);}',
+      '.ie4-card.clean .ie4-title{color:var(--green);}',
+      '.ie4-sub{font-size:10.5px;color:var(--muted2);line-height:1.5;}',
+      '.ie4-badge{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.09em;padding:2px 8px;border-radius:20px;margin-top:5px;}',
+      '.ie4-badge.ds{background:rgba(255,79,79,0.15);color:var(--red);border:1px solid rgba(255,79,79,0.3);}',
+      '.ie4-badge.obs{background:rgba(255,174,48,0.12);color:var(--amber);border:1px solid rgba(255,174,48,0.25);}',
+      '.ie4-badge.self{background:rgba(74,158,255,0.12);color:var(--blue);border:1px solid rgba(74,158,255,0.25);}',
+      '.ie4-badge.hidden{background:rgba(160,122,255,0.12);color:var(--purple);border:1px solid rgba(160,122,255,0.25);}',
+      '.ie4-badge.ok{background:rgba(39,217,122,0.1);color:var(--green);border:1px solid rgba(39,217,122,0.25);}',
+      '.ie4-days{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;}',
+      '.ie4-day-chip{font-size:9.5px;padding:2px 7px;border-radius:5px;}',
+      '.ie4-day-chip.red{background:rgba(255,79,79,0.1);color:var(--red);border:1px solid rgba(255,79,79,0.2);}',
+      '.ie4-day-chip.amber{background:rgba(255,174,48,0.1);color:var(--amber);border:1px solid rgba(255,174,48,0.2);}',
+      '.ie4-day-chip.purple{background:rgba(160,122,255,0.1);color:var(--purple);border:1px solid rgba(160,122,255,0.2);}',
+      '.ie4-concordance{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--bg1);border:1px solid var(--border);margin-bottom:12px;}',
+      '.ie4-conc-ring{position:relative;width:52px;height:52px;flex-shrink:0;}',
+      '.ie4-conc-ring svg{transform:rotate(-90deg);}',
+      '.ie4-conc-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}',
+      '.ie4-conc-info{flex:1;}',
+      '.ie4-conc-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px;}',
+      '.ie4-conc-sub{font-size:10px;color:var(--muted2);line-height:1.5;}',
+    ].join('');
+    document.head.appendChild(s);
+  }
+
+  // Mapa de errores: tag del Coach ↔ señal del engine
+  var IE4_MAP = [
+    { tag:'sobreoperar',  label:'Overtrading / sobreoperar',                icon:'⚡',  engineCheck: function(d){ return !!d.opsViol; }},
+    { tag:'venganza',     label:'Revenge trading',                           icon:'😤',  engineCheck: function(d){ return !!d.revenge; }},
+    { tag:'size',         label:'Tamaño de posición excesivo',               icon:'💰',  engineCheck: function(d){ return !!d.riskViol; }},
+    { tag:'impulsiva',    label:'Entrada impulsiva / escalada de posición',  icon:'⚡',  engineCheck: function(d){ return !!d.escalation; }},
+    { tag:'stop',         label:'Riesgo extendido (posible mover stop)',      icon:'🚫',  engineCheck: function(d){ return !!d.riskViol; }},
+    { tag:'plan',         label:'Saltar el plan (ops + sesión fuera)',        icon:'📋',  engineCheck: function(d){ return !!d.opsViol || !!d.outOfSession; }},
+    { tag:'fomo',         label:'FOMO (entradas fuera de sesión)',            icon:'🔥',  engineCheck: function(d){ return !!d.outOfSession; }},
+    { tag:'tardia',       label:'Entrada tardía / fuera de sesión',          icon:'⏰',  engineCheck: function(d){ return !!d.outOfSession; }},
+    { tag:'confianza',    label:'Exceso de confianza (racha + escalada)',     icon:'😎',  engineCheck: function(d){ return !!d.escalation || !!d.opsViol; }}
+  ];
+
+  // ── Análisis central ────────────────────────────────────────────────────────
+  function _ie4Analyze(acc, days, r) {
+    // Cargar datos del Coach Emocional del período
+    var coachAll = (typeof coachLoad === 'function') ? coachLoad() : {};
+    var tradeDates = days.map(function(d){ return d.date; });
+
+    var coachInPeriod = [];
+    tradeDates.forEach(function(date) {
+      if (coachAll[date]) coachInPeriod.push({ date: date, entry: coachAll[date] });
+    });
+
+    // Errores declarados por tag → lista de fechas
+    var declaredErrors = {};
+    coachInPeriod.forEach(function(c) {
+      (c.entry.errors || []).forEach(function(tag) {
+        if (!declaredErrors[tag]) declaredErrors[tag] = [];
+        declaredErrors[tag].push(c.date);
+      });
+    });
+
+    // Detecciones del engine por tag → lista de fechas
+    var engineDetected = {};
+    IE4_MAP.forEach(function(m) {
+      days.forEach(function(day) {
+        if (m.engineCheck(day, r)) {
+          if (!engineDetected[m.tag]) engineDetected[m.tag] = [];
+          if (engineDetected[m.tag].indexOf(day.date) === -1)
+            engineDetected[m.tag].push(day.date);
+        }
+      });
+    });
+
+    // ── Patrones ocultos del EA (automáticos, no declarados) ────────────────
+    var hiddenPatterns = [];
+
+    // Escalada de size silenciosa: el EA sube lotaje tras pérdida sin que el trader lo declare
+    var silentEsc = days.filter(function(d){
+      return d.escalation &&
+             !d.revenge &&
+             !(declaredErrors['venganza'] && declaredErrors['venganza'].indexOf(d.date) > -1);
+    });
+    if (silentEsc.length >= 2) hiddenPatterns.push({
+      id: 'silent-escalation', icon: '📈',
+      label: 'Escalada de size silenciosa',
+      desc: 'El EA detectó aumento de lotaje tras pérdida en ' + silentEsc.length + ' día(s) sin declaración en el Coach. Patrón de compensación no reconocido.',
+      dates: silentEsc.slice(0,5).map(function(d){ return d.date; })
+    });
+
+    // Operativa fuera de sesión recurrente no declarada
+    var silentOOS = days.filter(function(d){
+      return d.outOfSession && !declaredErrors['fomo'] && !declaredErrors['tardia'];
+    });
+    if (silentOOS.length >= 2) hiddenPatterns.push({
+      id: 'silent-oos', icon: '🕐',
+      label: 'Operativa fuera de sesión no declarada',
+      desc: 'El EA registra entradas recurrentes fuera de sesión en ' + silentOOS.length + ' día(s) sin señal en el Coach. Puede ser un hábito operativo que no percibes.',
+      dates: silentOOS.slice(0,5).map(function(d){ return d.date; })
+    });
+
+    // Racha peligrosa sin señal emocional
+    if (r.dangerStreaks && r.dangerStreaks.length &&
+        !declaredErrors['venganza'] && !declaredErrors['confianza']) {
+      hiddenPatterns.push({
+        id: 'silent-streaks', icon: '🔴',
+        label: 'Racha peligrosa sin señal emocional registrada',
+        desc: 'El engine detectó ' + r.dangerStreaks.length + ' racha(s) con riesgo doble del límite diario, pero el Coach no registra estado emocional alterado. Los datos revelan más de lo que percibes.',
+        dates: r.dangerStreaks.slice(0,3).map(function(s){ return s.dates[0]; })
+      });
+    }
+
+    // Overtrading sistemático no reconocido
+    var silentOT = days.filter(function(d){
+      return d.opsViol &&
+             !(declaredErrors['sobreoperar'] && declaredErrors['sobreoperar'].indexOf(d.date) > -1) &&
+             !(declaredErrors['plan']        && declaredErrors['plan'].indexOf(d.date) > -1);
+    });
+    if (silentOT.length >= 2) hiddenPatterns.push({
+      id: 'silent-overtrading', icon: '⚡',
+      label: 'Overtrading sistemático no reconocido',
+      desc: 'En ' + silentOT.length + ' día(s) el EA superó el límite de operaciones sin que el Coach lo registre. Patrón automático que escapa a tu percepción consciente.',
+      dates: silentOT.slice(0,5).map(function(d){ return d.date; })
+    });
+
+    // ── Conclusiones cruzadas ────────────────────────────────────────────────
+    var conclusions = [];
+    var done = {};
+    IE4_MAP.forEach(function(m) {
+      if (done[m.tag]) return;
+      done[m.tag] = true;
+      var dec = declaredErrors[m.tag]  || [];
+      var det = engineDetected[m.tag]  || [];
+
+      if (dec.length && det.length) {
+        // Doble fuente confirmada
+        var overlap = dec.filter(function(d){ return det.indexOf(d) > -1; });
+        conclusions.push({
+          type: 'confirmed', icon: m.icon, label: m.label, badge: 'ds',
+          badgeText: '● Doble fuente · Confirmada',
+          desc: 'Coach lo declaró (' + dec.length + ' día' + (dec.length !== 1 ? 's' : '') + ') y el engine lo detectó (' + det.length + ' día' + (det.length !== 1 ? 's' : '') + '). Coincidencia exacta: ' + overlap.length + ' día' + (overlap.length !== 1 ? 's' : '') + '.',
+          dates: det.slice(0,5), dateClass: 'red'
+        });
+      } else if (!dec.length && det.length) {
+        // Solo engine — observación abierta
+        conclusions.push({
+          type: 'open', icon: m.icon, label: m.label, badge: 'obs',
+          badgeText: '○ Observación abierta · Solo engine',
+          desc: 'Engine detectó en ' + det.length + ' día' + (det.length !== 1 ? 's' : '') + ' pero no aparece en el Coach. Puede ser un patrón automático del EA que no percibes como error.',
+          dates: det.slice(0,5), dateClass: 'amber'
+        });
+      } else if (dec.length && !det.length) {
+        // Solo autodeclarado — sin datos que lo confirmen
+        conclusions.push({
+          type: 'self-only', icon: m.icon, label: m.label, badge: 'self',
+          badgeText: '◌ Solo autodeclarado · Sin señal en datos',
+          desc: 'Lo marcaste en el Coach (' + dec.length + ' día' + (dec.length !== 1 ? 's' : '') + ') pero los datos no muestran la desviación. Puede ser un error emocional que el EA no captura.',
+          dates: dec.slice(0,5), dateClass: 'amber'
+        });
+      }
+    });
+
+    // Concordancia: % de señales detectadas por engine que el trader también declaró
+    var confirmed = conclusions.filter(function(c){ return c.type === 'confirmed'; }).length;
+    var totalEngine = conclusions.filter(function(c){ return c.type !== 'self-only'; }).length || 1;
+
+    return {
+      conclusions:    conclusions,
+      hiddenPatterns: hiddenPatterns,
+      concordance:    Math.round((confirmed / totalEngine) * 100),
+      hasCoachData:   coachInPeriod.length > 0,
+      coachDays:      coachInPeriod.length,
+      tradeDays:      tradeDates.length
+    };
+  }
+
+  // ── Render principal ─────────────────────────────────────────────────────────
+  window.renderIE4Block = function(acc, days, r) {
+    _ie4InjectCSS();
+    var result = _ie4Analyze(acc, days, r);
+    var html = '<div class="ie4-wrap">';
+
+    // Cabecera de sección
+    html += '<div class="ie4-header">'
+      + '<div class="ie4-header-line"></div>'
+      + '<div class="ie4-header-title">🧠 Cruce Coach × Engine · Etapa 4</div>'
+      + '<div class="ie4-header-line"></div>'
+      + '</div>';
+
+    // Sin entradas de Coach
+    if (!result.hasCoachData) {
+      html += '<div class="ie4-card self-only"><div class="ie4-icon">📋</div>'
+        + '<div class="ie4-body"><div class="ie4-title">Sin entradas del Coach en este período</div>'
+        + '<div class="ie4-sub">Registra tu estado emocional diario en el Coach para activar el cruce de fuentes. El engine seguirá detectando señales en los datos del EA.</div>'
+        + '</div></div></div>';
+      return html;
+    }
+
+    // Anillo de concordancia
+    var concColor  = result.concordance >= 70 ? 'var(--red)' : result.concordance >= 40 ? 'var(--amber)' : 'var(--green)';
+    var concLabel  = result.concordance >= 70 ? 'Alta consistencia entre fuentes'
+                   : result.concordance >= 40 ? 'Consistencia parcial'
+                   : 'Baja concordancia — revisar percepciones';
+    var circ = 2 * Math.PI * 19;
+    var dash = circ - (circ * result.concordance / 100);
+    html += '<div class="ie4-concordance">'
+      + '<div class="ie4-conc-ring"><svg width="52" height="52" viewBox="0 0 52 52">'
+      + '<circle cx="26" cy="26" r="19" fill="none" stroke="var(--bg3)" stroke-width="4"/>'
+      + '<circle cx="26" cy="26" r="19" fill="none" stroke="' + concColor + '" stroke-width="4"'
+      + ' stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + dash.toFixed(1) + '"'
+      + ' stroke-linecap="round"/>'
+      + '</svg><div class="ie4-conc-num" style="color:' + concColor + '">' + result.concordance + '%</div></div>'
+      + '<div class="ie4-conc-info"><div class="ie4-conc-title">Concordancia doble fuente</div>'
+      + '<div class="ie4-conc-sub">' + concLabel + '<br>Coach activo ' + result.coachDays + '/' + result.tradeDays + ' días operados.</div>'
+      + '</div></div>';
+
+    // Sin señales
+    if (!result.conclusions.length) {
+      html += '<div class="ie4-card clean"><div class="ie4-icon">✅</div>'
+        + '<div class="ie4-body"><div class="ie4-title">Sin señales de cruce en este período</div>'
+        + '<div class="ie4-sub">El Coach no registra errores y el engine no detecta desviaciones. Período limpio en ambas fuentes.</div>'
+        + '<span class="ie4-badge ok">● Doble fuente · Limpio</span></div></div>';
+    }
+
+    // Conclusiones cruzadas
+    result.conclusions.forEach(function(c) {
+      html += '<div class="ie4-card ' + c.type + '"><div class="ie4-icon">' + c.icon + '</div>'
+        + '<div class="ie4-body"><div class="ie4-title">' + c.label + '</div>'
+        + '<div class="ie4-sub">' + c.desc + '</div>'
+        + '<span class="ie4-badge ' + c.badge + '">' + c.badgeText + '</span>'
+        + (c.dates && c.dates.length
+            ? '<div class="ie4-days">' + c.dates.map(function(d){
+                return '<span class="ie4-day-chip ' + c.dateClass + '">' + d + '</span>';
+              }).join('') + '</div>'
+            : '')
+        + '</div></div>';
+    });
+
+    // Patrones ocultos detectados solo por el EA
+    if (result.hiddenPatterns.length) {
+      html += '<div class="ie4-header" style="margin-top:14px;">'
+        + '<div class="ie4-header-line"></div>'
+        + '<div class="ie4-header-title">🤖 Patrones ocultos · Solo EA</div>'
+        + '<div class="ie4-header-line"></div>'
+        + '</div>';
+      result.hiddenPatterns.forEach(function(p) {
+        html += '<div class="ie4-card hidden"><div class="ie4-icon">' + p.icon + '</div>'
+          + '<div class="ie4-body"><div class="ie4-title">' + p.label + '</div>'
+          + '<div class="ie4-sub">' + p.desc + '</div>'
+          + '<span class="ie4-badge hidden">◈ Detectado por EA · No declarado</span>'
+          + (p.dates && p.dates.length
+              ? '<div class="ie4-days">' + p.dates.map(function(d){
+                  return '<span class="ie4-day-chip purple">' + d + '</span>';
+                }).join('') + '</div>'
+              : '')
+          + '</div></div>';
+      });
+    }
+
+    html += '</div>';
+    return html;
+  };
+
+  // ── Hook sobre renderIntelligenceTab (se ejecuta después de IE3) ────────────
+  var _ie4OrigRender = window.renderIntelligenceTab;
+  window.renderIntelligenceTab = function(acc, period) {
+    _ie4OrigRender(acc, period);
+
+    var container = document.getElementById('ie-account-content');
+    if (!container) return;
+
+    var plan = window.getTradingPlan ? window.getTradingPlan(acc) : null;
+    if (!plan) return;
+
+    var r = window.getConductualAnalysis ? window.getConductualAnalysis(acc) : null;
+    if (!r || r.noData) return;
+
+    if (!period) period = 'week';
+    var now          = new Date();
+    var todayStr     = now.toISOString().slice(0,10);
+    var weekStart    = new Date(now);
+    weekStart.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    var weekStartStr  = weekStart.toISOString().slice(0,10);
+    var monthStartStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-01';
+
+    var days = r.dayDetails.filter(function(d) {
+      if (period === 'today') return d.date === todayStr;
+      if (period === 'week')  return d.date >= weekStartStr  && d.date <= todayStr;
+      if (period === 'month') return d.date >= monthStartStr && d.date <= todayStr;
+      return true;
+    });
+    if (!days.length) return;
+
+    var ie4Html = window.renderIE4Block(acc, days, r);
+    // Insertar al final del bloque IE3
+    var wrap = container.querySelector('.ie3-wrap');
+    if (wrap) wrap.insertAdjacentHTML('afterend', ie4Html);
+    else container.insertAdjacentHTML('beforeend', ie4Html);
+  };
+
+  // API pública para acceso externo si se necesita
+  window.getIE4Analysis = function(acc, days, r) {
+    return _ie4Analyze(acc, days, r);
+  };
+
+})();
+// ── FIN INTELLIGENCE ENGINE ETAPA 4 · Saint Fortune™ ─────────────────────────
+
+
 // ── Marca de autoría (no eliminar) ──
 console.log('%cSaint Fortune', 'color:#999;font-size:10px;');
 console.log('%cPID-SF-' + (Date.now().toString(36).toUpperCase()), 'color:#444;font-size:9px;');
