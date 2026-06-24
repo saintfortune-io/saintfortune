@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(14).html -->
+<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(22).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -576,9 +576,18 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .cal-nav{display:flex;gap:4px;}
 .cal-nav-btn{background:var(--bg2);border:1px solid var(--border2);color:var(--muted2);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
 .cal-nav-btn:hover{color:var(--text);border-color:var(--blue);}
-.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr) 72px;gap:4px;margin-bottom:4px;}
 .cal-wd{font-size:9.5px;text-align:center;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr) 72px;gap:4px;}
+.cal-week-cell{border-radius:7px;padding:6px 4px 5px;text-align:center;border:1px solid var(--border);background:var(--bg3);min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.cal-week-cell.week-win{background:var(--green-dim);border-color:#0f3a22;}
+.cal-week-cell.week-loss{background:var(--red-dim);border-color:#3a0f0f;}
+.cal-week-cell.week-empty{background:transparent;border-color:transparent;}
+.cal-week-label{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+.cal-week-pnl{font-size:10px;font-weight:800;}
+.cal-week-pnl.green{color:var(--green);}
+.cal-week-pnl.red{color:var(--red);}
+.cal-week-trades{font-size:8px;color:var(--muted);}
 .cal-cell{border-radius:7px;padding:6px 4px 5px;text-align:center;border:1px solid transparent;background:var(--bg2);cursor:pointer;min-height:52px;position:relative;transition:all 0.15s;}
 .cal-cell:hover{border-color:var(--border2);}
 .cal-cell.empty{background:transparent;border-color:transparent;cursor:default;}
@@ -1325,7 +1334,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 /* — Licencia — */
 #lic-logo{background:linear-gradient(135deg,var(--gold-bright),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;letter-spacing:0.04em;}
 </style>
-<style id="reto-fall-style">@keyframes retoFall{0%{transform:translateY(0) rotate(0deg);opacity:0.9;}100%{transform:translateY(500px) rotate(720deg);opacity:0;}}</style></head>
+<style id="reto-fall-style">@keyframes retoFall{0%{transform:translateY(0) rotate(0deg);opacity:0.9;}100%{transform:translateY(500px) rotate(720deg);opacity:0;}}</style><style id="sf-tp-css">.tp-card{background:linear-gradient(135deg,rgba(74,158,255,0.05),rgba(160,122,255,0.04));border:1.5px solid rgba(74,158,255,0.25);border-radius:12px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden;}.tp-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));}.tp-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}.tp-card-title{font-size:12px;font-weight:700;color:var(--text);}.tp-card-sub{font-size:10px;color:var(--muted);margin-top:1px;}.tp-badge{font-size:8.5px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(74,158,255,0.12);color:var(--blue);border:1px solid rgba(74,158,255,0.25);}.tp-badge.active{background:rgba(39,217,122,0.12);color:var(--green);border-color:rgba(39,217,122,0.3);}.tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}@media(max-width:500px){.tp-grid{grid-template-columns:1fr;}}.tp-field{display:flex;flex-direction:column;gap:4px;}.tp-field-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}.tp-field-input{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-size:12px;padding:7px 10px;outline:none;transition:border-color 0.15s;}.tp-field-input:focus{border-color:var(--blue);}.tp-field-input option{background:var(--bg2);color:var(--text);}.tp-sessions{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;}.tp-session-btn{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--bg2);color:var(--muted2);transition:all 0.15s;}.tp-session-btn.selected.london{background:rgba(74,158,255,0.15);border-color:rgba(74,158,255,0.5);color:var(--blue);}.tp-session-btn.selected.new-york{background:rgba(160,122,255,0.15);border-color:rgba(160,122,255,0.5);color:var(--purple);}.tp-session-btn.selected.asia{background:rgba(255,174,48,0.12);border-color:rgba(255,174,48,0.4);color:var(--amber);}.tp-session-btn.selected.flexible{background:rgba(39,217,122,0.12);border-color:rgba(39,217,122,0.35);color:var(--green);}.tp-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;margin-bottom:10px;}.tp-toggle-label{font-size:11.5px;font-weight:600;color:var(--muted2);}.tp-toggle-sub{font-size:10px;color:var(--muted);margin-top:1px;}.tp-toggle{position:relative;width:36px;height:20px;flex-shrink:0;}.tp-toggle input{opacity:0;width:0;height:0;}.tp-toggle-slider{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg3);border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:0.2s;}.tp-toggle-slider::after{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;background:var(--muted);border-radius:50%;transition:0.2s;}.tp-toggle input:checked + .tp-toggle-slider{background:rgba(39,217,122,0.2);border-color:var(--green);}.tp-toggle input:checked + .tp-toggle-slider::after{transform:translateX(16px);background:var(--green);}.tp-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}.tp-stat{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:9px 10px;text-align:center;}.tp-stat-val{font-size:16px;font-weight:700;color:var(--text);}.tp-stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:2px;}.tp-stat-trend{font-size:9.5px;font-weight:600;margin-top:3px;}.tp-empty{text-align:center;padding:2rem 1rem;}.tp-empty-icon{font-size:28px;margin-bottom:8px;}.tp-empty-title{font-size:13px;font-weight:700;color:var(--muted2);margin-bottom:4px;}.tp-empty-sub{font-size:11px;color:var(--muted);line-height:1.5;}.tp-divider{display:flex;align-items:center;gap:8px;margin:12px 0;}.tp-divider-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);white-space:nowrap;}.tp-divider-line{flex:1;height:1px;background:var(--border);}.tp-save-btn{width:100%;padding:10px;border-radius:9px;background:linear-gradient(135deg,rgba(74,158,255,0.15),rgba(160,122,255,0.12));border:1.5px solid rgba(74,158,255,0.35);color:var(--blue);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;letter-spacing:0.02em;}.tp-save-btn:hover{background:linear-gradient(135deg,rgba(74,158,255,0.25),rgba(160,122,255,0.2));border-color:rgba(74,158,255,0.6);}.tp-compliance{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:10px;}.tp-compliance.good{background:rgba(39,217,122,0.08);border:1px solid rgba(39,217,122,0.2);}.tp-compliance.warn{background:rgba(255,174,48,0.08);border:1px solid rgba(255,174,48,0.2);}.tp-compliance.bad{background:rgba(255,79,79,0.08);border:1px solid rgba(255,79,79,0.2);}.tp-compliance-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.tp-compliance.good .tp-compliance-dot{background:var(--green);}.tp-compliance.warn .tp-compliance-dot{background:var(--amber);}.tp-compliance.bad .tp-compliance-dot{background:var(--red);}.tp-compliance-text{font-size:11px;font-weight:600;color:var(--muted2);line-height:1.4;}</style><style id="sf-cd-css">.cd-section{margin-top:14px;}.cd-section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}.cd-section-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}.cd-section-line{flex:1;height:1px;background:var(--border);}.cd-alert{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:9px;margin-bottom:7px;}.cd-alert.violation{background:rgba(255,79,79,0.07);border:1px solid rgba(255,79,79,0.25);}.cd-alert.warning{background:rgba(255,174,48,0.07);border:1px solid rgba(255,174,48,0.22);}.cd-alert.ok{background:rgba(39,217,122,0.07);border:1px solid rgba(39,217,122,0.2);}.cd-alert.info{background:rgba(255,255,255,0.03);border:1px solid var(--border2);}.cd-alert-icon{font-size:15px;flex-shrink:0;margin-top:1px;}.cd-alert-body{flex:1;}.cd-alert-title{font-size:11.5px;font-weight:700;line-height:1.4;}.cd-alert.violation .cd-alert-title{color:var(--red);}.cd-alert.warning .cd-alert-title{color:var(--amber);}.cd-alert.ok .cd-alert-title{color:var(--green);}.cd-alert.info .cd-alert-title{color:var(--muted2);}.cd-alert-sub{font-size:10.5px;color:var(--muted2);line-height:1.5;margin-top:3px;}.cd-alert-data{font-size:10px;color:var(--muted);margin-top:4px;font-family:monospace;background:var(--bg3);padding:4px 8px;border-radius:5px;display:inline-block;}.cd-chart{margin-top:8px;}.cd-bars{display:flex;align-items:flex-end;gap:3px;height:36px;margin-bottom:3px;}.cd-bar{flex:1;border-radius:3px 3px 0 0;min-height:3px;transition:all 0.3s;position:relative;}.cd-bar.ok{background:rgba(39,217,122,0.5);}.cd-bar.over{background:rgba(255,79,79,0.6);}.cd-bar-limit{position:absolute;left:0;right:0;border-top:1.5px dashed rgba(255,174,48,0.6);}.cd-chart-label{font-size:9px;color:var(--muted);text-align:center;}.cd-score{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;background:var(--bg2);border:1px solid var(--border2);margin-bottom:10px;}.cd-score-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;}.cd-score-circle.high{background:rgba(39,217,122,0.12);border:2px solid rgba(39,217,122,0.4);color:var(--green);}.cd-score-circle.mid{background:rgba(255,174,48,0.1);border:2px solid rgba(255,174,48,0.35);color:var(--amber);}.cd-score-circle.low{background:rgba(255,79,79,0.1);border:2px solid rgba(255,79,79,0.3);color:var(--red);}.cd-score-label{font-size:12px;font-weight:700;color:var(--text);}.cd-score-sub{font-size:10.5px;color:var(--muted2);margin-top:2px;}.cd-no-data{text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:11px;line-height:1.6;}.cd-days-toggle{font-size:10px;font-weight:600;color:var(--muted2);cursor:pointer;display:flex;align-items:center;gap:5px;margin-top:6px;padding:5px 0;border:none;background:none;}.cd-days-toggle:hover{color:var(--text);}.cd-days-list{margin-top:6px;display:none;}.cd-days-list.open{display:block;}.cd-day-row{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:7px;margin-bottom:4px;font-size:11px;}.cd-day-row.viol{background:rgba(255,79,79,0.06);border:1px solid rgba(255,79,79,0.18);}.cd-day-row.ok{background:var(--bg3);border:1px solid var(--border);}.cd-day-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}.cd-day-row.viol .cd-day-dot{background:var(--red);}.cd-day-row.ok .cd-day-dot{background:var(--green);}.cd-day-date{color:var(--muted2);min-width:80px;}.cd-day-ops{font-weight:700;min-width:30px;}.cd-day-row.viol .cd-day-ops{color:var(--red);}.cd-day-row.ok .cd-day-ops{color:var(--green);}.cd-day-note{color:var(--muted);font-size:10px;flex:1;}.cd-escalation{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap;}.cd-esc-step{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600;}.cd-esc-step.inc{background:rgba(255,79,79,0.1);color:var(--red);}.cd-esc-step.same{background:var(--bg3);color:var(--muted2);}.cd-esc-arrow{font-size:9px;color:var(--muted);}</style></head>
 <body>
 
 <!-- Boot loader — tapa la página hasta que el sistema de licencias resuelve qué mostrar -->
@@ -1401,7 +1410,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <div class="nav-divider"></div>
-  <div class="nav-item active" onclick="showPage(&#39;coach&#39;)" style="color:#a07aff"><div class="dot dot-purple"></div> 🧠 Coach Emocional</div>
+  <div class="nav-item" onclick="showPage(&#39;coach&#39;)" style="color:#a07aff"><div class="dot dot-purple"></div> 🧠 Coach Emocional</div>
   <div class="nav-item" onclick="showPage(&#39;faqs&#39;)" style="color:var(--cyan)"><div class="dot dot-cyan"></div> 📚 Firmas · Diario</div>
   <div class="nav-item" onclick="showPage(&#39;trader&#39;)" style="color:var(--purple)"><div class="dot dot-purple"></div> Control del Trader</div>
   <div class="sidebar-footer" style="padding-top:0.75rem;">
@@ -1443,7 +1452,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
-      <div class="page-sub" id="overview-date">Sesión activa · martes, 23 de junio de 2026</div>
+      <div class="page-sub" id="overview-date">Sesión activa · miércoles, 24 de junio de 2026</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;calendar&#39;)">📅 Calendario</button>
@@ -2070,7 +2079,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-wd">Mié</div><div class="cal-wd">Jue</div><div class="cal-wd">Vie</div>
       <div class="cal-wd">Sáb</div>
     </div>
-    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell win" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div><div class="cal-day-pnl green">+$1994,45</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell win" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div><div class="cal-day-pnl green">+$1378,4</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$2707</div><div class="cal-day-trades">3 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$3960</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$3545</div><div class="cal-day-trades">8 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell loss" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div><div class="cal-day-pnl red">-$3842,4</div><div class="cal-day-trades">8 op</div></div><div class="cal-cell today mixed" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div><div class="cal-day-pnl green">+$15.512</div><div class="cal-day-trades">20 op</div></div><div class="cal-cell" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div></div><div class="cal-cell" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div></div><div class="cal-cell" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-cell weekend" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div></div>
+    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell win" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div><div class="cal-day-pnl green">+$1994,45</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell win" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div><div class="cal-day-pnl green">+$1378,4</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$2707</div><div class="cal-day-trades">3 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$3960</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$3545</div><div class="cal-day-trades">8 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell loss" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div><div class="cal-day-pnl red">-$3842,4</div><div class="cal-day-trades">8 op</div></div><div class="cal-cell mixed" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div><div class="cal-day-pnl green">+$15.512</div><div class="cal-day-trades">20 op</div></div><div class="cal-cell today" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div></div><div class="cal-cell" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div></div><div class="cal-cell" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-cell weekend" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div></div>
     <div class="cal-legend">
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--green)"></div> Ganador</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--red)"></div> Perdedor</div>
@@ -2078,7 +2087,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--border2)"></div> Sin datos</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--amber);border-radius:2px"></div> 💰 Ciclo cobrado</div>
     </div>
-  </div><div style="margin-top:1rem"><div class="section-title" style="margin-bottom:0.75rem">📊 Trazabilidad de Ciclos por Cuenta · Junio 2026</div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">BACKTESTING<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">0 días válidos totales · mín 5</div></div><div style="font-size:10px;color:var(--muted)">Sin días válidos este mes aún</div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>0 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">BACKTESTING2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 23 +$2404</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">PROXP TRADE 1<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">4 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 12 +$689</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 15 +$605</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 16 +$902</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 17 +$973</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>4 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:80%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">backtesting 1<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 23 +$13108</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">FUTUROS TRADE 2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$150/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$400</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">PROP XP TRADE 2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">5 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 12 +$1305</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 15 +$773</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 16 +$1005</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 17 +$937</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$658</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>5 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">FUTUROS ACELERATOR +++<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$150/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$1200</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div></div></div>
+  </div><div style="margin-top:1rem"><div class="section-title" style="margin-bottom:0.75rem">📊 Trazabilidad de Ciclos por Cuenta · Junio 2026</div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">BACKTESTING<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">0 días válidos totales · mín 5</div></div><div style="font-size:10px;color:var(--muted)">Sin días válidos este mes aún</div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>0 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">BACKTESTING2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 23 +$2404</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">PROXP TRADE 1<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">4 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 12 +$689</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 15 +$605</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 16 +$902</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 17 +$973</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>4 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:80%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">backtesting 1<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 1</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 23 +$13108</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 1 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">FUTUROS TRADE 2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$150/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$400</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">PROP XP TRADE 2<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">5 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$500/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 12 +$1305</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 15 +$773</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 16 +$1005</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 17 +$937</div><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$658</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>5 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green);border-radius:3px"></div></div></div></div><div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:0.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700">FUTUROS ACELERATOR +++<span style="font-size:10px;margin-left:6px;padding:1px 8px;border-radius:4px;background:var(--amber-dim);color:var(--amber)">1er Ciclo activo</span></div><div style="font-size:10px;color:var(--muted)">1 días válidos totales · mín 5</div></div><div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Días válidos este mes (≥$150/día):</div><div style="display:flex;gap:4px;flex-wrap:wrap"><div style="padding:2px 7px;border-radius:4px;background:var(--green-dim);border:1px solid #0a3020;font-size:9px;color:var(--green);font-weight:600">Día 18 +$1200</div></div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:3px"><span>Progreso ciclo global</span><span>1 / 5 días</span></div><div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:3px"></div></div></div></div></div></div>
 </div>
 
 <!-- ───────── PAGE: CERTIFICATES ───────── -->
@@ -2255,7 +2264,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 </div>
 
 <!-- ───────── PAGE: ACCOUNT DETAIL ───────── -->
-<div id="page-account" class="page hidden">
+<div id="page-account" class="page">
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
@@ -2278,6 +2287,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <button class="tab-btn" onclick="switchDetailTab(&#39;roi&#39;)">💰 ROI &amp; Cobro</button>
     <button class="tab-btn" onclick="switchDetailTab(&#39;params&#39;)">⚙ Parámetros</button>
     <button class="tab-btn" onclick="switchDetailTab(&#39;trades&#39;)">📋 Operaciones</button>
+    <button class="tab-btn" onclick="switchDetailTab(&#39;plan&#39;)">🎯 Plan de Trading</button>
   </div>
 
   <!-- TAB: STATS -->
@@ -2446,9 +2456,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;BACKTESTING&#39;)">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;BACKTESTING&#39;)">⬇ Importar ahora</button>
-        <span id="mt5-status-BACKTESTING" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 0 ya existían/omitidos · 18:56:09</span>
+        <span id="mt5-status-BACKTESTING" style="font-size:11px;color:var(--muted)">Última importación: 24/6/2026, 12:50:27 · 0 nuevo(s)</span>
       </div>
     </div>
+  </div>
+
+
+  <!-- TAB: PLAN DE TRADING -->
+  <div class="tab-content" id="dtab-plan">
+    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · BACKTESTING</div><div class="tp-card-sub">Sin plan guardado todavía</div></div><span class="tp-badge ">Sin configurar</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="2" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk"><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup."></textarea></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div><div class="tp-stats-row"><div class="tp-stat"><div class="tp-stat-val blue">2.0</div><div class="tp-stat-label">Ops/día media</div></div><div class="tp-stat"><div class="tp-stat-val green">1</div><div class="tp-stat-label">Posible revancha</div></div><div class="tp-stat"><div class="tp-stat-val purple">Asia</div><div class="tp-stat-label">Sesión frecuente</div></div></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;BACKTESTING&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · BACKTESTING</div><div class="cd-section-line"></div></div><div id="cd-block-BACKTESTING"><div class="cd-no-data">Define primero el Plan de Trading para activar la detección.</div></div></div></div>
   </div>
 
   <!-- TAB: TRADES -->
@@ -2500,7 +2516,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
 
 <!-- ══ PAGE: COACH EMOCIONAL ══ -->
-<div id="page-coach" class="page" style="position:relative;">
+<div id="page-coach" class="page hidden" style="position:relative;">
 <div class="sf-watermark"><span>Saint Fortune</span></div>
 
   <!-- TOPBAR -->
@@ -2650,7 +2666,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">🚦 Semáforo Mental — 30 días</span>
         </div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">Verde si operaste en peak · Amarillo si con precaución · Rojo si zona de riesgo</div>
-        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="25 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">25</div><div title="26 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div><div title="27 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">27</div><div title="28 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">28</div><div title="29 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">29</div><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div></div>
+        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="26 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div><div title="27 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">27</div><div title="28 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">28</div><div title="29 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">29</div><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div><div title="24 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">24</div></div>
         <div style="display:flex;gap:10px;margin-top:8px;font-size:9px;color:var(--muted);">
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(39,217,122,0.4);margin-right:3px;"></span>🟢 Peak</span>
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(255,174,48,0.4);margin-right:3px;"></span>🟡 Precaución</span>
@@ -4179,7 +4195,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">🏆 ¡Nuevo récord! 2 días de trading limpios</span></div>
 
 <!-- ══════════════ SUPABASE (sincronización en la nube) ══════════════ -->
-<script src="file:///C:/Users/34634/Downloads/index_files/supabase.min.js.descarga"></script>
+<script src="./index_files/supabase.min.js.descarga"></script>
 
 <!-- ══════════════ SCRIPT ══════════════ -->
 <script>
@@ -5748,7 +5764,7 @@ function switchDetailTab(tab) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('dtab-'+tab)?.classList.add('active');
-  const tabs = ['stats','fuel','roi','params','trades'];
+  const tabs = ['stats','fuel','roi','params','trades','plan'];
   const idx = tabs.indexOf(tab);
   const tabBtns = document.querySelectorAll('.tab-btn');
   if(tabBtns[idx]) tabBtns[idx].classList.add('active');
@@ -5864,13 +5880,16 @@ function renderCalendar() {
       <div class="cal-wd">Dom</div><div class="cal-wd">Lun</div><div class="cal-wd">Mar</div>
       <div class="cal-wd">Mi\u00e9</div><div class="cal-wd">Jue</div><div class="cal-wd">Vie</div>
       <div class="cal-wd">S\u00e1b</div>
+      <div class="cal-wd" style="color:var(--blue);border-left:1px solid var(--border);margin-left:2px;">Sem.</div>
     </div>
     <div class="cal-grid">`;
 
   // Celdas vacías iniciales
   for (let i = 0; i < startWD; i++) html += '<div class="cal-cell empty"></div>';
 
-  // Días del mes
+  // Días del mes con columna de totales semanales
+  let weekPnl = 0; let weekTrades = 0; let weekHasData = false;
+
   for (let d = 1; d <= endDay; d++) {
     const date   = new Date(year, month, d);
     const wd     = date.getDay();
@@ -5880,6 +5899,7 @@ function renderCalendar() {
     let cls = 'cal-cell' + (isWknd ? ' weekend' : '');
     if (isToday) cls += ' today';
     if (data) {
+      weekPnl += data.pnl; weekTrades += data.trades; weekHasData = true;
       if (data.wins > 0 && data.losses === 0) cls += ' win';
       else if (data.losses > 0 && data.wins === 0) cls += ' loss';
       else if (data.wins > 0 && data.losses > 0) cls += ' mixed';
@@ -5890,10 +5910,25 @@ function renderCalendar() {
       inner += `<div style="font-size:7px;font-weight:800;color:#000;background:var(--amber);border-radius:3px;padding:1px 3px;margin-top:2px;line-height:1.4;text-align:center" title="${m.label} · $${m.amount.toLocaleString()}">&#128176;${m.label}</div>`;
     });
     html += `<div class="${cls}" onclick="openDayModal(${d},${month},${year})">${inner}</div>`;
-    // Celdas vacías al final de la última fila
-    if (d === endDay) {
-      const rem = 6 - date.getDay();
-      for (let i = 0; i < rem; i++) html += '<div class="cal-cell empty"></div>';
+
+    const isLastDay = d === endDay;
+    const isSaturday = wd === 6;
+
+    if (isSaturday || isLastDay) {
+      // Rellenar celdas vacías si es el último día y no terminó en sábado
+      if (isLastDay && !isSaturday) {
+        const rem = 6 - wd;
+        for (let i = 0; i < rem; i++) html += '<div class="cal-cell empty"></div>';
+      }
+      // Celda de totales semanales
+      if (weekHasData) {
+        const wcls = weekPnl >= 0 ? 'week-win' : 'week-loss';
+        const wcolor = weekPnl >= 0 ? 'green' : 'red';
+        html += `<div class="cal-week-cell ${wcls}"><div class="cal-week-label">semana</div><div class="cal-week-pnl ${wcolor}">${fmtPnl(weekPnl)}</div><div class="cal-week-trades">${weekTrades} op</div></div>`;
+      } else {
+        html += `<div class="cal-week-cell week-empty"></div>`;
+      }
+      weekPnl = 0; weekTrades = 0; weekHasData = false;
     }
   }
 
@@ -13624,6 +13659,1192 @@ if (typeof coachSaveEntry === 'function') {
 }
 
 // ── FIN SESIÓN 5 · Saint Fortune™ ────────────────────────────────────────────
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · INTELLIGENCE ENGINE v2
+// Sin fricción: el trader solo registra. El engine interpreta solo.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+(function() {
+
+// ── CSS ──────────────────────────────────────────────────────────────────────
+function _ieInjectCSS() {
+  if (document.getElementById('sf-ie-css')) return;
+  var s = document.createElement('style');
+  s.id = 'sf-ie-css';
+  s.textContent = [
+    '.ie-card{background:linear-gradient(135deg,rgba(160,122,255,0.07),rgba(74,158,255,0.05));border:1.5px solid rgba(160,122,255,0.35);border-radius:12px;padding:14px 16px;margin-bottom:8px;position:relative;overflow:hidden;}',
+    '.ie-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--purple),var(--blue));}',
+    '.ie-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}',
+    '.ie-badge{font-size:9px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(160,122,255,0.15);color:var(--purple);border:1px solid rgba(160,122,255,0.3);flex-shrink:0;}',
+    '.ie-title{font-size:11px;font-weight:600;color:var(--muted2);}',
+    '.ie-block{padding:10px 12px;border-radius:9px;margin-bottom:7px;}',
+    '.ie-block-label{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;}',
+    '.ie-block-text{font-size:12px;font-weight:600;line-height:1.55;color:var(--text);}',
+    '.ie-block-sub{font-size:10.5px;color:var(--muted2);line-height:1.5;margin-top:4px;}',
+    '.ie-block.ie-finding{background:rgba(160,122,255,0.09);border:1px solid rgba(160,122,255,0.2);}',
+    '.ie-block.ie-finding .ie-block-label{color:var(--purple);}',
+    '.ie-block.ie-objective{background:rgba(74,158,255,0.08);border:1px solid rgba(74,158,255,0.2);}',
+    '.ie-block.ie-objective .ie-block-label{color:var(--blue);}',
+    '.ie-block.ie-risk{background:rgba(255,174,48,0.08);border:1px solid rgba(255,174,48,0.2);}',
+    '.ie-block.ie-risk .ie-block-label{color:var(--amber);}',
+    '.ie-block.ie-strength{background:rgba(39,217,122,0.08);border:1px solid rgba(39,217,122,0.2);}',
+    '.ie-block.ie-strength .ie-block-label{color:var(--green);}',
+    '.ie-banner{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:9px;margin-bottom:9px;}',
+    '.ie-banner.improved{background:rgba(39,217,122,0.1);border:1px solid rgba(39,217,122,0.3);}',
+    '.ie-banner.worsened{background:rgba(255,174,48,0.09);border:1px solid rgba(255,174,48,0.25);}',
+    '.ie-banner.neutral{background:rgba(255,255,255,0.03);border:1px solid var(--border2);}',
+    '.ie-banner-icon{font-size:17px;flex-shrink:0;margin-top:1px;}',
+    '.ie-banner-text{font-size:11.5px;font-weight:600;line-height:1.5;}',
+    '.ie-banner-text.green{color:var(--green);}',
+    '.ie-banner-text.amber{color:var(--amber);}',
+    '.ie-banner-text.muted{color:var(--muted2);}',
+    '.ie-track{margin-top:8px;}',
+    '.ie-track-labels{display:flex;gap:4px;margin-bottom:3px;}',
+    '.ie-track-lbl{flex:1;font-size:8px;text-align:center;color:var(--muted);font-weight:700;text-transform:uppercase;}',
+    '.ie-track-dots{display:flex;gap:4px;}',
+    '.ie-dot{flex:1;height:7px;border-radius:4px;transition:all 0.3s;}',
+    '.ie-dot.ok{background:var(--green);box-shadow:0 0 5px rgba(39,217,122,0.4);}',
+    '.ie-dot.fail{background:var(--red);}',
+    '.ie-dot.none{background:var(--bg3);border:1px solid var(--border2);}',
+    '@keyframes ie-pulse{0%,100%{box-shadow:0 0 0 0 rgba(39,217,122,0.5);}60%{box-shadow:0 0 0 5px rgba(39,217,122,0);}}',
+    '.ie-streak{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;border-radius:20px;background:rgba(39,217,122,0.12);border:1px solid rgba(39,217,122,0.45);color:var(--green);font-size:11px;font-weight:700;margin-bottom:8px;animation:ie-pulse 2.2s ease-in-out infinite;}',
+    '.ie-streak-led{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;}',
+    '.ie-footer{font-size:10px;color:var(--muted);margin-top:6px;border-top:1px solid var(--border);padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}',
+    '.ie-data-btn{font-size:10px;font-weight:600;color:var(--muted2);background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:4px 11px;cursor:pointer;transition:all 0.15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}',
+    '.ie-data-btn:hover{border-color:var(--purple);color:var(--purple);}',
+    '.ie-data-drawer{background:var(--bg1);border:1.5px solid var(--border2);border-radius:10px;margin-top:6px;overflow:hidden;}',
+    '.ie-data-drawer-head{padding:10px 14px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:space-between;}',
+    '.ie-data-src{padding:10px 14px;border-bottom:1px solid var(--border);}',
+    '.ie-data-src:last-child{border-bottom:none;}',
+    '.ie-data-src-label{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;}',
+    '.ie-data-src-val{font-size:11.5px;color:var(--muted2);line-height:1.5;}',
+    '.ie-empty{text-align:center;padding:1.5rem 0;}',
+    '.ie-score-bar{height:4px;border-radius:3px;background:var(--bg3);margin-top:6px;overflow:hidden;}',
+    '.ie-score-fill{height:100%;border-radius:3px;transition:width 0.5s;}',
+  ].join('');
+  document.head.appendChild(s);
+}
+
+// ── Helpers de semana ────────────────────────────────────────────────────────
+function _ieWeekBounds(offsetWeeks) {
+  offsetWeeks = offsetWeeks || 0;
+  var now = new Date();
+  var day = now.getDay() || 7;
+  var monday = new Date(now);
+  monday.setDate(now.getDate() - (day - 1) - offsetWeeks * 7);
+  monday.setHours(0,0,0,0);
+  var friday = new Date(monday);
+  friday.setDate(monday.getDate() + 4);
+  return {
+    start: monday.toISOString().slice(0,10),
+    end:   friday.toISOString().slice(0,10),
+    days:  [0,1,2,3,4].map(function(i){
+      var d = new Date(monday); d.setDate(monday.getDate()+i);
+      return d.toISOString().slice(0,10);
+    })
+  };
+}
+
+// ── Recopilar datos ──────────────────────────────────────────────────────────
+function _ieGatherData() {
+  var allCoach = coachLoad();
+  var allDates = Object.keys(allCoach).sort();
+  if (allDates.length < 2) return null;
+
+  var tradesByDate = {};
+  try { tradesByDate = JSON.parse(localStorage.getItem('sf_trades_v1') || '{}'); } catch(e) {}
+
+  var allTrades = [];
+  Object.keys(tradesByDate).forEach(function(d) {
+    (tradesByDate[d]||[]).forEach(function(t){ allTrades.push({date:d,t:t}); });
+  });
+
+  var ERROR_LABELS = {
+    fomo:'FOMO', cansada:'Operar cansada', sobreoperar:'Sobreoperar',
+    impulsiva:'Entrada impulsiva', tardia:'Entrada tardía', stop:'Mover el stop',
+    venganza:'Revenge trading', confianza:'Exceso de confianza', plan:'Saltar el plan', size:'Tamaño excesivo'
+  };
+
+  // Errores globales
+  var errFreqAll = {}, errPnlAll = {};
+  allDates.forEach(function(date) {
+    var e = allCoach[date];
+    var dayPnl = (tradesByDate[date]||[]).reduce(function(s,t){ return s+(parseFloat(t.pnl)||0); },0);
+    (e.errors||[]).forEach(function(err){
+      errFreqAll[err] = (errFreqAll[err]||0)+1;
+      errPnlAll[err]  = (errPnlAll[err]||0)+dayPnl;
+    });
+  });
+  var sortedErrors   = Object.entries(errFreqAll).sort(function(a,b){ return b[1]-a[1]; });
+  var sortedErrCost  = Object.entries(errPnlAll).sort(function(a,b){ return a[1]-b[1]; });
+  var topError       = sortedErrors[0]  || null;
+  var costliestError = sortedErrCost[0] || null;
+
+  // Emociones
+  var emoFreqAll={}, emoPnlAll={}, emoCountAll={};
+  allDates.forEach(function(date){
+    var e=allCoach[date];
+    var dayPnl=(tradesByDate[date]||[]).reduce(function(s,t){return s+(parseFloat(t.pnl)||0);},0);
+    (e.emoBefore||[]).forEach(function(emo){
+      emoFreqAll[emo]=(emoFreqAll[emo]||0)+1;
+      emoPnlAll[emo]=(emoPnlAll[emo]||0)+dayPnl;
+      emoCountAll[emo]=(emoCountAll[emo]||0)+1;
+    });
+  });
+  var emoAvgPnl={};
+  Object.keys(emoPnlAll).forEach(function(e){ emoAvgPnl[e]=emoPnlAll[e]/(emoCountAll[e]||1); });
+  var sortedEmoProfit = Object.entries(emoAvgPnl).sort(function(a,b){ return b[1]-a[1]; });
+  var sortedEmoDanger = Object.entries(emoAvgPnl).sort(function(a,b){ return a[1]-b[1]; });
+  var bestEmotion  = sortedEmoProfit[0] || null;
+  var worstEmotion = sortedEmoDanger[0] || null;
+
+  // Semanas
+  var wCurr = _ieWeekBounds(0);
+  var wPrev = _ieWeekBounds(1);
+
+  function _errCountInRange(start, end) {
+    var freq = {};
+    allDates.filter(function(d){ return d>=start&&d<=end; }).forEach(function(d){
+      (allCoach[d].errors||[]).forEach(function(err){ freq[err]=(freq[err]||0)+1; });
+    });
+    return freq;
+  }
+  function _pnlInRange(start, end) {
+    return allDates.filter(function(d){ return d>=start&&d<=end; })
+      .reduce(function(s,d){ return s+(tradesByDate[d]||[]).reduce(function(ss,t){ return ss+(parseFloat(t.pnl)||0); },0); },0);
+  }
+
+  var errCurr = _errCountInRange(wCurr.start, wCurr.end);
+  var errPrev = _errCountInRange(wPrev.start, wPrev.end);
+  var pnlCurr = _pnlInRange(wCurr.start, wCurr.end);
+  var pnlPrev = _pnlInRange(wPrev.start, wPrev.end);
+
+  // Error principal de las últimas 3 semanas
+  var err3w = {};
+  [0,1,2].forEach(function(off){
+    var wb=_ieWeekBounds(off);
+    Object.entries(_errCountInRange(wb.start,wb.end)).forEach(function(kv){
+      err3w[kv[0]]=(err3w[kv[0]]||0)+kv[1];
+    });
+  });
+  var topErr3w = Object.entries(err3w).sort(function(a,b){ return b[1]-a[1]; })[0] || topError;
+
+  // Error principal a seguir
+  var mainErrKey = topErr3w ? topErr3w[0] : (topError ? topError[0] : null);
+  var mainErrCurr = mainErrKey ? (errCurr[mainErrKey]||0) : 0;
+  var mainErrPrev = mainErrKey ? (errPrev[mainErrKey]||0) : 0;
+  var progressPct = mainErrPrev > 0 ? Math.round(((mainErrPrev-mainErrCurr)/mainErrPrev)*100) : null;
+
+  // Seguimiento semanal inferido
+  var weekDots = wCurr.days.map(function(date) {
+    if (!allCoach[date]) return 'none';
+    var errs = allCoach[date].errors || [];
+    return errs.indexOf(mainErrKey) >= 0 ? 'fail' : 'ok';
+  });
+
+  // Racha de días sin el error principal (desde hoy hacia atrás)
+  var streak = 0;
+  var reverseDots = weekDots.slice().reverse();
+  for (var i=0; i<reverseDots.length; i++) {
+    if (reverseDots[i]==='ok') streak++;
+    else break;
+  }
+  // Si la racha llega al lunes, mirar semana anterior también
+  if (streak === weekDots.filter(function(d){return d!=='none';}).length) {
+    var prevDots = wPrev.days.map(function(date){
+      if (!allCoach[date]) return 'none';
+      return (allCoach[date].errors||[]).indexOf(mainErrKey)>=0 ? 'fail':'ok';
+    });
+    var prevStreak=0;
+    var revPrev=prevDots.slice().reverse();
+    for (var j=0;j<revPrev.length;j++){ if(revPrev[j]==='ok') prevStreak++; else break; }
+    streak += prevStreak;
+  }
+
+  // Días protegidos
+  var protectedDays = allDates.filter(function(d){
+    return allCoach[d].semaforo==='rojo' && !(tradesByDate[d]&&tradesByDate[d].length);
+  }).length;
+
+  var greenDays = allDates.filter(function(d){ return allCoach[d].semaforo==='verde'; }).length;
+  var greenRate = allDates.length ? Math.round((greenDays/allDates.length)*100) : 0;
+
+  // Winrate reciente
+  var cut4w = new Date(); cut4w.setDate(cut4w.getDate()-28);
+  var cut4wStr = cut4w.toISOString().slice(0,10);
+  var recent = allTrades.filter(function(x){ return x.date>=cut4wStr; });
+  var wins4w  = recent.filter(function(x){ return (parseFloat(x.t.pnl)||0)>0; }).length;
+  var wr4w    = recent.length ? Math.round((wins4w/recent.length)*100) : null;
+
+  return {
+    totalSessions:  allDates.length,
+    allTrades:      allTrades,
+    topError:       topError,
+    costliestError: costliestError,
+    mainErrKey:     mainErrKey,
+    bestEmotion:    bestEmotion,
+    worstEmotion:   worstEmotion,
+    protectedDays:  protectedDays,
+    greenRate:      greenRate,
+    wr4w:           wr4w,
+    pnlCurr:        pnlCurr,
+    pnlPrev:        pnlPrev,
+    errCurr:        errCurr,
+    errPrev:        errPrev,
+    mainErrCurr:    mainErrCurr,
+    mainErrPrev:    mainErrPrev,
+    progressPct:    progressPct,
+    weekDots:       weekDots,
+    streak:         streak,
+    errFreqAll:     errFreqAll,
+    emoPnlAll:      emoPnlAll,
+    emoAvgPnl:      emoAvgPnl,
+    sortedEmoProfit:sortedEmoProfit,
+    ERROR_LABELS:   ERROR_LABELS,
+  };
+}
+
+// ── Conclusiones ─────────────────────────────────────────────────────────────
+function _ieConclusions(d) {
+  var EL  = d.ERROR_LABELS;
+  var fmt = function(n){ return (n>=0?'+$':'-$')+Math.abs(Math.round(n)).toLocaleString('es-ES'); };
+
+  // Hallazgo principal
+  var finding='', findingSub='', findingScore=0;
+  if (d.topError && d.costliestError && d.topError[0]===d.costliestError[0]) {
+    var eLabel=EL[d.topError[0]]||d.topError[0];
+    finding = '"'+eLabel+'" es el comportamiento que más afecta tu rendimiento.';
+    findingSub = 'Apareció <b>'+d.topError[1]+' veces</b> y acumula un impacto total en cuenta de <b style="color:var(--red);">'+fmt(d.costliestError[1])+'</b>.';
+    findingScore = Math.min(Math.round(Math.abs(d.costliestError[1])/50),100);
+  } else if (d.worstEmotion && d.worstEmotion[1]<-30) {
+    finding = 'Operar en estado "'+d.worstEmotion[0]+'" destruye tu resultado.';
+    findingSub = 'PnL medio en ese estado: <b style="color:var(--red);">'+fmt(d.worstEmotion[1])+'</b>/día. Es tu correlación más negativa.';
+    findingScore = Math.min(Math.round(Math.abs(d.worstEmotion[1])/20),100);
+  } else if (d.topError) {
+    var tLabel=EL[d.topError[0]]||d.topError[0];
+    finding = '"'+tLabel+'" es tu error más frecuente.';
+    findingSub = 'Apareció <b>'+d.topError[1]+' veces</b> en tu historial. Reducirlo es la palanca más directa.';
+    findingScore = Math.min(d.topError[1]*15,100);
+  } else {
+    finding = 'No hay un error dominante claro — buena señal.';
+    findingSub = 'Tu historial no muestra un patrón negativo recurrente. Foco en consolidar lo que ya funciona.';
+    findingScore = 0;
+  }
+
+  // Objetivo semanal
+  var objective='', objectiveSub='';
+  if (d.mainErrKey && d.mainErrCurr===0 && d.mainErrPrev>0) {
+    var oLabel=EL[d.mainErrKey]||d.mainErrKey;
+    objective = 'Esta semana no has cometido "'+oLabel+'" — mantén eso.';
+    objectiveSub = 'La semana pasada apareció '+d.mainErrPrev+' veces. El cambio ya es visible en los datos.';
+  } else if (d.mainErrKey) {
+    var oLabel2=EL[d.mainErrKey]||d.mainErrKey;
+    objective = 'Reducir "'+oLabel2+'" esta semana.';
+    objectiveSub = 'Antes de cada entrada pregúntate en voz alta: "¿Estoy entrando por '+oLabel2+'?" Si la respuesta es sí, cierra el gráfico.';
+  } else if (d.worstEmotion && d.worstEmotion[1]<-30) {
+    objective = 'No operar si tu estado es "'+d.worstEmotion[0]+'".';
+    objectiveSub = 'Si ese estado aparece antes de abrir el terminal, ciérralo. Eso es gestión de riesgo psicológico real.';
+  } else {
+    objective = 'Mantener el proceso sin cambios.';
+    objectiveSub = 'No hay una palanca negativa dominante. Lo peligroso sería cambiar algo que funciona por impaciencia.';
+  }
+
+  // Riesgo principal
+  var risk='', riskSub='';
+  if (d.topError && d.errFreqAll[d.topError[0]]>=4) {
+    var rLabel=EL[d.topError[0]]||d.topError[0];
+    risk = '"'+rLabel+'" se está convirtiendo en hábito.';
+    riskSub = 'Con '+d.topError[1]+' apariciones ya no es un desliz. Los hábitos no se rompen con fuerza de voluntad, se rompen con sistemas. Define una regla específica antes de cada entrada.';
+  } else if (d.worstEmotion && (d.emoPnlAll[d.worstEmotion[0]]||0)<-200) {
+    risk = 'Fatiga operativa — operar en mal estado emocional.';
+    riskSub = 'El coste acumulado de operar en estado "'+d.worstEmotion[0]+'" es significativo. Cada día sin filtro aumenta el riesgo de drawdown emocional.';
+  } else if (d.wr4w!==null && d.wr4w<40) {
+    risk = 'Winrate por debajo del 40% en 4 semanas.';
+    riskSub = d.wr4w+'% de efectividad. Antes de buscar más setups, revisa si los errores psicológicos están influyendo en las entradas.';
+  } else if (d.pnlCurr<0 && d.pnlPrev<0) {
+    risk = 'Dos semanas seguidas en negativo.';
+    riskSub = 'Si la próxima semana también es negativa, activa pausa de 2 días y revisión completa del diario.';
+  } else {
+    risk = 'Sin riesgo dominante detectado.';
+    riskSub = 'Mantén el nivel de exigencia con el checklist de preparación.';
+  }
+
+  // Fortaleza
+  var strength='', strengthSub='';
+  if (d.bestEmotion && d.bestEmotion[1]>20) {
+    strength = 'Estado "'+d.bestEmotion[0]+'"';
+    strengthSub = 'PnL medio en ese estado: <b style="color:var(--green);">'+fmt(d.bestEmotion[1])+'</b>/día. Diseña tu rutina para llegar a ese estado cada mañana.';
+  } else if (d.protectedDays>=3) {
+    strength = 'Disciplina de días protegidos';
+    strengthSub = '<b>'+d.protectedDays+' días</b> en que elegiste no operar estando en rojo. Eso es capital real preservado.';
+  } else if (d.greenRate>=70) {
+    strength = 'Consistencia en preparación';
+    strengthSub = 'Completas el checklist el <b>'+d.greenRate+'%</b> de los días. Esa disciplina es la base de todo lo demás.';
+  } else {
+    strength = 'Constancia en el registro';
+    strengthSub = '<b>'+d.totalSessions+' sesiones</b> registradas. Sin datos no hay mejora posible.';
+  }
+
+  return {finding:finding,findingSub:findingSub,findingScore:findingScore,objective:objective,objectiveSub:objectiveSub,risk:risk,riskSub:riskSub,strength:strength,strengthSub:strengthSub};
+}
+
+// ── Nombre ───────────────────────────────────────────────────────────────────
+function _ieGetName() {
+  try { var l=JSON.parse(localStorage.getItem('sf_lic_v1')||'{}'); return l.name||l.trader||''; } catch(e){ return ''; }
+}
+
+// ── Panel de datos completos ──────────────────────────────────────────────────
+function _ieDataDrawerHTML(d) {
+  var EL=d.ERROR_LABELS;
+  var fmt=function(n){ return (n>=0?'+$':'-$')+Math.abs(Math.round(n)).toLocaleString('es-ES'); };
+  var rows='';
+
+  // Top errores
+  var topErrs=Object.entries(d.errFreqAll).sort(function(a,b){return b[1]-a[1];}).slice(0,3);
+  if (topErrs.length) {
+    var errRows=topErrs.map(function(kv){
+      return '<span style="display:inline-flex;align-items:center;gap:5px;margin-right:6px;margin-bottom:4px;padding:3px 8px;border-radius:5px;background:rgba(255,79,79,0.08);border:1px solid rgba(255,79,79,0.2);font-size:11px;"><b style="color:var(--red);">'+kv[1]+'×</b><span style="color:var(--muted2);">'+(EL[kv[0]]||kv[0])+'</span></span>';
+    }).join('');
+    rows+='<div class="ie-data-src"><div class="ie-data-src-label">⚠️ Errores más frecuentes (fuente: etiquetas diarias)</div><div class="ie-data-src-val">'+errRows+'</div></div>';
+  }
+
+  // Emociones vs PnL
+  var topEmo=d.sortedEmoProfit.slice(0,3);
+  if (topEmo.length) {
+    var emoRows=topEmo.map(function(kv){
+      var color=kv[1]>=0?'var(--green)':'var(--red)';
+      return '<span style="display:inline-flex;align-items:center;gap:5px;margin-right:6px;margin-bottom:4px;padding:3px 8px;border-radius:5px;background:var(--bg3);border:1px solid var(--border2);font-size:11px;"><span style="color:var(--muted2);">'+kv[0]+'</span><b style="color:'+color+';">'+fmt(kv[1])+'</b></span>';
+    }).join('');
+    rows+='<div class="ie-data-src"><div class="ie-data-src-label">🧠 Estado emocional vs PnL (fuente: correlaciones)</div><div class="ie-data-src-val">'+emoRows+'</div></div>';
+  }
+
+  // Semáforo verde rate
+  rows+='<div class="ie-data-src"><div class="ie-data-src-label">🚦 Preparación pre-sesión (fuente: semáforo)</div><div class="ie-data-src-val" style="font-size:11.5px;color:var(--muted2);">Semáforo verde el <b style="color:var(--green);">'+d.greenRate+'%</b> de los días registrados · <b>'+d.protectedDays+'</b> días protegidos (rojo sin operar)</div></div>';
+
+  // PnL semanas
+  var pnlColor=d.pnlCurr>=0?'var(--green)':'var(--red)';
+  var pnlPrevColor=d.pnlPrev>=0?'var(--green)':'var(--red)';
+  rows+='<div class="ie-data-src"><div class="ie-data-src-label">📊 Rendimiento económico (fuente: trades)</div><div class="ie-data-src-val" style="font-size:11.5px;color:var(--muted2);">Esta semana: <b style="color:'+pnlColor+';">'+fmt(d.pnlCurr)+'</b> · Semana anterior: <b style="color:'+pnlPrevColor+';">'+fmt(d.pnlPrev)+'</b>'+(d.wr4w!==null?' · Winrate 4 sem: <b>'+d.wr4w+'%</b>':'')+'</div></div>';
+
+  return '<div class="ie-data-drawer" id="ie-data-drawer">'
+    +'<div class="ie-data-drawer-head"><span>📂 Datos que generan las conclusiones</span><span onclick="document.getElementById(\'ie-data-drawer\').remove();document.querySelector(\'.ie-data-btn\').style.display=\'flex\';" style="cursor:pointer;color:var(--muted);font-size:11px;font-weight:600;">✕ Cerrar</span></div>'
+    +rows
+    +'</div>';
+}
+
+// ── Render principal ──────────────────────────────────────────────────────────
+function _ieRender() {
+  var panel = document.getElementById('coach-insights-panel');
+  if (!panel) return;
+  _ieInjectCSS();
+
+  var old = document.getElementById('sf-intelligence-engine');
+  if (old) old.remove();
+
+  var card = document.createElement('div');
+  card.id = 'sf-intelligence-engine';
+
+  var d = _ieGatherData();
+  if (!d) {
+    card.innerHTML = '<div class="ie-card"><div class="ie-header"><span class="ie-badge">🧠 Intelligence Engine</span></div><div class="ie-empty"><div style="font-size:20px;margin-bottom:6px;">📊</div><div style="font-size:12px;color:var(--muted2);font-weight:600;">Registra al menos 2 días para activar el engine</div><div style="font-size:10px;color:var(--muted);margin-top:3px;">El engine lee tus datos del coach y genera las conclusiones automáticamente.</div></div></div>';
+    panel.insertBefore(card, panel.firstChild);
+    return;
+  }
+
+  var c    = _ieConclusions(d);
+  var name = _ieGetName();
+  var fmt  = function(n){ return (n>=0?'+$':'-$')+Math.abs(Math.round(n)).toLocaleString('es-ES'); };
+  var EL   = d.ERROR_LABELS;
+
+  // ── Banner de avance comparativo ──────────────────────────────────────────
+  var bannerHTML = '';
+  if (d.mainErrKey && d.mainErrPrev > 0) {
+    var errLabel = EL[d.mainErrKey] || d.mainErrKey;
+    if (d.progressPct >= 50) {
+      bannerHTML = '<div class="ie-banner improved">'
+        +'<div class="ie-banner-icon">📈</div>'
+        +'<div class="ie-banner-text green">'
+        +(name?name+', ':'')+'esta semana llevas un <b>'+d.progressPct+'% menos de "'+errLabel+'"</b> que la semana pasada.'
+        +(d.pnlCurr>d.pnlPrev?' Tu PnL mejoró de <b>'+fmt(d.pnlPrev)+'</b> a <b>'+fmt(d.pnlCurr)+'</b>. Ese es el efecto directo.':'')
+        +'</div></div>';
+    } else if (d.mainErrCurr > d.mainErrPrev) {
+      var worse = d.mainErrCurr - d.mainErrPrev;
+      bannerHTML = '<div class="ie-banner worsened">'
+        +'<div class="ie-banner-icon">⚠️</div>'
+        +'<div class="ie-banner-text amber">'
+        +'"'+errLabel+'" aumentó '+worse+' vez'+(worse>1?'es':'')+' respecto a la semana anterior. Activa el filtro antes de la siguiente entrada.'
+        +'</div></div>';
+    } else if (d.progressPct > 0) {
+      bannerHTML = '<div class="ie-banner improved">'
+        +'<div class="ie-banner-icon">✅</div>'
+        +'<div class="ie-banner-text green">'
+        +'"'+errLabel+'" bajó un <b>'+d.progressPct+'%</b> esta semana. El patrón está cambiando.'
+        +'</div></div>';
+    }
+  }
+
+  // ── Racha verde parpadeante ───────────────────────────────────────────────
+  var streakHTML = '';
+  if (d.streak >= 3 && d.mainErrKey) {
+    var sLabel = EL[d.mainErrKey] || d.mainErrKey;
+    streakHTML = '<div class="ie-streak"><div class="ie-streak-led"></div>Llevas <b>'+d.streak+' días</b> sin "'+sLabel+'" 🔥</div>';
+  }
+
+  // ── Seguimiento semanal inferido ──────────────────────────────────────────
+  var dayNames = ['L','M','X','J','V'];
+  var dotsHTML = '<div class="ie-track">'
+    +'<div class="ie-track-labels">'+dayNames.map(function(n){ return '<span class="ie-track-lbl">'+n+'</span>'; }).join('')+'</div>'
+    +'<div class="ie-track-dots">'+d.weekDots.map(function(st,i){
+      var title = st==='ok'?'Sin el error':st==='fail'?'Error marcado este día':'Sin registro';
+      return '<div class="ie-dot '+st+'" title="'+title+'"></div>';
+    }).join('')+'</div>'
+    +'</div>';
+
+  // ── HTML final ────────────────────────────────────────────────────────────
+  var html = '<div class="ie-card">'
+    +'<div class="ie-header"><span class="ie-badge">🧠 Intelligence Engine</span><span class="ie-title">'+(name ? name + ' — ' : '')+'esto es lo único que debes saber ahora</span></div>'
+
+    + bannerHTML
+    + streakHTML
+
+    // Hallazgo
+    +'<div class="ie-block ie-finding">'
+    +'<div class="ie-block-label">🔍 Hallazgo principal</div>'
+    +'<div class="ie-block-text">'+c.finding+'</div>'
+    +(c.findingSub?'<div class="ie-block-sub">'+c.findingSub+'</div>':'')
+    +(c.findingScore>5?'<div class="ie-score-bar"><div class="ie-score-fill" style="width:'+c.findingScore+'%;background:var(--purple);"></div></div>':'')
+    +'</div>'
+
+    // Objetivo + seguimiento días
+    +'<div class="ie-block ie-objective">'
+    +'<div class="ie-block-label">🎯 Objetivo de esta semana</div>'
+    +'<div class="ie-block-text">'+c.objective+'</div>'
+    +(c.objectiveSub?'<div class="ie-block-sub">'+c.objectiveSub+'</div>':'')
+    + dotsHTML
+    +'</div>'
+
+    // Riesgo
+    +'<div class="ie-block ie-risk">'
+    +'<div class="ie-block-label">⚡ Riesgo principal</div>'
+    +'<div class="ie-block-text">'+c.risk+'</div>'
+    +(c.riskSub?'<div class="ie-block-sub">'+c.riskSub+'</div>':'')
+    +'</div>'
+
+    // Fortaleza
+    +'<div class="ie-block ie-strength">'
+    +'<div class="ie-block-label">💪 Fortaleza activa</div>'
+    +'<div class="ie-block-text">'+c.strength+'</div>'
+    +(c.strengthSub?'<div class="ie-block-sub">'+c.strengthSub+'</div>':'')
+    +'</div>'
+
+    +'<div class="ie-footer">'
+    +'<span style="color:var(--muted);font-size:10px;">'+d.totalSessions+' sesiones · '+d.allTrades.length+' operaciones · actualizado en tiempo real</span>'
+    +'<button class="ie-data-btn" onclick="(function(btn){var dr=document.getElementById(\'ie-data-drawer\');if(dr){dr.remove();btn.style.display=\'flex\';}else{var el=document.getElementById(\'sf-intelligence-engine\');el.insertAdjacentHTML(\'afterend\',window._ieDrawerHTML);btn.style.display=\'none\';}}).call(this,this)">📂 Ver datos completos</button>'
+    +'</div>'
+    +'</div>';
+
+  card.innerHTML = html;
+  window._ieDrawerHTML = _ieDataDrawerHTML(d);
+  panel.insertBefore(card, panel.firstChild);
+}
+
+// ── Hooks ─────────────────────────────────────────────────────────────────────
+var _coachRenderInsightsPrevIE = coachRenderInsights;
+coachRenderInsights = function() {
+  _coachRenderInsightsPrevIE();
+  _ieRender();
+};
+
+if (typeof coachSaveEntry === 'function') {
+  var __ieOrigSave = coachSaveEntry;
+  coachSaveEntry = function() {
+    __ieOrigSave.apply(this, arguments);
+    _ieRender();
+  };
+}
+
+})(); // fin IIFE Intelligence Engine v2
+
+// ── FIN INTELLIGENCE ENGINE · Saint Fortune™ ─────────────────────────────────
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · PLAN DE TRADING — Etapa 1
+// Parámetros personales de operación por cuenta. Base para detección conductual.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+(function() {
+
+// ── CSS ──────────────────────────────────────────────────────────────────────
+function _tpInjectCSS() {
+  if (document.getElementById('sf-tp-css')) return;
+  var s = document.createElement('style');
+  s.id = 'sf-tp-css';
+  s.textContent = [
+    // Card principal del plan
+    '.tp-card{background:linear-gradient(135deg,rgba(74,158,255,0.05),rgba(160,122,255,0.04));border:1.5px solid rgba(74,158,255,0.25);border-radius:12px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden;}',
+    '.tp-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));}',
+    '.tp-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}',
+    '.tp-card-title{font-size:12px;font-weight:700;color:var(--text);}',
+    '.tp-card-sub{font-size:10px;color:var(--muted);margin-top:1px;}',
+    '.tp-badge{font-size:8.5px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(74,158,255,0.12);color:var(--blue);border:1px solid rgba(74,158,255,0.25);}',
+    '.tp-badge.active{background:rgba(39,217,122,0.12);color:var(--green);border-color:rgba(39,217,122,0.3);}',
+    // Grid de campos
+    '.tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}',
+    '@media(max-width:500px){.tp-grid{grid-template-columns:1fr;}}',
+    '.tp-field{display:flex;flex-direction:column;gap:4px;}',
+    '.tp-field-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}',
+    '.tp-field-input{background:var(--bg2);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-size:12px;padding:7px 10px;outline:none;transition:border-color 0.15s;}',
+    '.tp-field-input:focus{border-color:var(--blue);}',
+    '.tp-field-input option{background:var(--bg2);color:var(--text);}',
+    // Selector de sesiones (múltiple visual)
+    '.tp-sessions{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;}',
+    '.tp-session-btn{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--bg2);color:var(--muted2);transition:all 0.15s;}',
+    '.tp-session-btn.selected.london{background:rgba(74,158,255,0.15);border-color:rgba(74,158,255,0.5);color:var(--blue);}',
+    '.tp-session-btn.selected.new-york{background:rgba(160,122,255,0.15);border-color:rgba(160,122,255,0.5);color:var(--purple);}',
+    '.tp-session-btn.selected.asia{background:rgba(255,174,48,0.12);border-color:rgba(255,174,48,0.4);color:var(--amber);}',
+    '.tp-session-btn.selected.flexible{background:rgba(39,217,122,0.12);border-color:rgba(39,217,122,0.35);color:var(--green);}',
+    // Toggle división de riesgo
+    '.tp-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;margin-bottom:10px;}',
+    '.tp-toggle-label{font-size:11.5px;font-weight:600;color:var(--muted2);}',
+    '.tp-toggle-sub{font-size:10px;color:var(--muted);margin-top:1px;}',
+    '.tp-toggle{position:relative;width:36px;height:20px;flex-shrink:0;}',
+    '.tp-toggle input{opacity:0;width:0;height:0;}',
+    '.tp-toggle-slider{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg3);border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:0.2s;}',
+    '.tp-toggle-slider::after{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;background:var(--muted);border-radius:50%;transition:0.2s;}',
+    '.tp-toggle input:checked + .tp-toggle-slider{background:rgba(39,217,122,0.2);border-color:var(--green);}',
+    '.tp-toggle input:checked + .tp-toggle-slider::after{transform:translateX(16px);background:var(--green);}',
+    // Bloque de stats inferidas (se rellena con historial)
+    '.tp-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}',
+    '.tp-stat{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:9px 10px;text-align:center;}',
+    '.tp-stat-val{font-size:16px;font-weight:700;color:var(--text);}',
+    '.tp-stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:2px;}',
+    '.tp-stat-trend{font-size:9.5px;font-weight:600;margin-top:3px;}',
+    // Sección vacía / sin plan
+    '.tp-empty{text-align:center;padding:2rem 1rem;}',
+    '.tp-empty-icon{font-size:28px;margin-bottom:8px;}',
+    '.tp-empty-title{font-size:13px;font-weight:700;color:var(--muted2);margin-bottom:4px;}',
+    '.tp-empty-sub{font-size:11px;color:var(--muted);line-height:1.5;}',
+    // Divider con label
+    '.tp-divider{display:flex;align-items:center;gap:8px;margin:12px 0;}',
+    '.tp-divider-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);white-space:nowrap;}',
+    '.tp-divider-line{flex:1;height:1px;background:var(--border);}',
+    // Botón guardar plan
+    '.tp-save-btn{width:100%;padding:10px;border-radius:9px;background:linear-gradient(135deg,rgba(74,158,255,0.15),rgba(160,122,255,0.12));border:1.5px solid rgba(74,158,255,0.35);color:var(--blue);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;letter-spacing:0.02em;}',
+    '.tp-save-btn:hover{background:linear-gradient(135deg,rgba(74,158,255,0.25),rgba(160,122,255,0.2));border-color:rgba(74,158,255,0.6);}',
+    // Indicador de cumplimiento del plan
+    '.tp-compliance{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:10px;}',
+    '.tp-compliance.good{background:rgba(39,217,122,0.08);border:1px solid rgba(39,217,122,0.2);}',
+    '.tp-compliance.warn{background:rgba(255,174,48,0.08);border:1px solid rgba(255,174,48,0.2);}',
+    '.tp-compliance.bad{background:rgba(255,79,79,0.08);border:1px solid rgba(255,79,79,0.2);}',
+    '.tp-compliance-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}',
+    '.tp-compliance.good .tp-compliance-dot{background:var(--green);}',
+    '.tp-compliance.warn .tp-compliance-dot{background:var(--amber);}',
+    '.tp-compliance.bad .tp-compliance-dot{background:var(--red);}',
+    '.tp-compliance-text{font-size:11px;font-weight:600;color:var(--muted2);line-height:1.4;}',
+  ].join('');
+  document.head.appendChild(s);
+}
+
+// ── Clave de storage para planes ─────────────────────────────────────────────
+var TP_KEY = 'sf_trading_plans_v1';
+
+function _tpLoad() {
+  try { return JSON.parse(localStorage.getItem(TP_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function _tpSave(plans) {
+  try { localStorage.setItem(TP_KEY, JSON.stringify(plans)); } catch(e) {}
+}
+
+// ── Guardar plan de una cuenta ────────────────────────────────────────────────
+window.saveTradingPlan = function(acc) {
+  var plans = _tpLoad();
+
+  // Sesiones seleccionadas
+  var sessions = [];
+  document.querySelectorAll('#tp-session-btns .tp-session-btn.selected').forEach(function(btn) {
+    sessions.push(btn.dataset.session);
+  });
+
+  var maxOpsEl    = document.getElementById('tp-max-ops');
+  var riskPerOpEl = document.getElementById('tp-risk-per-op');
+  var maxRiskDayEl= document.getElementById('tp-max-risk-day');
+  var splitRiskEl = document.getElementById('tp-split-risk');
+  var notesEl     = document.getElementById('tp-notes');
+
+  plans[acc] = {
+    sessions:        sessions,
+    maxOpsPerDay:    parseInt(maxOpsEl ? maxOpsEl.value : 1) || 1,
+    riskPerOp:       parseFloat(riskPerOpEl ? riskPerOpEl.value : 1) || 1,
+    maxDailyRisk:    parseFloat(maxRiskDayEl ? maxRiskDayEl.value : 2) || 2,
+    splitRisk:       splitRiskEl ? splitRiskEl.checked : false,
+    notes:           notesEl ? notesEl.value.trim() : '',
+    updatedAt:       new Date().toISOString(),
+  };
+
+  _tpSave(plans);
+
+  // Toast usando el sistema del dashboard
+  if (typeof toast === 'function') toast('Plan de Trading guardado ✓');
+
+  // Re-render para actualizar el badge y stats
+  renderTradingPlanTab(acc);
+};
+
+// ── Calcular estadísticas inferidas del historial ─────────────────────────────
+function _tpCalcStats(acc, plan) {
+  var trades = [];
+  try {
+    var all = JSON.parse(localStorage.getItem('sf_trades_v1') || '{}');
+    trades = all[acc] ? all[acc] : [];
+    // También buscar en entries del sistema principal
+    if (!trades.length && typeof entries !== 'undefined') {
+      trades = entries.filter(function(e){ return e.account === acc; }).map(function(e){
+        return { pnl: e.pnl, openTime: e.date, closeTime: e.date, lots: e.lots };
+      });
+    }
+  } catch(e) {}
+
+  if (!trades.length) return null;
+
+  // Operaciones por día
+  var byDay = {};
+  trades.forEach(function(t) {
+    var d = (t.openTime || t.date || '').slice(0, 10);
+    if (!d) return;
+    byDay[d] = (byDay[d] || 0) + 1;
+  });
+  var days = Object.keys(byDay);
+  var avgOpsPerDay = days.length ? (trades.length / days.length).toFixed(1) : '—';
+  var maxOpsInDay  = days.length ? Math.max.apply(null, Object.values(byDay)) : 0;
+
+  // Detección básica de revenge (operación nueva < revengeWindowMin tras pérdida)
+  var revengeCount = 0;
+  var planWindow = 5; // ventana interna del engine — no declarada por el trader
+  var sorted = trades.slice().sort(function(a,b){
+    return new Date(a.openTime||a.date||0) - new Date(b.openTime||b.date||0);
+  });
+  for (var i = 1; i < sorted.length; i++) {
+    var prev = sorted[i-1];
+    var curr = sorted[i];
+    var prevPnl = parseFloat(prev.pnl) || 0;
+    if (prevPnl < 0) {
+      var prevClose = new Date(prev.closeTime || prev.openTime || prev.date || 0);
+      var currOpen  = new Date(curr.openTime || curr.date || 0);
+      var diffMin   = (currOpen - prevClose) / 60000;
+      if (diffMin >= 0 && diffMin <= planWindow) revengeCount++;
+    }
+  }
+
+  // Sesiones detectadas (hora de apertura)
+  var sessionCounts = { london: 0, 'new-york': 0, asia: 0, other: 0 };
+  sorted.forEach(function(t) {
+    var dt = new Date(t.openTime || t.date || 0);
+    var h = dt.getUTCHours();
+    if (h >= 7 && h < 12)       sessionCounts.london++;
+    else if (h >= 12 && h < 17) sessionCounts['new-york']++;
+    else if (h >= 0 && h < 6)   sessionCounts.asia++;
+    else                         sessionCounts.other++;
+  });
+  var topSession = Object.entries(sessionCounts).sort(function(a,b){ return b[1]-a[1]; })[0];
+
+  return {
+    avgOpsPerDay:  avgOpsPerDay,
+    maxOpsInDay:   maxOpsInDay,
+    totalDays:     days.length,
+    revengeCount:  revengeCount,
+    topSession:    topSession ? topSession[0] : null,
+    sessionCounts: sessionCounts,
+  };
+}
+
+// ── Calcular cumplimiento del plan ────────────────────────────────────────────
+function _tpCompliance(acc, plan, stats) {
+  if (!plan || !stats || stats.totalDays < 3) return null;
+
+  var issues = [];
+  var maxOps = plan.maxOpsPerDay || 1;
+
+  if (stats.maxOpsInDay > maxOps) {
+    issues.push('Superaste el máximo de ' + maxOps + ' op/día (' + stats.maxOpsInDay + ' en un día)');
+  }
+  if (stats.revengeCount >= 3) {
+    issues.push(stats.revengeCount + ' posibles entradas por revancha detectadas');
+  }
+  if (plan.sessions && plan.sessions.length && !plan.sessions.includes('flexible') && stats.topSession) {
+    var topKey = stats.topSession.replace('-', '');
+    var inPlan = plan.sessions.some(function(s){ return s.replace('-','') === topKey || s === 'flexible'; });
+    // Solo avisar si hay suficientes datos para que sea significativo
+    if (!inPlan && stats.sessionCounts[stats.topSession] > stats.totalDays * 0.4) {
+      var sessionNames = { london:'Londres', 'new-york':'Nueva York', asia:'Asia', other:'Fuera de sesión' };
+      issues.push('Operas mayormente en ' + (sessionNames[stats.topSession]||stats.topSession) + ' (no en tu sesión declarada)');
+    }
+  }
+
+  if (!issues.length) return { level: 'good', text: 'Tu historial está en línea con tu plan declarado.' };
+  if (issues.length === 1) return { level: 'warn', text: issues[0] + '.' };
+  return { level: 'bad', text: issues[0] + '. Además: ' + issues.slice(1).join('; ') + '.' };
+}
+
+// ── Render del tab completo ───────────────────────────────────────────────────
+window.renderTradingPlanTab = function(acc) {
+  var container = document.getElementById('trading-plan-content');
+  if (!container) return;
+
+  _tpInjectCSS();
+
+  var plans = _tpLoad();
+  var plan  = plans[acc] || null;
+  var stats = _tpCalcStats(acc, plan);
+  var compliance = plan ? _tpCompliance(acc, plan, stats) : null;
+
+  var sessionsData = [
+    { key: 'london',   label: '🇬🇧 Londres',   cls: 'london' },
+    { key: 'new-york', label: '🗽 Nueva York', cls: 'new-york' },
+    { key: 'asia',     label: '🌏 Asia',        cls: 'asia' },
+    { key: 'flexible', label: '🔄 Flexible',   cls: 'flexible' },
+  ];
+
+  var selectedSessions = plan ? (plan.sessions || []) : [];
+
+  // ── Stats inferidas del historial ──────────────────────────────────────────
+  var statsHTML = '';
+  if (stats) {
+    var sessionNames = { london:'Londres', 'new-york':'Nueva York', asia:'Asia', other:'Otras horas' };
+    var topSessLabel = stats.topSession ? (sessionNames[stats.topSession] || stats.topSession) : '—';
+    statsHTML = '<div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div>'
+      + '<div class="tp-stats-row">'
+      + '<div class="tp-stat"><div class="tp-stat-val blue">' + stats.avgOpsPerDay + '</div><div class="tp-stat-label">Ops/día media</div></div>'
+      + '<div class="tp-stat"><div class="tp-stat-val ' + (stats.revengeCount >= 3 ? 'red' : 'green') + '">' + stats.revengeCount + '</div><div class="tp-stat-label">Posible revancha</div></div>'
+      + '<div class="tp-stat"><div class="tp-stat-val purple">' + topSessLabel + '</div><div class="tp-stat-label">Sesión frecuente</div></div>'
+      + '</div>';
+  }
+
+  // ── Cumplimiento ───────────────────────────────────────────────────────────
+  var complianceHTML = '';
+  if (compliance) {
+    complianceHTML = '<div class="tp-compliance ' + compliance.level + '">'
+      + '<div class="tp-compliance-dot"></div>'
+      + '<div class="tp-compliance-text">' + compliance.text + '</div>'
+      + '</div>';
+  }
+
+  // ── Sesiones buttons ───────────────────────────────────────────────────────
+  var sessionsHTML = '<div id="tp-session-btns" class="tp-sessions">'
+    + sessionsData.map(function(s) {
+      var isSelected = selectedSessions.indexOf(s.key) >= 0;
+      return '<button class="tp-session-btn ' + s.cls + (isSelected ? ' selected' : '') + '" data-session="' + s.key + '" onclick="window._tpToggleSession(this)">' + s.label + '</button>';
+    }).join('')
+    + '</div>';
+
+  // ── Última actualización ───────────────────────────────────────────────────
+  var updatedAt = plan && plan.updatedAt ? new Date(plan.updatedAt).toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric' }) : null;
+
+  var html = '<div class="tp-card">'
+    + '<div class="tp-card-header">'
+    + '<div><div class="tp-card-title">🎯 Plan de Trading · ' + acc + '</div>'
+    + '<div class="tp-card-sub">' + (updatedAt ? 'Actualizado: ' + updatedAt : 'Sin plan guardado todavía') + '</div></div>'
+    + '<span class="tp-badge ' + (plan ? 'active' : '') + '">' + (plan ? 'Activo' : 'Sin configurar') + '</span>'
+    + '</div>'
+
+    + complianceHTML
+
+    + '<div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div>'
+    + sessionsHTML
+
+    + '<div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div>'
+    + '<div class="tp-grid">'
+    + '<div class="tp-field"><label class="tp-field-label">Máx ops por día</label>'
+    + '<input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="' + (plan ? plan.maxOpsPerDay : 1) + '" placeholder="1"></div>'
+
+    + '<div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label>'
+    + '<input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="' + (plan ? plan.riskPerOp : 1) + '" placeholder="1"></div>'
+
+    + '<div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label>'
+    + '<input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="' + (plan ? plan.maxDailyRisk : 2) + '" placeholder="2"></div>'
+
+    + '</div>'
+
+    + '<div class="tp-toggle-row">'
+    + '<div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div>'
+    + '<div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div>'
+    + '<label class="tp-toggle"><input type="checkbox" id="tp-split-risk" ' + (plan && plan.splitRisk ? 'checked' : '') + '><span class="tp-toggle-slider"></span></label>'
+    + '</div>'
+
+    + '<div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label>'
+    + '<textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">' + (plan && plan.notes ? plan.notes : '') + '</textarea></div>'
+
+    + statsHTML
+
+    + '<button class="tp-save-btn" onclick="window.saveTradingPlan(\'' + acc.replace(/'/g, "\\'") + '\')">✓ Guardar Plan de Trading</button>'
+    + '</div>';
+
+  container.innerHTML = html;
+};
+
+// ── Toggle de sesión ──────────────────────────────────────────────────────────
+window._tpToggleSession = function(btn) {
+  // Si se selecciona "Flexible", deseleccionar las demás
+  if (btn.dataset.session === 'flexible') {
+    document.querySelectorAll('#tp-session-btns .tp-session-btn').forEach(function(b) {
+      b.classList.remove('selected');
+    });
+    btn.classList.add('selected');
+    return;
+  }
+  // Si se selecciona otra, quitar flexible
+  document.querySelectorAll('#tp-session-btns .tp-session-btn[data-session="flexible"]').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btn.classList.toggle('selected');
+};
+
+// ── Hook en switchDetailTab ───────────────────────────────────────────────────
+var _origSwitchDetailTab = window.switchDetailTab;
+window.switchDetailTab = function(tab) {
+  _origSwitchDetailTab(tab);
+  if (tab === 'plan' && typeof currentAccount !== 'undefined' && currentAccount) {
+    window.renderTradingPlanTab(currentAccount);
+  }
+};
+
+// ── Exponer getter para otros módulos (Etapa 2+) ──────────────────────────────
+window.getTradingPlan = function(acc) {
+  var plans = _tpLoad();
+  return plans[acc] || null;
+};
+
+window.getAllTradingPlans = function() {
+  return _tpLoad();
+};
+
+})(); // fin IIFE Plan de Trading
+
+// ── FIN PLAN DE TRADING · Saint Fortune™ ────────────────────────────────────
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · DETECCIÓN CONDUCTUAL — Etapa 2
+// El engine lee trades por cuenta y detecta desviaciones del Plan de Trading.
+// El trader no declara conducta. Solo el plan. El engine mide el resto.
+// ═══════════════════════════════════════════════════════════════════════════════
+(function() {
+  // ── CSS ────────────────────────────────────────────────────────────────────
+  function _cdInjectCSS() {
+    if (document.getElementById('sf-cd-css')) return;
+    var s = document.createElement('style');
+    s.id = 'sf-cd-css';
+    s.textContent = [
+      '.cd-section{margin-top:14px;}',
+      '.cd-section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}',
+      '.cd-section-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}',
+      '.cd-section-line{flex:1;height:1px;background:var(--border);}',
+      '.cd-alert{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:9px;margin-bottom:7px;}',
+      '.cd-alert.violation{background:rgba(255,79,79,0.07);border:1px solid rgba(255,79,79,0.25);}',
+      '.cd-alert.warning{background:rgba(255,174,48,0.07);border:1px solid rgba(255,174,48,0.22);}',
+      '.cd-alert.ok{background:rgba(39,217,122,0.07);border:1px solid rgba(39,217,122,0.2);}',
+      '.cd-alert.info{background:rgba(255,255,255,0.03);border:1px solid var(--border2);}',
+      '.cd-alert-icon{font-size:15px;flex-shrink:0;margin-top:1px;}',
+      '.cd-alert-body{flex:1;}',
+      '.cd-alert-title{font-size:11.5px;font-weight:700;line-height:1.4;}',
+      '.cd-alert.violation .cd-alert-title{color:var(--red);}',
+      '.cd-alert.warning .cd-alert-title{color:var(--amber);}',
+      '.cd-alert.ok .cd-alert-title{color:var(--green);}',
+      '.cd-alert.info .cd-alert-title{color:var(--muted2);}',
+      '.cd-alert-sub{font-size:10.5px;color:var(--muted2);line-height:1.5;margin-top:3px;}',
+      '.cd-alert-data{font-size:10px;color:var(--muted);margin-top:4px;font-family:monospace;background:var(--bg3);padding:4px 8px;border-radius:5px;display:inline-block;}',
+      '.cd-chart{margin-top:8px;}',
+      '.cd-bars{display:flex;align-items:flex-end;gap:3px;height:36px;margin-bottom:3px;}',
+      '.cd-bar{flex:1;border-radius:3px 3px 0 0;min-height:3px;transition:all 0.3s;position:relative;}',
+      '.cd-bar.ok{background:rgba(39,217,122,0.5);}',
+      '.cd-bar.over{background:rgba(255,79,79,0.6);}',
+      '.cd-bar-limit{position:absolute;left:0;right:0;border-top:1.5px dashed rgba(255,174,48,0.6);}',
+      '.cd-chart-label{font-size:9px;color:var(--muted);text-align:center;}',
+      '.cd-score{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;background:var(--bg2);border:1px solid var(--border2);margin-bottom:10px;}',
+      '.cd-score-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;}',
+      '.cd-score-circle.high{background:rgba(39,217,122,0.12);border:2px solid rgba(39,217,122,0.4);color:var(--green);}',
+      '.cd-score-circle.mid{background:rgba(255,174,48,0.1);border:2px solid rgba(255,174,48,0.35);color:var(--amber);}',
+      '.cd-score-circle.low{background:rgba(255,79,79,0.1);border:2px solid rgba(255,79,79,0.3);color:var(--red);}',
+      '.cd-score-label{font-size:12px;font-weight:700;color:var(--text);}',
+      '.cd-score-sub{font-size:10.5px;color:var(--muted2);margin-top:2px;}',
+      '.cd-no-data{text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:11px;line-height:1.6;}',
+      '.cd-days-toggle{font-size:10px;font-weight:600;color:var(--muted2);cursor:pointer;display:flex;align-items:center;gap:5px;margin-top:6px;padding:5px 0;border:none;background:none;}',
+      '.cd-days-toggle:hover{color:var(--text);}',
+      '.cd-days-list{margin-top:6px;display:none;}',
+      '.cd-days-list.open{display:block;}',
+      '.cd-day-row{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:7px;margin-bottom:4px;font-size:11px;}',
+      '.cd-day-row.viol{background:rgba(255,79,79,0.06);border:1px solid rgba(255,79,79,0.18);}',
+      '.cd-day-row.ok{background:var(--bg3);border:1px solid var(--border);}',
+      '.cd-day-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}',
+      '.cd-day-row.viol .cd-day-dot{background:var(--red);}',
+      '.cd-day-row.ok .cd-day-dot{background:var(--green);}',
+      '.cd-day-date{color:var(--muted2);min-width:80px;}',
+      '.cd-day-ops{font-weight:700;min-width:30px;}',
+      '.cd-day-row.viol .cd-day-ops{color:var(--red);}',
+      '.cd-day-row.ok .cd-day-ops{color:var(--green);}',
+      '.cd-day-note{color:var(--muted);font-size:10px;flex:1;}',
+      '.cd-escalation{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap;}',
+      '.cd-esc-step{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600;}',
+      '.cd-esc-step.inc{background:rgba(255,79,79,0.1);color:var(--red);}',
+      '.cd-esc-step.same{background:var(--bg3);color:var(--muted2);}',
+      '.cd-esc-arrow{font-size:9px;color:var(--muted);}',
+    ].join('');
+    document.head.appendChild(s);
+  }
+
+  // ── Analizar una cuenta contra su plan ───────────────────────────────────
+  function _cdAnalyze(acc) {
+    var plan = window.getTradingPlan ? window.getTradingPlan(acc) : null;
+    if (!plan) return null;
+
+    var accEntries = (typeof entries !== 'undefined' ? entries : [])
+      .filter(function(e) { return e.account === acc; });
+    if (!accEntries.length) return { plan: plan, noData: true };
+
+    var maxOps   = plan.maxOpsPerDay  || 1;
+    var maxRisk  = plan.maxDailyRisk  || 2;
+    var splitRisk = plan.splitRisk    || false;
+    var balance  = (typeof accounts !== 'undefined' && accounts[acc])
+                   ? (accounts[acc].balance || 0) : 0;
+
+    // Agrupar por día
+    var byDay = {};
+    accEntries.forEach(function(e) {
+      var d = e.date;
+      if (!byDay[d]) byDay[d] = [];
+      byDay[d].push(e);
+    });
+
+    var days       = Object.keys(byDay).sort();
+    var violations = [];
+    var dayDetails = [];
+    var totalDays  = days.length;
+    var cleanDays  = 0;
+
+    days.forEach(function(date) {
+      var dayTrades    = byDay[date];
+      var opsCount     = dayTrades.length;
+      var effectiveOps = opsCount;
+
+      if (splitRisk && opsCount > 1) {
+        var buys  = dayTrades.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('buy')  >= 0; }).length;
+        var sells = dayTrades.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('sell') >= 0; }).length;
+        var hasTypes = dayTrades.some(function(t){ return t.eaType; });
+        if (hasTypes) { effectiveOps = (buys > 0 ? 1 : 0) + (sells > 0 ? 1 : 0); }
+      }
+
+      var dayLoss  = dayTrades.reduce(function(s,t){ return s + Math.min(parseFloat(t.pnl)||0, 0); }, 0);
+      var riskUsed = balance > 0 ? (Math.abs(dayLoss) / balance * 100) : null;
+
+      var opsViol  = effectiveOps > maxOps;
+      var riskViol = riskUsed !== null && riskUsed > maxRisk;
+
+      // Detección de size escalation tras pérdida
+      var escalation = null;
+      if (dayTrades.length >= 2) {
+        var lotsSeq = dayTrades.map(function(t){ return parseFloat(t.lots)||0; }).filter(function(l){ return l > 0; });
+        var pnlSeq  = dayTrades.map(function(t){ return parseFloat(t.pnl)||0; });
+        var hasEsc  = false;
+        for (var i = 1; i < lotsSeq.length; i++) {
+          if (pnlSeq[i-1] < 0 && lotsSeq[i] > lotsSeq[i-1] * 1.05) { hasEsc = true; break; }
+        }
+        if (hasEsc) escalation = lotsSeq;
+      }
+
+      var isClean = !opsViol && !riskViol;
+      if (isClean) cleanDays++;
+
+      dayDetails.push({ date:date, ops:opsCount, effectiveOps:effectiveOps,
+        opsViol:opsViol, riskViol:riskViol, riskUsed:riskUsed,
+        dayLoss:dayLoss, escalation:escalation, clean:isClean });
+
+      if (opsViol)  violations.push({ type:'ops',  date:date, ops:opsCount, effOps:effectiveOps, max:maxOps, split:splitRisk });
+      if (riskViol) violations.push({ type:'risk', date:date, riskUsed:riskUsed, maxRisk:maxRisk, loss:dayLoss });
+    });
+
+    var complianceScore = totalDays > 0 ? Math.round((cleanDays / totalDays) * 100) : 100;
+
+    // Sesión más frecuente vs plan declarado
+    var sessionMismatch = null;
+    if (plan.sessions && plan.sessions.length && !plan.sessions.includes('flexible')) {
+      var sessCounts = {};
+      accEntries.forEach(function(e) {
+        var sess = e.session || 'sin sesión';
+        sessCounts[sess] = (sessCounts[sess]||0) + 1;
+      });
+      var topSess = Object.entries(sessCounts).sort(function(a,b){ return b[1]-a[1]; })[0];
+      if (topSess && !plan.sessions.includes(topSess[0]) && topSess[1] > totalDays * 0.4) {
+        sessionMismatch = { actual:topSess[0], count:topSess[1], total:totalDays };
+      }
+    }
+
+    return { plan:plan, noData:false, totalDays:totalDays, cleanDays:cleanDays,
+      complianceScore:complianceScore, violations:violations,
+      dayDetails:dayDetails, sessionMismatch:sessionMismatch, balance:balance };
+  }
+
+  // ── Render del bloque ─────────────────────────────────────────────────────
+  window.renderConductualBlock = function(acc) {
+    var container = document.getElementById('cd-block-' + _cdAccId(acc));
+    if (!container) return;
+    _cdInjectCSS();
+
+    var r = _cdAnalyze(acc);
+    if (!r) {
+      container.innerHTML = '<div class="cd-no-data">Define primero el Plan de Trading para activar la detección.</div>';
+      return;
+    }
+    if (r.noData) {
+      container.innerHTML = '<div class="cd-no-data">Sin operaciones registradas todavía en esta cuenta.</div>';
+      return;
+    }
+
+    var fmt    = function(n){ return (n>=0?'+$':'-$') + Math.abs(n).toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:2}); };
+    var fmtPct = function(n){ return n.toFixed(1) + '%'; };
+
+    // Score de cumplimiento
+    var scoreClass = r.complianceScore >= 80 ? 'high' : r.complianceScore >= 50 ? 'mid' : 'low';
+    var scoreLabel = r.complianceScore >= 80 ? 'Plan respetado' : r.complianceScore >= 50 ? 'Cumplimiento parcial' : 'Plan frecuentemente roto';
+    var scoreSub   = r.cleanDays + ' de ' + r.totalDays + ' días dentro del plan · ' +
+                     r.violations.length + ' violación' + (r.violations.length!==1?'es':'') +
+                     ' detectada' + (r.violations.length!==1?'s':'');
+
+    var html = '<div class="cd-score">' +
+      '<div class="cd-score-circle ' + scoreClass + '">' + r.complianceScore + '%</div>' +
+      '<div><div class="cd-score-label">' + scoreLabel + '</div>' +
+      '<div class="cd-score-sub">' + scoreSub + '</div></div></div>';
+
+    // Alertas
+    if (!r.violations.length && !r.sessionMismatch) {
+      html += '<div class="cd-alert ok"><div class="cd-alert-icon">✅</div>' +
+        '<div class="cd-alert-body"><div class="cd-alert-title">Dentro del plan en todos los días registrados</div>' +
+        '<div class="cd-alert-sub">Número de operaciones y riesgo diario respetados. El engine no detecta desviaciones.</div></div></div>';
+    }
+
+    var opsViols  = r.violations.filter(function(v){ return v.type==='ops'; });
+    var riskViols = r.violations.filter(function(v){ return v.type==='risk'; });
+
+    if (opsViols.length) {
+      var worst    = opsViols.slice().sort(function(a,b){ return b.ops-a.ops; })[0];
+      var datesStr = opsViols.slice(0,3).map(function(v){ return v.date; }).join(', ') +
+                     (opsViols.length>3?' y '+(opsViols.length-3)+' más':'');
+      html += '<div class="cd-alert violation"><div class="cd-alert-icon">⚡</div>' +
+        '<div class="cd-alert-body"><div class="cd-alert-title">Superaste el máximo de ' + r.plan.maxOpsPerDay +
+        ' operación' + (r.plan.maxOpsPerDay!==1?'es':'') + '/día en ' + opsViols.length +
+        ' día' + (opsViols.length!==1?'s':'') + '</div>' +
+        '<div class="cd-alert-sub">Máximo registrado: <b>' + worst.ops + ' ops</b> en un día' +
+        (r.plan.splitRisk ? ' · Con división de riesgo activada, se agruparon entradas por dirección' : '') + '</div>' +
+        '<div class="cd-alert-data">' + datesStr + '</div></div></div>';
+    }
+
+    if (riskViols.length) {
+      var worstR    = riskViols.slice().sort(function(a,b){ return b.riskUsed-a.riskUsed; })[0];
+      var datesRStr = riskViols.slice(0,3).map(function(v){ return v.date; }).join(', ') +
+                      (riskViols.length>3?' y '+(riskViols.length-3)+' más':'');
+      html += '<div class="cd-alert violation"><div class="cd-alert-icon">📉</div>' +
+        '<div class="cd-alert-body"><div class="cd-alert-title">Riesgo diario superado en ' + riskViols.length +
+        ' día' + (riskViols.length!==1?'s':'') + '</div>' +
+        '<div class="cd-alert-sub">Límite declarado: <b>' + fmtPct(r.plan.maxDailyRisk) +
+        '</b> · Peor día: <b style="color:var(--red);">' + fmtPct(worstR.riskUsed) +
+        '</b> (' + fmt(worstR.loss) + ')</div>' +
+        '<div class="cd-alert-data">' + datesRStr + '</div></div></div>';
+    }
+
+    // Size escalation — observación
+    var escDays = r.dayDetails.filter(function(d){ return d.escalation; });
+    if (escDays.length) {
+      html += '<div class="cd-alert warning"><div class="cd-alert-icon">📈</div>' +
+        '<div class="cd-alert-body"><div class="cd-alert-title">Lotaje aumentó tras pérdida en ' +
+        escDays.length + ' día' + (escDays.length!==1?'s':'') + '</div>' +
+        '<div class="cd-alert-sub">Observación: en esos días el size de la siguiente entrada fue mayor que el anterior tras un stop. Puede ser parte del plan — contrástalo con tu estrategia.</div>' +
+        '<div class="cd-escalation">' +
+        escDays.slice(0,1).map(function(d){
+          return d.escalation.map(function(l,i){
+            return (i>0?'<span class="cd-esc-arrow">→</span>':'') +
+              '<span class="cd-esc-step ' + (i>0&&d.escalation[i]>d.escalation[i-1]?'inc':'same') + '">' + l + ' lots</span>';
+          }).join('');
+        }).join('') +
+        (escDays.length>1?' <span style="font-size:10px;color:var(--muted);">+' + (escDays.length-1) + ' día(s) más</span>' : '') +
+        '</div></div></div>';
+    }
+
+    // Sesión mismatch
+    if (r.sessionMismatch) {
+      var sessNames  = { london:'Londres', 'new-york':'Nueva York', asia:'Asia', null:'sin sesión registrada' };
+      var actualName = sessNames[r.sessionMismatch.actual] || r.sessionMismatch.actual;
+      html += '<div class="cd-alert warning"><div class="cd-alert-icon">🕐</div>' +
+        '<div class="cd-alert-body"><div class="cd-alert-title">Sesión frecuente no coincide con tu plan</div>' +
+        '<div class="cd-alert-sub">Operas mayormente en <b>' + actualName + '</b> (' +
+        r.sessionMismatch.count + ' de ' + r.sessionMismatch.total +
+        ' días). Tu plan declara otra sesión preferida. Puede ser intencional — si cambiaste tu estrategia, actualiza el plan.</div>' +
+        '</div></div>';
+    }
+
+    // Detalle colapsable por día
+    var violDays = r.dayDetails.filter(function(d){ return !d.clean; });
+    if (violDays.length) {
+      var cdId = 'cd-days-' + _cdAccId(acc);
+      html += '<button class="cd-days-toggle" onclick="(function(b){var l=document.getElementById(\'' + cdId +
+        '\');l.classList.toggle(\'open\');b.querySelector(\'.cd-toggle-arr\').textContent=l.classList.contains(\'open\')?\'▲\':\'▼\';})(this)">' +
+        '<span class="cd-toggle-arr">▼</span> Ver días con desviaciones (' + violDays.length + ')</button>' +
+        '<div class="cd-days-list" id="' + cdId + '">';
+      violDays.slice(0,30).forEach(function(d) {
+        var notes = [];
+        if (d.opsViol)  notes.push(d.effectiveOps + ' ops (máx ' + r.plan.maxOpsPerDay + ')');
+        if (d.riskViol) notes.push('riesgo ' + fmtPct(d.riskUsed) + ' (máx ' + fmtPct(r.plan.maxDailyRisk) + ')');
+        html += '<div class="cd-day-row viol">' +
+          '<div class="cd-day-dot"></div>' +
+          '<div class="cd-day-date">' + d.date + '</div>' +
+          '<div class="cd-day-ops">' + d.ops + ' ops</div>' +
+          '<div class="cd-day-note">' + notes.join(' · ') + '</div></div>';
+      });
+      html += '</div>';
+    }
+
+    container.innerHTML = html;
+  };
+
+  // ── Helper ────────────────────────────────────────────────────────────────
+  function _cdAccId(acc) { return acc.replace(/[^a-z0-9]/gi, '_'); }
+
+  // ── Hook sobre renderTradingPlanTab ───────────────────────────────────────
+  var _origRenderPlanTab = window.renderTradingPlanTab;
+  window.renderTradingPlanTab = function(acc) {
+    _origRenderPlanTab(acc);
+    var container = document.getElementById('trading-plan-content');
+    if (!container) return;
+    var cdId = 'cd-block-' + _cdAccId(acc);
+    if (!document.getElementById(cdId)) {
+      var cdSection = document.createElement('div');
+      cdSection.className = 'cd-section';
+      cdSection.innerHTML =
+        '<div class="cd-section-header">' +
+        '<div class="cd-section-line"></div>' +
+        '<div class="cd-section-title">Análisis conductual · ' + acc + '</div>' +
+        '<div class="cd-section-line"></div></div>' +
+        '<div id="' + cdId + '"></div>';
+      container.appendChild(cdSection);
+    }
+    window.renderConductualBlock(acc);
+  };
+
+  // ── API pública para Etapa 3 / IE ────────────────────────────────────────
+  window.getConductualAnalysis = function(acc) { return _cdAnalyze(acc); };
+  window.getAllConductualSignals = function() {
+    if (typeof accounts === 'undefined') return {};
+    var result = {};
+    Object.keys(accounts).forEach(function(acc) {
+      var r = _cdAnalyze(acc);
+      if (r && !r.noData) result[acc] = r;
+    });
+    return result;
+  };
+
+})(); // fin IIFE Detección Conductual
+// ── FIN DETECCIÓN CONDUCTUAL · Saint Fortune™ ────────────────────────────────
+
+
 
 // ── Comprobar licencia al cargar ──────────────────────────────────
 // ── Marca de autoría (no eliminar) ──
