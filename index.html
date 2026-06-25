@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)file:///C:/Users/34634/Desktop/index.html -->
+<!-- saved from url=(0047)https://saintfortune-io.github.io/saintfortune/ -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1703,17 +1703,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div>
         <div class="firm-chip-name">META QUOTES</div>
         <div class="firm-chip-badges" style="margin-top:4px">
-          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 0 pas.</span>
-          <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
-          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 1 act.</span>
-          
-        </div>
-      </div>
-      
-    </div><div class="firm-chip" id="firm-chip-1" onclick="firmToggleDetail(1)">
-      <div>
-        <div class="firm-chip-name">LUCID</div>
-        <div class="firm-chip-badges" style="margin-top:4px">
           <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 1 pas.</span>
           <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
           <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 1 act.</span>
@@ -1721,13 +1710,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </div>
       </div>
       <span class="firm-chip-ratio" style="color:var(--green);border-color:var(--green);background:transparent">100%</span>
-    </div><div class="firm-chip" id="firm-chip-2" onclick="firmToggleDetail(2)">
+    </div><div class="firm-chip" id="firm-chip-1" onclick="firmToggleDetail(1)">
       <div>
-        <div class="firm-chip-name">METAQUOTES</div>
+        <div class="firm-chip-name">LUCID</div>
         <div class="firm-chip-badges" style="margin-top:4px">
           <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 1 pas.</span>
           <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
-          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 0 act.</span>
+          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 1 act.</span>
           
         </div>
       </div>
@@ -2148,7 +2137,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Group ABCDE tabs -->
-  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn active">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
+  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn active">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
     <div class="group-panel-header">
@@ -2254,7 +2243,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
       <div class="page-title" id="detail-title">RETO DE CONSISTENCIA <span class="acc-platform type-cfd-funded" style="font-size:13px;vertical-align:middle">🏆 Funded</span></div>
-      <div class="page-sub" id="detail-sub">CFD funded $3000 · METAQUOTES</div>
+      <div class="page-sub" id="detail-sub">CFD funded $3000 · META QUOTES</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" id="detail-rename-btn" onclick="openRenameAccountModal()">✏ Renombrar</button>
@@ -2277,7 +2266,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: STATS -->
-  <div class="tab-content" id="dtab-stats">
+  <div class="tab-content active" id="dtab-stats">
     <div class="stat-row">
       <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value neutral" id="d-pnl">—</div></div>
       <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value " id="d-wr">—</div></div>
@@ -2387,7 +2376,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: PARAMS -->
-  <div class="tab-content active" id="dtab-params">
+  <div class="tab-content" id="dtab-params">
     <div id="params-content">
       <div class="section-header"><div class="section-title">Parámetros de gestión · Funded CFDs</div></div>
       <div class="lot-params-grid">
@@ -2442,7 +2431,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;RETO DE CONSISTENCIA&#39;)">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;RETO DE CONSISTENCIA&#39;)">⬇ Importar ahora</button>
-        <span id="mt5-status-RETO_DE_CONSISTENCIA" style="font-size: 11px; color: var(--red);">✕ Error: SB_URL is not defined</span>
+        <span id="mt5-status-RETO_DE_CONSISTENCIA" style="font-size:11px;color:var(--muted)">Sin importar todavía</span>
       </div>
     </div>
   </div>
@@ -2450,7 +2439,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- TAB: PLAN DE TRADING -->
   <div class="tab-content" id="dtab-plan">
-    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · RETO DE CONSISTENCIA</div><div class="tp-card-sub">Actualizado: 25 jun 2026</div></div><span class="tp-badge active">Activo</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london selected" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york selected" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="2" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="3" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="5" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk" checked=""><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">CONFLUENCIAS H1 Y H5 con entradas en H5 patrones confirmados, manipulación, liquidez, doble suelo, FVG</textarea></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;RETO DE CONSISTENCIA&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · RETO DE CONSISTENCIA</div><div class="cd-section-line"></div></div><div id="cd-block-RETO_DE_CONSISTENCIA"><div class="cd-no-data">Sin operaciones registradas todavía en esta cuenta.</div></div></div></div>
+    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · RETO DE CONSISTENCIA</div><div class="tp-card-sub">Actualizado: 25 jun 2026</div></div><span class="tp-badge active">Activo</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london selected" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york selected" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="2" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="3" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="4" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk" checked=""><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup."></textarea></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;RETO DE CONSISTENCIA&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · RETO DE CONSISTENCIA</div><div class="cd-section-line"></div></div><div id="cd-block-RETO_DE_CONSISTENCIA"><div class="cd-no-data">Sin operaciones registradas todavía en esta cuenta.</div></div></div></div>
   </div>
 
   <!-- TAB: INTELLIGENCE -->
@@ -3085,7 +3074,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
     <div class="form-group">
       <label class="form-label">Modo de cuenta</label>
-      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
+      <div class="type-selector" id="modal-mode-selector"><div class="type-pill">⚡ Instant</div><div class="type-pill">📋 Eval F1</div><div class="type-pill">📋 Eval F2</div><div class="type-pill active purple">🏆 Funded</div></div>
     </div>
 
     <!-- Base fields -->
@@ -3112,7 +3101,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- FUTURES EVAL fields -->
-    <div id="modal-section-fut-eval" class="form-section" style="">
+    <div id="modal-section-fut-eval" class="form-section" style="display: none;">
       <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
@@ -3180,7 +3169,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- CFD FUNDED/LIVE fields -->
-    <div id="modal-section-cfd-funded" class="form-section" style="display: none;">
+    <div id="modal-section-cfd-funded" class="form-section" style="">
       <div class="form-section-title">🏆 Parámetros Funded · CFD</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-f-maxdd" placeholder="10" step="0.1"></div>
@@ -3223,7 +3212,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- Grupo assignment (futures) -->
-    <div id="modal-group-select" class="form-group" style="">
+    <div id="modal-group-select" class="form-group" style="display: none;">
       <label class="form-label">Grupo de estrategia</label>
       <select class="form-input" id="na-group">
         <option value="A">🔵 Grupo A</option>
@@ -4218,12 +4207,18 @@ Cuentas a cobrar este mes: ..."></textarea>
 <!-- ───────── PAGE: VINCULACIÓN AUTO ───────── -->
 
 <!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">⚠ Introduce un P&amp;L distinto de 0</span></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg">Plan de Trading guardado ✓</span></div>
 
 
 
 <!-- ══════════════ SCRIPT ══════════════ -->
 <script>
+// ═══════════════════════════════════════════
+// SUPABASE CONFIG
+// ═══════════════════════════════════════════
+const SB_URL = "https://qkuimdilzxhhxpnvlnjb.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrdWltZGlsenhoaHhwbnZsbmpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NTQzNjQsImV4cCI6MjA5NzUzMDM2NH0.9kkAuNYuuU6G5EIgXk3ZO7nKxs6IVwjlzAAGggcn0Dk";
+
 // ═══════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════
