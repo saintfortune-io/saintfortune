@@ -1544,10 +1544,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.584,85</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">83%</div><div class="stat-hint" id="s-wr-hint">15W / 3L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$9684,85</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">79%</div><div class="stat-hint" id="s-wr-hint">15W / 4L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">18</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">19</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
     <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
@@ -1581,10 +1581,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROXP TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$3273</div>
+      <div class="acc-pnl green">+$2373</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>83%</span></div>
-        <div class="acc-meta-item">Ops <span>6</span></div>
+        <div class="acc-meta-item">WR <span>71%</span></div>
+        <div class="acc-meta-item">Ops <span>7</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1736,7 +1736,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="page-sub">Equity, rachas, P&amp;L por día de la semana y distribución de resultados</div>
     </div>
     <div class="topbar-actions" style="gap:8px;flex-wrap:wrap;">
-      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="BACKTESTING">BACKTESTING  [Instant]</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1  [Eval]</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2  [Live]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++  [Live]</option></select>
+      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="BACKTESTING">BACKTESTING  [Instant]</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1  [Eval]</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2  [Live]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++  [Live]</option><option value="RETO DE CONSISTENCIA">RETO DE CONSISTENCIA  [Funded]</option></select>
       <select id="equity-range-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;">
         <option value="all">Todo el historial</option>
         <option value="30">Últimos 30 días</option>
@@ -1748,10 +1748,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Stats row -->
   <div class="stat-row stat-row-4" style="margin-bottom:1.5rem;" id="equity-stats-row">
-    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$10.584,85</div><div class="stat-hint" id="eq-total-hint">5 días · 18 ops</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$9684,85</div><div class="stat-hint" id="eq-total-hint">6 días · 19 ops</div></div>
     <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eq-best-day">+$2960,00</div><div class="stat-hint" id="eq-best-hint">2026-06-17</div></div>
-    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">+$1378,40</div><div class="stat-hint" id="eq-worst-hint">2026-06-15</div></div>
-    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">$0</div><div class="stat-hint" id="eq-dd-hint">sin drawdown</div></div>
+    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">$900,00</div><div class="stat-hint" id="eq-worst-hint">2026-06-22</div></div>
+    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">-$900,00</div><div class="stat-hint" id="eq-dd-hint">desde el pico</div></div>
   </div>
 
   <!-- Chart card -->
@@ -1780,13 +1780,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </defs>
     <line x1="70" y1="280" x2="898" y2="280" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="230" x2="898" y2="230" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="180" x2="898" y2="180" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="129.99999999999997" x2="898" y2="129.99999999999997" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="80" x2="898" y2="80" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="29.999999999999943" x2="898" y2="29.999999999999943" stroke="#ffffff0a" stroke-width="0.5"></line>
     <text x="62" y="284" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="234" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><text x="62" y="184" text-anchor="end" fill="#55556a" font-size="10">+4.2k</text><text x="62" y="133.99999999999997" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><text x="62" y="84" text-anchor="end" fill="#55556a" font-size="10">+8.5k</text><text x="62" y="33.99999999999994" text-anchor="end" fill="#55556a" font-size="10">+10.6k</text>
-    <text x="70" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-12</text><text x="277" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-15</text><text x="484" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-16</text><text x="691" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-17</text><text x="898" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-18</text>
-    <path d="M70.0,232.9 L277.0,200.3 L484.0,155.3 L691.0,85.4 L898.0,30.0 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
-    <path d="M70.0,232.9 L277.0,200.3 L484.0,155.3 L691.0,85.4 L898.0,30.0 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
-    <path d="M70.0,232.9 L277.0,200.3 L484.0,155.3 L691.0,85.4 L898.0,30.0" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+    <text x="70" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-12</text><text x="235.60000000000002" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-15</text><text x="401.20000000000005" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-16</text><text x="566.8" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-17</text><text x="732.4000000000001" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-18</text><text x="898" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-22</text>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
     <line x1="70" y1="280.0" x2="898" y2="280.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <circle cx="70.0" cy="232.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="277.0" cy="200.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="484.0" cy="155.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="691.0" cy="85.4" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="898.0" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
-    <circle cx="70.0" cy="232.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="232.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="277.0" cy="200.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="277.0" data-y="200.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="484.0" cy="155.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="484.0" data-y="155.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="691.0" cy="85.4" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="691.0" data-y="85.4" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="898.0" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="898.0" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
+    <circle cx="70.0" cy="232.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="235.6" cy="200.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="401.2" cy="155.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="566.8" cy="85.4" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="732.4" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="898.0" cy="51.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
+    <circle cx="70.0" cy="232.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="232.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="235.6" cy="200.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="235.6" data-y="200.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="401.2" cy="155.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="401.2" data-y="155.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="566.8" cy="85.4" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="566.8" data-y="85.4" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="732.4" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="732.4" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="898.0" cy="51.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-22 | Día: $900,00 | Acum: +$9684,85 | 1 ops" data-x="898.0" data-y="51.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
   </svg>
       <div id="equity-tooltip" style="position: absolute; pointer-events: none; background: rgb(26, 26, 40); border-color: rgb(39, 217, 122); border-top-style: ; border-top-width: ; border-right-style: ; border-right-width: ; border-bottom-style: ; border-bottom-width: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; left: 456.051px; top: 53.9px;">2026-06-16<br>Día: +$3513,10<br>Acum: +$6835,95 · 10 ops</div>
     </div>
@@ -1810,10 +1810,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="min-width:0;">
         <div id="eqd-summary-label" style="font-size:11px;color:var(--muted2);margin-bottom:8px;">Semana: 22/06 – 26/06</div>
         <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value" id="eqd-sum-pnl">—</div><div class="stat-hint" id="eqd-sum-pnl-hint">0 días</div></div>
-          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">—</div><div class="stat-hint" id="eqd-sum-best-hint">—</div></div>
-          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">—</div><div class="stat-hint" id="eqd-sum-worst-hint">—</div></div>
-          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">0</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 0%</div></div>
+          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value red" id="eqd-sum-pnl">$900,00</div><div class="stat-hint" id="eqd-sum-pnl-hint">1 día</div></div>
+          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">$900,00</div><div class="stat-hint" id="eqd-sum-best-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">$900,00</div><div class="stat-hint" id="eqd-sum-worst-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">1</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 0% · 0W / 1L</div></div>
         </div>
         <div style="overflow-x:auto;" id="eqd-table-wrap" class="">
           <table style="width:100%;border-collapse:collapse;font-size:12.5px;" id="equity-table">
@@ -1826,7 +1826,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
                 <th style="text-align:right;padding:6px 10px;font-weight:500;">W/L</th>
               </tr>
             </thead>
-            <tbody id="equity-table-body"><tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">Sin operaciones en este periodo</td></tr></tbody>
+            <tbody id="equity-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
+        <td style="padding:7px 10px;color:var(--muted2);">2026-06-22</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:600;">$900,00</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$9684,85</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0W / 1L</td>
+      </tr></tbody>
           </table>
         </div>
       </div>
@@ -1841,7 +1847,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:9.5px;color:var(--muted);text-align:center;margin-bottom:4px;">
           <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
         </div>
-        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
+        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell has-data loss" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
         <div id="eqd-day-selected-wrap" class="hidden" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
           <div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">📅 Selección personalizada · clic para añadir/quitar días</div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -1857,20 +1863,20 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;" id="weekly-section">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
       <div style="font-size:13px;font-weight:600;color:var(--text);">📅 Análisis Semanal</div>
-      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"><span style="background:var(--green-dim);color:var(--green);border:1px solid #0a3020;padding:3px 10px;border-radius:6px;font-weight:700;">🔥 2 semanas ganadoras seguidas</span></div>
+      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"></div>
     </div>
     <!-- KPIs semanales -->
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">2</div><div class="stat-hint" id="wk-wins-hint">de 2 semanas</div></div>
-      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">0</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">2</div><div class="stat-hint" id="wk-wins-hint">de 3 semanas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">1</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
       <div class="stat-card"><div class="stat-label">Mejor semana</div><div class="stat-value green" id="wk-best">+$8590,40</div><div class="stat-hint" id="wk-best-hint">15 jun – 19 jun</div></div>
-      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">+$1994,45</div><div class="stat-hint" id="wk-worst-hint">8 jun – 12 jun</div></div>
+      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">$900,00</div><div class="stat-hint" id="wk-worst-hint">22 jun – 26 jun</div></div>
     </div>
     <!-- Gráfico de barras semanal -->
     <div style="position:relative;width:100%;overflow:hidden;margin-bottom:1rem;" id="weekly-chart-wrap">
-      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 918 220"><line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff22" stroke-width="1"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">0</text><line x1="70" y1="143.0" x2="898" y2="143.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><line x1="70" y1="102.0" x2="898" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+4.3k</text><line x1="70" y1="61.0" x2="898" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><line x1="70" y1="20.0" x2="898" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="111.4" y="145.9" width="331.2" height="38.1" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="525.4" y="20.0" width="331.2" height="164.0" rx="3" fill="#27d97a" opacity="0.8" style=""></rect>
-      <line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
-      <text x="277.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="691.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><rect x="111.4" y="20" width="331.2" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="525.4" y="20" width="331.2" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
+      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 918 220"><line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">-900</text><line x1="70" y1="143.0" x2="898" y2="143.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><line x1="70" y1="102.0" x2="898" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+3.8k</text><line x1="70" y1="61.0" x2="898" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+6.2k</text><line x1="70" y1="20.0" x2="898" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="97.6" y="134.0" width="220.8" height="34.5" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="373.6" y="20.0" width="220.8" height="148.4" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="649.6" y="168.4" width="220.8" height="15.6" rx="3" fill="#ff4f4f" opacity="0.8" style=""></rect>
+      <line x1="70" y1="168.4" x2="898" y2="168.4" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
+      <text x="208.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="484.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><text x="760.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S26</text><rect x="97.6" y="20" width="220.8" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="373.6" y="20" width="220.8" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="649.6" y="20" width="220.8" height="164" fill="transparent" data-tip="22 jun – 26 jun | $900,00 | 1 ops | WR 0%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
       <div id="weekly-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 275.333px; top: 126.708px;">8 jun – 12 jun | +$2994,45 | 3 ops | WR 100%</div>
     </div>
     <!-- Tabla de semanas -->
@@ -1887,6 +1893,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           </tr>
         </thead>
         <tbody id="weekly-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
+        <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">22 jun – 26 jun</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:700;">$900,00</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0%</td>
+        <td style="padding:7px 10px;text-align:right;"><span style="background:var(--red-dim);color:var(--red);border:1px solid #3a0000;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">PERDEDORA</span></td>
+      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
         <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">15 jun – 19 jun</td>
         <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$8590,40</td>
         <td style="padding:7px 10px;text-align:right;color:var(--muted2);">4</td>
@@ -1916,10 +1929,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="streak-stats-row">
-      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value green" id="st-current">+4</div><div class="stat-hint" id="st-current-hint">4 operaciones · ganando 🔥</div></div>
+      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value red" id="st-current">-1</div><div class="stat-hint" id="st-current-hint">1 operación · perdiendo ⚠️</div></div>
       <div class="stat-card"><div class="stat-label">Mejor racha (wins)</div><div class="stat-value green" id="st-best-win">7</div><div class="stat-hint" id="st-best-win-hint">+$5679,85 · 2026-06-12 → 2026-06-17</div></div>
       <div class="stat-card"><div class="stat-label">Peor racha (losses)</div><div class="stat-value red" id="st-worst-loss">2</div><div class="stat-hint" id="st-worst-loss-hint">-$1300 · 2026-06-18</div></div>
-      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">3.6</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
+      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">3.2</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
     </div>
     <div style="overflow-x:auto;padding-bottom:4px;">
       <div id="streak-strip" style="display:flex;align-items:flex-end;gap:3px;min-height:60px;"><div title="🟢 Racha ganadora · 7 op · +$5679,85 · 2026-06-12 → 2026-06-17" style="flex:0 0 auto;width:14px;height:56px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
@@ -1932,6 +1945,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="width:100%;height:14px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
     </div><div title="🟢 Racha ganadora · 4 op · +$2445 · 2026-06-18" style="flex:0 0 auto;width:14px;height:32px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
       <div style="width:100%;height:30px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🔴 Racha perdedora · 1 op · -$900 · 2026-06-22" style="flex:0 0 auto;width:14px;height:14px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:12px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
     </div></div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Cada bloque es una sesión registrada, en orden cronológico (más reciente a la derecha). El tamaño indica el largo de la racha en curso.</div>
@@ -1944,9 +1959,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div id="dow-legend" style="font-size:11px;color:var(--muted2);">¿Qué días rindes mejor y peor?</div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dow-chart-wrap">
-      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 918 280"><line x1="70" y1="240" x2="898" y2="240" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="187.5" x2="898" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="898" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="898" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="898" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">+740</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="129.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="247.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="365.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="484.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="602.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="720.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="838.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="80.6" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="198.9" y="142.2" width="97.0" height="97.8" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="317.2" y="104.7" width="97.0" height="135.3" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="435.5" y="30.0" width="97.0" height="210.0" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="553.8" y="73.6" width="97.0" height="166.4" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="672.1" y="98.5" width="97.0" height="141.5" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="790.4" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
+      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 918 280"><line x1="70" y1="240" x2="898" y2="240" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="187.5" x2="898" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="898" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="898" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="898" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">+740</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="129.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="247.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="365.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="484.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="602.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="720.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="838.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="80.6" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="198.9" y="206.1" width="97.0" height="33.9" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="317.2" y="104.7" width="97.0" height="135.3" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="435.5" y="30.0" width="97.0" height="210.0" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="553.8" y="73.6" width="97.0" height="166.4" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="672.1" y="98.5" width="97.0" height="141.5" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="790.4" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
     <line x1="70" y1="240.0" x2="898" y2="240.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <rect x="80.6" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="198.9" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Lun · +$1378,4 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="317.2" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="435.5" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="553.8" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="672.1" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="790.4" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
+    <rect x="80.6" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="198.9" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Lun · +$478,4 · 3 op · WR 67%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="317.2" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="435.5" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="553.8" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="672.1" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="790.4" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
       <div id="dow-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 142.333px; top: 59.375px;">Dom · +$0 · 0 op · WR 0%</div>
     </div>
   </div>
@@ -1962,14 +1977,14 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="dist-stats-row">
       <div class="stat-card"><div class="stat-label">Ganancia media</div><div class="stat-value green" id="dist-avg-win">+$822,32</div></div>
-      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$583,33</div></div>
-      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.41x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
-      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$588,05</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
+      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$662,5</div></div>
+      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.24x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
+      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$509,73</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dist-chart-wrap">
-      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 918 260"><rect x="58.5" y="186.7" width="124.4" height="33.3" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="199.8" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="341.1" y="220.0" width="124.4" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="482.5" y="120.0" width="124.4" height="100.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="623.8" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="765.1" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="396.1" y1="20" x2="396.1" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="120.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="262.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">$532</text><text x="403.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">$165</text><text x="544.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$203</text><text x="686.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$570</text><text x="827.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$938</text>
+      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 918 260"><rect x="58.5" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="199.8" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="341.1" y="220.0" width="124.4" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="482.5" y="120.0" width="124.4" height="100.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="623.8" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="765.1" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="396.1" y1="20" x2="396.1" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="120.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="262.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">$532</text><text x="403.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">$165</text><text x="544.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$203</text><text x="686.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$570</text><text x="827.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$938</text>
     <line x1="50" y1="220" x2="898" y2="220" stroke="#ffffff18" stroke-width="1"></line>
-    <rect x="58.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$532,43 · 1 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="199.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$532,43 a -$164,85 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="341.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$164,85 a +$202,72 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="482.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$202,72 a +$570,3 · 3 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="623.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$570,3 a +$937,88 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="765.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$937,88 a +$1305,45 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
+    <rect x="58.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$532,43 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="199.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$532,43 a -$164,85 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="341.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$164,85 a +$202,72 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="482.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$202,72 a +$570,3 · 3 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="623.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$570,3 a +$937,88 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="765.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$937,88 a +$1305,45 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
       <div id="dist-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 142.333px; top: 0.375px;">-$900 a -$532,43 · 1 op</div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Una distribución sana suele mostrar pérdidas agrupadas y controladas, con una cola de ganancias que se extiende más lejos.</div>
@@ -3074,7 +3089,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
     <div class="form-group">
       <label class="form-label">Modo de cuenta</label>
-      <div class="type-selector" id="modal-mode-selector"><div class="type-pill">⚡ Instant</div><div class="type-pill">📋 Eval F1</div><div class="type-pill">📋 Eval F2</div><div class="type-pill active purple">🏆 Funded</div></div>
+      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
     </div>
 
     <!-- Base fields -->
@@ -3101,7 +3116,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- FUTURES EVAL fields -->
-    <div id="modal-section-fut-eval" class="form-section" style="display: none;">
+    <div id="modal-section-fut-eval" class="form-section" style="">
       <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
@@ -3169,7 +3184,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- CFD FUNDED/LIVE fields -->
-    <div id="modal-section-cfd-funded" class="form-section" style="">
+    <div id="modal-section-cfd-funded" class="form-section" style="display: none;">
       <div class="form-section-title">🏆 Parámetros Funded · CFD</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-f-maxdd" placeholder="10" step="0.1"></div>
@@ -3212,7 +3227,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- Grupo assignment (futures) -->
-    <div id="modal-group-select" class="form-group" style="display: none;">
+    <div id="modal-group-select" class="form-group" style="">
       <label class="form-label">Grupo de estrategia</label>
       <select class="form-input" id="na-group">
         <option value="A">🔵 Grupo A</option>
@@ -16337,9 +16352,84 @@ function prepMedToggle(label) {
 }
 
 // ══════════════════════════════════════════════════════════════════
-// SF CLOUD SYNC — Supabase
+// SF CLOUD SYNC — Supabase bidireccional
+// Guarda y restaura TODOS los datos (cuentas, entradas, grupos,
+// certificados, diario, notas…) en la tabla client_data.
+// ══════════════════════════════════════════════════════════════════
 
-// ── Auto-guardado local cada 45s ──────────────────────────────────────────
+// ── Subir datos a la nube ─────────────────────────────────────────
+async function sbPush(licKey) {
+  if (!licKey || typeof SB_URL === 'undefined') return;
+  try {
+    const payload = buildBackupPayload();
+    await fetch(SB_URL + '/rest/v1/client_data', {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({
+        license_key: licKey,
+        data: payload,
+        updated_at: new Date().toISOString()
+      })
+    });
+  } catch(e) { console.warn('SF Cloud: error al subir datos', e); }
+}
+
+// ── Descargar datos de la nube y aplicarlos al localStorage ──────
+async function sbPull(licKey) {
+  if (!licKey || typeof SB_URL === 'undefined') return false;
+  try {
+    const res = await fetch(
+      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(licKey) + '&select=data,updated_at',
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
+    );
+    if (!res.ok) return false;
+    const rows = await res.json();
+    if (!rows || !rows.length || !rows[0].data) return false;
+    applyBackupPayload(rows[0].data);
+    return true;
+  } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
+}
+
+// ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
+async function sbStartAutoSync(licKey) {
+  if (!licKey) return;
+
+  // 1. Traer datos de la nube
+  const pulled = await sbPull(licKey);
+  if (pulled) {
+    try {
+      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+      if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
+      if (typeof renderOverview      === 'function') renderOverview();
+      if (typeof renderGroups        === 'function') renderGroups();
+      if (typeof renderCertificates  === 'function') renderCertificates();
+      if (typeof renderFirmSummary   === 'function') renderFirmSummary();
+      if (typeof renderGoals         === 'function') renderGoals();
+      if (typeof buildAccountSelects === 'function') buildAccountSelects();
+      console.log('SF Cloud datos restaurados desde la nube');
+    } catch(e) { console.warn('SF Cloud: error al aplicar datos', e); }
+  }
+
+  // 2. Auto-guardar en nube cada 60s
+  setInterval(() => sbPush(licKey), 60000);
+
+  // 3. Guardar al cerrar/cambiar pestana
+  window.addEventListener('beforeunload', () => sbPush(licKey));
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) sbPush(licKey);
+  });
+}
+
+// ── Auto-guardado local cada 45s ──────────────────────────────────
 (function() {
   let _autoSaveTimer = null;
   function _autoSave() {
@@ -16353,12 +16443,10 @@ function prepMedToggle(label) {
       if (document.hidden) _autoSave();
     });
   }
-  // Arrancar cuando la licencia esté activa
   document.addEventListener('DOMContentLoaded', function() {
     setTimeout(_startAutoSave, 2000);
   });
 })();
 </script>
-
 
 </body></html>
