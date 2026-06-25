@@ -374,7 +374,7 @@
 }
 .coach-tab-pane { display: none; }
 .coach-tab-pane.active { display: block; }
-.coach-tabs-scroll { padding-right: 4px; }
+.coach-tabs-scroll { padding-right: 4px; max-height: 520px; overflow-y: auto; }
 .coach-tabs-scroll::-webkit-scrollbar { width: 4px; }
 .coach-tabs-scroll::-webkit-scrollbar-track { background: transparent; }
 .coach-tabs-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
@@ -1509,24 +1509,17 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/FondeoProLogger.ex5" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(201, 168, 76); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(80, 60, 10); background: rgba(201, 168, 76, 0.08); transition: 0.15s; text-decoration: none;" onmouseover="this.style.background=&#39;rgba(201,168,76,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(201,168,76,0.08)&#39;">
         <span style="font-size:14px">⬇</span> Descargar EA (FondeoProLogger.ex5)
       </a>
-      <div onclick="migrarDesdControl()" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(255, 174, 48); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(58, 40, 0); background: rgba(255, 174, 48, 0.06); transition: 0.15s;" onmouseover="this.style.background=&#39;rgba(255,174,48,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(255,174,48,0.06)&#39;">
-        <span style="font-size:14px">⚡</span> Importar datos del Control
-      </div>
+
       <div onclick="backupCompleto()" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(78, 203, 141); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(26, 58, 42); background: rgba(0, 200, 100, 0.06); transition: 0.15s;" onmouseover="this.style.background=&#39;rgba(0,200,100,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(0,200,100,0.06)&#39;">
         <span style="font-size:14px">📦</span> Backup configuración .json
       </div>
       <div onclick="restaurarBackup()" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(126, 184, 232); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(26, 42, 58); background: rgba(0, 120, 220, 0.06); transition: 0.15s;" onmouseover="this.style.background=&#39;rgba(0,120,220,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(0,120,220,0.06)&#39;">
         <span style="font-size:14px">🔄</span> Restaurar backup
       </div>
-      <div onclick="sfOpenCloudConfig()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(74,158,255);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgba(74,158,255,0.25);background:rgba(74,158,255,0.07);transition:0.15s;margin-top:4px;" onmouseover="this.style.background='rgba(74,158,255,0.15)'" onmouseout="this.style.background='rgba(74,158,255,0.07)'">
-        <span style="font-size:14px">☁️</span> Sincronización en la nube
-      </div>
+
     </div>
-    <div style="margin-top:8px;padding:6px 8px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span id="sf-cloud-indicator" style="font-size:10px;color:var(--muted);">☁️ Sin nube configurada</span>
-      <span onclick="sfCloudPull(false)" style="font-size:10px;color:var(--blue);cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid rgba(74,158,255,0.2);background:rgba(74,158,255,0.06);">↻ Sync</span>
-    </div>
-    <p style="font-size:10px;color:var(--muted);">📦 Backup guarda tu configuración local<br>(diario, notas, ajustes de cuentas).</p>
+
+
   </div>
 </aside>
 
@@ -3125,7 +3118,22 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
 
       <!-- ── PANEL COACH (generado automáticamente) ── -->
-      <div id="coach-insights-panel"><div id="sf-intelligence-engine"><div class="ie-card"><div class="ie-header" onclick="(function(){var b=document.getElementById(&#39;ie-body&#39;);if(!b)return;var open=b.style.display!==&#39;none&#39;;b.style.display=open?&#39;none&#39;:&#39;&#39;;document.getElementById(&#39;ie-arrow&#39;).textContent=open?&#39;▶&#39;:&#39;▲&#39;;_lsSet(&#39;ie_card_open&#39;,open?&#39;0&#39;:&#39;1&#39;);})()" style="cursor:pointer;"><span class="ie-badge">Intelligence Engine</span><span class="ie-title">esto es lo único que debes saber ahora</span><span id="ie-arrow" style="margin-left:auto;font-size:10px;color:var(--muted2);flex-shrink:0;">▶</span></div><div id="ie-body" style="display:none;"><div class="ie-block ie-finding"><div class="ie-block-label">🔍 Hallazgo principal</div><div class="ie-block-text">"Mover el stop" es el comportamiento que más afecta tu rendimiento.</div><div class="ie-block-sub">Apareció <b>2 veces</b> y acumula un impacto total en cuenta de <b style="color:var(--red);">+$0</b>.</div></div><div class="ie-block ie-objective"><div class="ie-block-label">🎯 Objetivo de esta semana</div><div class="ie-block-text">Reducir "FOMO" esta semana.</div><div class="ie-block-sub">Antes de cada entrada pregúntate en voz alta: "¿Estoy entrando por FOMO?" Si la respuesta es sí, cierra el gráfico.</div><div class="ie-track"><div class="ie-track-labels"><span class="ie-track-lbl">L</span><span class="ie-track-lbl">M</span><span class="ie-track-lbl">X</span><span class="ie-track-lbl">J</span><span class="ie-track-lbl">V</span></div><div class="ie-track-dots"><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot fail" title="Error marcado este día"></div><div class="ie-dot ok" title="Sin el error"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot none" title="Sin registro"></div></div></div></div><div class="ie-block ie-risk"><div class="ie-block-label">⚡ Riesgo principal</div><div class="ie-block-text">Sin riesgo dominante detectado.</div><div class="ie-block-sub">Mantén el nivel de exigencia con el checklist de preparación.</div></div><div class="ie-block ie-strength"><div class="ie-block-label">💪 Fortaleza activa</div><div class="ie-block-text">Constancia en el registro</div><div class="ie-block-sub"><b>7 sesiones</b> registradas. Sin datos no hay mejora posible.</div></div><div class="ie-footer"><span style="color:var(--muted);font-size:10px;">7 sesiones · 0 operaciones · actualizado en tiempo real</span><button class="ie-data-btn" onclick="(function(btn){var dr=document.getElementById(&#39;ie-data-drawer&#39;);if(dr){dr.remove();btn.style.display=&#39;flex&#39;;}else{var el=document.getElementById(&#39;sf-intelligence-engine&#39;);el.insertAdjacentHTML(&#39;afterend&#39;,window._ieDrawerHTML);btn.style.display=&#39;none&#39;;}}).call(this,this)">📂 Ver datos completos</button></div></div></div></div><div class="coach-insight blue" style="border: 1.5px solid rgba(74, 158, 255, 0.35); margin-bottom: 8px;"><div id="coach-profile-module"><div class="coach-insight-label">Perfil psicologico</div><div style="text-align:center;padding:0.75rem 0;"><div style="font-size:20px;margin-bottom:6px;">🔬</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber);">2</b> entradas mas con trades reales</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">Tienes 3 dias vinculados · Minimo: 5</div><div style="margin-top:8px;background:var(--bg3);border-radius:6px;overflow:hidden;height:5px;"><div style="height:100%;width:60%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="section-title" style="font-size:10px;">🤖 COACH · INTELIGENCIA EMOCIONAL</div><span id="coach-days-count" style="font-size:10px;color:var(--muted);">7 días registrados</span></div><div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn active" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="semanal" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#a07aff;"></span>📅 Semana</button><button class="coach-tab-btn" data-tab="perfil" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ff6eb4;"></span>🧠 Perfil</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane active" style=""><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">📊 PnL medio: <b style="color:var(--green)">+$2418</b></div><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">🎯 Winrate: <b style="color:var(--blue)">80%</b></div><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">📅 Días: <b style="color:var(--text)">5</b></div></div><div class="coach-insight green expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">✅ Tu emoción más rentable<span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">Cuando operas <b>tranquila</b> tu PnL promedio es <b>+$2643</b> (<b>+9%</b> vs tu media)</div><div class="coach-insight-sub">Efectividad: 100% · 2 días registrados</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">2 días · haz clic para colapsar</div><div class="ci-day-row"><span class="ci-day-date">mar, 16 jun</span><span class="ci-day-emo">tranquila, cansada</span><span class="ci-day-pnl green">+$2707</span></div><div class="ci-day-row"><span class="ci-day-date">lun, 15 jun</span><span class="ci-day-emo">tranquila</span><span class="ci-day-pnl green">+$2578</span></div></div></div><div class="coach-insight blue expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">🚦 Tu estado de preparación óptimo<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">En estado <b>Precaución activa 🟡</b> tu promedio es <b>+$3653</b> (<b>+51%</b> vs media)</div><div class="coach-insight-sub">2 días en este estado · Efectividad: 100%</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">2 días en este estado:</div><div class="ci-day-row"><span class="ci-day-date">jue, 18 jun</span><span class="ci-day-emo">ansiosa</span><span class="ci-day-pnl green">+$3345</span></div><div class="ci-day-row"><span class="ci-day-date">mié, 17 jun</span><span class="ci-day-emo">motivada</span><span class="ci-day-pnl green">+$3960</span></div></div></div><div class="coach-insight amber expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">⚡ Cuidado con este estado de preparación<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">En estado <b>Mentalidad de peak 🟢</b> tu promedio cae a <b>+$1595</b> (<b>-34%</b> vs media)</div><div class="coach-insight-sub">3 días · Efectividad: 67% vs media 80%</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">3 días en este estado:</div><div class="ci-day-row"><span class="ci-day-date">lun, 22 jun</span><span class="ci-day-emo">concentrada</span><span class="ci-day-pnl red">-$500</span></div><div class="ci-day-row"><span class="ci-day-date">mar, 16 jun</span><span class="ci-day-emo">tranquila, cansada</span><span class="ci-day-pnl green">+$2707</span></div><div class="ci-day-row"><span class="ci-day-date">lun, 15 jun</span><span class="ci-day-emo">tranquila</span><span class="ci-day-pnl green">+$2578</span></div></div></div><div class="coach-insight red expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">💸 Tu error más caro<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main"><b>FOMO</b> aparece en días donde tu PnL promedio es <b>-$500</b> vs tu media de <b>+$2418</b></div><div class="coach-insight-sub">1 veces registrado · Eliminarlo mejoraría tu resultado directamente</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">1 días con este error:</div><div class="ci-day-row"><span class="ci-day-date">lun, 22 jun</span><span class="ci-day-emo">concentrada</span><span class="ci-day-pnl red">-$500</span></div></div></div><div class="coach-insight amber" style=""><div class="coach-insight-label">💸 Coste de tus errores</div><div style="display:flex;flex-direction:column;gap:4px;margin-top:6px;"><div class="cost-row"><span class="cost-label">FOMO <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--red)">-$500/día</span></div><div class="cost-row"><span class="cost-label">Mover el stop <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--green)">+$3960/día</span></div><div class="cost-row"><span class="cost-label">Tamaño excesivo <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--green)">+$3960/día</span></div></div></div><div class="coach-insight amber" style="border:1.5px solid var(--amber);"><div class="coach-insight-label">🎯 ACCIÓN CONCRETA ESTA SEMANA<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span></div><div class="coach-insight-main">Tu patrón más frecuente estos últimos 7 días: <b>FOMO</b> (1×)</div><div class="coach-insight-sub">Antes de cada operación esta semana, pregúntate: <i>"¿Estoy entrando por FOMO?"</i> — Si la respuesta es sí, no entres.</div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div><div id="coach-tab-perfil" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div></div>
+      <div id="coach-insights-panel"><div id="sf-intelligence-engine"><div class="ie-card"><div class="ie-header" onclick="(function(){var b=document.getElementById(&#39;ie-body&#39;);if(!b)return;var open=b.style.display!==&#39;none&#39;;b.style.display=open?&#39;none&#39;:&#39;&#39;;document.getElementById(&#39;ie-arrow&#39;).textContent=open?&#39;▶&#39;:&#39;▲&#39;;_lsSet(&#39;ie_card_open&#39;,open?&#39;0&#39;:&#39;1&#39;);})()" style="cursor:pointer;"><span class="ie-badge">Intelligence Engine</span><span class="ie-title">esto es lo único que debes saber ahora</span><span id="ie-arrow" style="margin-left:auto;font-size:10px;color:var(--muted2);flex-shrink:0;">▶</span></div><div id="ie-body" style="display:none;"><div class="ie-block ie-finding"><div class="ie-block-label">🔍 Hallazgo principal</div><div class="ie-block-text">"Mover el stop" es el comportamiento que más afecta tu rendimiento.</div><div class="ie-block-sub">Apareció <b>2 veces</b> y acumula un impacto total en cuenta de <b style="color:var(--red);">+$0</b>.</div></div><div class="ie-block ie-objective"><div class="ie-block-label">🎯 Objetivo de esta semana</div><div class="ie-block-text">Reducir "FOMO" esta semana.</div><div class="ie-block-sub">Antes de cada entrada pregúntate en voz alta: "¿Estoy entrando por FOMO?" Si la respuesta es sí, cierra el gráfico.</div><div class="ie-track"><div class="ie-track-labels"><span class="ie-track-lbl">L</span><span class="ie-track-lbl">M</span><span class="ie-track-lbl">X</span><span class="ie-track-lbl">J</span><span class="ie-track-lbl">V</span></div><div class="ie-track-dots"><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot fail" title="Error marcado este día"></div><div class="ie-dot ok" title="Sin el error"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot none" title="Sin registro"></div></div></div></div><div class="ie-block ie-risk"><div class="ie-block-label">⚡ Riesgo principal</div><div class="ie-block-text">Sin riesgo dominante detectado.</div><div class="ie-block-sub">Mantén el nivel de exigencia con el checklist de preparación.</div></div><div class="ie-block ie-strength"><div class="ie-block-label">💪 Fortaleza activa</div><div class="ie-block-text">Constancia en el registro</div><div class="ie-block-sub"><b>7 sesiones</b> registradas. Sin datos no hay mejora posible.</div></div><div class="ie-footer"><span style="color:var(--muted);font-size:10px;">7 sesiones · 0 operaciones · actualizado en tiempo real</span><button class="ie-data-btn" onclick="(function(btn){var dr=document.getElementById(&#39;ie-data-drawer&#39;);if(dr){dr.remove();btn.style.display=&#39;flex&#39;;}else{var el=document.getElementById(&#39;sf-intelligence-engine&#39;);el.insertAdjacentHTML(&#39;afterend&#39;,window._ieDrawerHTML);btn.style.display=&#39;none&#39;;}}).call(this,this)">📂 Ver datos completos</button></div></div></div></div><div class="coach-insight blue" style="border: 1.5px solid rgba(74, 158, 255, 0.35); margin-bottom: 8px;"><div id="coach-profile-module"><div class="coach-insight-label">Perfil psicologico</div><div style="text-align:center;padding:0.75rem 0;"><div style="font-size:20px;margin-bottom:6px;">🔬</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber);">2</b> entradas mas con trades reales</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">Tienes 3 dias vinculados · Minimo: 5</div><div style="margin-top:8px;background:var(--bg3);border-radius:6px;overflow:hidden;height:5px;"><div style="height:100%;width:60%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="section-title" style="font-size:10px;">🤖 COACH · INTELIGENCIA EMOCIONAL</div><span id="coach-days-count" style="font-size:10px;color:var(--muted);">7 días registrados</span></div>
+<!-- ── Resumen semanal siempre visible ── -->
+<div id="coach-week-banner" style="background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span style="font-size:10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em;">Resumen esta semana</span>
+    <div style="display:flex;gap:5px;" id="coach-week-days-bar">
+      <span id="cwb-L" style="font-size:11px;font-weight:700;color:var(--muted2);">L —</span>
+      <span id="cwb-M" style="font-size:11px;font-weight:700;color:var(--muted2);">M —</span>
+      <span id="cwb-X" style="font-size:11px;font-weight:700;color:var(--muted2);">X —</span>
+      <span id="cwb-J" style="font-size:11px;font-weight:700;color:var(--muted2);">J —</span>
+      <span id="cwb-V" style="font-size:11px;font-weight:700;color:var(--muted2);">V —</span>
+    </div>
+  </div>
+  <div id="coach-week-pnl" style="font-size:12px;font-weight:800;color:var(--muted2);">PnL: —</div>
+</div>
+<div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn active" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="perfil" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ff6eb4;"></span>🧠 Perfil</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane active" style=""><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">📊 PnL medio: <b style="color:var(--green)">+$2418</b></div><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">🎯 Winrate: <b style="color:var(--blue)">80%</b></div><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:5px 12px;font-size:10px;color:var(--muted2);">📅 Días: <b style="color:var(--text)">5</b></div></div><div class="coach-insight green expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">✅ Tu emoción más rentable<span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">Cuando operas <b>tranquila</b> tu PnL promedio es <b>+$2643</b> (<b>+9%</b> vs tu media)</div><div class="coach-insight-sub">Efectividad: 100% · 2 días registrados</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">2 días · haz clic para colapsar</div><div class="ci-day-row"><span class="ci-day-date">mar, 16 jun</span><span class="ci-day-emo">tranquila, cansada</span><span class="ci-day-pnl green">+$2707</span></div><div class="ci-day-row"><span class="ci-day-date">lun, 15 jun</span><span class="ci-day-emo">tranquila</span><span class="ci-day-pnl green">+$2578</span></div></div></div><div class="coach-insight blue expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">🚦 Tu estado de preparación óptimo<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">En estado <b>Precaución activa 🟡</b> tu promedio es <b>+$3653</b> (<b>+51%</b> vs media)</div><div class="coach-insight-sub">2 días en este estado · Efectividad: 100%</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">2 días en este estado:</div><div class="ci-day-row"><span class="ci-day-date">jue, 18 jun</span><span class="ci-day-emo">ansiosa</span><span class="ci-day-pnl green">+$3345</span></div><div class="ci-day-row"><span class="ci-day-date">mié, 17 jun</span><span class="ci-day-emo">motivada</span><span class="ci-day-pnl green">+$3960</span></div></div></div><div class="coach-insight amber expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">⚡ Cuidado con este estado de preparación<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main">En estado <b>Mentalidad de peak 🟢</b> tu promedio cae a <b>+$1595</b> (<b>-34%</b> vs media)</div><div class="coach-insight-sub">3 días · Efectividad: 67% vs media 80%</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">3 días en este estado:</div><div class="ci-day-row"><span class="ci-day-date">lun, 22 jun</span><span class="ci-day-emo">concentrada</span><span class="ci-day-pnl red">-$500</span></div><div class="ci-day-row"><span class="ci-day-date">mar, 16 jun</span><span class="ci-day-emo">tranquila, cansada</span><span class="ci-day-pnl green">+$2707</span></div><div class="ci-day-row"><span class="ci-day-date">lun, 15 jun</span><span class="ci-day-emo">tranquila</span><span class="ci-day-pnl green">+$2578</span></div></div></div><div class="coach-insight red expandable" style="" onclick="this.classList.toggle(&#39;open&#39;)"><div class="coach-insight-label">💸 Tu error más caro<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span><span class="ci-expand-arrow">▶</span></div><div class="coach-insight-main"><b>FOMO</b> aparece en días donde tu PnL promedio es <b>-$500</b> vs tu media de <b>+$2418</b></div><div class="coach-insight-sub">1 veces registrado · Eliminarlo mejoraría tu resultado directamente</div><div class="coach-insight-detail"><div style="font-size:9px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;">1 días con este error:</div><div class="ci-day-row"><span class="ci-day-date">lun, 22 jun</span><span class="ci-day-emo">concentrada</span><span class="ci-day-pnl red">-$500</span></div></div></div><div class="coach-insight amber" style=""><div class="coach-insight-label">💸 Coste de tus errores</div><div style="display:flex;flex-direction:column;gap:4px;margin-top:6px;"><div class="cost-row"><span class="cost-label">FOMO <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--red)">-$500/día</span></div><div class="cost-row"><span class="cost-label">Mover el stop <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--green)">+$3960/día</span></div><div class="cost-row"><span class="cost-label">Tamaño excesivo <span class="cost-freq">(×1)</span></span><span class="cost-val" style="color:var(--green)">+$3960/día</span></div></div></div><div class="coach-insight amber" style="border:1.5px solid var(--amber);"><div class="coach-insight-label">🎯 ACCIÓN CONCRETA ESTA SEMANA<span style="font-size:8px;background:rgba(255,174,48,0.15);color:var(--amber);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;">SIGNIFICATIVO</span></div><div class="coach-insight-main">Tu patrón más frecuente estos últimos 7 días: <b>FOMO</b> (1×)</div><div class="coach-insight-sub">Antes de cada operación esta semana, pregúntate: <i>"¿Estoy entrando por FOMO?"</i> — Si la respuesta es sí, no entres.</div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div><div id="coach-tab-perfil" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div></div>
 
     </div><!-- /col derecha -->
   </div><!-- /coach-grid -->
@@ -4398,8 +4406,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <!-- TOAST -->
 <div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">🏆 ¡Nuevo récord! 3 días de trading limpios</span></div>
 
-<!-- ══════════════ SUPABASE (sincronización en la nube) ══════════════ -->
-<script src="file:///C:/Users/34634/Downloads/index1_files/supabase.min.js.descarga"></script>
+
 
 <!-- ══════════════ SCRIPT ══════════════ -->
 <script>
@@ -4517,7 +4524,6 @@ function save() {
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  if (typeof window.sfCloudPush === 'function') window.sfCloudPush();
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -5851,6 +5857,7 @@ async function importarMT5Ahora(acc, silent) {
   try {
     // Filtro: user_id = licencia + account = número de cuenta MT5
     const accountNum = cfg.mt5UserID.trim();
+    // EA MT5 envía directo a Supabase — ver FondeoProLogger.ex5
     const url = SB_URL + '/rest/v1/trades'
       + '?user_id=eq.' + encodeURIComponent(userLicencia)
       + '&account=eq.' + encodeURIComponent(accountNum)
@@ -6218,9 +6225,49 @@ function renderCalendar() {
   const startWD  = new Date(year, month, 1).getDay();
   const monthLabel = MONTHS[month] + ' ' + year;
 
+  // ── Indicador días válidos para el header ────────────────────────────────
+  const monthPrefixHdr = year + '-' + String(month + 1).padStart(2,'0');
+  const accsHdr = (accFilter === 'all' ? getAllAccounts() : [accFilter])
+    .filter(a => accounts[a] && ['instant','funded','live'].includes(accounts[a].subtype));
+  let hdrTotalValid = 0, hdrTotalMin = 0;
+  accsHdr.forEach(acc => {
+    const cfg = accounts[acc];
+    const minDayPnlH = cfg.type === 'cfd'
+      ? ((cfg.balance||100000) * (cfg.minDailyProfit||0.5) / 100)
+      : (cfg.liveMinDailyProfit || 150);
+    const minDaysH = cfg.minProfitDays || cfg.liveMinDays || 5;
+    const activeTagH = cfg.subtype;
+    const byDateH = {};
+    entries.filter(e => e.account === acc && (!e.phase || e.phase === activeTagH) && !(e.phase && e.phase.startsWith('cycle_')))
+      .forEach(e => { byDateH[e.date] = (byDateH[e.date]||0) + e.pnl; });
+    hdrTotalValid += Object.keys(byDateH).filter(d => d.startsWith(monthPrefixHdr) && byDateH[d] >= minDayPnlH).length;
+    hdrTotalMin += minDaysH;
+  });
+  let hdrBadgeHtml = '';
+  if (accsHdr.length > 0) {
+    const hdrPct = hdrTotalMin > 0 ? Math.min(100, hdrTotalValid / hdrTotalMin * 100) : 0;
+    const hdrColor  = hdrPct >= 100 ? 'var(--green)' : hdrPct >= 50 ? 'var(--amber)' : 'var(--muted2)';
+    const hdrBg     = hdrPct >= 100 ? 'var(--green-dim)' : hdrPct >= 50 ? 'var(--amber-dim)' : 'var(--bg3)';
+    const hdrBorder = hdrPct >= 100 ? 'rgba(39,217,122,0.4)' : hdrPct >= 50 ? 'rgba(255,174,48,0.35)' : 'var(--border2)';
+    const hdrEmoji  = hdrPct >= 100 ? '✅' : hdrPct >= 50 ? '⚡' : '📅';
+    hdrBadgeHtml = `<div title="Días válidos acumulados este mes" style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:7px;background:${hdrBg};border:1px solid ${hdrBorder};cursor:default;user-select:none">
+      <span style="font-size:11px">${hdrEmoji}</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:1px">
+        <span style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:600;line-height:1">Días válidos mes</span>
+        <div style="display:flex;align-items:center;gap:5px">
+          <span style="font-size:13px;font-weight:800;color:${hdrColor};line-height:1">${hdrTotalValid}<span style="font-size:10px;font-weight:600;color:var(--muted)"> / ${hdrTotalMin}</span></span>
+          <div style="width:42px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden"><div style="height:100%;width:${hdrPct}%;background:${hdrColor};border-radius:2px"></div></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
   let html = `<div class="cal-container">
     <div class="cal-header">
-      <div class="cal-month">${monthLabel}</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="cal-month">${monthLabel}</div>
+        ${hdrBadgeHtml}
+      </div>
       <div class="cal-nav">
         <button class="cal-nav-btn" onclick="calNav(-1)">&#8249;</button>
         <button class="cal-nav-btn" onclick="calNav(1)">&#8250;</button>
@@ -6326,27 +6373,42 @@ function renderCalendar() {
   if (realAccs.length > 0) {
     const cfdAccs = realAccs.filter(a => accounts[a] && accounts[a].type === 'cfd');
     const futAccs = realAccs.filter(a => accounts[a] && accounts[a].type === 'futures');
+    const firstTab = cfdAccs.length ? 'cfd' : 'fut';
 
     html += `<div style="margin-top:1rem" id="traz-section">`;
-    html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">`;
+    html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">`;
     html += `<div class="section-title" style="margin-bottom:0">&#128202; Trazabilidad de Ciclos &middot; ${MONTHS[month]} ${year}</div>`;
     html += `<div style="display:flex;gap:5px">`;
-    if (cfdAccs.length) html += `<div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px" onclick="trazSwitchTab('cfd')"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">${cfdAccs.length}</span></div>`;
-    if (futAccs.length) html += `<div class="ov-tab${cfdAccs.length?'':' active-fut'}" id="traz-tab-fut" style="padding:4px 12px;font-size:11px" onclick="trazSwitchTab('fut')"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">${futAccs.length}</span></div>`;
+    if (cfdAccs.length) html += `<div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab('cfd')"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">${cfdAccs.length}</span></div>`;
+    if (futAccs.length) html += `<div class="ov-tab${cfdAccs.length?'':' active-fut'}" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab('fut')"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">${futAccs.length}</span></div>`;
     html += `</div></div>`;
 
+    html += `<div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">`;
+    html += `<button onclick="trazFilter('all')" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button>`;
+    html += `<button onclick="trazFilter('going')" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button>`;
+    html += `<button onclick="trazFilter('done')" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button>`;
+    html += `<button onclick="trazFilter('new')" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button>`;
+    html += `</div>`;
+
     function buildTrazChips(accs, tab) {
-      let s = `<div id="traz-chips-${tab}" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;${tab!=='cfd'&&cfdAccs.length?'display:none':''}">`;
+      let s = `<div id="traz-chips-${tab}" style="display:flex;flex-direction:column;gap:4px;${tab !== firstTab ? 'display:none' : ''}">`;
       accs.forEach(acc => {
         const d = trazData[acc];
         const done = d.profDays.length >= d.minDays;
-        const dotColor = done ? 'var(--green)' : d.pct > 50 ? 'var(--amber)' : 'var(--muted)';
-        const pnlColor = done ? 'var(--green)' : d.pct > 50 ? 'var(--amber)' : 'var(--muted2)';
-        s += `<div style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:9px;border:1px solid var(--border);background:var(--bg1);cursor:pointer;transition:all 0.15s;user-select:none" data-traz-acc="${acc}" data-traz-tab="${tab}" onclick="trazSelectAcc('${acc}','${tab}')">`;
-        s += `<div style="width:7px;height:7px;border-radius:50%;background:${dotColor};${done?'box-shadow:0 0 6px var(--green)':''}"></div>`;
-        s += `<span style="font-size:11.5px;font-weight:700;color:var(--text)">${acc}</span>`;
-        s += `<span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim)">${d.currentOrd} Ciclo</span>`;
-        s += `<span style="font-size:11px;font-weight:700;color:${pnlColor}">${d.profDays.length}/${d.minDays} días</span>`;
+        const going = d.pct > 50 && !done;
+        const status = done ? 'done' : going ? 'going' : 'new';
+        const dotColor = done ? 'var(--green)' : going ? 'var(--amber)' : 'var(--muted)';
+        const pnlColor = done ? 'var(--green)' : going ? 'var(--amber)' : 'var(--muted2)';
+        const safeId = acc.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+        s += `<div data-traz-status="${status}" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden">`;
+        s += `<button onclick="trazToggle('${safeId}','${acc}','${tab}')" id="traz-chip-${safeId}" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s">`;
+        s += `<div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:${dotColor};${done?'box-shadow:0 0 6px var(--green)':''}"></div>`;
+        s += `<span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">${acc}</span>`;
+        s += `<span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">${d.currentOrd} Ciclo</span>`;
+        s += `<span style="font-size:11px;font-weight:700;color:${pnlColor};margin:0 6px;flex-shrink:0">${d.profDays.length}/${d.minDays} días</span>`;
+        s += `<span id="traz-arrow-${safeId}" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span>`;
+        s += `</button>`;
+        s += `<div id="traz-panel-${safeId}" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div>`;
         s += `</div>`;
       });
       s += `</div>`;
@@ -6355,7 +6417,6 @@ function renderCalendar() {
 
     if (cfdAccs.length) html += buildTrazChips(cfdAccs, 'cfd');
     if (futAccs.length) html += buildTrazChips(futAccs, 'fut');
-    html += `<div id="traz-detail-panel"></div>`;
     html += `</div>`;
   }
 
@@ -6363,7 +6424,6 @@ function renderCalendar() {
 
   (function() {
     var _trazTab = 'cfd';
-    var _trazSel = null;
     window._trazDataJS = {};
     Object.keys(trazData).forEach(acc => {
       const d = trazData[acc];
@@ -6376,28 +6436,47 @@ function renderCalendar() {
     });
 
     window.trazSwitchTab = function(tab) {
-      _trazTab = tab; _trazSel = null;
+      _trazTab = tab;
       ['cfd','fut'].forEach(t => {
         const tb = document.getElementById('traz-tab-'+t);
         const ch = document.getElementById('traz-chips-'+t);
         if(tb) tb.className = 'ov-tab' + (t===tab?(t==='cfd'?' active-cfd':' active-fut'):'');
         if(ch) ch.style.display = t===tab ? '' : 'none';
       });
-      document.querySelectorAll('[data-traz-acc]').forEach(c=>c.style.borderColor='var(--border)');
-      const dp = document.getElementById('traz-detail-panel');
-      if(dp) dp.innerHTML = '';
     };
 
-    window.trazSelectAcc = function(acc, tab) {
-      if(_trazSel === acc) {
-        _trazSel = null;
-        document.querySelectorAll('[data-traz-acc]').forEach(c=>c.style.borderColor='var(--border)');
-        const dp = document.getElementById('traz-detail-panel'); if(dp) dp.innerHTML=''; return;
+    window.trazFilter = function(f) {
+      ['all','going','done','new'].forEach(k => {
+        const btn = document.getElementById('trazf-'+k);
+        if(!btn) return;
+        if(k===f) {
+          const colors = {all:'var(--blue)',going:'var(--amber)',done:'var(--green)',new:'var(--muted2)'};
+          const bgs = {all:'var(--blue-dim)',going:'var(--amber-dim)',done:'var(--green-dim)',new:'var(--bg3)'};
+          btn.style.borderColor = colors[k]; btn.style.background = bgs[k]; btn.style.color = colors[k];
+        } else {
+          btn.style.borderColor = 'var(--border2)'; btn.style.background = 'var(--bg3)'; btn.style.color = 'var(--muted2)';
+        }
+      });
+      document.querySelectorAll('[data-traz-status]').forEach(el => {
+        el.style.display = (f==='all' || el.dataset.trazStatus===f) ? '' : 'none';
+      });
+    };
+
+    window.trazToggle = function(safeId, acc, tab) {
+      const panel = document.getElementById('traz-panel-'+safeId);
+      const arrow = document.getElementById('traz-arrow-'+safeId);
+      const btn   = document.getElementById('traz-chip-'+safeId);
+      if(!panel) return;
+      const isOpen = panel.style.display !== 'none';
+      if(isOpen) {
+        panel.style.display = 'none';
+        if(arrow) { arrow.textContent='▶'; arrow.style.transform=''; }
+        if(btn) { btn.style.background=''; }
+        return;
       }
-      _trazSel = acc;
-      document.querySelectorAll('[data-traz-acc]').forEach(c=>c.style.borderColor='var(--border)');
-      const el2 = document.querySelector('[data-traz-acc="'+acc+'"]');
-      if(el2) { el2.style.borderColor = tab==='cfd'?'var(--blue)':'var(--purple)'; el2.style.background = tab==='cfd'?'var(--blue-dim)':'var(--purple-dim)'; }
+      panel.style.display = '';
+      if(arrow) { arrow.textContent='▼'; arrow.style.transform='rotate(0deg)'; }
+      if(btn) { btn.style.background = tab==='cfd'?'var(--blue-dim)':'var(--purple-dim)'; }
 
       const d = window._trazDataJS[acc]; if(!d) return;
       const ORDx=['1er','2do','3er','4to','5to','6to','7mo','8vo','9no','10mo'];
@@ -6420,8 +6499,7 @@ function renderCalendar() {
         daysHtml+='</div>';
       } else { daysHtml='<div style="font-size:11px;color:var(--muted);margin-bottom:10px">Sin días válidos este mes aún</div>'; }
 
-      const dp = document.getElementById('traz-detail-panel');
-      if(dp) dp.innerHTML = `<div style="background:var(--bg1);border:1px solid ${color};border-top:2px solid ${color};border-radius:var(--radius);padding:1rem 1.1rem;margin-top:6px;animation:firmDetailIn 0.15s ease">
+      panel.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
           <div style="font-size:14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px">
             <span style="width:10px;height:10px;border-radius:50%;background:${color};display:inline-block"></span>${acc}
@@ -6438,8 +6516,7 @@ function renderCalendar() {
           <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:8.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Mín. día</div><div style="font-size:15px;font-weight:800;margin-top:2px;color:var(--muted2)">$${d.minDayPnl.toFixed(0)}</div></div>
         </div>
         <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:4px"><span>Progreso ciclo global</span><span>${d.profDays.length} / ${d.minDays} días</span></div><div style="height:7px;background:var(--bg3);border-radius:4px;overflow:hidden"><div style="height:100%;width:${d.pct}%;background:${barColor};border-radius:4px;transition:width 0.4s"></div></div></div>
-        ${certsHtml}${daysHtml}
-      </div>`;
+        ${certsHtml}${daysHtml}`;
     };
   })();
 } // fin renderCalendar
@@ -11685,113 +11762,15 @@ const LIC_ADMIN_KEYS = [
   'FONDEO-MASTER-KEY-2026',
 ];
 
-// ══════════════════════════════════════════════════════════════════
-// ☁ SINCRONIZACIÓN EN LA NUBE (Supabase REST directo)
-// Usa la tabla client_data con RLS — cada licencia solo ve su fila.
-// ══════════════════════════════════════════════════════════════════
-const SB_URL = 'https://qkuimdilzxhhxpnvlnjb.supabase.co';
-const SB_KEY = 'sb_publishable_CP_kH-61i8DKEBa53qOA3Q_iH35VORs';
-const SB_FUNCTION_URL  = null; // no se usa — reemplazado por REST directo
-const SB_DEVICE_FUNCTION_URL = null; // no se usa
-
-// Detecta si el dispositivo actual es "pc" o "mobile" a partir del navegador
-function licDetectarTipoDispositivo() {
-  const ua = (navigator.userAgent || '').toLowerCase();
-  const esMovil = /android|iphone|ipad|ipod|mobile|blackberry|opera mini|iemobile/.test(ua);
-  return esMovil ? 'mobile' : 'pc';
-}
-const SB_LAST_SYNC_PREFIX = 'fp_sb_last_sync_sale_';
-
-let sbSyncTimer = null;
+// ── Identidad del dispositivo ──
 
 // Sube el estado actual del cliente directo a Supabase REST (upsert)
-async function sbPush(clave){
-  if (!clave) return;
-  try {
-    const payload = buildBackupPayload();
-    const now = new Date().toISOString();
-    const resp = await fetch(SB_URL + '/rest/v1/client_data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({ license_key: clave, data: payload, updated_at: now })
-    });
-    if (resp.ok || resp.status === 201) {
-      _lsSet(SB_LAST_SYNC_PREFIX + clave, now);
-    } else {
-      const err = await resp.text();
-      console.warn('Supabase push error:', resp.status, err);
-    }
-  } catch(e) { console.warn('Supabase push falló:', e); }
-}
 
 // Descarga el estado del cliente directo desde Supabase REST
-async function sbPull(clave){
-  if (!clave) return false;
-  try {
-    const resp = await fetch(
-      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(clave) + '&select=data,updated_at&limit=1',
-      {
-        headers: {
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + SB_KEY
-        }
-      }
-    );
-    if (!resp.ok) return false;
-    const rows = await resp.json();
-    if (!rows || rows.length === 0 || !rows[0].data) return false;
-    applyBackupPayload(rows[0].data);
-    if (rows[0].updated_at) _lsSet(SB_LAST_SYNC_PREFIX + clave, rows[0].updated_at);
-    return true;
-  } catch(e) { console.warn('Supabase pull falló:', e); return false; }
-}
 
 // Al cargar: compara updated_at de la nube con el último sync local
-async function sbSyncOnLoad(clave){
-  if (!clave) return;
-  const reloadFlag = sessionStorage.getItem('sb_just_reloaded');
-  if (reloadFlag === clave) {
-    sessionStorage.removeItem('sb_just_reloaded');
-    return;
-  }
-  try {
-    const resp = await fetch(
-      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(clave) + '&select=data,updated_at&limit=1',
-      {
-        headers: {
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + SB_KEY
-        }
-      }
-    );
-    if (!resp.ok) return;
-    const rows = await resp.json();
-    if (!rows || rows.length === 0 || !rows[0].data) return;
-    const lastSync = _lsGet(SB_LAST_SYNC_PREFIX + clave) || '';
-    if (rows[0].updated_at && rows[0].updated_at !== lastSync) {
-      applyBackupPayload(rows[0].data);
-      _lsSet(SB_LAST_SYNC_PREFIX + clave, rows[0].updated_at);
-      sessionStorage.setItem('sb_just_reloaded', clave);
-      location.reload();
-    }
-  } catch(e) { console.warn('Sincronización inicial falló:', e); }
-}
 
-// Activa el guardado automático en la nube cada cierto tiempo
-function sbStartAutoSync(clave){
-  if (!clave) return;
-  if (sbSyncTimer) clearInterval(sbSyncTimer);
-  // NO subir inmediatamente al arrancar — evita cambiar updated_at y provocar bucle
-  // La primera subida ocurre tras 45s o cuando el usuario cierra/minimiza
-  sbSyncTimer = setInterval(() => sbPush(clave), 45000); // cada 45s
-  window.addEventListener('beforeunload', () => { sbPush(clave); });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) sbPush(clave); });
-}
+
 
 
 // ── Identidad del dispositivo (persistente en este navegador/PC) ───
@@ -11937,7 +11916,6 @@ window.licActivar = async function() {
   if (resultado.admin) {
     licSave({ key: clave, expiry: null, activated: Date.now(), admin: true });
     licSetMsg(resultado.msg, 'ok');
-    await sbPull(clave);
     setTimeout(() => { location.reload(); }, 900);
     return;
   }
@@ -11956,7 +11934,6 @@ window.licActivar = async function() {
   licSave({ key: clave, expiry, activated: Date.now(), admin: false, deviceId });
   licSetMsg(chk.sinVerificar ? resultado.msg + ' (sin conexión, verificado localmente)' : resultado.msg, 'ok');
   licMostrarBarra(resultado.dias, resultado.dias);
-  await sbPull(clave);
   setTimeout(() => { location.reload(); }, 1400);
 };
 
@@ -12035,57 +12012,7 @@ async function licActualizarPill() {
 
 
 // ── Migración desde dashboard Control (fp_*_v4 → fp_*_v4_sale) ───
-window.migrarDesdControl = function() {
-  const mapeo = [
-    ['fp_entries_v4',         'fp_entries_v4_sale'],
-    ['fp_accounts_v4',        'fp_accounts_v4_sale'],
-    ['fp_groups_v4',          'fp_groups_v4_sale'],
-    ['fp_certs_v4',           'fp_certs_v4_sale'],
-    ['fp_firmstats_v4',       'fp_firmstats_v4_sale'],
-    ['fp_goal_milestones_v1', 'fp_goal_milestones_v1_sale'],
-    ['fp_goals_position',     'fp_goals_position_sale'],
-    ['fondeo_diary',          'fondeo_diary_sale'],
-    ['fondeo_quotes',         'fondeo_quotes_sale'],
-    ['tp_badtrades',          'tp_badtrades_sale'],
-    ['tp_month_archive_v1',   'tp_month_archive_v1_sale'],
-  ];
 
-  const tieneEntradas = localStorage.getItem('fp_entries_v4'); // fuente antigua (sin prefijo)
-  const tieneCuentas  = localStorage.getItem('fp_accounts_v4');  // fuente antigua (sin prefijo)
-  if (!tieneEntradas && !tieneCuentas) {
-    alert('⚠️ No se encontraron datos del dashboard Control en este navegador.\n\nAsegúrate de abrir este archivo en el mismo navegador donde usas el Control.');
-    return;
-  }
-
-  const ok = confirm('⚡ Importar datos del dashboard Control a este dashboard con licencia.\n\n⚠️ Esto sobreescribirá los datos actuales de este archivo.\n\n¿Continuar?');
-  if (!ok) return;
-
-  let copiados = 0;
-
-  mapeo.forEach(([origen, destino]) => {
-    const val = localStorage.getItem(origen); // leer fuente antigua (sin prefijo de usuario)
-    if (val !== null) { _lsSet(destino, val); copiados++; } // guardar en namespace del usuario
-  });
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (k && k.startsWith('fondeo_notes_') && !k.startsWith('fondeo_notes_sale_')) {
-      _lsSet(k.replace('fondeo_notes_', 'fondeo_notes_sale_'), localStorage.getItem(k));
-      copiados++;
-    }
-  }
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (k && k.startsWith('tp_daily_')) {
-      _lsSet(k, localStorage.getItem(k)); // migrar al namespace del usuario actual
-      copiados++;
-    }
-  }
-
-  alert('✅ Migración completada. ' + copiados + ' bloques de datos importados.\n\nLa página se recargará ahora para aplicar los cambios.');
-  location.reload();
-};
 
 
 // ═══ COACH EMOCIONAL ═══
@@ -13187,11 +13114,22 @@ function _coachEnsureTabStructure() {
     + '</div>'
     + '</div>'
     + '<div id="coach-panel-body">'
+    + '<div id="coach-week-banner" style="background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">'
+    + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'
+    + '<span style="font-size:10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em;">Resumen esta semana</span>'
+    + '<div style="display:flex;gap:5px;" id="coach-week-days-bar">'
+    + '<span id="cwb-L" style="font-size:11px;font-weight:700;color:var(--muted2);">L —</span>'
+    + '<span id="cwb-M" style="font-size:11px;font-weight:700;color:var(--muted2);">M —</span>'
+    + '<span id="cwb-X" style="font-size:11px;font-weight:700;color:var(--muted2);">X —</span>'
+    + '<span id="cwb-J" style="font-size:11px;font-weight:700;color:var(--muted2);">J —</span>'
+    + '<span id="cwb-V" style="font-size:11px;font-weight:700;color:var(--muted2);">V —</span>'
+    + '</div></div>'
+    + '<div id="coach-week-pnl" style="font-size:12px;font-weight:800;color:var(--muted2);">PnL: —</div>'
+    + '</div>'
     + '<div class="coach-tabs-nav" id="coach-tabs-nav"></div>'
     + '<div id="coach-tab-correlaciones" class="coach-tab-pane active"><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"></div></div>'
     + '<div id="coach-tab-errores"       class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"></div></div>'
     + '<div id="coach-tab-protegidos"    class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"></div></div>'
-    + '<div id="coach-tab-semanal"       class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"></div></div>'
     + '<div id="coach-tab-perfil"        class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div>'
     + '</div>';
 
@@ -13200,7 +13138,6 @@ function _coachEnsureTabStructure() {
     { id:'correlaciones', icon:'📊', label:'Correlaciones', color:'#4a9eff' },
     { id:'errores',       icon:'💸', label:'Errores',       color:'#ffae30' },
     { id:'protegidos',    icon:'🛡', label:'Protegidos',   color:'#27d97a' },
-    { id:'semanal',       icon:'📅', label:'Semana',        color:'#a07aff' },
     { id:'perfil',        icon:'🧠', label:'Perfil',        color:'#ff6eb4' },
   ];
   var nav = panel.querySelector('#coach-tabs-nav');
@@ -13615,6 +13552,62 @@ coachRenderInsights = function() {
 };
 
 // ── FIN MÓDULO COSTE DE ERRORES · Saint Fortune™ v1.0 ────────────────────────
+
+// ── Resumen semanal siempre visible (week banner) ──────────────────────────────
+(function() {
+  function _cwbUpdate() {
+    var banner = document.getElementById('coach-week-banner');
+    if (!banner) return;
+    // Get current week Mon-Fri
+    var now = new Date();
+    var day = now.getDay(); // 0=Sun,1=Mon..5=Fri,6=Sat
+    var mondayOff = (day === 0) ? -6 : 1 - day;
+    var monday = new Date(now); monday.setDate(now.getDate() + mondayOff); monday.setHours(0,0,0,0);
+    var dayKeys = ['L','M','X','J','V'];
+    var totalPnl = 0;
+    var hasPnl = false;
+    for (var i = 0; i < 5; i++) {
+      var d = new Date(monday); d.setDate(monday.getDate() + i);
+      var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+      var entry = null;
+      try { var raw = localStorage.getItem('diary_'+iso); if(raw) entry = JSON.parse(raw); } catch(e) {}
+      var el = document.getElementById('cwb-'+dayKeys[i]);
+      if (!el) continue;
+      if (!entry) {
+        var future = d > now;
+        el.textContent = dayKeys[i] + ' —';
+        el.style.color = 'var(--muted)';
+      } else if (entry.noTraded) {
+        el.textContent = dayKeys[i] + ' 🛡';
+        el.style.color = 'var(--cyan)';
+      } else {
+        var pnl = parseFloat(entry.pnl) || 0;
+        if (!isNaN(pnl)) { totalPnl += pnl; hasPnl = true; }
+        var emoji = pnl >= 0 ? '✅' : '❌';
+        el.textContent = dayKeys[i] + ' ' + emoji;
+        el.style.color = pnl >= 0 ? 'var(--green)' : 'var(--red)';
+      }
+    }
+    var pnlEl = document.getElementById('coach-week-pnl');
+    if (pnlEl) {
+      if (hasPnl) {
+        var sign = totalPnl >= 0 ? '+' : '';
+        pnlEl.textContent = 'PnL: ' + sign + '$' + Math.round(totalPnl).toLocaleString('en-US');
+        pnlEl.style.color = totalPnl >= 0 ? 'var(--green)' : 'var(--red)';
+      } else {
+        pnlEl.textContent = 'PnL: —';
+        pnlEl.style.color = 'var(--muted2)';
+      }
+    }
+  }
+  // Hook into coachRenderInsights
+  var _prevCRI = coachRenderInsights;
+  coachRenderInsights = function() { _prevCRI(); _cwbUpdate(); };
+  // Also update on page load
+  document.addEventListener('DOMContentLoaded', function() { setTimeout(_cwbUpdate, 600); });
+  setTimeout(_cwbUpdate, 800);
+})();
+// ── FIN WEEK BANNER ──────────────────────────────────────────────────────────
 
 
 
@@ -16406,7 +16399,6 @@ function licOcultarBoot() {
   licOcultarBoot();
 
   if (data.key) {
-    sbSyncOnLoad(data.key);
     sbStartAutoSync(data.key);
   }
 
@@ -16537,240 +16529,26 @@ function prepMedToggle(label) {
 
 // ══════════════════════════════════════════════════════════════════
 // SF CLOUD SYNC — Supabase
-// Se inyecta ANTES del cierre del body para que window.sfCloudPush
-// esté disponible cuando save() lo llame.
-// ══════════════════════════════════════════════════════════════════
-window.sfCloud = (function() {
-  const URL_KEY   = 'sf_supa_url';
-  const KEY_KEY   = 'sf_supa_key';
-  const ROW_KEY   = 'sf_supa_row';   // id de la fila en la tabla
-  const TABLE     = 'sf_data';
 
-  let _pushTimer  = null;
-
-  function getUrl()   { return localStorage.getItem(URL_KEY)  || ''; }
-  function getKey()   { return localStorage.getItem(KEY_KEY)  || ''; }
-  function getRowId() { return localStorage.getItem(ROW_KEY)  || null; }
-
-  function setStatus(icon, msg, color) {
-    const el = document.getElementById('sf-cloud-indicator');
-    if (!el) return;
-    el.textContent = icon + ' ' + msg;
-    el.style.color = color || 'var(--muted)';
+// ── Auto-guardado local cada 45s ──────────────────────────────────────────
+(function() {
+  let _autoSaveTimer = null;
+  function _autoSave() {
+    try { save(); } catch(e) {}
   }
-
-  function rerender() {
-    ['renderOverview','renderAccountList','renderCFDAccounts',
-     'renderFuturesAccounts','renderCertificates','renderGoals','renderFirmSummary'
-    ].forEach(fn => { if (typeof window[fn] === 'function') window[fn](); });
+  function _startAutoSave() {
+    if (_autoSaveTimer) clearInterval(_autoSaveTimer);
+    _autoSaveTimer = setInterval(_autoSave, 45000);
+    window.addEventListener('beforeunload', _autoSave);
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) _autoSave();
+    });
   }
-
-  // ── Push (debounced 2 s) ──────────────────────────────────────
-  async function push() {
-    if (!getUrl() || !getKey()) return;
-    clearTimeout(_pushTimer);
-    _pushTimer = setTimeout(async () => {
-      setStatus('⏳', 'Guardando...', 'var(--amber)');
-      try {
-        const payload = {
-          version: 'fondeo_backup_v1',
-          fecha: new Date().toISOString(),
-          data: buildBackupPayload()
-        };
-        const body = { data: payload };
-        const rowId = getRowId();
-        let res;
-        if (rowId) {
-          // UPDATE existing row
-          res = await fetch(`${getUrl()}/rest/v1/${TABLE}?id=eq.${rowId}`, {
-            method: 'PATCH',
-            headers: headers(),
-            body: JSON.stringify(body)
-          });
-        } else {
-          // INSERT new row
-          res = await fetch(`${getUrl()}/rest/v1/${TABLE}`, {
-            method: 'POST',
-            headers: { ...headers(), 'Prefer': 'return=representation' },
-            body: JSON.stringify(body)
-          });
-          if (res.ok) {
-            const rows = await res.json();
-            if (rows && rows[0] && rows[0].id) {
-              localStorage.setItem(ROW_KEY, rows[0].id);
-            }
-            const t = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-            setStatus('✅', 'Guardado ' + t, 'var(--green)');
-            return;
-          }
-        }
-        if (res && res.ok) {
-          const t = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-          setStatus('✅', 'Guardado ' + t, 'var(--green)');
-        } else {
-          const txt = res ? await res.text() : '?';
-          setStatus('❌', 'Error ' + (res ? res.status : ''), 'var(--red)');
-          console.error('sfCloud push error:', txt);
-        }
-      } catch(e) {
-        setStatus('❌', 'Sin conexión', 'var(--red)');
-        console.error('sfCloud push exception:', e);
-      }
-    }, 2000);
-  }
-
-  // ── Pull ─────────────────────────────────────────────────────
-  async function pull(silent) {
-    if (!getUrl() || !getKey()) {
-      setStatus('☁️', 'Sin nube configurada', 'var(--muted)');
-      return false;
-    }
-    setStatus('⏳', 'Cargando nube...', 'var(--amber)');
-    try {
-      const rowId = getRowId();
-      const url = rowId
-        ? `${getUrl()}/rest/v1/${TABLE}?id=eq.${rowId}&select=data`
-        : `${getUrl()}/rest/v1/${TABLE}?select=data,id&order=id.desc&limit=1`;
-      const res = await fetch(url, { headers: headers() });
-      if (!res.ok) {
-        setStatus('❌', 'Error ' + res.status, 'var(--red)');
-        return false;
-      }
-      const rows = await res.json();
-      if (!rows || !rows.length) {
-        setStatus('☁️', 'Sin datos en nube', 'var(--muted)');
-        // First time: push current data
-        push();
-        return false;
-      }
-      const row = rows[0];
-      if (row.id && !rowId) localStorage.setItem(ROW_KEY, row.id);
-      const backup = row.data;
-      if (!backup || backup.version !== 'fondeo_backup_v1') {
-        setStatus('❌', 'Formato inválido', 'var(--red)');
-        return false;
-      }
-      applyBackupPayload(backup.data);
-      // Reload JS variables from localStorage (applyBackupPayload writes there)
-      window.entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-      window.accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(window.CORE_ACCOUNTS || {}));
-      window.groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(window.DEFAULT_GROUPS || {}));
-      window.certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-      window.firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
-      const t = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-      setStatus('✅', 'Sincronizado ' + t, 'var(--green)');
-      if (!silent) toast('☁️ Datos cargados desde Supabase');
-      return true;
-    } catch(e) {
-      setStatus('❌', 'Error al cargar', 'var(--red)');
-      console.error('sfCloud pull exception:', e);
-      return false;
-    }
-  }
-
-  function headers() {
-    return {
-      'apikey': getKey(),
-      'Authorization': 'Bearer ' + getKey(),
-      'Content-Type': 'application/json'
-    };
-  }
-
-  // ── Config modal ─────────────────────────────────────────────
-  function openConfig() {
-    document.getElementById('sf-cloud-config-modal')?.remove();
-    const modal = document.createElement('div');
-    modal.id = 'sf-cloud-config-modal';
-    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1rem;';
-    modal.innerHTML = `
-      <div style="background:#0d0d14;border:1px solid #2a2a3a;border-radius:16px;width:480px;max-width:96vw;padding:1.5rem;box-shadow:0 0 40px rgba(74,158,255,0.12);">
-        <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;">☁️ Sincronización Supabase</div>
-        <div style="font-size:11.5px;color:var(--muted);margin-bottom:1.25rem;line-height:1.7;">
-          Tus datos se guardan en tu proyecto Supabase.<br>
-          Necesitas la <b style="color:var(--text)">URL</b> y la <b style="color:var(--text)">anon key</b> de tu proyecto, y una tabla llamada
-          <code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px;">sf_data</code>
-          con columnas <code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px;">id</code> (int8, PK, identity) y
-          <code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px;">data</code> (jsonb).
-        </div>
-        <div style="margin-bottom:12px;">
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:5px;font-weight:700;">URL del proyecto</div>
-          <input id="sf-cfg-url" type="text" placeholder="https://xxxx.supabase.co"
-            style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:9px 12px;outline:none;box-sizing:border-box;"
-            value="${getUrl()}">
-        </div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:5px;font-weight:700;">Anon Key</div>
-          <input id="sf-cfg-key" type="password" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-            style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:9px 12px;outline:none;box-sizing:border-box;"
-            value="${getKey()}">
-        </div>
-        <div id="sf-cfg-status" style="font-size:11px;color:var(--muted);min-height:18px;margin-bottom:14px;"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button onclick="sfCloud._saveConfig()" style="flex:1;padding:10px;border-radius:8px;background:rgba(74,158,255,0.15);border:1.5px solid rgba(74,158,255,0.4);color:var(--blue);font-size:12px;font-weight:700;cursor:pointer;">
-            💾 Guardar y conectar
-          </button>
-          <button onclick="document.getElementById('sf-cloud-config-modal').remove()" style="padding:10px 16px;border-radius:8px;background:var(--bg2);border:1px solid var(--border2);color:var(--muted2);font-size:12px;cursor:pointer;">
-            Cancelar
-          </button>
-        </div>
-      </div>`;
-    document.body.appendChild(modal);
-  }
-
-  async function saveConfig() {
-    const url = document.getElementById('sf-cfg-url').value.trim().replace(/\/+$/, '');
-    const key = document.getElementById('sf-cfg-key').value.trim();
-    const st  = document.getElementById('sf-cfg-status');
-    if (!url || !key) { st.style.color='var(--red)'; st.textContent='⚠️ Rellena los dos campos.'; return; }
-    st.style.color='var(--amber)'; st.textContent='⏳ Verificando conexión...';
-    try {
-      const r = await fetch(`${url}/rest/v1/${TABLE}?limit=1`, {
-        headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
-      });
-      if (!r.ok) { st.style.color='var(--red)'; st.textContent='❌ Error ' + r.status + ' — revisa URL y key'; return; }
-      localStorage.setItem(URL_KEY, url);
-      localStorage.setItem(KEY_KEY, key);
-      localStorage.removeItem(ROW_KEY); // reset row id for new project
-      st.style.color='var(--green)'; st.textContent='✅ Conectado. Cargando datos...';
-      setTimeout(async () => {
-        const loaded = await pull(true);
-        if (loaded) rerender();
-        else push(); // first time: push local data up
-        document.getElementById('sf-cloud-config-modal')?.remove();
-        toast('☁️ Supabase conectado correctamente');
-      }, 600);
-    } catch(e) {
-      st.style.color='var(--red)';
-      st.textContent='❌ No se pudo conectar: ' + e.message;
-    }
-  }
-
-  // ── Auto-pull on startup ─────────────────────────────────────
+  // Arrancar cuando la licencia esté activa
   document.addEventListener('DOMContentLoaded', function() {
-    // Pull en background: si llegan datos nuevos, re-renderiza silenciosamente
-    setTimeout(async () => {
-      if (getUrl() && getKey()) {
-        const loaded = await pull(true);
-        if (loaded) rerender();
-      } else {
-        setStatus('☁️', 'Sin nube configurada', 'var(--muted)');
-      }
-    }, 100);
+    setTimeout(_startAutoSave, 2000);
   });
-
-  return {
-    push,
-    pull,
-    openConfig,
-    _saveConfig: saveConfig,
-    isConfigured: () => !!(getUrl() && getKey())
-  };
 })();
-
-// Aliases globales para que save() y el HTML los encuentren
-window.sfCloudPush = () => window.sfCloud.push();
-window.sfCloudPull = (silent) => window.sfCloud.pull(silent).then(ok => { if(ok) { ['renderOverview','renderAccountList','renderCFDAccounts','renderFuturesAccounts','renderCertificates','renderGoals','renderFirmSummary'].forEach(fn => { if(typeof window[fn]==='function') window[fn](); }); } });
-window.sfOpenCloudConfig = () => window.sfCloud.openConfig();
 </script>
 
 
