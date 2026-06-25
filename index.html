@@ -29,6 +29,41 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 
+/* ── SIDEBAR COLAPSABLE ── */
+.nav-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.55rem 1.1rem 0.3rem;
+  cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.nav-section-header:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+.nav-section-header .nav-label { margin: 0; padding: 0; font-size: 10px; }
+.nav-section-toggle { font-size: 9px; color: var(--muted); transition: transform 0.2s; }
+.nav-section-toggle.open { transform: rotate(90deg); }
+.nav-section-body { overflow: hidden; transition: max-height 0.25s ease; }
+.nav-section-body.collapsed { max-height: 0 !important; }
+.nav-section-count { font-size: 9px; font-weight: 700; color: var(--muted); background: var(--bg3); border-radius: 10px; padding: 1px 6px; margin-left: 5px; }
+
+/* ── GRUPO OVERVIEW COLAPSABLE ── */
+.ov-group-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 12px;
+  background: var(--bg1); border: 1px solid var(--border);
+  cursor: pointer; user-select: none; margin-bottom: 8px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ov-group-header:hover { background: var(--bg2); }
+.ov-group-header.cfd { border-left: 3px solid var(--cyan); }
+.ov-group-header.futures { border-left: 3px solid var(--purple); }
+.ov-group-title { font-size: 12px; font-weight: 800; color: var(--text); flex: 1; }
+.ov-group-stats { display: flex; gap: 14px; align-items: center; }
+.ov-group-stat { font-size: 10px; color: var(--muted2); display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.ov-group-stat span { font-size: 12px; font-weight: 700; }
+.ov-group-arrow { font-size: 10px; color: var(--muted); transition: transform 0.2s; }
+.ov-group-arrow.open { transform: rotate(90deg); }
+.ov-group-body { overflow: hidden; transition: max-height 0.3s ease; }
+.ov-group-body.collapsed { max-height: 0 !important; }
+
 /* ── COACH EMOCIONAL ── */
 
 
@@ -1474,18 +1509,28 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="nav-item" onclick="showPage(&#39;groups&#39;)"><div class="dot dot-amber"></div> Grupos &amp; Estrategias</div>
   </div>
 
-  <div class="nav-section">
-    <div class="nav-label">🔵 CFDs · MT5</div>
+  <div class="nav-section" id="nav-section-cfd">
+    <div class="nav-section-header" onclick="toggleNavSection('cfd')">
+      <div class="nav-label" style="margin:0;padding:0">🔵 CFDs · MT5 <span class="nav-section-count" id="nav-count-cfd">0</span></div>
+      <span class="nav-section-toggle open" id="nav-toggle-cfd">▶</span>
+    </div>
+    <div class="nav-section-body" id="nav-body-cfd" style="max-height:600px">
     <div id="cfd-nav-items"></div>
     <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="RETO DE CONSISTENCIA"><div class="dot dot-cyan"></div> RETO DE CONSISTENCIA <span class="nav-badge badge-funded" style="">FUNDED</span></div></div>
-    <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
+    <div class="nav-action" onclick="openAddAccountModal('cfd')" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
+    </div><!-- /nav-body-cfd -->
   </div>
 
-  <div class="nav-section">
-    <div class="nav-label">🟣 Futuros · NinjaTrader</div>
+  <div class="nav-section" id="nav-section-futures">
+    <div class="nav-section-header" onclick="toggleNavSection('futures')">
+      <div class="nav-label" style="margin:0;padding:0">🟣 Futuros · NinjaTrader <span class="nav-section-count" id="nav-count-futures">0</span></div>
+      <span class="nav-section-toggle open" id="nav-toggle-futures">▶</span>
+    </div>
+    <div class="nav-section-body" id="nav-body-futures" style="max-height:600px">
     <div id="futures-nav-items"><div class="nav-item" data-acc-id="FUTUROS TRADE 1"><div class="dot" style="background:#4a9eff"></div> FUTUROS TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="FUTUROS TRADE 2"><div class="dot" style="background:#a07aff"></div> FUTUROS TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="FUTUROS ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> FUTUROS ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div id="extra-futures-nav"></div>
-    <div class="nav-action" onclick="openAddAccountModal(&#39;futures&#39;)" style="color:var(--purple);font-size:11.5px;">+ Agregar cuenta Futuros</div>
+    <div class="nav-action" onclick="openAddAccountModal('futures')" style="color:var(--purple);font-size:11.5px;">+ Agregar cuenta Futuros</div>
+    </div><!-- /nav-body-futures -->
   </div>
 
   <div class="nav-divider"></div>
@@ -1552,8 +1597,18 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- CFD Section -->
-  <div class="group-header"><div class="dot dot-blue"></div> CFDs · MT5 <div class="group-line"></div></div>
-  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
+  <div class="ov-group-header cfd" onclick="toggleOvGroup('cfd')" id="ov-header-cfd">
+    <div class="dot dot-blue"></div>
+    <div class="ov-group-title">🔵 CFDs · MT5</div>
+    <div class="ov-group-stats">
+      <div class="ov-group-stat">PnL grupo<span id="ov-cfd-pnl" class="green">—</span></div>
+      <div class="ov-group-stat">WR<span id="ov-cfd-wr" class="green">—</span></div>
+      <div class="ov-group-stat">Cuentas<span id="ov-cfd-count" style="color:var(--cyan)">—</span></div>
+    </div>
+    <span class="ov-group-arrow open" id="ov-arrow-cfd">▶</span>
+  </div>
+  <div class="ov-group-body" id="ov-body-cfd" style="max-height:2000px">
+  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
       <div class="acc-head">
         <div class="acc-name">BACKTESTING</div>
         <div class="acc-badges">
@@ -1627,9 +1682,21 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div></div>
 
+  </div><!-- /ov-body-cfd -->
+
   <!-- Futures Section -->
-  <div class="group-header"><div class="dot dot-purple"></div> Futuros · NinjaTrader <div class="group-line"></div></div>
-  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
+  <div class="ov-group-header futures" onclick="toggleOvGroup('futures')" id="ov-header-futures" style="margin-top:0.5rem">
+    <div class="dot dot-purple"></div>
+    <div class="ov-group-title">🟣 Futuros · NinjaTrader</div>
+    <div class="ov-group-stats">
+      <div class="ov-group-stat">PnL grupo<span id="ov-fut-pnl" class="green">—</span></div>
+      <div class="ov-group-stat">WR<span id="ov-fut-wr" class="green">—</span></div>
+      <div class="ov-group-stat">Cuentas<span id="ov-fut-count" style="color:var(--purple)">—</span></div>
+    </div>
+    <span class="ov-group-arrow open" id="ov-arrow-futures">▶</span>
+  </div>
+  <div class="ov-group-body" id="ov-body-futures" style="max-height:2000px">
+  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
       <div class="acc-head">
         <div class="acc-name">FUTUROS TRADE 1</div>
         <div class="acc-badges">
@@ -2038,7 +2105,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--border2)"></div> Sin datos</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--amber);border-radius:2px"></div> 💰 Ciclo cobrado</div>
     </div>
-  </div><div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">3</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
+  </div><!-- /futures-overview-cards -->
+  </div><!-- /ov-body-futures -->
+
+  <div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">3</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
 </div>
 
 <!-- ───────── PAGE: CERTIFICATES ───────── -->
@@ -4546,6 +4616,7 @@ function render() {
   renderFirmSummary();
   buildSidebarDynamic();
   buildAccountSelects();
+  updateGroupStats();
 }
 
 function renderAlertsBanner() {
@@ -16351,13 +16422,114 @@ function prepMedToggle(label) {
   }
 }
 
+
+// ═══════════════════════════════════════════
+// GRUPOS COLAPSABLES — Sidebar y Overview
+// ═══════════════════════════════════════════
+
+// Estado persistente de los grupos (abierto/cerrado)
+const _ovGroupState = { cfd: true, futures: true };
+const _navGroupState = { cfd: true, futures: true };
+
+function toggleNavSection(type) {
+  _navGroupState[type] = !_navGroupState[type];
+  const body = document.getElementById('nav-body-' + type);
+  const toggle = document.getElementById('nav-toggle-' + type);
+  if (!body) return;
+  if (_navGroupState[type]) {
+    body.style.maxHeight = '600px';
+    body.classList.remove('collapsed');
+    if (toggle) { toggle.classList.add('open'); toggle.style.transform = ''; }
+  } else {
+    body.style.maxHeight = '0';
+    body.classList.add('collapsed');
+    if (toggle) { toggle.classList.remove('open'); toggle.style.transform = 'rotate(0deg)'; }
+  }
+}
+
+function toggleOvGroup(type) {
+  _ovGroupState[type] = !_ovGroupState[type];
+  const body = document.getElementById('ov-body-' + type);
+  const arrow = document.getElementById('ov-arrow-' + type);
+  if (!body) return;
+  if (_ovGroupState[type]) {
+    body.style.maxHeight = '2000px';
+    body.classList.remove('collapsed');
+    if (arrow) arrow.classList.add('open');
+  } else {
+    body.style.maxHeight = '0';
+    body.classList.add('collapsed');
+    if (arrow) arrow.classList.remove('open');
+  }
+}
+
+function updateGroupStats() {
+  // CFD stats
+  const cfdAccs = getCFDAccounts();
+  let cfdPnl = 0, cfdWins = 0, cfdOps = 0;
+  cfdAccs.forEach(acc => {
+    const { pnl, wr, count } = getActivePhasePnlAndWr(acc);
+    cfdPnl += pnl;
+    cfdOps += count;
+    cfdWins += Math.round((wr || 0) / 100 * count);
+  });
+  const cfdWr = cfdOps ? Math.round(cfdWins / cfdOps * 100) : null;
+  const cfdPnlEl = document.getElementById('ov-cfd-pnl');
+  const cfdWrEl = document.getElementById('ov-cfd-wr');
+  const cfdCountEl = document.getElementById('ov-cfd-count');
+  const navCountCfd = document.getElementById('nav-count-cfd');
+  if (cfdPnlEl) { cfdPnlEl.textContent = cfdOps ? fmtPnl(cfdPnl) : '—'; cfdPnlEl.className = cfdOps ? pnlClass(cfdPnl) : ''; }
+  if (cfdWrEl) { cfdWrEl.textContent = cfdWr !== null ? cfdWr + '%' : '—'; cfdWrEl.className = cfdWr !== null ? (cfdWr >= 60 ? 'green' : 'red') : ''; }
+  if (cfdCountEl) cfdCountEl.textContent = cfdAccs.length;
+  if (navCountCfd) navCountCfd.textContent = cfdAccs.length;
+
+  // Futures stats
+  const futAccs = getFuturesAccounts();
+  let futPnl = 0, futWins = 0, futOps = 0;
+  futAccs.forEach(acc => {
+    const { pnl, wr, count } = getActivePhasePnlAndWr(acc);
+    futPnl += pnl;
+    futOps += count;
+    futWins += Math.round((wr || 0) / 100 * count);
+  });
+  const futWr = futOps ? Math.round(futWins / futOps * 100) : null;
+  const futPnlEl = document.getElementById('ov-fut-pnl');
+  const futWrEl = document.getElementById('ov-fut-wr');
+  const futCountEl = document.getElementById('ov-fut-count');
+  const navCountFut = document.getElementById('nav-count-futures');
+  if (futPnlEl) { futPnlEl.textContent = futOps ? fmtPnl(futPnl) : '—'; futPnlEl.className = futOps ? pnlClass(futPnl) : ''; }
+  if (futWrEl) { futWrEl.textContent = futWr !== null ? futWr + '%' : '—'; futWrEl.className = futWr !== null ? (futWr >= 60 ? 'green' : 'red') : ''; }
+  if (futCountEl) futCountEl.textContent = futAccs.length;
+  if (navCountFut) navCountFut.textContent = futAccs.length;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// SF CLOUD SYNC — Supabase
+
+// ── Auto-guardado local cada 45s ──────────────────────────────────────────
+(function() {
+  let _autoSaveTimer = null;
+  function _autoSave() {
+    try { save(); } catch(e) {}
+  }
+  function _startAutoSave() {
+    if (_autoSaveTimer) clearInterval(_autoSaveTimer);
+    _autoSaveTimer = setInterval(_autoSave, 45000);
+    window.addEventListener('beforeunload', _autoSave);
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) _autoSave();
+    });
+  }
+  // Arrancar cuando la licencia esté activa
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(_startAutoSave, 2000);
+  });
+})();
+
 // ══════════════════════════════════════════════════════════════════
 // SF CLOUD SYNC — Supabase bidireccional
-// Guarda y restaura TODOS los datos (cuentas, entradas, grupos,
-// certificados, diario, notas…) en la tabla client_data.
 // ══════════════════════════════════════════════════════════════════
 
-// ── Subir datos a la nube ─────────────────────────────────────────
 async function sbPush(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return;
   try {
@@ -16370,16 +16542,11 @@ async function sbPush(licKey) {
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({
-        license_key: licKey,
-        data: payload,
-        updated_at: new Date().toISOString()
-      })
+      body: JSON.stringify({ license_key: licKey, data: payload, updated_at: new Date().toISOString() })
     });
   } catch(e) { console.warn('SF Cloud: error al subir datos', e); }
 }
 
-// ── Descargar datos de la nube y aplicarlos al localStorage ──────
 async function sbPull(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return false;
   try {
@@ -16395,11 +16562,8 @@ async function sbPull(licKey) {
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
 
-// ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
-
-  // 1. Traer datos de la nube
   const pulled = await sbPull(licKey);
   if (pulled) {
     try {
@@ -16415,38 +16579,29 @@ async function sbStartAutoSync(licKey) {
       if (typeof renderFirmSummary   === 'function') renderFirmSummary();
       if (typeof renderGoals         === 'function') renderGoals();
       if (typeof buildAccountSelects === 'function') buildAccountSelects();
+      if (typeof updateGroupStats    === 'function') updateGroupStats();
       console.log('SF Cloud datos restaurados desde la nube');
     } catch(e) { console.warn('SF Cloud: error al aplicar datos', e); }
   }
-
-  // 2. Auto-guardar en nube cada 60s
   setInterval(() => sbPush(licKey), 60000);
-
-  // 3. Guardar al cerrar/cambiar pestana
   window.addEventListener('beforeunload', () => sbPush(licKey));
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) sbPush(licKey);
-  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) sbPush(licKey); });
 }
 
-// ── Auto-guardado local cada 45s ──────────────────────────────────
+// Auto-guardado local cada 45s
 (function() {
-  let _autoSaveTimer = null;
-  function _autoSave() {
-    try { save(); } catch(e) {}
+  let _t = null;
+  function _s() { try { save(); } catch(e) {} }
+  function _start() {
+    if (_t) clearInterval(_t);
+    _t = setInterval(_s, 45000);
+    window.addEventListener('beforeunload', _s);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) _s(); });
   }
-  function _startAutoSave() {
-    if (_autoSaveTimer) clearInterval(_autoSaveTimer);
-    _autoSaveTimer = setInterval(_autoSave, 45000);
-    window.addEventListener('beforeunload', _autoSave);
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) _autoSave();
-    });
-  }
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(_startAutoSave, 2000);
-  });
+  document.addEventListener('DOMContentLoaded', () => setTimeout(_start, 2000));
 })();
+
 </script>
+
 
 </body></html>
