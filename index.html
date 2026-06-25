@@ -29,41 +29,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 
-/* ── SIDEBAR COLAPSABLE ── */
-.nav-section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.55rem 1.1rem 0.3rem;
-  cursor: pointer; user-select: none;
-  transition: background 0.15s;
-}
-.nav-section-header:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
-.nav-section-header .nav-label { margin: 0; padding: 0; font-size: 10px; }
-.nav-section-toggle { font-size: 9px; color: var(--muted); transition: transform 0.2s; }
-.nav-section-toggle.open { transform: rotate(90deg); }
-.nav-section-body { overflow: hidden; transition: max-height 0.25s ease; }
-.nav-section-body.collapsed { max-height: 0 !important; }
-.nav-section-count { font-size: 9px; font-weight: 700; color: var(--muted); background: var(--bg3); border-radius: 10px; padding: 1px 6px; margin-left: 5px; }
-
-/* ── GRUPO OVERVIEW COLAPSABLE ── */
-.ov-group-header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: 12px;
-  background: var(--bg1); border: 1px solid var(--border);
-  cursor: pointer; user-select: none; margin-bottom: 8px;
-  transition: background 0.15s, border-color 0.15s;
-}
-.ov-group-header:hover { background: var(--bg2); }
-.ov-group-header.cfd { border-left: 3px solid var(--cyan); }
-.ov-group-header.futures { border-left: 3px solid var(--purple); }
-.ov-group-title { font-size: 12px; font-weight: 800; color: var(--text); flex: 1; }
-.ov-group-stats { display: flex; gap: 14px; align-items: center; }
-.ov-group-stat { font-size: 10px; color: var(--muted2); display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
-.ov-group-stat span { font-size: 12px; font-weight: 700; }
-.ov-group-arrow { font-size: 10px; color: var(--muted); transition: transform 0.2s; }
-.ov-group-arrow.open { transform: rotate(90deg); }
-.ov-group-body { overflow: hidden; transition: max-height 0.3s ease; }
-.ov-group-body.collapsed { max-height: 0 !important; }
-
 /* ── COACH EMOCIONAL ── */
 
 
@@ -1509,28 +1474,18 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="nav-item" onclick="showPage(&#39;groups&#39;)"><div class="dot dot-amber"></div> Grupos &amp; Estrategias</div>
   </div>
 
-  <div class="nav-section" id="nav-section-cfd">
-    <div class="nav-section-header" onclick="toggleNavSection(&#39;cfd&#39;)">
-      <div class="nav-label" style="margin:0;padding:0">🔵 CFDs · MT5 <span class="nav-section-count" id="nav-count-cfd">3</span></div>
-      <span class="nav-section-toggle open" id="nav-toggle-cfd">▶</span>
-    </div>
-    <div class="nav-section-body" id="nav-body-cfd" style="max-height:600px">
+  <div class="nav-section">
+    <div class="nav-label">🔵 CFDs · MT5</div>
     <div id="cfd-nav-items"></div>
-    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="RETO DE CONSISTENCIA"><div class="dot dot-cyan"></div> RETO DE CONSISTENCIA <span class="nav-badge badge-funded" style="">FUNDED</span></div></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
-    </div><!-- /nav-body-cfd -->
   </div>
 
-  <div class="nav-section" id="nav-section-futures">
-    <div class="nav-section-header" onclick="toggleNavSection(&#39;futures&#39;)">
-      <div class="nav-label" style="margin:0;padding:0">🟣 Futuros · NinjaTrader <span class="nav-section-count" id="nav-count-futures">3</span></div>
-      <span class="nav-section-toggle open" id="nav-toggle-futures">▶</span>
-    </div>
-    <div class="nav-section-body" id="nav-body-futures" style="max-height:600px">
+  <div class="nav-section">
+    <div class="nav-label">🟣 Futuros · NinjaTrader</div>
     <div id="futures-nav-items"><div class="nav-item" data-acc-id="FUTUROS TRADE 1"><div class="dot" style="background:#4a9eff"></div> FUTUROS TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="FUTUROS TRADE 2"><div class="dot" style="background:#a07aff"></div> FUTUROS TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="FUTUROS ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> FUTUROS ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div id="extra-futures-nav"></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;futures&#39;)" style="color:var(--purple);font-size:11.5px;">+ Agregar cuenta Futuros</div>
-    </div><!-- /nav-body-futures -->
   </div>
 
   <div class="nav-divider"></div>
@@ -1589,26 +1544,16 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.584,85</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">83%</div><div class="stat-hint" id="s-wr-hint">15W / 3L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$9684,85</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">79%</div><div class="stat-hint" id="s-wr-hint">15W / 4L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">18</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">19</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
     <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
   <!-- CFD Section -->
-  <div class="ov-group-header cfd" onclick="toggleOvGroup(&#39;cfd&#39;)" id="ov-header-cfd">
-    <div class="dot dot-blue"></div>
-    <div class="ov-group-title">🔵 CFDs · MT5</div>
-    <div class="ov-group-stats">
-      <div class="ov-group-stat">PnL grupo<span id="ov-cfd-pnl" class="green">+$7951,85</span></div>
-      <div class="ov-group-stat">WR<span id="ov-cfd-wr" class="green">91%</span></div>
-      <div class="ov-group-stat">Cuentas<span id="ov-cfd-count" style="color:var(--cyan)">3</span></div>
-    </div>
-    <span class="ov-group-arrow open" id="ov-arrow-cfd">▶</span>
-  </div>
-  <div class="ov-group-body" id="ov-body-cfd" style="max-height:2000px">
-  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
+  <div class="group-header"><div class="dot dot-blue"></div> CFDs · MT5 <div class="group-line"></div></div>
+  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
       <div class="acc-head">
         <div class="acc-name">BACKTESTING</div>
         <div class="acc-badges">
@@ -1636,10 +1581,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROXP TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$3273</div>
+      <div class="acc-pnl green">+$2373</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>83%</span></div>
-        <div class="acc-meta-item">Ops <span>6</span></div>
+        <div class="acc-meta-item">WR <span>71%</span></div>
+        <div class="acc-meta-item">Ops <span>7</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -1662,23 +1607,29 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         
         
       </div>
+    </div><div class="acc-card blue-accent" onclick="showPage(&#39;RETO DE CONSISTENCIA&#39;)">
+      <div class="acc-head">
+        <div class="acc-name">RETO DE CONSISTENCIA</div>
+        <div class="acc-badges">
+          <span class="acc-platform tag-mt5">MT5</span>
+          <span class="acc-platform type-cfd-funded">🏆 Funded</span>
+          
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;RETO DE CONSISTENCIA&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+        </div>
+      </div>
+      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-meta">
+        <div class="acc-meta-item">WR <span>—</span></div>
+        <div class="acc-meta-item">Ops <span>0</span></div>
+        <div class="acc-meta-item">DD <span>50%</span></div>
+        
+        
+      </div>
     </div></div>
 
-  </div><!-- /ov-body-cfd -->
-
   <!-- Futures Section -->
-  <div class="ov-group-header futures" onclick="toggleOvGroup(&#39;futures&#39;)" id="ov-header-futures" style="margin-top:0.5rem">
-    <div class="dot dot-purple"></div>
-    <div class="ov-group-title">🟣 Futuros · NinjaTrader</div>
-    <div class="ov-group-stats">
-      <div class="ov-group-stat">PnL grupo<span id="ov-fut-pnl" class="green">+$2633</span></div>
-      <div class="ov-group-stat">WR<span id="ov-fut-wr" class="green">71%</span></div>
-      <div class="ov-group-stat">Cuentas<span id="ov-fut-count" style="color:var(--purple)">3</span></div>
-    </div>
-    <span class="ov-group-arrow open" id="ov-arrow-futures">▶</span>
-  </div>
-  <div class="ov-group-body" id="ov-body-futures" style="max-height:2000px">
-  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
+  <div class="group-header"><div class="dot dot-purple"></div> Futuros · NinjaTrader <div class="group-line"></div></div>
+  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
       <div class="acc-head">
         <div class="acc-name">FUTUROS TRADE 1</div>
         <div class="acc-badges">
@@ -1752,13 +1703,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div>
         <div class="firm-chip-name">META QUOTES</div>
         <div class="firm-chip-badges" style="margin-top:4px">
-          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 0 pas.</span>
+          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 1 pas.</span>
           <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
           <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 1 act.</span>
           
         </div>
       </div>
-      
+      <span class="firm-chip-ratio" style="color:var(--green);border-color:var(--green);background:transparent">100%</span>
     </div><div class="firm-chip" id="firm-chip-1" onclick="firmToggleDetail(1)">
       <div>
         <div class="firm-chip-name">LUCID</div>
@@ -1785,7 +1736,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="page-sub">Equity, rachas, P&amp;L por día de la semana y distribución de resultados</div>
     </div>
     <div class="topbar-actions" style="gap:8px;flex-wrap:wrap;">
-      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="BACKTESTING">BACKTESTING  [Instant]</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1  [Eval]</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2  [Live]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++  [Live]</option></select>
+      <select id="equity-account-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;"><option value="__all__">Todas las cuentas (fase activa)</option><option value="BACKTESTING">BACKTESTING  [Instant]</option><option value="PROXP TRADE 1">PROXP TRADE 1  [Instant]</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1  [Eval]</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2  [Live]</option><option value="PROP XP TRADE 2">PROP XP TRADE 2  [Instant]</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++  [Live]</option><option value="RETO DE CONSISTENCIA">RETO DE CONSISTENCIA  [Funded]</option></select>
       <select id="equity-range-filter" onchange="renderEquityChart()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;">
         <option value="all">Todo el historial</option>
         <option value="30">Últimos 30 días</option>
@@ -1797,10 +1748,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Stats row -->
   <div class="stat-row stat-row-4" style="margin-bottom:1.5rem;" id="equity-stats-row">
-    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$10.584,85</div><div class="stat-hint" id="eq-total-hint">5 días · 18 ops</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="eq-total">+$9684,85</div><div class="stat-hint" id="eq-total-hint">6 días · 19 ops</div></div>
     <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eq-best-day">+$2960,00</div><div class="stat-hint" id="eq-best-hint">2026-06-17</div></div>
-    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">+$1378,40</div><div class="stat-hint" id="eq-worst-hint">2026-06-15</div></div>
-    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">$0</div><div class="stat-hint" id="eq-dd-hint">sin drawdown</div></div>
+    <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eq-worst-day">$900,00</div><div class="stat-hint" id="eq-worst-hint">2026-06-22</div></div>
+    <div class="stat-card"><div class="stat-label">Max Drawdown</div><div class="stat-value amber" id="eq-drawdown">-$900,00</div><div class="stat-hint" id="eq-dd-hint">desde el pico</div></div>
   </div>
 
   <!-- Chart card -->
@@ -1810,7 +1761,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div id="equity-legend" style="display:flex;gap:12px;font-size:11px;color:var(--muted2);"></div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="equity-chart-wrap">
-      <svg id="equity-svg" width="100%" height="320" style="display:block;overflow:visible;" viewBox="0 0 800 320">
+      <svg id="equity-svg" width="100%" height="320" style="display:block;overflow:visible;" viewBox="0 0 918 320">
     <defs>
       <lineargradient id="eq-grad-pos" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#27d97a" stop-opacity="0.25"></stop>
@@ -1821,21 +1772,21 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <stop offset="100%" stop-color="#ff4f4f" stop-opacity="0.2"></stop>
       </lineargradient>
       <clippath id="eq-clip-pos">
-        <rect x="70" y="30" width="710" height="250"></rect>
+        <rect x="70" y="30" width="828" height="250"></rect>
       </clippath>
       <clippath id="eq-clip-neg">
-        <rect x="70" y="280.0" width="710" height="0"></rect>
+        <rect x="70" y="280.0" width="828" height="0"></rect>
       </clippath>
     </defs>
-    <line x1="70" y1="280" x2="780" y2="280" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="230" x2="780" y2="230" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="180" x2="780" y2="180" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="129.99999999999997" x2="780" y2="129.99999999999997" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="80" x2="780" y2="80" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="29.999999999999943" x2="780" y2="29.999999999999943" stroke="#ffffff0a" stroke-width="0.5"></line>
+    <line x1="70" y1="280" x2="898" y2="280" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="230" x2="898" y2="230" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="180" x2="898" y2="180" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="129.99999999999997" x2="898" y2="129.99999999999997" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="80" x2="898" y2="80" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="29.999999999999943" x2="898" y2="29.999999999999943" stroke="#ffffff0a" stroke-width="0.5"></line>
     <text x="62" y="284" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="234" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><text x="62" y="184" text-anchor="end" fill="#55556a" font-size="10">+4.2k</text><text x="62" y="133.99999999999997" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><text x="62" y="84" text-anchor="end" fill="#55556a" font-size="10">+8.5k</text><text x="62" y="33.99999999999994" text-anchor="end" fill="#55556a" font-size="10">+10.6k</text>
-    <text x="70" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-12</text><text x="247.5" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-15</text><text x="425" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-16</text><text x="602.5" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-17</text><text x="780" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-18</text>
-    <path d="M70.0,232.9 L247.5,200.3 L425.0,155.3 L602.5,85.4 L780.0,30.0 L780.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
-    <path d="M70.0,232.9 L247.5,200.3 L425.0,155.3 L602.5,85.4 L780.0,30.0 L780.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
-    <path d="M70.0,232.9 L247.5,200.3 L425.0,155.3 L602.5,85.4 L780.0,30.0" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-    <line x1="70" y1="280.0" x2="780" y2="280.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <circle cx="70.0" cy="232.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="247.5" cy="200.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="425.0" cy="155.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="602.5" cy="85.4" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="780.0" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
-    <circle cx="70.0" cy="232.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="232.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="247.5" cy="200.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="247.5" data-y="200.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="425.0" cy="155.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="425.0" data-y="155.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="602.5" cy="85.4" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="602.5" data-y="85.4" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="780.0" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="780.0" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
+    <text x="70" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-12</text><text x="235.60000000000002" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-15</text><text x="401.20000000000005" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-16</text><text x="566.8" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-17</text><text x="732.4000000000001" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-18</text><text x="898" y="298" text-anchor="middle" fill="#55556a" font-size="10">06-22</text>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-pos)" clip-path="url(#eq-clip-pos)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3 L898.0,280.0 L70.0,280.0 Z" fill="url(#eq-grad-neg)" clip-path="url(#eq-clip-neg)"></path>
+    <path d="M70.0,232.9 L235.6,200.3 L401.2,155.3 L566.8,85.4 L732.4,30.0 L898.0,51.3" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+    <line x1="70" y1="280.0" x2="898" y2="280.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
+    <circle cx="70.0" cy="232.9" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="235.6" cy="200.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="401.2" cy="155.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="566.8" cy="85.4" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="732.4" cy="30.0" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle><circle cx="898.0" cy="51.3" r="3" fill="#27d97a" stroke="#090910" stroke-width="1.5" class="eq-dot"></circle>
+    <circle cx="70.0" cy="232.9" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-12 | Día: +$1994,45 | Acum: +$1994,45 | 2 ops" data-x="70.0" data-y="232.9" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="235.6" cy="200.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-15 | Día: +$1378,40 | Acum: +$3372,85 | 2 ops" data-x="235.6" data-y="200.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="401.2" cy="155.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-16 | Día: +$1907,00 | Acum: +$5279,85 | 2 ops" data-x="401.2" data-y="155.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="566.8" cy="85.4" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-17 | Día: +$2960,00 | Acum: +$8239,85 | 5 ops" data-x="566.8" data-y="85.4" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="732.4" cy="30.0" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-18 | Día: +$2345,00 | Acum: +$10.584,85 | 7 ops" data-x="732.4" data-y="30.0" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle><circle cx="898.0" cy="51.3" r="12" fill="transparent" class="eq-hit" data-tip="2026-06-22 | Día: $900,00 | Acum: +$9684,85 | 1 ops" data-x="898.0" data-y="51.3" data-col="#27d97a" onmouseenter="showEquityTip(this)" onmouseleave="hideEquityTip()"></circle>
   </svg>
       <div id="equity-tooltip" style="position: absolute; pointer-events: none; background: rgb(26, 26, 40); border-color: rgb(39, 217, 122); border-top-style: ; border-top-width: ; border-right-style: ; border-right-width: ; border-bottom-style: ; border-bottom-width: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; left: 456.051px; top: 53.9px;">2026-06-16<br>Día: +$3513,10<br>Acum: +$6835,95 · 10 ops</div>
     </div>
@@ -1859,10 +1810,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="min-width:0;">
         <div id="eqd-summary-label" style="font-size:11px;color:var(--muted2);margin-bottom:8px;">Semana: 22/06 – 26/06</div>
         <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value" id="eqd-sum-pnl">—</div><div class="stat-hint" id="eqd-sum-pnl-hint">0 días</div></div>
-          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">—</div><div class="stat-hint" id="eqd-sum-best-hint">—</div></div>
-          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">—</div><div class="stat-hint" id="eqd-sum-worst-hint">—</div></div>
-          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">0</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 0%</div></div>
+          <div class="stat-card"><div class="stat-label">P&amp;L</div><div class="stat-value red" id="eqd-sum-pnl">$900,00</div><div class="stat-hint" id="eqd-sum-pnl-hint">1 día</div></div>
+          <div class="stat-card"><div class="stat-label">Mejor día</div><div class="stat-value green" id="eqd-sum-best">$900,00</div><div class="stat-hint" id="eqd-sum-best-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Peor día</div><div class="stat-value red" id="eqd-sum-worst">$900,00</div><div class="stat-hint" id="eqd-sum-worst-hint">2026-06-22</div></div>
+          <div class="stat-card"><div class="stat-label">Ops / WR</div><div class="stat-value" id="eqd-sum-ops">1</div><div class="stat-hint" id="eqd-sum-wr-hint">WR 0% · 0W / 1L</div></div>
         </div>
         <div style="overflow-x:auto;" id="eqd-table-wrap" class="">
           <table style="width:100%;border-collapse:collapse;font-size:12.5px;" id="equity-table">
@@ -1875,7 +1826,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
                 <th style="text-align:right;padding:6px 10px;font-weight:500;">W/L</th>
               </tr>
             </thead>
-            <tbody id="equity-table-body"><tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">Sin operaciones en este periodo</td></tr></tbody>
+            <tbody id="equity-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
+        <td style="padding:7px 10px;color:var(--muted2);">2026-06-22</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:600;">$900,00</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$9684,85</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0W / 1L</td>
+      </tr></tbody>
           </table>
         </div>
       </div>
@@ -1890,7 +1847,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:9.5px;color:var(--muted);text-align:center;margin-bottom:4px;">
           <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
         </div>
-        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
+        <div id="eqd-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-01&#39;)" title="2026-06-01">1</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-02&#39;)" title="2026-06-02">2</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-03&#39;)" title="2026-06-03">3</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-04&#39;)" title="2026-06-04">4</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-05&#39;)" title="2026-06-05">5</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-06&#39;)" title="2026-06-06">6</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-07&#39;)" title="2026-06-07">7</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-08&#39;)" title="2026-06-08">8</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-09&#39;)" title="2026-06-09">9</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-10&#39;)" title="2026-06-10">10</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-11&#39;)" title="2026-06-11">11</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-12&#39;)" title="2026-06-12">12</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-13&#39;)" title="2026-06-13">13</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-14&#39;)" title="2026-06-14">14</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-15&#39;)" title="2026-06-15">15</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-16&#39;)" title="2026-06-16">16</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-17&#39;)" title="2026-06-17">17</div><div class="eqd-cal-cell has-data win" onclick="eqdSelectDay(&#39;2026-06-18&#39;)" title="2026-06-18">18</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-19&#39;)" title="2026-06-19">19</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-20&#39;)" title="2026-06-20">20</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-21&#39;)" title="2026-06-21">21</div><div class="eqd-cal-cell has-data loss" onclick="eqdSelectDay(&#39;2026-06-22&#39;)" title="2026-06-22">22</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-23&#39;)" title="2026-06-23">23</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-24&#39;)" title="2026-06-24">24</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-25&#39;)" title="2026-06-25">25</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-26&#39;)" title="2026-06-26">26</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-27&#39;)" title="2026-06-27">27</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-28&#39;)" title="2026-06-28">28</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-29&#39;)" title="2026-06-29">29</div><div class="eqd-cal-cell" onclick="eqdSelectDay(&#39;2026-06-30&#39;)" title="2026-06-30">30</div></div>
         <div id="eqd-day-selected-wrap" class="hidden" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
           <div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">📅 Selección personalizada · clic para añadir/quitar días</div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -1906,20 +1863,20 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;" id="weekly-section">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
       <div style="font-size:13px;font-weight:600;color:var(--text);">📅 Análisis Semanal</div>
-      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"><span style="background:var(--green-dim);color:var(--green);border:1px solid #0a3020;padding:3px 10px;border-radius:6px;font-weight:700;">🔥 2 semanas ganadoras seguidas</span></div>
+      <div id="weekly-streak-badge" style="font-size:11px;color:var(--muted2);"></div>
     </div>
     <!-- KPIs semanales -->
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;">
-      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">2</div><div class="stat-hint" id="wk-wins-hint">de 2 semanas</div></div>
-      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">0</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas ganadoras</div><div class="stat-value green" id="wk-wins">2</div><div class="stat-hint" id="wk-wins-hint">de 3 semanas</div></div>
+      <div class="stat-card"><div class="stat-label">Semanas perdedoras</div><div class="stat-value red" id="wk-losses">1</div><div class="stat-hint" id="wk-losses-hint">sin rachas negativas</div></div>
       <div class="stat-card"><div class="stat-label">Mejor semana</div><div class="stat-value green" id="wk-best">+$8590,40</div><div class="stat-hint" id="wk-best-hint">15 jun – 19 jun</div></div>
-      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">+$1994,45</div><div class="stat-hint" id="wk-worst-hint">8 jun – 12 jun</div></div>
+      <div class="stat-card"><div class="stat-label">Peor semana</div><div class="stat-value red" id="wk-worst">$900,00</div><div class="stat-hint" id="wk-worst-hint">22 jun – 26 jun</div></div>
     </div>
     <!-- Gráfico de barras semanal -->
     <div style="position:relative;width:100%;overflow:hidden;margin-bottom:1rem;" id="weekly-chart-wrap">
-      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 800 220"><line x1="70" y1="184.0" x2="780" y2="184.0" stroke="#ffffff22" stroke-width="1"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">0</text><line x1="70" y1="143.0" x2="780" y2="143.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">+2.1k</text><line x1="70" y1="102.0" x2="780" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+4.3k</text><line x1="70" y1="61.0" x2="780" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+6.4k</text><line x1="70" y1="20.0" x2="780" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="105.5" y="145.9" width="284.0" height="38.1" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="460.5" y="20.0" width="284.0" height="164.0" rx="3" fill="#27d97a" opacity="0.8" style=""></rect>
-      <line x1="70" y1="184.0" x2="780" y2="184.0" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
-      <text x="247.5" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="602.5" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><rect x="105.5" y="20" width="284.0" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="460.5" y="20" width="284.0" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
+      <svg id="weekly-svg" width="100%" height="220" style="display:block;overflow:visible;" viewBox="0 0 918 220"><line x1="70" y1="184.0" x2="898" y2="184.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="188.0" text-anchor="end" fill="#55556a" font-size="10">-900</text><line x1="70" y1="143.0" x2="898" y2="143.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="147.0" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><line x1="70" y1="102.0" x2="898" y2="102.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="106.0" text-anchor="end" fill="#55556a" font-size="10">+3.8k</text><line x1="70" y1="61.0" x2="898" y2="61.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="65.0" text-anchor="end" fill="#55556a" font-size="10">+6.2k</text><line x1="70" y1="20.0" x2="898" y2="20.0" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="24.0" text-anchor="end" fill="#55556a" font-size="10">+8.6k</text><rect x="97.6" y="134.0" width="220.8" height="34.5" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="373.6" y="20.0" width="220.8" height="148.4" rx="3" fill="#27d97a" opacity="0.8" style=""></rect><rect x="649.6" y="168.4" width="220.8" height="15.6" rx="3" fill="#ff4f4f" opacity="0.8" style=""></rect>
+      <line x1="70" y1="168.4" x2="898" y2="168.4" stroke="#ffffff22" stroke-width="1" stroke-dasharray="4,3"></line>
+      <text x="208.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S24</text><text x="484.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S25</text><text x="760.0" y="200" text-anchor="middle" fill="#888899" font-size="10">S26</text><rect x="97.6" y="20" width="220.8" height="164" fill="transparent" data-tip="8 jun – 12 jun | +$1994,45 | 2 ops | WR 100%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="373.6" y="20" width="220.8" height="164" fill="transparent" data-tip="15 jun – 19 jun | +$8590,40 | 16 ops | WR 81%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect><rect x="649.6" y="20" width="220.8" height="164" fill="transparent" data-tip="22 jun – 26 jun | $900,00 | 1 ops | WR 0%" onmouseenter="showWeeklyTip(event,this)" onmouseleave="hideWeeklyTip()"></rect></svg>
       <div id="weekly-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 275.333px; top: 126.708px;">8 jun – 12 jun | +$2994,45 | 3 ops | WR 100%</div>
     </div>
     <!-- Tabla de semanas -->
@@ -1936,6 +1893,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           </tr>
         </thead>
         <tbody id="weekly-table-body"><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
+        <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">22 jun – 26 jun</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--red);font-weight:700;">$900,00</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">1</td>
+        <td style="padding:7px 10px;text-align:right;color:var(--muted2);">0%</td>
+        <td style="padding:7px 10px;text-align:right;"><span style="background:var(--red-dim);color:var(--red);border:1px solid #3a0000;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">PERDEDORA</span></td>
+      </tr><tr style="border-bottom:1px solid var(--border);transition:background 0.1s;" onmouseover="this.style.background=&#39;var(--bg2)&#39;" onmouseout="this.style.background=&#39;&#39;">
         <td style="padding:7px 10px;color:var(--muted2);white-space:nowrap;">15 jun – 19 jun</td>
         <td style="padding:7px 10px;text-align:right;color:var(--green);font-weight:700;">+$8590,40</td>
         <td style="padding:7px 10px;text-align:right;color:var(--muted2);">4</td>
@@ -1965,10 +1929,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="streak-stats-row">
-      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value green" id="st-current">+4</div><div class="stat-hint" id="st-current-hint">4 operaciones · ganando 🔥</div></div>
+      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-value red" id="st-current">-1</div><div class="stat-hint" id="st-current-hint">1 operación · perdiendo ⚠️</div></div>
       <div class="stat-card"><div class="stat-label">Mejor racha (wins)</div><div class="stat-value green" id="st-best-win">7</div><div class="stat-hint" id="st-best-win-hint">+$5679,85 · 2026-06-12 → 2026-06-17</div></div>
       <div class="stat-card"><div class="stat-label">Peor racha (losses)</div><div class="stat-value red" id="st-worst-loss">2</div><div class="stat-hint" id="st-worst-loss-hint">-$1300 · 2026-06-18</div></div>
-      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">3.6</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
+      <div class="stat-card"><div class="stat-label">Promedio de racha</div><div class="stat-value blue" id="st-avg">3.2</div><div class="stat-hint" id="st-avg-hint">consecutivos</div></div>
     </div>
     <div style="overflow-x:auto;padding-bottom:4px;">
       <div id="streak-strip" style="display:flex;align-items:flex-end;gap:3px;min-height:60px;"><div title="🟢 Racha ganadora · 7 op · +$5679,85 · 2026-06-12 → 2026-06-17" style="flex:0 0 auto;width:14px;height:56px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
@@ -1981,6 +1945,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="width:100%;height:14px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
     </div><div title="🟢 Racha ganadora · 4 op · +$2445 · 2026-06-18" style="flex:0 0 auto;width:14px;height:32px;background:var(--green-dim);border:1px solid var(--green);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
       <div style="width:100%;height:30px;background:var(--green);border-radius:2px;opacity:0.85;"></div>
+    </div><div title="🔴 Racha perdedora · 1 op · -$900 · 2026-06-22" style="flex:0 0 auto;width:14px;height:14px;background:var(--red-dim);border:1px solid var(--red);border-radius:3px;display:flex;align-items:flex-end;justify-content:center;cursor:default;">
+      <div style="width:100%;height:12px;background:var(--red);border-radius:2px;opacity:0.85;"></div>
     </div></div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Cada bloque es una sesión registrada, en orden cronológico (más reciente a la derecha). El tamaño indica el largo de la racha en curso.</div>
@@ -1993,9 +1959,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div id="dow-legend" style="font-size:11px;color:var(--muted2);">¿Qué días rindes mejor y peor?</div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dow-chart-wrap">
-      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 800 280"><line x1="70" y1="240" x2="780" y2="240" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="187.5" x2="780" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="780" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="780" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="780" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">+740</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="120.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="222.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="323.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="425.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="526.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="627.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="729.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="79.1" y="240.0" width="83.2" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="180.6" y="142.2" width="83.2" height="97.8" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="282.0" y="104.7" width="83.2" height="135.3" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="383.4" y="30.0" width="83.2" height="210.0" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="484.8" y="73.6" width="83.2" height="166.4" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="586.3" y="98.5" width="83.2" height="141.5" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="687.7" y="240.0" width="83.2" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
-    <line x1="70" y1="240.0" x2="780" y2="240.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
-    <rect x="79.1" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="180.6" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Lun · +$1378,4 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="282.0" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="383.4" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="484.8" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="586.3" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="687.7" y="30" width="83.2" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
+      <svg id="dow-svg" width="100%" height="280" style="display:block;overflow:visible;" viewBox="0 0 918 280"><line x1="70" y1="240" x2="898" y2="240" stroke="#ffffff22" stroke-width="1"></line><line x1="70" y1="187.5" x2="898" y2="187.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="135" x2="898" y2="135" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="82.5" x2="898" y2="82.5" stroke="#ffffff0a" stroke-width="0.5"></line><line x1="70" y1="30" x2="898" y2="30" stroke="#ffffff0a" stroke-width="0.5"></line><text x="62" y="244" text-anchor="end" fill="#55556a" font-size="10">0</text><text x="62" y="191.5" text-anchor="end" fill="#55556a" font-size="10">+740</text><text x="62" y="139" text-anchor="end" fill="#55556a" font-size="10">+1.5k</text><text x="62" y="86.5" text-anchor="end" fill="#55556a" font-size="10">+2.2k</text><text x="62" y="34" text-anchor="end" fill="#55556a" font-size="10">+3.0k</text><text x="129.1" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Dom</text><text x="247.4" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Lun</text><text x="365.7" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mar</text><text x="484.0" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Mié</text><text x="602.3" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Jue</text><text x="720.6" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Vie</text><text x="838.9" y="258" text-anchor="middle" fill="#888899" font-size="11" font-weight="600">Sáb</text><rect x="80.6" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect><rect x="198.9" y="206.1" width="97.0" height="33.9" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="317.2" y="104.7" width="97.0" height="135.3" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="435.5" y="30.0" width="97.0" height="210.0" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="553.8" y="73.6" width="97.0" height="166.4" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="672.1" y="98.5" width="97.0" height="141.5" rx="4" fill="#27d97a" opacity="0.85"></rect><rect x="790.4" y="240.0" width="97.0" height="0.0" rx="4" fill="#55556a" opacity="0.15"></rect>
+    <line x1="70" y1="240.0" x2="898" y2="240.0" stroke="#ffffff18" stroke-width="1" stroke-dasharray="4,3"></line>
+    <rect x="80.6" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Dom · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="198.9" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Lun · +$478,4 · 3 op · WR 67%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="317.2" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mar · +$1907 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="435.5" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Mié · +$2960 · 5 op · WR 80%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="553.8" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Jue · +$2345 · 7 op · WR 71%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="672.1" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Vie · +$1994,45 · 2 op · WR 100%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect><rect x="790.4" y="30" width="97.0" height="210" fill="transparent" class="dow-hit" data-tip="Sáb · +$0 · 0 op · WR 0%" onmouseenter="showDowTip(event,this)" onmouseleave="hideDowTip()"></rect></svg>
       <div id="dow-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 142.333px; top: 59.375px;">Dom · +$0 · 0 op · WR 0%</div>
     </div>
   </div>
@@ -2011,14 +1977,14 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <div class="stat-row stat-row-4" style="margin-bottom:1rem;" id="dist-stats-row">
       <div class="stat-card"><div class="stat-label">Ganancia media</div><div class="stat-value green" id="dist-avg-win">+$822,32</div></div>
-      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$583,33</div></div>
-      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.41x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
-      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$588,05</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
+      <div class="stat-card"><div class="stat-label">Pérdida media</div><div class="stat-value red" id="dist-avg-loss">-$662,5</div></div>
+      <div class="stat-card"><div class="stat-label">Ratio W/L</div><div class="stat-value blue" id="dist-ratio">1.24x</div><div class="stat-hint" id="dist-ratio-hint">ganancia media / pérdida media</div></div>
+      <div class="stat-card"><div class="stat-label">Expectativa</div><div class="stat-value green" id="dist-expectancy">+$509,73</div><div class="stat-hint" id="dist-expectancy-hint">por operación</div></div>
     </div>
     <div style="position:relative;width:100%;overflow:hidden;" id="dist-chart-wrap">
-      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 800 260"><rect x="57.3" y="186.7" width="107.1" height="33.3" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="179.0" y="153.3" width="107.1" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="300.6" y="220.0" width="107.1" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="422.3" y="120.0" width="107.1" height="100.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="544.0" y="20.0" width="107.1" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="665.6" y="20.0" width="107.1" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="347.9" y1="20" x2="347.9" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="110.8" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="232.5" y="238" text-anchor="middle" fill="#55556a" font-size="9">$532</text><text x="354.2" y="238" text-anchor="middle" fill="#55556a" font-size="9">$165</text><text x="475.8" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$203</text><text x="597.5" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$570</text><text x="719.2" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$938</text>
-    <line x1="50" y1="220" x2="780" y2="220" stroke="#ffffff18" stroke-width="1"></line>
-    <rect x="57.3" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$532,43 · 1 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="179.0" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="-$532,43 a -$164,85 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="300.6" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="-$164,85 a +$202,72 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="422.3" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="+$202,72 a +$570,3 · 3 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="544.0" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="+$570,3 a +$937,88 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="665.6" y="20" width="107.1" height="200" fill="transparent" class="dist-hit" data-tip="+$937,88 a +$1305,45 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
+      <svg id="dist-svg" width="100%" height="260" style="display:block;overflow:visible;" viewBox="0 0 918 260"><rect x="58.5" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="199.8" y="153.3" width="124.4" height="66.7" rx="3" fill="#ff4f4f" opacity="0.85"></rect><rect x="341.1" y="220.0" width="124.4" height="0.0" rx="3" fill="#27d97a" opacity="0.1"></rect><rect x="482.5" y="120.0" width="124.4" height="100.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="623.8" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><rect x="765.1" y="20.0" width="124.4" height="200.0" rx="3" fill="#27d97a" opacity="0.85"></rect><line x1="396.1" y1="20" x2="396.1" y2="220" stroke="#ffffff33" stroke-width="1" stroke-dasharray="3,3"></line><text x="120.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">$900</text><text x="262.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">$532</text><text x="403.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">$165</text><text x="544.7" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$203</text><text x="686.0" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$570</text><text x="827.3" y="238" text-anchor="middle" fill="#55556a" font-size="9">+$938</text>
+    <line x1="50" y1="220" x2="898" y2="220" stroke="#ffffff18" stroke-width="1"></line>
+    <rect x="58.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$900 a -$532,43 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="199.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$532,43 a -$164,85 · 2 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="341.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="-$164,85 a +$202,72 · 0 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="482.5" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$202,72 a +$570,3 · 3 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="623.8" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$570,3 a +$937,88 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect><rect x="765.1" y="20" width="124.4" height="200" fill="transparent" class="dist-hit" data-tip="+$937,88 a +$1305,45 · 6 op" onmouseenter="showDistTip(event,this)" onmouseleave="hideDistTip()"></rect></svg>
       <div id="dist-tooltip" style="position: absolute; pointer-events: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--text); display: none; white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; z-index: 5; left: 142.333px; top: 0.375px;">-$900 a -$532,43 · 1 op</div>
     </div>
     <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Una distribución sana suele mostrar pérdidas agrupadas y controladas, con una cola de ganancias que se extiende más lejos.</div>
@@ -2035,7 +2001,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="topbar-actions">
       <select class="form-input btn-sm" id="cal-month-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5" selected="">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select>
       <select class="form-input btn-sm" id="cal-year-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
-      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="RETO DE CONSISTENCIA">RETO DE CONSISTENCIA</option></select>
     </div>
   </div>
   <div id="cal-body"><div class="cal-container">
@@ -2072,9 +2038,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--border2)"></div> Sin datos</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--amber);border-radius:2px"></div> 💰 Ciclo cobrado</div>
     </div>
-  </div><div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">3</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div><!-- /ov-body-futures -->
-
-  <div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">3</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
+  </div><div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">3</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
 </div>
 
 <!-- ───────── PAGE: CERTIFICATES ───────── -->
@@ -2188,7 +2152,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Group ABCDE tabs -->
-  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn active">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
+  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn active">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
     <div class="group-panel-header">
@@ -2576,19 +2540,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="faqs-card" style="padding:1rem;">
         <div class="faqs-card-label" style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;" onclick="coachToggleHistory()">
           <span>🕐 Historial · última semana</span>
-          <span id="coach-history-toggle-icon" style="font-size:10px;color:var(--muted2);transition:transform 0.2s;">▲ ocultar</span>
+          <span id="coach-history-toggle-icon" style="font-size:10px;color:var(--muted2);transition:transform 0.2s;">▶ ver</span>
         </div>
-        <div id="coach-history-list" style="display: flex; flex-direction: column; gap: 4px; max-height: 420px; overflow-y: auto;"><div class="coach-history-item" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-25&#39;;coachLoadDate()">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-        <div style="font-size:16px;">🟡</div>
-        <div class="chi-date">jue, 25 jun</div>
-      </div>
-      <div class="chi-body">
-        <div class="chi-state">ansiosa · 4/6 prep</div>
-        <div class="chi-err">⚠ cansada</div>
-      </div>
-      <div class="chi-res ">— Sin trades</div>
-    </div></div>
+        <div id="coach-history-list" style="display: none; flex-direction: column; gap: 4px; max-height: 420px; overflow-y: auto;"><div class="faqs-empty">Sin entradas esta semana</div></div>
       </div>
 
       <!-- MINI CALENDAR — días con entradas guardadas -->
@@ -2604,7 +2558,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="coach-mini-cal-wd">
           <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
         </div>
-        <div class="coach-mini-cal-grid" id="coach-mini-cal-grid"><div class="coach-cal-cell" title="2026-06-01">1</div><div class="coach-cal-cell" title="2026-06-02">2</div><div class="coach-cal-cell" title="2026-06-03">3</div><div class="coach-cal-cell" title="2026-06-04">4</div><div class="coach-cal-cell" title="2026-06-05">5</div><div class="coach-cal-cell" title="2026-06-06">6</div><div class="coach-cal-cell" title="2026-06-07">7</div><div class="coach-cal-cell" title="2026-06-08">8</div><div class="coach-cal-cell" title="2026-06-09">9</div><div class="coach-cal-cell" title="2026-06-10">10</div><div class="coach-cal-cell" title="2026-06-11">11</div><div class="coach-cal-cell" title="2026-06-12">12</div><div class="coach-cal-cell" title="2026-06-13">13</div><div class="coach-cal-cell" title="2026-06-14">14</div><div class="coach-cal-cell" title="2026-06-15">15</div><div class="coach-cal-cell has-entry" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-16&#39;;coachLoadDate()" title="2026-06-16">16</div><div class="coach-cal-cell" title="2026-06-17">17</div><div class="coach-cal-cell" title="2026-06-18">18</div><div class="coach-cal-cell" title="2026-06-19">19</div><div class="coach-cal-cell" title="2026-06-20">20</div><div class="coach-cal-cell" title="2026-06-21">21</div><div class="coach-cal-cell" title="2026-06-22">22</div><div class="coach-cal-cell" title="2026-06-23">23</div><div class="coach-cal-cell" title="2026-06-24">24</div><div class="coach-cal-cell has-entry sem-amarillo is-today is-selected" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-25&#39;;coachLoadDate()" title="2026-06-25">25</div><div class="coach-cal-cell" title="2026-06-26">26</div><div class="coach-cal-cell" title="2026-06-27">27</div><div class="coach-cal-cell" title="2026-06-28">28</div><div class="coach-cal-cell" title="2026-06-29">29</div><div class="coach-cal-cell" title="2026-06-30">30</div></div>
+        <div class="coach-mini-cal-grid" id="coach-mini-cal-grid"><div class="coach-cal-cell" title="2026-06-01">1</div><div class="coach-cal-cell" title="2026-06-02">2</div><div class="coach-cal-cell" title="2026-06-03">3</div><div class="coach-cal-cell" title="2026-06-04">4</div><div class="coach-cal-cell" title="2026-06-05">5</div><div class="coach-cal-cell" title="2026-06-06">6</div><div class="coach-cal-cell" title="2026-06-07">7</div><div class="coach-cal-cell" title="2026-06-08">8</div><div class="coach-cal-cell" title="2026-06-09">9</div><div class="coach-cal-cell" title="2026-06-10">10</div><div class="coach-cal-cell" title="2026-06-11">11</div><div class="coach-cal-cell" title="2026-06-12">12</div><div class="coach-cal-cell" title="2026-06-13">13</div><div class="coach-cal-cell" title="2026-06-14">14</div><div class="coach-cal-cell has-entry" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-15&#39;;coachLoadDate()" title="2026-06-15">15</div><div class="coach-cal-cell has-entry sem-amarillo" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-16&#39;;coachLoadDate()" title="2026-06-16">16</div><div class="coach-cal-cell has-entry sem-verde" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-17&#39;;coachLoadDate()" title="2026-06-17">17</div><div class="coach-cal-cell" title="2026-06-18">18</div><div class="coach-cal-cell" title="2026-06-19">19</div><div class="coach-cal-cell" title="2026-06-20">20</div><div class="coach-cal-cell" title="2026-06-21">21</div><div class="coach-cal-cell has-entry sem-amarillo" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-22&#39;;coachLoadDate()" title="2026-06-22">22</div><div class="coach-cal-cell has-entry sem-amarillo" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-23&#39;;coachLoadDate()" title="2026-06-23">23</div><div class="coach-cal-cell" title="2026-06-24">24</div><div class="coach-cal-cell has-entry sem-rojo is-today is-selected" onclick="document.getElementById(&#39;coach-date-picker&#39;).value=&#39;2026-06-25&#39;;coachLoadDate()" title="2026-06-25">25</div><div class="coach-cal-cell" title="2026-06-26">26</div><div class="coach-cal-cell" title="2026-06-27">27</div><div class="coach-cal-cell" title="2026-06-28">28</div><div class="coach-cal-cell" title="2026-06-29">29</div><div class="coach-cal-cell" title="2026-06-30">30</div></div>
         <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">
           <span style="display:flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue);"></span>Entrada</span>
           <span style="display:flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);"></span>🟢</span>
@@ -2764,15 +2718,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
               <div style="font-size:10px;color:var(--muted2);">Sin pérdidas recientes · Confiado · Listo</div>
             </div>
           </div>
-          <div class="coach-sem-item sem-amarillo active-amarillo" data-sem="amarillo" onclick="coachSelectSem(this)">
-            <div class="sem-indicator" style="opacity: 1;"></div>
+          <div class="coach-sem-item sem-amarillo" data-sem="amarillo" onclick="coachSelectSem(this)">
+            <div class="sem-indicator" style="opacity: 0.4;"></div>
             <div>
               <div style="font-size:12px;font-weight:600;color:var(--amber);">🟡 Precaución activa</div>
               <div style="font-size:10px;color:var(--muted2);">Pérdida reciente · Tensa · Proceso pendiente</div>
             </div>
           </div>
-          <div class="coach-sem-item sem-rojo" data-sem="rojo" onclick="coachSelectSem(this)">
-            <div class="sem-indicator" style="opacity: 0.4;"></div>
+          <div class="coach-sem-item sem-rojo active-rojo" data-sem="rojo" onclick="coachSelectSem(this)">
+            <div class="sem-indicator" style="opacity: 1;"></div>
             <div>
               <div style="font-size:12px;font-weight:600;color:var(--red);">🔴 Zona de riesgo</div>
               <div style="font-size:10px;color:var(--muted2);">Racha negativa · Frustrada · Agotada · FOMO</div>
@@ -2788,13 +2742,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="emo-pill" data-emo="concentrada" data-color="green" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">🎯</span>Concentrada</div>
             <div class="emo-pill" data-emo="confiada" data-color="green" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">💪</span>Confiada</div>
             <div class="emo-pill" data-emo="motivada" data-color="green" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">🚀</span>Motivada</div>
-            <div class="emo-pill active-amber" data-emo="ansiosa" data-color="amber" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😰</span>Ansiosa</div>
+            <div class="emo-pill" data-emo="ansiosa" data-color="amber" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😰</span>Ansiosa</div>
             <div class="emo-pill" data-emo="tensa" data-color="amber" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😤</span>Tensa</div>
             <div class="emo-pill active-amber" data-emo="cansada" data-color="amber" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😴</span>Cansada</div>
             <div class="emo-pill" data-emo="insegura" data-color="amber" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">🤔</span>Insegura</div>
             <div class="emo-pill" data-emo="frustrada" data-color="red" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😠</span>Frustrada</div>
             <div class="emo-pill" data-emo="euforica" data-color="red" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">🔥</span>Eufórica</div>
-            <div class="emo-pill active-red" data-emo="agotada" data-color="red" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">💀</span>Agotada</div>
+            <div class="emo-pill" data-emo="agotada" data-color="red" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">💀</span>Agotada</div>
             <div class="emo-pill" data-emo="enojada" data-color="red" onclick="coachToggleEmo(this,&#39;before&#39;)"><span class="emo-emoji">😡</span>Enojada</div>
           </div>
         </div>
@@ -2817,19 +2771,19 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--border2); background: var(--bg2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: 0.2s; color: rgb(0, 0, 0);"></div>
             <span style="font-size:12px;">🧘 Medité / hice mi rutina mental</span>
           </label>
-          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: rgba(39, 217, 122, 0.05); border: 1px solid rgba(39, 217, 122, 0.3); transition: 0.2s;">
+          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: var(--bg3); border: 1px solid transparent; transition: 0.2s;">
             <input type="checkbox" data-prep="analisis" onchange="coachUpdatePrep(this);coachUpdateLeftSemaforo();" style="display:none;">
-            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--green); background: var(--green); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);">✓</div>
+            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--border2); background: var(--bg2); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);"></div>
             <span style="font-size:12px;">📊 Analicé el mercado antes de entrar</span>
           </label>
-          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: rgba(39, 217, 122, 0.05); border: 1px solid rgba(39, 217, 122, 0.3); transition: 0.2s;">
+          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: var(--bg3); border: 1px solid transparent; transition: 0.2s;">
             <input type="checkbox" data-prep="aceptacion" onchange="coachUpdatePrep(this);coachUpdateLeftSemaforo();" style="display:none;">
-            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--green); background: var(--green); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);">✓</div>
+            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--border2); background: var(--bg2); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);"></div>
             <span style="font-size:12px;">✅ Acepté el resultado anterior antes de operar</span>
           </label>
-          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: rgba(39, 217, 122, 0.05); border: 1px solid rgba(39, 217, 122, 0.3); transition: 0.2s;">
+          <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: var(--bg3); border: 1px solid transparent; transition: 0.2s;">
             <input type="checkbox" data-prep="plan" onchange="coachUpdatePrep(this);coachUpdateLeftSemaforo();" style="display:none;">
-            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--green); background: var(--green); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);">✓</div>
+            <div class="tp-checkbox" style="width: 17px; height: 17px; border-radius: 4px; border-color: var(--border2); background: var(--bg2); flex-shrink: 0; display: flex; align-items: center; transition: 0.2s; color: rgb(0, 0, 0);"></div>
             <span style="font-size:12px;">📋 Leí mi plan y mis reglas</span>
           </label>
           <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: var(--bg3); border: 1px solid transparent; transition: 0.2s;">
@@ -2847,10 +2801,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <!-- Score proceso -->
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--bg3);border:1px solid var(--border2);">
           <div style="flex:1;height:6px;background:var(--bg2);border-radius:4px;overflow:hidden;">
-            <div id="coach-prep-bar" style="height: 100%; width: 67%; background: var(--amber); border-radius: 4px; transition: width 0.4s, background 0.4s;"></div>
+            <div id="coach-prep-bar" style="height: 100%; width: 17%; background: var(--red); border-radius: 4px; transition: width 0.4s, background 0.4s;"></div>
           </div>
-          <div id="coach-prep-label" style="font-size: 11px; font-weight: 700; color: var(--amber); min-width: 30px;">4/6</div>
-          <div id="coach-prep-msg" style="font-size:10px;color:var(--muted);">Casi lista 💪</div>
+          <div id="coach-prep-label" style="font-size: 11px; font-weight: 700; color: var(--red); min-width: 30px;">1/6</div>
+          <div id="coach-prep-msg" style="font-size:10px;color:var(--muted);">Inicio débil</div>
         </div>
 
         <!-- ¿No operé hoy? -->
@@ -2879,7 +2833,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;user-select:none;" onclick="(function(el){const body=document.getElementById(&#39;coach-group-cfd&#39;);const arr=el.querySelector(&#39;.cg-arrow&#39;);if(body.style.display===&#39;none&#39;){body.style.display=&#39;block&#39;;arr.textContent=&#39;▾&#39;;}else{body.style.display=&#39;none&#39;;arr.textContent=&#39;▸&#39;;}})(this)">
         <span style="font-size:14px;">🔵</span>
         <span style="font-size:11px;font-weight:700;color:var(--cyan);">CFDs · MT5</span>
-        <span style="font-size:9px;color:var(--muted);margin-left:2px;">3 ctas</span>
+        <span style="font-size:9px;color:var(--muted);margin-left:2px;">4 ctas</span>
         
         <span class="cg-arrow" style="margin-left:auto;font-size:11px;color:var(--muted);">▸</span>
       </div>
@@ -2888,7 +2842,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <!-- Acción rápida para todo el grupo -->
         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;padding:6px 4px;border-bottom:1px solid var(--border);">
           <span style="font-size:9px;color:var(--muted);align-self:center;margin-right:2px;">Todas:</span>
-          <span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2"],="" 'plan-ok')"="">✅ Todas OK</span><span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2"],="" 'plan-skip')"="">⚠️ Alguna falló</span><span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2"],="" 'noops')"="">— Sin operaciones</span>
+          <span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2","reto="" de="" consistencia"],="" 'plan-ok')"="">✅ Todas OK</span><span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2","reto="" de="" consistencia"],="" 'plan-skip')"="">⚠️ Alguna falló</span><span class="acc-result-badge " style="font-size:10px;padding:3px 8px;" onclick="_coachApplyGroupPlan([" backtesting","proxp="" trade="" 1","prop="" xp="" 2","reto="" de="" consistencia"],="" 'noops')"="">— Sin operaciones</span>
         </div>
         <!-- Lista individual -->
         <div class="acc-result-row" style="padding:5px 8px;">
@@ -2903,6 +2857,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="acc-result-name" style="font-size:11px;">PROP XP TRADE 2</div>
       
       <div style="display:flex;gap:3px;flex-wrap:wrap;"><span class="acc-result-badge " data-acc="PROP XP TRADE 2" data-state="plan-ok" onclick="coachToggleAccPlan(this)">✅ Seguí el plan</span><span class="acc-result-badge " data-acc="PROP XP TRADE 2" data-state="plan-skip" onclick="coachToggleAccPlan(this)">⚠️ Salté el plan</span><span class="acc-result-badge plan-noops" data-acc="PROP XP TRADE 2" data-state="noops" onclick="coachToggleAccPlan(this)">— Sin ops</span></div>
+    </div><div class="acc-result-row" style="padding:5px 8px;">
+      <div class="acc-result-name" style="font-size:11px;">RETO DE CONSISTENCIA</div>
+      
+      <div style="display:flex;gap:3px;flex-wrap:wrap;"><span class="acc-result-badge " data-acc="RETO DE CONSISTENCIA" data-state="plan-ok" onclick="coachToggleAccPlan(this)">✅ Seguí el plan</span><span class="acc-result-badge " data-acc="RETO DE CONSISTENCIA" data-state="plan-skip" onclick="coachToggleAccPlan(this)">⚠️ Salté el plan</span><span class="acc-result-badge plan-noops" data-acc="RETO DE CONSISTENCIA" data-state="noops" onclick="coachToggleAccPlan(this)">— Sin ops</span></div>
     </div>
       </div>
     </div><div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;margin-bottom:8px;overflow:hidden;">
@@ -2944,7 +2902,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div class="emo-grid" id="coach-emo-after">
             <div class="emo-pill" data-emo="satisfecha" data-color="green" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">😊</span>Satisfecha</div>
             <div class="emo-pill" data-emo="serena" data-color="green" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">🧘</span>Serena</div>
-            <div class="emo-pill active-purple" data-emo="neutral" data-color="purple" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">😐</span>Neutral</div>
+            <div class="emo-pill" data-emo="neutral" data-color="purple" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">😐</span>Neutral</div>
             <div class="emo-pill" data-emo="orgullosa" data-color="green" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">💎</span>Orgullosa</div>
             <div class="emo-pill" data-emo="frustrada-post" data-color="red" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">😤</span>Frustrada</div>
             <div class="emo-pill" data-emo="decepcionada" data-color="red" onclick="coachToggleEmo(this,&#39;after&#39;)"><span class="emo-emoji">😞</span>Decepcionada</div>
@@ -2958,7 +2916,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <div class="faqs-field-label" style="margin-bottom:4px;">⚠️ Etiquetas de error (selecciona los que apliquen)</div>
           <div class="error-tags-wrap" id="coach-error-tags">
             <span class="error-tag" data-err="fomo" onclick="coachToggleError(this)">🔥 FOMO</span>
-            <span class="error-tag active" data-err="cansada" onclick="coachToggleError(this)">😴 Operar cansada</span>
+            <span class="error-tag" data-err="cansada" onclick="coachToggleError(this)">😴 Operar cansada</span>
             <span class="error-tag" data-err="sobreoperar" onclick="coachToggleError(this)">📈 Sobreoperar</span>
             <span class="error-tag" data-err="impulsiva" onclick="coachToggleError(this)">⚡ Entrada impulsiva</span>
             <span class="error-tag" data-err="tardia" onclick="coachToggleError(this)">⏰ Entrada tardía</span>
@@ -2978,7 +2936,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
 
       <!-- ── PANEL COACH (generado automáticamente) ── -->
-      <div id="coach-insights-panel"><div id="sf-intelligence-engine"><div class="ie-card"><div class="ie-header" onclick="(function(){var b=document.getElementById(&#39;ie-body&#39;);if(!b)return;var open=b.style.display!==&#39;none&#39;;b.style.display=open?&#39;none&#39;:&#39;&#39;;document.getElementById(&#39;ie-arrow&#39;).textContent=open?&#39;▶&#39;:&#39;▲&#39;;_lsSet(&#39;ie_card_open&#39;,open?&#39;0&#39;:&#39;1&#39;);})()" style="cursor:pointer;"><span class="ie-badge">Intelligence Engine</span><span class="ie-title">esto es lo único que debes saber ahora</span><span id="ie-arrow" style="margin-left:auto;font-size:10px;color:var(--muted2);flex-shrink:0;">▶</span></div><div id="ie-body" style="display:none;"><div class="ie-block ie-finding"><div class="ie-block-label">🔍 Hallazgo principal</div><div class="ie-block-text">"Operar cansada" es el comportamiento que más afecta tu rendimiento.</div><div class="ie-block-sub">Apareció <b>1 veces</b> y acumula un impacto total en cuenta de <b style="color:var(--red);">+$0</b>.</div></div><div class="ie-block ie-objective"><div class="ie-block-label">🎯 Objetivo de esta semana</div><div class="ie-block-text">Reducir "Operar cansada" esta semana.</div><div class="ie-block-sub">Antes de cada entrada pregúntate en voz alta: "¿Estoy entrando por Operar cansada?" Si la respuesta es sí, cierra el gráfico.</div><div class="ie-track"><div class="ie-track-labels"><span class="ie-track-lbl">L</span><span class="ie-track-lbl">M</span><span class="ie-track-lbl">X</span><span class="ie-track-lbl">J</span><span class="ie-track-lbl">V</span></div><div class="ie-track-dots"><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot fail" title="Error marcado este día"></div></div></div></div><div class="ie-block ie-risk"><div class="ie-block-label">⚡ Riesgo principal</div><div class="ie-block-text">Sin riesgo dominante detectado.</div><div class="ie-block-sub">Mantén el nivel de exigencia con el checklist de preparación.</div></div><div class="ie-block ie-strength"><div class="ie-block-label">💪 Fortaleza activa</div><div class="ie-block-text">Constancia en el registro</div><div class="ie-block-sub"><b>2 sesiones</b> registradas. Sin datos no hay mejora posible.</div></div><div class="ie-footer"><span style="color:var(--muted);font-size:10px;">2 sesiones · 0 operaciones · actualizado en tiempo real</span><button class="ie-data-btn" onclick="(function(btn){var dr=document.getElementById(&#39;ie-data-drawer&#39;);if(dr){dr.remove();btn.style.display=&#39;flex&#39;;}else{var el=document.getElementById(&#39;sf-intelligence-engine&#39;);el.insertAdjacentHTML(&#39;afterend&#39;,window._ieDrawerHTML);btn.style.display=&#39;none&#39;;}}).call(this,this)">📂 Ver datos completos</button></div></div></div></div><div class="coach-insight blue" style="border: 1.5px solid rgba(74, 158, 255, 0.35); margin-bottom: 8px;"><div id="coach-profile-module"><div class="coach-insight-label">Perfil psicologico</div><div style="text-align:center;padding:0.75rem 0;"><div style="font-size:20px;margin-bottom:6px;">🔬</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber);">2</b> entradas mas con trades reales</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">Tienes 3 dias vinculados · Minimo: 5</div><div style="margin-top:8px;background:var(--bg3);border-radius:6px;overflow:hidden;height:5px;"><div style="height:100%;width:60%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="section-title" style="font-size:10px;">🤖 COACH · INTELIGENCIA EMOCIONAL</div><span id="coach-days-count" style="font-size:10px;color:var(--muted);">2 días registrados</span></div>
+      <div id="coach-insights-panel"><div id="sf-intelligence-engine"><div class="ie-card"><div class="ie-header" onclick="(function(){var b=document.getElementById(&#39;ie-body&#39;);if(!b)return;var open=b.style.display!==&#39;none&#39;;b.style.display=open?&#39;none&#39;:&#39;&#39;;document.getElementById(&#39;ie-arrow&#39;).textContent=open?&#39;▶&#39;:&#39;▲&#39;;_lsSet(&#39;ie_card_open&#39;,open?&#39;0&#39;:&#39;1&#39;);})()" style="cursor:pointer;"><span class="ie-badge">Intelligence Engine</span><span class="ie-title">esto es lo único que debes saber ahora</span><span id="ie-arrow" style="margin-left:auto;font-size:10px;color:var(--muted2);flex-shrink:0;">▶</span></div><div id="ie-body" style="display:none;"><div class="ie-block ie-finding"><div class="ie-block-label">🔍 Hallazgo principal</div><div class="ie-block-text">"Operar cansada" es el comportamiento que más afecta tu rendimiento.</div><div class="ie-block-sub">Apareció <b>1 veces</b> y acumula un impacto total en cuenta de <b style="color:var(--red);">+$0</b>.</div></div><div class="ie-block ie-objective"><div class="ie-block-label">🎯 Objetivo de esta semana</div><div class="ie-block-text">Reducir "Operar cansada" esta semana.</div><div class="ie-block-sub">Antes de cada entrada pregúntate en voz alta: "¿Estoy entrando por Operar cansada?" Si la respuesta es sí, cierra el gráfico.</div><div class="ie-track"><div class="ie-track-labels"><span class="ie-track-lbl">L</span><span class="ie-track-lbl">M</span><span class="ie-track-lbl">X</span><span class="ie-track-lbl">J</span><span class="ie-track-lbl">V</span></div><div class="ie-track-dots"><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot fail" title="Error marcado este día"></div><div class="ie-dot ok" title="Sin el error"></div><div class="ie-dot none" title="Sin registro"></div><div class="ie-dot ok" title="Sin el error"></div></div></div></div><div class="ie-block ie-risk"><div class="ie-block-label">⚡ Riesgo principal</div><div class="ie-block-text">Sin riesgo dominante detectado.</div><div class="ie-block-sub">Mantén el nivel de exigencia con el checklist de preparación.</div></div><div class="ie-block ie-strength"><div class="ie-block-label">💪 Fortaleza activa</div><div class="ie-block-text">Constancia en el registro</div><div class="ie-block-sub"><b>6 sesiones</b> registradas. Sin datos no hay mejora posible.</div></div><div class="ie-footer"><span style="color:var(--muted);font-size:10px;">6 sesiones · 0 operaciones · actualizado en tiempo real</span><button class="ie-data-btn" onclick="(function(btn){var dr=document.getElementById(&#39;ie-data-drawer&#39;);if(dr){dr.remove();btn.style.display=&#39;flex&#39;;}else{var el=document.getElementById(&#39;sf-intelligence-engine&#39;);el.insertAdjacentHTML(&#39;afterend&#39;,window._ieDrawerHTML);btn.style.display=&#39;none&#39;;}}).call(this,this)">📂 Ver datos completos</button></div></div></div></div><div class="coach-insight blue" style="border: 1.5px solid rgba(74, 158, 255, 0.35); margin-bottom: 8px;"><div id="coach-profile-module"><div class="coach-insight-label">Perfil psicologico</div><div style="text-align:center;padding:0.75rem 0;"><div style="font-size:20px;margin-bottom:6px;">🔬</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber);">2</b> entradas mas con trades reales</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">Tienes 3 dias vinculados · Minimo: 5</div><div style="margin-top:8px;background:var(--bg3);border-radius:6px;overflow:hidden;height:5px;"><div style="height:100%;width:60%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="section-title" style="font-size:10px;">🤖 COACH · INTELIGENCIA EMOCIONAL</div><span id="coach-days-count" style="font-size:10px;color:var(--muted);">6 días registrados</span></div>
 <!-- ── Resumen semanal siempre visible ── -->
 <div id="coach-week-banner" style="background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -2993,7 +2951,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
   <div id="coach-week-pnl" style="font-size:12px;font-weight:800;color:var(--muted2);">PnL: —</div>
 </div>
-<div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="perfil" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ff6eb4;"></span>🧠 Perfil</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane" style="display: none;"><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="padding:1.2rem 0.5rem;text-align:center;"><div style="font-size:22px;margin-bottom:8px;">📈</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber)">4</b> entradas más para activar correlaciones</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">1 días con PnL · Mínimo: 5</div><div style="margin-top:10px;background:var(--bg3);border-radius:8px;overflow:hidden;height:6px;"><div style="height:100%;width:20%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div><div id="coach-tab-perfil" class="coach-tab-pane active"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div></div>
+<div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="perfil" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ff6eb4;"></span>🧠 Perfil</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane" style="display: none;"><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="padding:1.2rem 0.5rem;text-align:center;"><div style="font-size:22px;margin-bottom:8px;">📈</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber)">2</b> entradas más para activar correlaciones</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">3 días con PnL · Mínimo: 5</div><div style="margin-top:10px;background:var(--bg3);border-radius:8px;overflow:hidden;height:6px;"><div style="height:100%;width:60%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div><div id="coach-tab-perfil" class="coach-tab-pane active"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div></div>
 
     </div><!-- /col derecha -->
   </div><!-- /coach-grid -->
@@ -3019,7 +2977,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="form-row-2">
       <div class="form-group">
         <label class="form-label">Cuenta</label>
-        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="RETO DE CONSISTENCIA">RETO DE CONSISTENCIA</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Fecha</label>
@@ -3701,9 +3659,9 @@ Cuentas a cobrar este mes: ..."></textarea>
         <div>
           <div id="daily-quote-card" class="faqs-quote-card">
             <div class="faqs-quote-glow"></div>
-            <div style="font-size:36px;margin-bottom:1rem;position:relative" id="quote-emoji">💪</div>
-            <div style="font-size:15px;font-weight:600;line-height:1.7;color:var(--text);margin-bottom:1rem;position:relative" id="quote-text">La consistencia es más importante que la perfección.</div>
-            <div style="font-size:11px;color:var(--muted);position:relative" id="quote-author">— Anónimo</div>
+            <div style="font-size:36px;margin-bottom:1rem;position:relative" id="quote-emoji">🎲</div>
+            <div style="font-size:15px;font-weight:600;line-height:1.7;color:var(--text);margin-bottom:1rem;position:relative" id="quote-text">El riesgo viene de no saber lo que estás haciendo.</div>
+            <div style="font-size:11px;color:var(--muted);position:relative" id="quote-author">— Warren Buffett</div>
           </div>
           <button class="btn btn-ghost btn-sm" onclick="showNextQuote()" style="width:100%">🔄 Siguiente frase</button>
         </div>
@@ -4588,7 +4546,6 @@ function render() {
   renderFirmSummary();
   buildSidebarDynamic();
   buildAccountSelects();
-  updateGroupStats();
 }
 
 function renderAlertsBanner() {
@@ -16394,114 +16351,13 @@ function prepMedToggle(label) {
   }
 }
 
-
-// ═══════════════════════════════════════════
-// GRUPOS COLAPSABLES — Sidebar y Overview
-// ═══════════════════════════════════════════
-
-// Estado persistente de los grupos (abierto/cerrado)
-const _ovGroupState = { cfd: true, futures: true };
-const _navGroupState = { cfd: true, futures: true };
-
-function toggleNavSection(type) {
-  _navGroupState[type] = !_navGroupState[type];
-  const body = document.getElementById('nav-body-' + type);
-  const toggle = document.getElementById('nav-toggle-' + type);
-  if (!body) return;
-  if (_navGroupState[type]) {
-    body.style.maxHeight = '600px';
-    body.classList.remove('collapsed');
-    if (toggle) { toggle.classList.add('open'); toggle.style.transform = ''; }
-  } else {
-    body.style.maxHeight = '0';
-    body.classList.add('collapsed');
-    if (toggle) { toggle.classList.remove('open'); toggle.style.transform = 'rotate(0deg)'; }
-  }
-}
-
-function toggleOvGroup(type) {
-  _ovGroupState[type] = !_ovGroupState[type];
-  const body = document.getElementById('ov-body-' + type);
-  const arrow = document.getElementById('ov-arrow-' + type);
-  if (!body) return;
-  if (_ovGroupState[type]) {
-    body.style.maxHeight = '2000px';
-    body.classList.remove('collapsed');
-    if (arrow) arrow.classList.add('open');
-  } else {
-    body.style.maxHeight = '0';
-    body.classList.add('collapsed');
-    if (arrow) arrow.classList.remove('open');
-  }
-}
-
-function updateGroupStats() {
-  // CFD stats
-  const cfdAccs = getCFDAccounts();
-  let cfdPnl = 0, cfdWins = 0, cfdOps = 0;
-  cfdAccs.forEach(acc => {
-    const { pnl, wr, count } = getActivePhasePnlAndWr(acc);
-    cfdPnl += pnl;
-    cfdOps += count;
-    cfdWins += Math.round((wr || 0) / 100 * count);
-  });
-  const cfdWr = cfdOps ? Math.round(cfdWins / cfdOps * 100) : null;
-  const cfdPnlEl = document.getElementById('ov-cfd-pnl');
-  const cfdWrEl = document.getElementById('ov-cfd-wr');
-  const cfdCountEl = document.getElementById('ov-cfd-count');
-  const navCountCfd = document.getElementById('nav-count-cfd');
-  if (cfdPnlEl) { cfdPnlEl.textContent = cfdOps ? fmtPnl(cfdPnl) : '—'; cfdPnlEl.className = cfdOps ? pnlClass(cfdPnl) : ''; }
-  if (cfdWrEl) { cfdWrEl.textContent = cfdWr !== null ? cfdWr + '%' : '—'; cfdWrEl.className = cfdWr !== null ? (cfdWr >= 60 ? 'green' : 'red') : ''; }
-  if (cfdCountEl) cfdCountEl.textContent = cfdAccs.length;
-  if (navCountCfd) navCountCfd.textContent = cfdAccs.length;
-
-  // Futures stats
-  const futAccs = getFuturesAccounts();
-  let futPnl = 0, futWins = 0, futOps = 0;
-  futAccs.forEach(acc => {
-    const { pnl, wr, count } = getActivePhasePnlAndWr(acc);
-    futPnl += pnl;
-    futOps += count;
-    futWins += Math.round((wr || 0) / 100 * count);
-  });
-  const futWr = futOps ? Math.round(futWins / futOps * 100) : null;
-  const futPnlEl = document.getElementById('ov-fut-pnl');
-  const futWrEl = document.getElementById('ov-fut-wr');
-  const futCountEl = document.getElementById('ov-fut-count');
-  const navCountFut = document.getElementById('nav-count-futures');
-  if (futPnlEl) { futPnlEl.textContent = futOps ? fmtPnl(futPnl) : '—'; futPnlEl.className = futOps ? pnlClass(futPnl) : ''; }
-  if (futWrEl) { futWrEl.textContent = futWr !== null ? futWr + '%' : '—'; futWrEl.className = futWr !== null ? (futWr >= 60 ? 'green' : 'red') : ''; }
-  if (futCountEl) futCountEl.textContent = futAccs.length;
-  if (navCountFut) navCountFut.textContent = futAccs.length;
-}
-
-// ══════════════════════════════════════════════════════════════════
-// SF CLOUD SYNC — Supabase
-
-// ── Auto-guardado local cada 45s ──────────────────────────────────────────
-(function() {
-  let _autoSaveTimer = null;
-  function _autoSave() {
-    try { save(); } catch(e) {}
-  }
-  function _startAutoSave() {
-    if (_autoSaveTimer) clearInterval(_autoSaveTimer);
-    _autoSaveTimer = setInterval(_autoSave, 45000);
-    window.addEventListener('beforeunload', _autoSave);
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) _autoSave();
-    });
-  }
-  // Arrancar cuando la licencia esté activa
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(_startAutoSave, 2000);
-  });
-})();
-
 // ══════════════════════════════════════════════════════════════════
 // SF CLOUD SYNC — Supabase bidireccional
+// Guarda y restaura TODOS los datos (cuentas, entradas, grupos,
+// certificados, diario, notas…) en la tabla client_data.
 // ══════════════════════════════════════════════════════════════════
 
+// ── Subir datos a la nube ─────────────────────────────────────────
 async function sbPush(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return;
   try {
@@ -16514,11 +16370,16 @@ async function sbPush(licKey) {
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({ license_key: licKey, data: payload, updated_at: new Date().toISOString() })
+      body: JSON.stringify({
+        license_key: licKey,
+        data: payload,
+        updated_at: new Date().toISOString()
+      })
     });
   } catch(e) { console.warn('SF Cloud: error al subir datos', e); }
 }
 
+// ── Descargar datos de la nube y aplicarlos al localStorage ──────
 async function sbPull(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return false;
   try {
@@ -16534,8 +16395,11 @@ async function sbPull(licKey) {
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
 
+// ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
+
+  // 1. Traer datos de la nube
   const pulled = await sbPull(licKey);
   if (pulled) {
     try {
@@ -16551,29 +16415,38 @@ async function sbStartAutoSync(licKey) {
       if (typeof renderFirmSummary   === 'function') renderFirmSummary();
       if (typeof renderGoals         === 'function') renderGoals();
       if (typeof buildAccountSelects === 'function') buildAccountSelects();
-      if (typeof updateGroupStats    === 'function') updateGroupStats();
       console.log('SF Cloud datos restaurados desde la nube');
     } catch(e) { console.warn('SF Cloud: error al aplicar datos', e); }
   }
+
+  // 2. Auto-guardar en nube cada 60s
   setInterval(() => sbPush(licKey), 60000);
+
+  // 3. Guardar al cerrar/cambiar pestana
   window.addEventListener('beforeunload', () => sbPush(licKey));
-  document.addEventListener('visibilitychange', () => { if (document.hidden) sbPush(licKey); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) sbPush(licKey);
+  });
 }
 
-// Auto-guardado local cada 45s
+// ── Auto-guardado local cada 45s ──────────────────────────────────
 (function() {
-  let _t = null;
-  function _s() { try { save(); } catch(e) {} }
-  function _start() {
-    if (_t) clearInterval(_t);
-    _t = setInterval(_s, 45000);
-    window.addEventListener('beforeunload', _s);
-    document.addEventListener('visibilitychange', () => { if (document.hidden) _s(); });
+  let _autoSaveTimer = null;
+  function _autoSave() {
+    try { save(); } catch(e) {}
   }
-  document.addEventListener('DOMContentLoaded', () => setTimeout(_start, 2000));
+  function _startAutoSave() {
+    if (_autoSaveTimer) clearInterval(_autoSaveTimer);
+    _autoSaveTimer = setInterval(_autoSave, 45000);
+    window.addEventListener('beforeunload', _autoSave);
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) _autoSave();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(_startAutoSave, 2000);
+  });
 })();
-
 </script>
-
 
 </body></html>
