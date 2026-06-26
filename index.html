@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/34634/Downloads/index%20(31).html -->
+<!-- saved from url=(0056)file:///C:/Users/34634/Downloads/index1_fixed%20(8).html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1467,7 +1467,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">📊 Vistas</div>
-    <div class="nav-item" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
+    <div class="nav-item active" onclick="showPage(&#39;overview&#39;)"><div class="dot" style="background:var(--muted2)"></div> Resumen Global</div>
     <div class="nav-item" onclick="showPage(&#39;equity&#39;)"><div class="dot dot-green"></div> 📈 Rendimiento</div>
     <div class="nav-item" onclick="showPage(&#39;calendar&#39;)"><div class="dot dot-blue"></div> Calendario</div>
     <div class="nav-item" onclick="showPage(&#39;certificates&#39;)"><div class="dot dot-green"></div> Certificados de Pago</div>
@@ -1527,7 +1527,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <main class="main" id="sf-main">
 
 <!-- ───────── PAGE: OVERVIEW ───────── -->
-<div id="page-overview" class="page hidden">
+<div id="page-overview" class="page">
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
@@ -1544,10 +1544,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.563,95</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">73%</div><div class="stat-hint" id="s-wr-hint">19W / 7L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.550,45</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">68%</div><div class="stat-hint" id="s-wr-hint">19W / 9L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">26</div><div class="stat-hint" id="s-days-hint">8 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">28</div><div class="stat-hint" id="s-days-hint">8 días con datos</div></div>
     <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$184,94</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
@@ -1701,10 +1701,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;NINJA SIMULATED&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-pnl red">-$13,5</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>—</span></div>
-        <div class="acc-meta-item">Ops <span>0</span></div>
+        <div class="acc-meta-item">WR <span>0%</span></div>
+        <div class="acc-meta-item">Ops <span>2</span></div>
         <div class="acc-meta-item">DD <span>$2000</span></div>
       </div>
       
@@ -2092,7 +2092,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="flex:1;min-width:120px;padding:8px 14px;border-radius:9px;background:var(--blue-dim);border:1px solid rgba(74,158,255,0.25)">
         <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);margin-bottom:4px">📘 CFDs · MT5</div>
         <div style="font-size:17px;font-weight:800;color:var(--blue)">$0</div>
-        <div style="font-size:10px;color:var(--muted2);margin-top:2px">0 pagos · 6 cuentas</div>
+        <div style="font-size:10px;color:var(--muted2);margin-top:2px">0 pagos · 5 cuentas</div>
       </div>
       
       <div style="flex:1;min-width:120px;padding:8px 14px;border-radius:9px;background:var(--purple-dim);border:1px solid rgba(160,122,255,0.25)">
@@ -2112,7 +2112,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
            })(this)">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0"></div>
         <div style="font-size:13px;font-weight:800;color:var(--text);flex:1">CFDs · MT5</div>
-        <span style="font-size:10px;color:var(--muted)">6 cuentas</span>
+        <span style="font-size:10px;color:var(--muted)">5 cuentas</span>
         <span style="font-size:10px;color:var(--muted)">Sin pagos aún</span>
         <span class="cert-group-arrow" style="font-size:11px;color:var(--muted2);margin-left:4px">▶</span>
       </div>
@@ -2139,12 +2139,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
         <div class="group-line"></div>
         <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;PROP XP TRADE 2&#39;)">+ Cargar pago</button>
-      </div>
-      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
-      <div class="group-header"><div class="dot dot-green"></div>NINJA SIMULATED1
-        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
-        <div class="group-line"></div>
-        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;NINJA SIMULATED1&#39;)">+ Cargar pago</button>
       </div>
       <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
       <div class="group-header"><div class="dot dot-green"></div>RETO CONSISTENCIA 3K
@@ -2309,7 +2303,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 </div>
 
 <!-- ───────── PAGE: ACCOUNT DETAIL ───────── -->
-<div id="page-account" class="page">
+<div id="page-account" class="page hidden">
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
@@ -2339,15 +2333,15 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: STATS -->
   <div class="tab-content" id="dtab-stats">
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value neutral" id="d-pnl">—</div></div>
-      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value " id="d-wr">—</div></div>
-      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">—</div></div>
-      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">0</div></div>
+      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value red" id="d-pnl">-$13,5</div></div>
+      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value red" id="d-wr">0%</div></div>
+      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">-$13,5</div></div>
+      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">2</div></div>
     </div>
     <div id="d-stats-extra"><div class="stat-row stat-row-3" style="margin-top:10px">
-      <div class="stat-card"><div class="stat-label">Saldo EOD actual</div><div class="stat-value blue">$100.000</div><div class="stat-hint">Pico: $100.000</div></div>
+      <div class="stat-card"><div class="stat-label">Saldo EOD actual</div><div class="stat-value blue">$99.986,5</div><div class="stat-hint">Pico: $100.000</div></div>
       <div class="stat-card"><div class="stat-label">Límite EOD Trailing</div><div class="stat-value red">$98.000</div><div class="stat-hint">DD trailing: -$2000</div></div>
-      <div class="stat-card"><div class="stat-label">Margen disponible</div><div class="stat-value green">$2000</div><div style="display:flex;gap:4px;margin-top:6px"><input class="form-input" type="number" id="inline-evalcost" value="" placeholder="Costo exam" step="any" style="font-size:11px;padding:4px 8px"><button class="btn btn-primary btn-xs" onclick="saveInlineEvalCost(&#39;NINJA SIMULATED&#39;)">✓</button></div></div>
+      <div class="stat-card"><div class="stat-label">Margen disponible</div><div class="stat-value green">$1986,5</div><div style="display:flex;gap:4px;margin-top:6px"><input class="form-input" type="number" id="inline-evalcost" value="" placeholder="Costo exam" step="any" style="font-size:11px;padding:4px 8px"><button class="btn btn-primary btn-xs" onclick="saveInlineEvalCost(&#39;NINJA SIMULATED&#39;)">✓</button></div></div>
     </div></div>
   </div>
 
@@ -2379,7 +2373,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="fuel-sub">efectividad en live</div>
             <div class="fuel-items">
               <div class="fuel-item"><span class="fuel-item-label">Límite EOD:</span><span class="fuel-item-val amber">$98.000</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Margen:</span><span class="fuel-item-val green">$2000</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Margen:</span><span class="fuel-item-val green">$1986,5</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Días rentables:</span><span class="fuel-item-val blue">0 / 5</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Mín diario:</span><span class="fuel-item-val green">+$150</span></div>
             </div>
@@ -2398,8 +2392,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
             <div class="fuel-pct" style="color:var(--blue)">0</div>
             <div class="fuel-sub">de 5 días requeridos</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">P&amp;L Total:</span><span class="fuel-item-val neutral">+$0</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Cobro 90%×50%:</span><span class="fuel-item-val blue">$0</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">P&amp;L Total:</span><span class="fuel-item-val red">-$13,5</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Cobro 90%×50%:</span><span class="fuel-item-val blue">$6,08</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Mín cobro:</span><span class="fuel-item-val">$150</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Máx cobro:</span><span class="fuel-item-val">$2000</span></div>
             </div>
@@ -2415,8 +2409,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;align-items:center;gap:10px">
         <div style="flex:1">
           <div class="thermo-track" style="height:20px">
-            <div class="thermo-fill" style="width:0%;background:linear-gradient(90deg,var(--red),var(--amber) 50%,var(--green));position:relative">
-              <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:9px;font-weight:700;color:#000;white-space:nowrap">0%</div>
+            <div class="thermo-fill" style="width:-0.3375%;background:linear-gradient(90deg,var(--red),var(--amber) 50%,var(--green));position:relative">
+              <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:9px;font-weight:700;color:#000;white-space:nowrap">-0%</div>
             </div>
           </div>
           <div class="thermo-markers">
@@ -2424,7 +2418,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           </div>
         </div>
         <div style="text-align:right">
-          <div style="font-size:18px;font-weight:800;color:var(--red)">+$0</div>
+          <div style="font-size:18px;font-weight:800;color:var(--red)">-$13,5</div>
           <div style="font-size:10px;color:var(--muted)">de $4000</div>
         </div>
       </div>
@@ -2460,7 +2454,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div id="roi-content">
     
     <div class="roi-grid">
-      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value neutral">+$0</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
+      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value red">-$13,5</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
       <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$0</div></div>
       <div class="roi-card"><div class="roi-label">Costo evaluación <span style="color:var(--muted);font-size:9px">editable</span></div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
@@ -2550,13 +2544,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <input class="form-input" type="text" id="p-nt8-userid" value="Sim101" placeholder="Ej: Sim101">
         </div>
         <div class="form-group"><label class="form-label">⏱ Intervalo auto-import (seg)</label>
-          <input class="form-input" type="number" id="p-nt8-import-interval" value="1" min="1" max="60" step="1">
+          <input class="form-input" type="number" id="p-nt8-import-interval" value="1" min="10" max="3600" step="1">
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;NINJA SIMULATED&#39;)">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarNT8Ahora(&#39;NINJA SIMULATED&#39;)">⬇ Importar ahora</button>
-        <span id="nt8-status-NINJA_SIMULATED" style="font-size: 11px; color: var(--red);">✕ Error: HTTP 400</span>
+        <span id="nt8-status-NINJA_SIMULATED" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 2 ya existían/omitidos · 23:19:35</span>
       </div>
     </div>
   </div>
@@ -2612,7 +2606,37 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <button class="btn btn-ghost btn-xs" onclick="opsCalClear()" style="color:var(--red);">✕ Limpiar</button>
       </div>
     </div>
-    <div class="entry-list" id="detail-entries"><div class="no-entries">Sin entradas para los filtros seleccionados</div></div>
+    <div class="entry-list" id="detail-entries">
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-26</div>
+      
+      <div class="entry-result pill-loss">LOSS</div>
+      <div class="entry-pnl red">-$7,5</div>
+      <div class="entry-source source-manual">MNQ SEP26</div>
+      <div class="entry-source source-mt5">5</div>
+      
+      <div class="entry-note">Auto-importado NT8 · MNQ SEP26 · NT-4e3bf</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1782508236135_ojzv&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1782508236135_ojzv&#39;)">✕</button>
+      </div>
+    </div>
+    <div class="entry-item" style="">
+      <div class="entry-date">2026-06-26</div>
+      
+      <div class="entry-result pill-loss">LOSS</div>
+      <div class="entry-pnl red">-$6</div>
+      <div class="entry-source source-manual">MNQ SEP26</div>
+      <div class="entry-source source-mt5">1</div>
+      
+      <div class="entry-note">Auto-importado NT8 · MNQ SEP26 · NT-a9712</div>
+      
+      <div class="entry-actions">
+        <button class="entry-edit-btn" onclick="openEditModal(&#39;1782508236135_8xg7&#39;)">✏</button>
+        <button class="entry-del-btn" onclick="deleteEntry(&#39;1782508236135_8xg7&#39;)">✕</button>
+      </div>
+    </div></div>
   </div>
 </div>
 
@@ -4342,7 +4366,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <!-- ───────── PAGE: VINCULACIÓN AUTO ───────── -->
 
 <!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">Error importando NT8: HTTP 400</span></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg">Parámetros actualizados ✓</span></div>
 
 
 
@@ -5827,7 +5851,7 @@ async function importarMT5Ahora(acc, silent) {
     const url = SB_URL + '/rest/v1/trades'
       + '?user_id=eq.' + encodeURIComponent(userLicencia)
       + '&account=eq.' + encodeURIComponent(accountNum)
-      + '&order=id.asc'
+      + '&order=close_time.asc'
       + '&limit=1000';
 
     const res = await fetch(url, {
@@ -5952,7 +5976,6 @@ async function importarNT8Ahora(acc, silent) {
     const accountNum = cfg.nt8AccountID.trim();
     const url = SB_URL + '/rest/v1/nt8_trades'
       + '?account=eq.' + encodeURIComponent(accountNum)
-      + '&order=id.asc'
       + '&limit=1000';
 
     const res = await fetch(url, {
@@ -5964,6 +5987,7 @@ async function importarNT8Ahora(acc, silent) {
     });
     if (!res.ok) { const errBody = await res.text(); console.error('NT8 Supabase error body:', errBody); throw new Error('HTTP ' + res.status + ' — ' + errBody); }
     const rows = await res.json();
+    console.log('NT8 rows recibidos:', rows.length);
 
     const existingTickets = new Set(
       entries.filter(e => e.account === acc && e.nt8Ticket).map(e => String(e.nt8Ticket))
@@ -5971,13 +5995,14 @@ async function importarNT8Ahora(acc, silent) {
 
     let added = 0, skipped = 0;
     rows.forEach(row => {
-      const ticket = String(row.ticket || row.id || '').trim();
+      const ticket = String(row.id || row.ticket || '').trim();
       if (!ticket) return;
       if (existingTickets.has(ticket)) { skipped++; return; }
 
-      const pnl = parseFloat(row.pnl) || 0;
+      const pnl = parseFloat(row.pnl) || parseFloat(row.net_pnl) || 0;
       const result = pnl >= 0 ? 'win' : 'loss';
-      const date = fpNormalizeMT5Date(row.close_time || row.open_time);
+      const rawDate = row.exit_time || row.close_time || row.entry_time || row.open_time;
+      const date = fpNormalizeMT5Date(rawDate);
       if (!date) { skipped++; return; }
 
       entries.push({
@@ -5987,13 +6012,14 @@ async function importarNT8Ahora(acc, silent) {
         result,
         pnl,
         source: 'nt8',
-        notes: `Auto-importado NT8 · ${ticket}`,
+        notes: `Auto-importado NT8 · ${(row.instrument || row.symbol || '')} · ${ticket.slice(0,8)}`,
         pair: row.instrument || row.symbol || '',
-        lots: parseFloat(row.quantity) || parseFloat(row.lots) || null,
+        lots: parseFloat(row.contracts) || parseFloat(row.lots) || null,
         session: null,
         nt8Ticket: ticket,
-        eaUserId: row.user_id || '',
-        eaType: row.action || row.type || '',
+        eaType: row.direction || row.type || '',
+        openPrice: parseFloat(row.entry_price) || parseFloat(row.open_price) || null,
+        closePrice: parseFloat(row.exit_price) || parseFloat(row.close_price) || null,
         ts: Date.now()
       });
       existingTickets.add(ticket);
