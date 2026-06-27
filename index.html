@@ -1555,7 +1555,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- CFD Section -->
-  <div class="group-header"><div class="dot dot-blue"></div> CFDs · MT5 <div class="group-line"></div></div>
+  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection('cfd')">
+    <div class="dot dot-blue"></div> CFDs · MT5
+    <div class="group-line"></div>
+    <span id="ov-arrow-cfd" style="font-size:11px;color:var(--muted);transition:transform 0.2s;display:inline-block;">▼</span>
+  </div>
   <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
       <div class="acc-head">
         <div class="acc-name">BACKTESTING</div>
@@ -1613,7 +1617,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div></div>
 
   <!-- Futures Section -->
-  <div class="group-header"><div class="dot dot-purple"></div> Futuros · NinjaTrader <div class="group-line"></div></div>
+  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection('fut')">
+    <div class="dot dot-purple"></div> Futuros · NinjaTrader
+    <div class="group-line"></div>
+    <span id="ov-arrow-fut" style="font-size:11px;color:var(--muted);transition:transform 0.2s;display:inline-block;">▼</span>
+  </div>
   <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
       <div class="acc-head">
         <div class="acc-name">FUTUROS TRADE 1</div>
@@ -4657,6 +4665,7 @@ function render() {
   renderAlertsBanner();
   renderStats();
   renderOverviewCards();
+  initOvSections();
   renderFirmSummary();
   buildSidebarDynamic();
   buildAccountSelects();
@@ -4750,6 +4759,36 @@ function renderStats() {
   payoutEl.style.display = 'flex';
   payoutEl.style.alignItems = 'center';
   payoutEl.style.gap = '6px';
+}
+
+
+function toggleOvSection(key) {
+  const cardsId = key === 'cfd' ? 'cfd-overview-cards' : 'futures-overview-cards';
+  const el = document.getElementById(cardsId);
+  const arrow = document.getElementById('ov-arrow-' + key);
+  const lsKey = 'ov_collapsed_' + key;
+  const isCollapsed = el.style.display === 'none';
+  if (isCollapsed) {
+    el.style.display = '';
+    if (arrow) arrow.style.transform = 'rotate(0deg)';
+    _lsRem(lsKey);
+  } else {
+    el.style.display = 'none';
+    if (arrow) arrow.style.transform = 'rotate(-90deg)';
+    _lsSet(lsKey, '1');
+  }
+}
+
+function initOvSections() {
+  ['cfd','fut'].forEach(key => {
+    const cardsId = key === 'cfd' ? 'cfd-overview-cards' : 'futures-overview-cards';
+    const el = document.getElementById(cardsId);
+    const arrow = document.getElementById('ov-arrow-' + key);
+    if (_lsGet('ov_collapsed_' + key) === '1') {
+      if (el) el.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(-90deg)';
+    }
+  });
 }
 
 function renderOverviewCards() {
