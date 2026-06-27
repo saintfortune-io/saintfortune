@@ -16521,6 +16521,21 @@ function licOcultarBoot() {
     } catch(e) {}
   }
 
+  // Primero descargar nube, luego mostrar UI — así nunca se ve localStorage vacío
+  if (data.key) {
+    try {
+      const pulled = await sbPull(data.key);
+      if (pulled) {
+        entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+        accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+        groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+        certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+        firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+        console.log('SF Cloud: datos pre-cargados antes de mostrar UI');
+      }
+    } catch(e) { console.warn('SF Cloud: fallo pre-carga', e); }
+  }
+
   licOcultar();
   licActualizarPill();
   licOcultarBoot();
@@ -16670,17 +16685,7 @@ async function forzarDescargaNube() {
     toast('☁️ Descargando datos desde la nube...');
     const pulled = await sbPull(licData.key);
     if (pulled) {
-      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
-      if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
-      if (typeof renderOverview      === 'function') renderOverview();
-      if (typeof renderGroups        === 'function') renderGroups();
-      if (typeof renderCertificates  === 'function') renderCertificates();
-      if (typeof renderFirmSummary   === 'function') renderFirmSummary();
-      if (typeof buildAccountSelects === 'function') buildAccountSelects();
+      sfApplyCloudData();
       toast('✅ Datos restaurados desde la nube');
     } else {
       toast('⚠️ No se encontraron datos en la nube', true);
@@ -16727,33 +16732,42 @@ async function sbPull(licKey) {
 }
 
 // ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
+function sfApplyCloudData() {
+  try {
+    entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+    accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+    groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+    certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+    firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+    if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
+    if (typeof renderOverview      === 'function') renderOverview();
+    if (typeof renderGroups        === 'function') renderGroups();
+    if (typeof renderCertificates  === 'function') renderCertificates();
+    if (typeof renderFirmSummary   === 'function') renderFirmSummary();
+    if (typeof renderGoals         === 'function') renderGoals();
+    if (typeof buildAccountSelects === 'function') buildAccountSelects();
+    if (typeof initOvSections      === 'function') initOvSections();
+    if (typeof renderCalendar      === 'function') try { renderCalendar(); } catch(e) {}
+  } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
+}
+
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
 
-  // 1. Traer datos de la nube
+  // 1. Traer datos de la nube y esperar a que el DOM esté listo
   const pulled = await sbPull(licKey);
   if (pulled) {
-    try {
-      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
-      if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
-      if (typeof renderOverview      === 'function') renderOverview();
-      if (typeof renderGroups        === 'function') renderGroups();
-      if (typeof renderCertificates  === 'function') renderCertificates();
-      if (typeof renderFirmSummary   === 'function') renderFirmSummary();
-      if (typeof renderGoals         === 'function') renderGoals();
-      if (typeof buildAccountSelects === 'function') buildAccountSelects();
+    // Esperar a que el render inicial haya terminado antes de re-renderizar
+    setTimeout(() => {
+      sfApplyCloudData();
       console.log('SF Cloud datos restaurados desde la nube');
-    } catch(e) { console.warn('SF Cloud: error al aplicar datos', e); }
+    }, 300);
   }
 
   // 2. Auto-guardar en nube cada 60s
   setInterval(() => sbPush(licKey), 60000);
 
-  // 3. Guardar al cerrar/cambiar pestana
+  // 3. Guardar al cerrar/cambiar pestaña
   window.addEventListener('beforeunload', () => sbPush(licKey));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) sbPush(licKey);
