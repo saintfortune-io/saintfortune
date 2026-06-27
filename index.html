@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)file:///C:/Users/34634/Downloads/index1_fixed%20(8).html -->
+<!-- saved from url=(0047)https://saintfortune-io.github.io/saintfortune/ -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1477,7 +1477,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="nav-section">
     <div class="nav-label">🔵 CFDs · MT5</div>
     <div id="cfd-nav-items"></div>
-    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="BACKTESTING"><div class="dot dot-cyan"></div> BACKTESTING <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="BACKTESTING2"><div class="dot dot-cyan"></div> BACKTESTING2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="PROXP TRADE 1"><div class="dot dot-cyan"></div> PROXP TRADE 1 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="PROP XP TRADE 2"><div class="dot dot-cyan"></div> PROP XP TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="RETO CONSISTENCIA 3K"><div class="dot dot-cyan"></div> RETO CONSISTENCIA 3K <span class="nav-badge badge-eval" style="">EVAL</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="extra-cfd-nav"><div class="nav-item" data-acc-id="PROPXP 50K INSTANT"><div class="dot dot-cyan"></div> PROPXP 50K INSTANT <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="RETO CONSISTENCIA 3K"><div class="dot dot-cyan"></div> RETO CONSISTENCIA 3K <span class="nav-badge badge-eval" style="">EVAL</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div><div class="nav-item" data-acc-id="BACKTESTING US30/US100"><div class="dot dot-cyan"></div> BACKTESTING US30/US100 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="BACKTESTING 100k NISH A+B"><div class="dot dot-cyan"></div> BACKTESTING 100k NISH A+B <span class="nav-badge badge-live" style="">LIVE</span></div></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;cfd&#39;)" style="color:var(--cyan);font-size:11.5px;">+ Agregar cuenta CFD</div>
   </div>
 
@@ -1516,6 +1516,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div onclick="restaurarBackup()" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(126, 184, 232); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(26, 42, 58); background: rgba(0, 120, 220, 0.06); transition: 0.15s;" onmouseover="this.style.background=&#39;rgba(0,120,220,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(0,120,220,0.06)&#39;">
         <span style="font-size:14px">🔄</span> Restaurar backup
       </div>
+      <div onclick="forzarDescargaNube()" style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgb(255, 200, 80); cursor: pointer; padding: 6px 8px; border-radius: 6px; border: 1px solid rgb(58, 50, 26); background: rgba(220, 160, 0, 0.06); transition: 0.15s;" onmouseover="this.style.background='rgba(220,160,0,0.14)'" onmouseout="this.style.background='rgba(220,160,0,0.06)'">
+        <span style="font-size:14px">☁️</span> Recuperar desde nube
+      </div>
 
     </div>
 
@@ -1531,7 +1534,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
-      <div class="page-sub" id="overview-date">Sesión activa · viernes, 26 de junio de 2026</div>
+      <div class="page-sub" id="overview-date">Sesión activa · sábado, 27 de junio de 2026</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;calendar&#39;)">📅 Calendario</button>
@@ -1544,11 +1547,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.550,45</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">68%</div><div class="stat-hint" id="s-wr-hint">19W / 9L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.571,35</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">75%</div><div class="stat-hint" id="s-wr-hint">15W / 5L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">28</div><div class="stat-hint" id="s-days-hint">8 días con datos</div></div>
-    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$184,94</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">20</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
   <!-- CFD Section -->
@@ -1561,24 +1564,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <span class="acc-platform type-cfd-instant">⚡ Instant</span>
           
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
-        </div>
-      </div>
-      <div class="acc-pnl green">+$5,2</div>
-      <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>40%</span></div>
-        <div class="acc-meta-item">Ops <span>5</span></div>
-        <div class="acc-meta-item">DD <span>6%</span></div>
-        
-        
-      </div>
-    </div><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING2&#39;)">
-      <div class="acc-head">
-        <div class="acc-name">BACKTESTING2</div>
-        <div class="acc-badges">
-          <span class="acc-platform tag-mt5">MT5</span>
-          <span class="acc-platform type-cfd-instant">⚡ Instant</span>
-          
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
       <div class="acc-pnl neutral">+$0</div>
@@ -1622,24 +1607,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="acc-meta-item">WR <span>100%</span></div>
         <div class="acc-meta-item">Ops <span>5</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
-        
-        
-      </div>
-    </div><div class="acc-card blue-accent" onclick="showPage(&#39;RETO CONSISTENCIA 3K&#39;)">
-      <div class="acc-head">
-        <div class="acc-name">RETO CONSISTENCIA 3K<span style="font-size:9px;color:var(--amber);margin-left:4px">🧪 BT</span></div>
-        <div class="acc-badges">
-          <span class="acc-platform tag-mt5">MT5</span>
-          <span class="acc-platform type-cfd-instant">⚡ Instant</span>
-          
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;RETO CONSISTENCIA 3K&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
-        </div>
-      </div>
-      <div class="acc-pnl red">-$26,1</div>
-      <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>67%</span></div>
-        <div class="acc-meta-item">Ops <span>3</span></div>
-        <div class="acc-meta-item">DD <span>50%</span></div>
         
         
       </div>
@@ -1737,17 +1704,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <div id="firm-summary-content"><div class="firm-chip-row" id="firm-chips-wrap"><div class="firm-chip" id="firm-chip-0" onclick="firmToggleDetail(0)">
       <div>
-        <div class="firm-chip-name">META QUOTES</div>
-        <div class="firm-chip-badges" style="margin-top:4px">
-          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 0 pas.</span>
-          <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
-          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 2 act.</span>
-          
-        </div>
-      </div>
-      
-    </div><div class="firm-chip" id="firm-chip-1" onclick="firmToggleDetail(1)">
-      <div>
         <div class="firm-chip-name">LUCID</div>
         <div class="firm-chip-badges" style="margin-top:4px">
           <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 1 pas.</span>
@@ -1757,7 +1713,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </div>
       </div>
       <span class="firm-chip-ratio" style="color:var(--green);border-color:var(--green);background:transparent">100%</span>
-    </div><div class="firm-chip" id="firm-chip-2" onclick="firmToggleDetail(2)">
+    </div><div class="firm-chip" id="firm-chip-1" onclick="firmToggleDetail(1)">
       <div>
         <div class="firm-chip-name">NT8</div>
         <div class="firm-chip-badges" style="margin-top:4px">
@@ -1768,6 +1724,28 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </div>
       </div>
       <span class="firm-chip-ratio" style="color:var(--green);border-color:var(--green);background:transparent">100%</span>
+    </div><div class="firm-chip" id="firm-chip-2" onclick="firmToggleDetail(2)">
+      <div>
+        <div class="firm-chip-name">PROPXP</div>
+        <div class="firm-chip-badges" style="margin-top:4px">
+          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 0 pas.</span>
+          <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
+          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 1 act.</span>
+          
+        </div>
+      </div>
+      
+    </div><div class="firm-chip" id="firm-chip-3" onclick="firmToggleDetail(3)">
+      <div>
+        <div class="firm-chip-name">META QUOTES</div>
+        <div class="firm-chip-badges" style="margin-top:4px">
+          <span class="firm-chip-badge" style="background:var(--green-dim);color:var(--green)">✅ 0 pas.</span>
+          <span class="firm-chip-badge" style="background:var(--red-dim);color:var(--red)">💀 0 perd.</span>
+          <span class="firm-chip-badge" style="background:var(--amber-dim);color:var(--amber)">⚡ 2 act.</span>
+          
+        </div>
+      </div>
+      
     </div></div><div id="firm-detail-target"></div></div>
   </div>
 </div>
@@ -2033,7 +2011,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="topbar-actions">
       <select class="form-input btn-sm" id="cal-month-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option><option value="3">Abril</option><option value="4">Mayo</option><option value="5" selected="">Junio</option><option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option></select>
       <select class="form-input btn-sm" id="cal-year-select" onchange="calCambiarMes()" style="width:auto;padding:6px 10px;"><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
-      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="BACKTESTING">BACKTESTING</option><option value="BACKTESTING2">BACKTESTING2</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+      <select class="form-input btn-sm" id="cal-account-filter" onchange="renderCalendar()" style="width:auto;padding:6px 10px;"><option value="all">Todas las cuentas</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROPXP 50K INSTANT">PROPXP 50K INSTANT</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="BACKTESTING US30/US100">BACKTESTING US30/US100</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="BACKTESTING 100k NISH A+B">BACKTESTING 100k NISH A+B</option></select>
     </div>
   </div>
   <div id="cal-body"><div class="cal-container">
@@ -2092,7 +2070,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="flex:1;min-width:120px;padding:8px 14px;border-radius:9px;background:var(--blue-dim);border:1px solid rgba(74,158,255,0.25)">
         <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);margin-bottom:4px">📘 CFDs · MT5</div>
         <div style="font-size:17px;font-weight:800;color:var(--blue)">$0</div>
-        <div style="font-size:10px;color:var(--muted2);margin-top:2px">0 pagos · 5 cuentas</div>
+        <div style="font-size:10px;color:var(--muted2);margin-top:2px">0 pagos · 4 cuentas</div>
       </div>
       
       <div style="flex:1;min-width:120px;padding:8px 14px;border-radius:9px;background:var(--purple-dim);border:1px solid rgba(160,122,255,0.25)">
@@ -2112,39 +2090,33 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
            })(this)">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0"></div>
         <div style="font-size:13px;font-weight:800;color:var(--text);flex:1">CFDs · MT5</div>
-        <span style="font-size:10px;color:var(--muted)">5 cuentas</span>
+        <span style="font-size:10px;color:var(--muted)">4 cuentas</span>
         <span style="font-size:10px;color:var(--muted)">Sin pagos aún</span>
         <span class="cert-group-arrow" style="font-size:11px;color:var(--muted2);margin-left:4px">▶</span>
       </div>
       <div class="cert-group-body" style="padding:0 4px;margin-top:6px;display:none"><div style="margin-bottom:1.2rem">
-      <div class="group-header"><div class="dot dot-green"></div>BACKTESTING
+      <div class="group-header"><div class="dot dot-green"></div>PROPXP 50K INSTANT
         <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
         <div class="group-line"></div>
-        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;BACKTESTING&#39;)">+ Cargar pago</button>
-      </div>
-      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
-      <div class="group-header"><div class="dot dot-green"></div>BACKTESTING2
-        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
-        <div class="group-line"></div>
-        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;BACKTESTING2&#39;)">+ Cargar pago</button>
-      </div>
-      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
-      <div class="group-header"><div class="dot dot-green"></div>PROXP TRADE 1
-        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
-        <div class="group-line"></div>
-        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;PROXP TRADE 1&#39;)">+ Cargar pago</button>
-      </div>
-      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
-      <div class="group-header"><div class="dot dot-green"></div>PROP XP TRADE 2
-        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
-        <div class="group-line"></div>
-        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;PROP XP TRADE 2&#39;)">+ Cargar pago</button>
+        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;PROPXP 50K INSTANT&#39;)">+ Cargar pago</button>
       </div>
       <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
       <div class="group-header"><div class="dot dot-green"></div>RETO CONSISTENCIA 3K
         <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
         <div class="group-line"></div>
         <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;RETO CONSISTENCIA 3K&#39;)">+ Cargar pago</button>
+      </div>
+      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
+      <div class="group-header"><div class="dot dot-green"></div>BACKTESTING US30/US100
+        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
+        <div class="group-line"></div>
+        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;BACKTESTING US30/US100&#39;)">+ Cargar pago</button>
+      </div>
+      <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div><div style="margin-bottom:1.2rem">
+      <div class="group-header"><div class="dot dot-green"></div>BACKTESTING 100k NISH A+B
+        <span style="font-size:10px;color:var(--green);margin-left:8px">0 pagos · Total: $0</span>
+        <div class="group-line"></div>
+        <button class="btn btn-green btn-xs" onclick="openCertModal(&#39;BACKTESTING 100k NISH A+B&#39;)">+ Cargar pago</button>
       </div>
       <div class="cert-grid"><div style="color:var(--muted);font-size:12px;padding:0.5rem 0">Sin certificados aún</div></div></div></div></div><div style="margin-bottom:1rem">
       <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;user-select:none" onclick="(function(el){
@@ -2202,7 +2174,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Group ABCDE tabs -->
-  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn">🔵 Grp A</button><button class="tab-btn active">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
+  <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn active">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
     <div class="group-panel-header">
@@ -2260,7 +2232,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <span class="group-panel-letter" style="color:#4a9eff">🔵 A</span>
         <div>
           <div style="font-size:14px;font-weight:700">Grupo A CFD</div>
-          <div style="font-size:10px;color:var(--muted)">🟣 CFDs · 1 cuenta</div>
+          <div style="font-size:10px;color:var(--muted)">🟣 CFDs · 0 cuentas</div>
         </div>
       </div>
       <div style="display:flex;gap:4px">
@@ -2277,26 +2249,16 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <div class="group-summary-grid" style="margin-top:12px">
-      <div class="group-summary-item"><div class="group-summary-label">P&amp;L Actual</div><div class="group-summary-val" style="color:var(--green)">+$3273</div></div>
-      <div class="group-summary-item"><div class="group-summary-label">WR</div><div class="group-summary-val" style="color:var(--green)">83%</div></div>
-      <div class="group-summary-item"><div class="group-summary-label">Ops</div><div class="group-summary-val">6</div></div>
+      <div class="group-summary-item"><div class="group-summary-label">P&amp;L Actual</div><div class="group-summary-val" style="color:var(--muted)">—</div></div>
+      <div class="group-summary-item"><div class="group-summary-label">WR</div><div class="group-summary-val" style="color:var(--red)">—</div></div>
+      <div class="group-summary-item"><div class="group-summary-label">Ops</div><div class="group-summary-val">—</div></div>
       <div class="group-summary-item"><div class="group-summary-label">Cobros</div><div class="group-summary-val" style="color:var(--green)">—</div></div>
     </div>
 
     <div style="margin-top:10px">
       <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;font-weight:600">Cuentas asignadas</div>
       <div class="group-accounts-list">
-        <div class="group-acc-row">
-            <div class="group-acc-info">
-              <div class="group-acc-name">PROXP TRADE 1</div>
-              <span class="acc-platform type-cfd-instant" style="font-size:9px">⚡ Instant</span>
-            </div>
-            <div class="group-acc-stats">
-              <div class="group-acc-stat">P&amp;L <span style="color:var(--green)">+$3273</span></div>
-              <div class="group-acc-stat">WR <span>83%</span></div>
-            </div>
-            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;PROXP TRADE 1&#39;)">→</button>
-          </div>
+        <div class="group-no-accounts">Sin cuentas · Usa ➕ para agregar</div>
       </div>
     </div>
   </div></div></div>
@@ -2550,7 +2512,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
         <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;NINJA SIMULATED&#39;)">Guardar parámetros</button>
         <button class="btn btn-green btn-sm" onclick="importarNT8Ahora(&#39;NINJA SIMULATED&#39;)">⬇ Importar ahora</button>
-        <span id="nt8-status-NINJA_SIMULATED" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 2 ya existían/omitidos · 23:19:35</span>
+        <span id="nt8-status-NINJA_SIMULATED" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 2 ya existían/omitidos · 21:29:45</span>
       </div>
     </div>
   </div>
@@ -2829,7 +2791,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">🚦 Semáforo Mental — 30 días</span>
         </div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">Verde si operaste en peak · Amarillo si con precaución · Rojo si zona de riesgo</div>
-        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="28 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">28</div><div title="29 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">29</div><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div><div title="24 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">24</div><div title="25 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">25</div><div title="26 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div></div>
+        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="29 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">29</div><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div><div title="24 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">24</div><div title="25 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">25</div><div title="26 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div><div title="27 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">27</div></div>
         <div style="display:flex;gap:10px;margin-top:8px;font-size:9px;color:var(--muted);">
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(39,217,122,0.4);margin-right:3px;"></span>🟢 Peak</span>
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(255,174,48,0.4);margin-right:3px;"></span>🟡 Precaución</span>
@@ -3121,7 +3083,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="form-row-2">
       <div class="form-group">
         <label class="form-label">Cuenta</label>
-        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="BACKTESTING">BACKTESTING</option><option value="BACKTESTING2">BACKTESTING2</option><option value="PROXP TRADE 1">PROXP TRADE 1</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROP XP TRADE 2">PROP XP TRADE 2</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option></select>
+        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROPXP 50K INSTANT">PROPXP 50K INSTANT</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="BACKTESTING US30/US100">BACKTESTING US30/US100</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="BACKTESTING 100k NISH A+B">BACKTESTING 100k NISH A+B</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Fecha</label>
@@ -3218,22 +3180,22 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 <div class="modal-backdrop" id="addAccountModal" onclick="closeModal(&#39;addAccountModal&#39;,event)">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal(&#39;addAccountModal&#39;)">✕</button>
-    <div class="modal-title" id="acc-modal-title">➕ Agregar cuenta Futuros</div>
+    <div class="modal-title" id="acc-modal-title">➕ Agregar cuenta CFD</div>
     <div class="modal-sub">Configura los parámetros según tipo de cuenta</div>
 
     <!-- Tipo: Futuros vs CFD -->
     <div class="form-group">
       <label class="form-label">Tipo de instrumento</label>
       <div class="type-selector" id="modal-instrument-selector">
-        <div class="type-pill active" onclick="setModalInstrument(&#39;futures&#39;)" id="pill-fut">🔵 Futuros</div>
-        <div class="type-pill" onclick="setModalInstrument(&#39;cfd&#39;)" id="pill-cfd">🟣 CFDs</div>
+        <div class="type-pill" onclick="setModalInstrument(&#39;futures&#39;)" id="pill-fut">🔵 Futuros</div>
+        <div class="type-pill active" onclick="setModalInstrument(&#39;cfd&#39;)" id="pill-cfd">🟣 CFDs</div>
       </div>
     </div>
 
     <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
     <div class="form-group">
       <label class="form-label">Modo de cuenta</label>
-      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
+      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active cyan">⚡ Instant</div><div class="type-pill">📋 Eval F1</div><div class="type-pill">📋 Eval F2</div><div class="type-pill">🏆 Funded</div></div>
     </div>
 
     <!-- Base fields -->
@@ -3260,7 +3222,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- FUTURES EVAL fields -->
-    <div id="modal-section-fut-eval" class="form-section" style="">
+    <div id="modal-section-fut-eval" class="form-section" style="display: none;">
       <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
@@ -3353,7 +3315,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- CFD INSTANT fields -->
-    <div id="modal-section-cfd-instant" class="form-section" style="display: none;">
+    <div id="modal-section-cfd-instant" class="form-section" style="">
       <div class="form-section-title">⚡ Parámetros Instant · CFD</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-inst-maxdd" placeholder="6" step="0.1"></div>
@@ -3371,7 +3333,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- Grupo assignment (futures) -->
-    <div id="modal-group-select" class="form-group" style="">
+    <div id="modal-group-select" class="form-group" style="display: none;">
       <label class="form-label">Grupo de estrategia</label>
       <select class="form-input" id="na-group">
         <option value="A">🔵 Grupo A</option>
@@ -4366,7 +4328,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <!-- ───────── PAGE: VINCULACIÓN AUTO ───────── -->
 
 <!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg">Parámetros actualizados ✓</span></div>
+<div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">⚠ Ya existe una cuenta con ese nombre · cambia el nombre para evitar duplicados</span></div>
 
 
 
@@ -4492,6 +4454,14 @@ function save() {
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
+  // Subir a la nube inmediatamente en cada cambio
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) {
+      const licData = JSON.parse(licRaw);
+      if (licData && licData.key) sbPush(licData.key);
+    }
+  } catch(e) {}
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -16650,6 +16620,34 @@ function prepMedToggle(label) {
 // Guarda y restaura TODOS los datos (cuentas, entradas, grupos,
 // certificados, diario, notas…) en la tabla client_data.
 // ══════════════════════════════════════════════════════════════════
+
+// ── Forzar descarga manual desde nube ────────────────────────────
+async function forzarDescargaNube() {
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (!licRaw) { toast('No hay sesión activa', true); return; }
+    const licData = JSON.parse(licRaw);
+    if (!licData || !licData.key) { toast('No hay sesión activa', true); return; }
+    toast('☁️ Descargando datos desde la nube...');
+    const pulled = await sbPull(licData.key);
+    if (pulled) {
+      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+      if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
+      if (typeof renderOverview      === 'function') renderOverview();
+      if (typeof renderGroups        === 'function') renderGroups();
+      if (typeof renderCertificates  === 'function') renderCertificates();
+      if (typeof renderFirmSummary   === 'function') renderFirmSummary();
+      if (typeof buildAccountSelects === 'function') buildAccountSelects();
+      toast('✅ Datos restaurados desde la nube');
+    } else {
+      toast('⚠️ No se encontraron datos en la nube', true);
+    }
+  } catch(e) { toast('Error al conectar con la nube', true); }
+}
 
 // ── Subir datos a la nube ─────────────────────────────────────────
 async function sbPush(licKey) {
