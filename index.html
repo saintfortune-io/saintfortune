@@ -3669,7 +3669,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div style="padding:12px 16px;border-radius:9px;background:rgba(74,158,255,0.06);border-left:3px solid var(--blue);font-size:12px;line-height:1.55;color:var(--text);">Mi trabajo no es <strong style="color:var(--blue);">recuperar</strong>.<br>Mi trabajo es <strong style="color:var(--purple);">ejecutar</strong>.</div>
-        <div style="padding:12px 16px;border-radius:9px;background:rgba(160,122,255,0.06);border-left:3px solid var(--purple);font-size:12px;line-height:1.55;color:var(--text);">Un trade fuera de plan vale más que cualquier <strong style="color:var(--amber);">Stop Loss</strong>.</div>
+        <div style="padding:12px 16px;border-radius:9px;background:rgba(160,122,255,0.06);border-left:3px solid var(--purple);font-size:12px;line-height:1.55;color:var(--text);">Un trade fuera de plan te <strong style="color:var(--red);">cuesta</strong> más que cualquier <strong style="color:var(--amber);">Stop Loss</strong>.</div>
         <div style="padding:12px 16px;border-radius:9px;background:rgba(39,217,122,0.06);border-left:3px solid var(--green);font-size:12px;line-height:1.55;color:var(--text);">Protejo el <strong style="color:var(--green);">capital primero</strong>.</div>
       </div>
     </div>
@@ -3816,6 +3816,16 @@ Cuentas a cobrar este mes: ..."></textarea>
       <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
         <button onclick="retoReset()" style="background: transparent; border-color: var(--border2); color: var(--muted2); border-radius: 8px; padding: 5px 12px; font-size: 11px; cursor: pointer; transition: 0.15s;" onmouseover="this.style.color=&#39;var(--red)&#39;;this.style.borderColor=&#39;var(--red)&#39;" onmouseout="this.style.color=&#39;var(--muted2)&#39;;this.style.borderColor=&#39;var(--border2)&#39;">🗑 Reiniciar reto</button>
       </div>
+    </div>
+
+    <!-- Cuenta vinculada al reto -->
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(74,158,255,0.06);border:1px solid rgba(74,158,255,0.2);margin-bottom:1rem;flex-wrap:wrap;">
+      <span style="font-size:11px;font-weight:700;color:var(--muted2);white-space:nowrap;">🔗 Cuenta vinculada:</span>
+      <select id="reto-linked-account" onchange="retoLinkedAccountChange()" style="flex:1;min-width:160px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:7px;padding:5px 10px;font-size:11.5px;font-weight:600;outline:none;cursor:pointer;">
+        <option value="">— Sin vincular (entrada manual) —</option>
+      </select>
+      <button onclick="retoImportFromAccount()" id="reto-import-btn" style="display:none;background:linear-gradient(135deg,rgba(74,158,255,0.15),rgba(160,122,255,0.1));border:1px solid rgba(74,158,255,0.4);color:var(--blue);border-radius:8px;padding:6px 14px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.15s;">⬇ Importar trades</button>
+      <span id="reto-linked-info" style="font-size:10px;color:var(--muted);width:100%;margin-top:2px;"></span>
     </div>
 
     <!-- Card principal del reto -->
@@ -4480,7 +4490,7 @@ function save() {
         if (licData && licData.key) sbPush(licData.key);
       }
     } catch(e) {}
-  }, 600);
+  }, 400);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -9269,6 +9279,7 @@ function buildBackupPayload(){
     tp_badtrades_sale:          JSON.parse(_lsGet('tp_badtrades_sale')          || '[]'),
     tp_month_archive_v1_sale:   JSON.parse(_lsGet('tp_month_archive_v1_sale')   || '{}'),
     sf_trading_plans_v1:        JSON.parse(_lsGet('sf_trading_plans_v1')        || '{}'),
+    fp_reto_linked_account_v1:  _lsGet('fp_reto_linked_account_v1') || '',
     sf_coach_v1_sale:           JSON.parse(_lsGet('sf_coach_v1_sale')           || '{}'),
     fp_reto_1k10k_v1:           JSON.parse(_lsGet('fp_reto_1k10k_v1')           || 'null'),
     fp_reto_pnl_v1:             JSON.parse(_lsGet('fp_reto_pnl_v1')             || '[]'),
@@ -9303,20 +9314,15 @@ function applyBackupPayload(d){
   if(d.tp_badtrades_sale          !== undefined) _lsSet('tp_badtrades_sale',          JSON.stringify(d.tp_badtrades_sale));
   if(d.tp_month_archive_v1_sale   !== undefined) _lsSet('tp_month_archive_v1_sale',   JSON.stringify(d.tp_month_archive_v1_sale));
   if(d.sf_trading_plans_v1        !== undefined) _lsSet('sf_trading_plans_v1',        JSON.stringify(d.sf_trading_plans_v1));
+  if(d.fp_reto_linked_account_v1  !== undefined) _lsSet('fp_reto_linked_account_v1',  d.fp_reto_linked_account_v1);
   if(d.sf_coach_v1_sale           !== undefined) _lsSet('sf_coach_v1_sale',           JSON.stringify(d.sf_coach_v1_sale));
   if(d.fp_reto_1k10k_v1          !== undefined) _lsSet('fp_reto_1k10k_v1',           JSON.stringify(d.fp_reto_1k10k_v1));
-  if(d.fp_reto_pnl_v1            !== undefined) _lsSet('fp_reto_pnl_v1',             JSON.stringify(d.fp_reto_pnl_v1));
   if(d.fp_reto_diasfuera_v1      !== undefined) _lsSet('fp_reto_diasfuera_v1',       JSON.stringify(d.fp_reto_diasfuera_v1));
   if(d.fp_reto_reflections_sale   !== undefined) _lsSet('fp_reto_reflections_sale',   JSON.stringify(d.fp_reto_reflections_sale));
   if(d.tp_max_streak_sale         !== undefined) _lsSet('tp_max_streak_sale',         String(d.tp_max_streak_sale));
   if(d.tp_max_streak_start_sale   !== undefined) _lsSet('tp_max_streak_start_sale',   d.tp_max_streak_start_sale);
   if(d.tp_max_streak_end_sale     !== undefined) _lsSet('tp_max_streak_end_sale',     d.tp_max_streak_end_sale);
   if(d.fp_reto_pnl_v1          !== undefined) _lsSet('fp_reto_pnl_v1',           JSON.stringify(d.fp_reto_pnl_v1));
-  if(d.fp_reto_diasfuera_v1    !== undefined) _lsSet('fp_reto_diasfuera_v1',     JSON.stringify(d.fp_reto_diasfuera_v1));
-  if(d.fp_reto_reflections_sale !== undefined) _lsSet('fp_reto_reflections_sale', JSON.stringify(d.fp_reto_reflections_sale));
-  if(d.tp_max_streak_sale       !== undefined) _lsSet('tp_max_streak_sale',       String(d.tp_max_streak_sale));
-  if(d.tp_max_streak_start_sale !== undefined) _lsSet('tp_max_streak_start_sale', d.tp_max_streak_start_sale);
-  if(d.tp_max_streak_end_sale   !== undefined) _lsSet('tp_max_streak_end_sale',   d.tp_max_streak_end_sale);
 }
 
 function backupCompleto(){
@@ -9709,7 +9715,7 @@ const GOAL_MILESTONE_DEFAULTS = {
   240000: {emoji:'👑', label:'Imperio Personal'}
 };
 let goalMilestones = JSON.parse(_lsGet('fp_goal_milestones_v1_sale') || 'null') || JSON.parse(JSON.stringify(GOAL_MILESTONE_DEFAULTS));
-function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); }
+function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); if (typeof save === 'function') save(); }
 
 function getTotalWithdrawn() {
   return certs.reduce((s,c) => s + (c.amount || 0), 0);
@@ -10028,7 +10034,7 @@ function switchFaqInner(tab) {
 let diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
 let selectedDiaryMood = '';
 
-function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); }
+function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); if (typeof save === 'function') save(); }
 
 function localDateStr(d) {
   const dt = d ? new Date(d) : new Date();
@@ -11393,7 +11399,109 @@ function retoInit() {
   if (dp) dp.value = localDateStr();
   retoUpdate();
   retoPnlRender();
+  retoLinkedAccountInit();
 }
+
+// ══════════════════════════════════════════════════════════════════
+// RETO — CUENTA VINCULADA
+// ══════════════════════════════════════════════════════════════════
+const RETO_LINKED_KEY = 'fp_reto_linked_account_v1';
+
+function retoLinkedAccountInit() {
+  const sel = document.getElementById('reto-linked-account');
+  if (!sel) return;
+  const saved = _lsGet(RETO_LINKED_KEY) || '';
+  while (sel.options.length > 1) sel.remove(1);
+  // accounts es un objeto: {nombreCuenta: {type, phase, ...}}
+  // Solo CFDs (type === 'cfd')
+  const keys = Object.keys(accounts || {}).filter(k => {
+    const a = accounts[k];
+    return a && a.type === 'cfd';
+  }).sort();
+  keys.forEach(name => {
+    const acc = accounts[name];
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name + (acc && acc.phase ? '  [' + acc.phase + ']' : '');
+    if (opt.value === saved) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  retoLinkedAccountRefreshUI();
+}
+
+function retoLinkedAccountChange() {
+  const sel = document.getElementById('reto-linked-account');
+  if (!sel) return;
+  _lsSet(RETO_LINKED_KEY, sel.value);
+  if (typeof save === 'function') save();
+  retoLinkedAccountRefreshUI();
+}
+
+function retoLinkedAccountRefreshUI() {
+  const sel  = document.getElementById('reto-linked-account');
+  const btn  = document.getElementById('reto-import-btn');
+  const info = document.getElementById('reto-linked-info');
+  if (!sel) return;
+  const val = sel.value;
+  if (btn) btn.style.display = val ? 'inline-flex' : 'none';
+  if (info && val) {
+    const accEntries = (entries || []).filter(e => e.account === val);
+    const days = [...new Set(accEntries.map(e => e.date))].length;
+    const acc = accounts[val];
+    const phase = acc && acc.phase ? '  [' + acc.phase + ']' : '';
+    info.textContent = val + phase + ' · ' + accEntries.length + ' trades · ' + days + ' días con actividad';
+  } else if (info) {
+    info.textContent = '';
+  }
+}
+
+window.retoImportFromAccount = function() {
+  const sel = document.getElementById('reto-linked-account');
+  if (!sel || !sel.value) { toast('Selecciona primero una cuenta', false, 'red'); return; }
+  const accName = sel.value;
+
+  const accEntries = (entries || []).filter(e =>
+    e.account === accName && e.pnl !== undefined && e.pnl !== null && e.pnl !== ''
+  );
+  if (!accEntries.length) { toast('No hay trades en esa cuenta aún', false, 'amber'); return; }
+
+  // Agrupar P&L por fecha
+  const byDate = {};
+  accEntries.forEach(e => {
+    const d = e.date || localDateStr();
+    byDate[d] = (byDate[d] || 0) + parseFloat(e.pnl || 0);
+  });
+
+  const arr = retoPnlLoad();
+  const alreadyDates = new Set(arr.filter(r => r._src === accName).map(r => r.date));
+
+  let added = 0, skipped = 0;
+  Object.entries(byDate).forEach(([date, pnl]) => {
+    if (Math.abs(pnl) < 0.001) return;
+    if (alreadyDates.has(date)) { skipped++; return; }
+    arr.push({ id: Date.now() + Math.random(), date, pnl: parseFloat(pnl.toFixed(2)), _src: accName });
+    added++;
+  });
+
+  if (!added) { toast('Todos los días ya estaban importados (' + skipped + ' omitidos)', false, 'amber'); return; }
+
+  arr.sort((a,b) => b.date.localeCompare(a.date) || b.id - a.id);
+  retoPnlSave(arr);
+
+  const total = arr.reduce((s,e) => s + e.pnl, 0);
+  const newBal = Math.max(0, RETO_INICIO + total);
+  const balInput = document.getElementById('reto-balance');
+  if (balInput) balInput.value = newBal.toFixed(2);
+
+  retoPnlPage = 0;
+  retoPnlRender();
+  retoUpdate();
+  retoLinkedAccountRefreshUI();
+
+  let msg = '✓ ' + added + ' día(s) importado(s) desde ' + accName;
+  if (skipped) msg += ' · ' + skipped + ' ya existían';
+  toast(msg);
+};
 
 // ── P&L Diario ──
 const RETO_PNL_KEY = 'fp_reto_pnl_v1';
@@ -16863,6 +16971,7 @@ function sfApplyCloudData() {
     if (typeof buildAccountSelects === 'function') buildAccountSelects();
     if (typeof initOvSections      === 'function') initOvSections();
     if (typeof renderCalendar      === 'function') try { renderCalendar(); } catch(e) {}
+    if (typeof retoLinkedAccountInit === 'function') try { retoLinkedAccountInit(); } catch(e) {}
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
