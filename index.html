@@ -9263,7 +9263,16 @@ function buildBackupPayload(){
     fondeo_notes:          notesData,
     tp_daily:              tpDaily,
     tp_badtrades_sale:          JSON.parse(_lsGet('tp_badtrades_sale')          || '[]'),
-    tp_month_archive_v1_sale:   JSON.parse(_lsGet('tp_month_archive_v1_sale')   || '{}')
+    tp_month_archive_v1_sale:   JSON.parse(_lsGet('tp_month_archive_v1_sale')   || '{}'),
+    sf_trading_plans_v1:        JSON.parse(_lsGet('sf_trading_plans_v1')        || '{}'),
+    sf_coach_v1_sale:           JSON.parse(_lsGet('sf_coach_v1_sale')           || '{}'),
+    fp_reto_1k10k_v1:           JSON.parse(_lsGet('fp_reto_1k10k_v1')           || 'null'),
+    fp_reto_pnl_v1:             JSON.parse(_lsGet('fp_reto_pnl_v1')             || '[]'),
+    fp_reto_diasfuera_v1:       JSON.parse(_lsGet('fp_reto_diasfuera_v1')       || '[]'),
+    fp_reto_reflections_sale:   JSON.parse(_lsGet('fp_reto_reflections_sale')   || '[]'),
+    tp_max_streak_sale:         _lsGet('tp_max_streak_sale') || '0',
+    tp_max_streak_start_sale:   _lsGet('tp_max_streak_start_sale') || '',
+    tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || ''
   };
 }
 
@@ -9289,6 +9298,15 @@ function applyBackupPayload(d){
   }
   if(d.tp_badtrades_sale        !== undefined) _lsSet('tp_badtrades_sale',        JSON.stringify(d.tp_badtrades_sale));
   if(d.tp_month_archive_v1_sale !== undefined) _lsSet('tp_month_archive_v1_sale', JSON.stringify(d.tp_month_archive_v1_sale));
+  if(d.sf_trading_plans_v1      !== undefined) _lsSet('sf_trading_plans_v1',      JSON.stringify(d.sf_trading_plans_v1));
+  if(d.sf_coach_v1_sale         !== undefined) _lsSet('sf_coach_v1_sale',         JSON.stringify(d.sf_coach_v1_sale));
+  if(d.fp_reto_1k10k_v1        !== undefined) _lsSet('fp_reto_1k10k_v1',         JSON.stringify(d.fp_reto_1k10k_v1));
+  if(d.fp_reto_pnl_v1          !== undefined) _lsSet('fp_reto_pnl_v1',           JSON.stringify(d.fp_reto_pnl_v1));
+  if(d.fp_reto_diasfuera_v1    !== undefined) _lsSet('fp_reto_diasfuera_v1',     JSON.stringify(d.fp_reto_diasfuera_v1));
+  if(d.fp_reto_reflections_sale !== undefined) _lsSet('fp_reto_reflections_sale', JSON.stringify(d.fp_reto_reflections_sale));
+  if(d.tp_max_streak_sale       !== undefined) _lsSet('tp_max_streak_sale',       String(d.tp_max_streak_sale));
+  if(d.tp_max_streak_start_sale !== undefined) _lsSet('tp_max_streak_start_sale', d.tp_max_streak_start_sale);
+  if(d.tp_max_streak_end_sale   !== undefined) _lsSet('tp_max_streak_end_sale',   d.tp_max_streak_end_sale);
 }
 
 function backupCompleto(){
@@ -11251,7 +11269,7 @@ function retoLoad() {
   try { return JSON.parse(_lsGet(RETO_KEY) || '{}'); } catch(e) { return {}; }
 }
 function retoSave(data) {
-  try { _lsSet(RETO_KEY, JSON.stringify(data)); } catch(e) {}
+  try { _lsSet(RETO_KEY, JSON.stringify(data)); if (typeof save === 'function') save(); } catch(e) {}
 }
 
 function retoUpdate() {
@@ -11374,7 +11392,7 @@ function retoPnlLoad() {
   try { return JSON.parse(_lsGet(RETO_PNL_KEY) || '[]'); } catch(e) { return []; }
 }
 function retoPnlSave(arr) {
-  try { _lsSet(RETO_PNL_KEY, JSON.stringify(arr)); } catch(e) {}
+  try { _lsSet(RETO_PNL_KEY, JSON.stringify(arr)); if (typeof save === 'function') save(); } catch(e) {}
 }
 
 window.retoPnlAdd = function() {
@@ -11757,6 +11775,7 @@ window.retoReflectionConfirm = function() {
     const refs = JSON.parse(_lsGet('fp_reto_reflections_sale') || '[]');
     refs.push({ date: localDateStr(), ts: Date.now(), why: why.trim(), change: change.trim() });
     _lsSet('fp_reto_reflections_sale', JSON.stringify(refs));
+    if (typeof save === 'function') save();
   } catch(e) {}
 
   const modal = document.getElementById('reto-reflection-modal');
@@ -12181,6 +12200,7 @@ function coachLoad() {
 }
 function coachSaveLS(data) {
   _lsSet(COACH_KEY, JSON.stringify(data));
+  if (typeof save === 'function') save();
 }
 
 // ── Inicializar página ──
@@ -15228,7 +15248,10 @@ function _tpLoad() {
 }
 
 function _tpSave(plans) {
-  try { localStorage.setItem(TP_KEY, JSON.stringify(plans)); } catch(e) {}
+  try {
+    _lsSet(TP_KEY, JSON.stringify(plans));
+    if (typeof save === 'function') save();
+  } catch(e) {}
 }
 
 // ── Guardar plan de una cuenta ────────────────────────────────────────────────
@@ -15246,6 +15269,10 @@ window.saveTradingPlan = function(acc) {
   var maxRiskDayEl= document.getElementById('tp-max-risk-day');
   var splitRiskEl = document.getElementById('tp-split-risk');
   var notesEl     = document.getElementById('tp-notes');
+  var chartLinkEl = document.getElementById('tp-chart-link');
+  var chartImgEl  = document.getElementById('tp-chart-img-data');
+  var prevPlan    = plans[acc] || {};
+  var chartImage  = (chartImgEl && chartImgEl.value) ? chartImgEl.value : (prevPlan.chartImage || '');
 
   plans[acc] = {
     sessions:        sessions,
@@ -15254,6 +15281,8 @@ window.saveTradingPlan = function(acc) {
     maxDailyRisk:    parseFloat(maxRiskDayEl ? maxRiskDayEl.value : 2) || 2,
     splitRisk:       splitRiskEl ? splitRiskEl.checked : false,
     notes:           notesEl ? notesEl.value.trim() : '',
+    chartLink:       chartLinkEl ? chartLinkEl.value.trim() : (prevPlan.chartLink || ''),
+    chartImage:      chartImage,
     updatedAt:       new Date().toISOString(),
   };
 
@@ -15449,6 +15478,32 @@ window.renderTradingPlanTab = function(acc) {
     + '<div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label>'
     + '<textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">' + (plan && plan.notes ? plan.notes : '') + '</textarea></div>'
 
+    + '<div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Plataforma &amp; Evidencia</div><div class="tp-divider-line"></div></div>'
+
+    + '<div class="tp-field" style="margin-bottom:10px;">'
+    + '<label class="tp-field-label">🔗 Link del gráfico (TradingView u otra plataforma)</label>'
+    + '<div style="display:flex;gap:6px;align-items:center;">'
+    + '<input class="tp-field-input" type="url" id="tp-chart-link" style="flex:1;" placeholder="https://es.tradingview.com/chart/..." value="' + (plan && plan.chartLink ? plan.chartLink.replace(/"/g,'&quot;') : '') + '">'
+    + (plan && plan.chartLink ? '<a href="' + plan.chartLink.replace(/"/g,'&quot;') + '" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">↗ Abrir</a>' : '')
+    + '</div>'
+    + '</div>'
+
+    + '<div class="tp-field" style="margin-bottom:12px;">'
+    + '<label class="tp-field-label">📸 Screenshot de la operación (evidencia)</label>'
+    + '<input type="hidden" id="tp-chart-img-data" value="">'
+    + (plan && plan.chartImage
+        ? '<div id="tp-img-preview" style="position:relative;margin-bottom:8px;">'
+          + '<img src="' + plan.chartImage + '" alt="Screenshot" style="width:100%;max-height:260px;object-fit:contain;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);">'
+          + '<button onclick="window._tpClearImage(\'' + acc.replace(/'/g,"\\'") + '\')" style="position:absolute;top:6px;right:6px;background:var(--red-dim);color:var(--red);border:1px solid var(--red);border-radius:6px;padding:3px 8px;font-size:10px;cursor:pointer;font-weight:700;">✕ Quitar</button>'
+          + '</div>'
+        : '')
+    + '<label style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px dashed var(--border2);border-radius:9px;background:var(--bg3);cursor:pointer;color:var(--muted2);font-size:11px;" onmouseover="this.style.borderColor=\'var(--blue)\'" onmouseout="this.style.borderColor=\'var(--border2)\'">'
+    + '<span style="font-size:20px;">🖼️</span>'
+    + '<span>' + (plan && plan.chartImage ? 'Reemplazar imagen · haz clic o arrastra aquí' : 'Adjuntar screenshot · haz clic o arrastra aquí') + '</span>'
+    + '<input type="file" accept="image/*" style="display:none;" onchange="window._tpLoadImage(this)">'
+    + '</label>'
+    + '</div>'
+
     + statsHTML
 
     + '<button class="tp-save-btn" onclick="window.saveTradingPlan(\'' + acc.replace(/'/g, "\\'") + '\')">✓ Guardar Plan de Trading</button>'
@@ -15472,6 +15527,37 @@ window._tpToggleSession = function(btn) {
     b.classList.remove('selected');
   });
   btn.classList.toggle('selected');
+};
+
+// ── Cargar imagen de screenshot ───────────────────────────────────
+window._tpLoadImage = function(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    var hidden = document.getElementById('tp-chart-img-data');
+    if (hidden) hidden.value = dataUrl;
+    var previewWrap = document.getElementById('tp-img-preview');
+    if (!previewWrap) {
+      previewWrap = document.createElement('div');
+      previewWrap.id = 'tp-img-preview';
+      previewWrap.style.cssText = 'position:relative;margin-bottom:8px;';
+      var uploadLabel = input.closest('label');
+      if (uploadLabel && uploadLabel.parentNode) uploadLabel.parentNode.insertBefore(previewWrap, uploadLabel);
+    }
+    previewWrap.innerHTML = '<img src="' + dataUrl + '" alt="Screenshot" style="width:100%;max-height:260px;object-fit:contain;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);">'
+      + '<div style="margin-top:5px;font-size:10px;color:var(--green);">✓ Imagen lista · guarda el plan para conservarla</div>';
+  };
+  reader.readAsDataURL(input.files[0]);
+};
+
+// ── Quitar imagen guardada ────────────────────────────────────────
+window._tpClearImage = function(acc) {
+  try {
+    var plans = _tpLoad();
+    if (plans[acc]) { plans[acc].chartImage = ''; _tpSave(plans); }
+  } catch(e) {}
+  if (typeof renderTradingPlanTab === 'function') renderTradingPlanTab(acc);
 };
 
 // ── Hook en switchDetailTab ───────────────────────────────────────────────────
