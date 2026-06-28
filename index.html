@@ -850,6 +850,20 @@ select.form-input option{background:var(--bg2);}
 .entry-edit-btn:hover{color:var(--blue);border-color:var(--blue-dim);}
 .entry-del-btn{color:var(--muted);}
 .entry-del-btn:hover{color:var(--red);border-color:var(--red-dim);}
+/* ── Clasificación de ejecución ── */
+.exec-classify-row{margin-top:7px;padding:7px 10px;background:rgba(0,0,0,0.18);border-radius:8px;border-top:1px solid var(--border);display:none;gap:8px;flex-wrap:wrap;}
+.exec-classify-row.open{display:flex;}
+.exec-btn{flex:1;min-width:90px;border:1px solid var(--border2);border-radius:8px;padding:6px 8px;font-size:10.5px;font-weight:600;cursor:pointer;background:var(--bg3);color:var(--muted2);transition:all 0.15s;text-align:center;line-height:1.4;}
+.exec-btn:hover{border-color:var(--blue);color:var(--text);}
+.exec-btn.active-good{background:rgba(39,217,122,0.12);border-color:#27d97a;color:#27d97a;}
+.exec-btn.active-bad{background:rgba(255,174,48,0.12);border-color:var(--amber);color:var(--amber);}
+.exec-btn.active-missed{background:rgba(255,80,80,0.12);border-color:var(--red);color:#ff5050;}
+.exec-classify-toggle{font-size:9.5px;font-weight:700;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
+.exec-classify-toggle:hover{color:var(--blue);border-color:var(--blue);}
+.exec-badge{font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid;white-space:nowrap;}
+.exec-badge-good{background:rgba(39,217,122,0.1);border-color:#27d97a;color:#27d97a;}
+.exec-badge-bad{background:rgba(255,174,48,0.1);border-color:var(--amber);color:var(--amber);}
+.exec-badge-missed{background:rgba(255,80,80,0.1);border-color:#ff5050;color:#ff5050;}
 .no-entries{text-align:center;padding:2rem 0;color:var(--muted);font-size:13px;}
 
 /* ── TOAST ── */
@@ -6115,7 +6129,6 @@ function scheduleAllNT8AutoImports() {
 // ─── TRADES TAB ───
 function renderTradesTab(acc, tf) {
   const el = document.getElementById('detail-entries');
-  // Show all entries for account (including archived phases) with phase label
   const allAccEntries = entries.filter(x=>x.account===acc);
   const fRes   = document.getElementById('d-filter-result')?.value || 'all';
   const opsDateFilter = (typeof opsGetDateFilter === 'function') ? opsGetDateFilter() : () => true;
@@ -6124,22 +6137,129 @@ function renderTradesTab(acc, tf) {
   const sorted = [...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date));
   const phaseLabels = {eval:'📋 Eval',f1:'📋 Fase 1',f2:'📋 Fase 2',live:'✅ Live',funded:'🏆 Funded',instant:'⚡ Instant'};
   const getCycleLabel = ph => ph && ph.startsWith('cycle_') ? '💰 Ciclo '+ph.replace('cycle_','') : null;
-  el.innerHTML = sorted.map(e => `
-    <div class="entry-item" style="${e.phase?'opacity:0.7':''}">
-      <div class="entry-date">${e.date}</div>
-      ${e.phase?`<span style="font-size:9px;padding:2px 5px;border-radius:4px;background:var(--bg3);color:var(--muted)">${getCycleLabel(e.phase)||phaseLabels[e.phase]||e.phase}</span>`:''}
-      <div class="entry-result ${e.result==='win'?'pill-win':'pill-loss'}">${e.result==='win'?'WIN':'LOSS'}</div>
-      <div class="entry-pnl ${pnlClass(e.pnl)}">${fmtPnl(e.pnl)}</div>
-      ${e.pair?`<div class="entry-source source-manual">${e.pair}</div>`:''}
-      ${e.lots?`<div class="entry-source source-mt5">${e.lots}</div>`:''}
-      ${e.session?`<div class="entry-source source-ninja">${e.session}</div>`:''}
-      <div class="entry-note">${e.notes||'—'}</div>
-      ${e.fileData?`<button class="entry-img-btn" onclick="viewEntryImg('${e.id}')">🖼</button>`:''}
-      <div class="entry-actions">
-        <button class="entry-edit-btn" onclick="openEditModal('${e.id}')">✏</button>
-        <button class="entry-del-btn" onclick="deleteEntry('${e.id}')">✕</button>
+
+  // ── Tasa de Aplicabilidad: semáforo Sonia ──
+  // Determinar periodo activo para clave y etiqueta de oportunidades perdidas
+  const _now = new Date();
+  const _yyyymm = _now.getFullYear() + '-' + String(_now.getMonth()+1).padStart(2,'0');
+  // Semana ISO: número de semana del año
+  const _getWeek = d => { const s = new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); s.setUTCDate(s.getUTCDate()+4-(s.getUTCDay()||7)); const y = new Date(Date.UTC(s.getUTCFullYear(),0,1)); return Math.ceil((((s-y)/86400000)+1)/7); };
+  const _wk = _now.getFullYear() + '-W' + String(_getWeek(_now)).padStart(2,'0');
+
+  let _activeMon, _monLabel;
+  if (opsPeriod === 'week') {
+    _activeMon = _wk;
+    _monLabel = 'semana ' + _wk.split('-W')[1] + ' · ' + _now.getFullYear();
+  } else if (opsPeriod === '15') {
+    _activeMon = _yyyymm + '-15d';
+    _monLabel = 'últimos 15 días';
+  } else if (opsPeriod === 'month') {
+    _activeMon = _yyyymm;
+    _monLabel = new Date(_yyyymm + '-01').toLocaleString('es', {month:'long', year:'numeric'});
+  } else {
+    _activeMon = _yyyymm;
+    _monLabel = new Date(_yyyymm + '-01').toLocaleString('es', {month:'long', year:'numeric'});
+  }
+
+  // Calcular good/bad solo con los trades filtrados (tf = filtered)
+  const good   = tf.filter(e => e.execution === 'good').length;
+  const bad    = tf.filter(e => e.execution === 'bad').length;
+
+  // Oportunidades perdidas por cuenta+mes
+  const missedKey = 'fp_missed_ops_' + acc + '_' + _activeMon;
+  const missedStored = parseInt(_lsGet(missedKey) || '0') || 0;
+  const denom = good + bad + missedStored;
+  const tasa = denom > 0 ? Math.round((good / denom) * 100) : null;
+  const semaforo = tasa === null ? '' : tasa >= 80 ? '🟢' : tasa >= 70 ? '🟡' : '🔴';
+  const tasaLabel = tasa === null ? 'Sin clasificar aún' : tasa >= 80 ? 'Disciplina real' : tasa >= 70 ? 'Proceso en construcción' : 'Sabotaje operativo';
+
+  const tasaHTML = `<div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:11px;font-weight:700;color:var(--muted2);">📊 Tasa de Aplicabilidad</span>
+      <span style="font-size:22px;font-weight:900;color:var(--text);">${tasa !== null ? tasa+'%' : '—'}</span>
+      <span style="font-size:14px;">${semaforo}</span>
+      <span style="font-size:10.5px;color:var(--muted);font-style:italic;">${tasaLabel}</span>
+      <span style="margin-left:auto;font-size:9.5px;color:var(--muted);">✅ ${good} bien · ⚠️ ${bad} incorrecto · ❌ ${missedStored} no ejecutadas</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:8px;border-top:1px solid var(--border);">
+      <span style="font-size:10px;color:var(--muted);white-space:nowrap;">❌ No ejecutadas en <strong style="color:var(--text)">${_monLabel}</strong>:</span>
+      <input type="number" min="0" max="999" value="${missedStored}"
+        id="missed-ops-input-${acc}"
+        onchange="execSaveMissed('${acc}', '${_activeMon}', this.value)"
+        style="width:56px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:3px 7px;font-size:12px;font-weight:700;text-align:center;outline:none;">
+      <span style="font-size:9.5px;color:var(--muted);font-style:italic;">Setups válidos que dejaste pasar este mes</span>
+      <button onclick="execResetMissed('${acc}','${_activeMon}')" style="margin-left:auto;font-size:9px;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 7px;cursor:pointer;">Resetear</button>
+    </div>
+  </div>`;
+
+  const execBadge = e => {
+    if (!e.execution) return '';
+    if (e.execution === 'good')   return '<span class="exec-badge exec-badge-good">✅ Bien ejecutado</span>';
+    if (e.execution === 'bad')    return '<span class="exec-badge exec-badge-bad">⚠️ Incorrecto</span>';
+    if (e.execution === 'missed') return '<span class="exec-badge exec-badge-missed">❌ No ejecuté</span>';
+    return '';
+  };
+
+  el.innerHTML = tasaHTML + sorted.map(e => `
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;${e.phase?'opacity:0.7':''}">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">${e.date}</div>
+        ${e.phase?`<span style="font-size:9px;padding:2px 5px;border-radius:4px;background:var(--bg3);color:var(--muted)">${getCycleLabel(e.phase)||phaseLabels[e.phase]||e.phase}</span>`:''}
+        <div class="entry-result ${e.result==='win'?'pill-win':'pill-loss'}">${e.result==='win'?'WIN':'LOSS'}</div>
+        <div class="entry-pnl ${pnlClass(e.pnl)}">${fmtPnl(e.pnl)}</div>
+        ${e.pair?`<div class="entry-source source-manual">${e.pair}</div>`:''}
+        ${e.lots?`<div class="entry-source source-mt5">${e.lots}</div>`:''}
+        ${e.session?`<div class="entry-source source-ninja">${e.session}</div>`:''}
+        <div class="entry-note">${e.notes||'—'}</div>
+        ${e.fileData?`<button class="entry-img-btn" onclick="viewEntryImg('${e.id}')">🖼</button>`:''}
+        <div class="entry-actions">
+          ${execBadge(e)}
+          <button class="exec-classify-toggle" onclick="execToggle('${e.id}')">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal('${e.id}')">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry('${e.id}')">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-${e.id}">
+        <button class="exec-btn${e.execution==='good'?' active-good':''}" onclick="execSet('${e.id}','good')">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn${e.execution==='bad'?' active-bad':''}" onclick="execSet('${e.id}','bad')">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn${e.execution==='missed'?' active-missed':''}" onclick="execSet('${e.id}','missed')">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div>`).join('');
+}
+
+// ── Clasificación de ejecución ─────────────────────────────────
+function execToggle(id) {
+  const row = document.getElementById('exec-row-' + id);
+  if (!row) return;
+  row.classList.toggle('open');
+}
+
+function execSet(id, val) {
+  const entry = entries.find(e => e.id == id);
+  if (!entry) return;
+  entry.execution = val;
+  save();
+  renderTradesTab(currentAccount);
+}
+
+function execSaveMissed(acc, mon, val) {
+  const n = Math.max(0, parseInt(val) || 0);
+  const key = 'fp_missed_ops_' + acc + '_' + mon;
+  _lsSet(key, String(n));
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+  } catch(e) {}
+  renderTradesTab(acc);
+}
+
+function execResetMissed(acc, mon) {
+  _lsSet('fp_missed_ops_' + acc + '_' + mon, '0');
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+  } catch(e) {}
+  renderTradesTab(acc);
 }
 
 // ══════════════════════════════════════════════════
@@ -9280,6 +9400,28 @@ function buildBackupPayload(){
     tp_month_archive_v1_sale:   JSON.parse(_lsGet('tp_month_archive_v1_sale')   || '{}'),
     sf_trading_plans_v1:        JSON.parse(_lsGet('sf_trading_plans_v1')        || '{}'),
     fp_reto_linked_account_v1:  _lsGet('fp_reto_linked_account_v1') || '',
+    fp_missed_ops_accounts:     JSON.stringify(
+      Object.keys(accounts||{}).reduce((obj,acc) => {
+        // Capture months, weeks and 15d keys
+        for (let y = 2024; y <= new Date().getFullYear()+1; y++) {
+          for (let m = 1; m <= 12; m++) {
+            const mon = y + '-' + String(m).padStart(2,'0');
+            ['', '-15d'].forEach(sfx => {
+              const k = 'fp_missed_ops_' + acc + '_' + mon + sfx;
+              const v = _lsGet(k);
+              if (v && v !== '0') obj[acc + '_' + mon + sfx] = v;
+            });
+          }
+          for (let w = 1; w <= 53; w++) {
+            const wk = y + '-W' + String(w).padStart(2,'0');
+            const k = 'fp_missed_ops_' + acc + '_' + wk;
+            const v = _lsGet(k);
+            if (v && v !== '0') obj[acc + '_' + wk] = v;
+          }
+        }
+        return obj;
+      }, {})
+    ),
     sf_coach_v1_sale:           JSON.parse(_lsGet('sf_coach_v1_sale')           || '{}'),
     fp_reto_1k10k_v1:           JSON.parse(_lsGet('fp_reto_1k10k_v1')           || 'null'),
     fp_reto_pnl_v1:             JSON.parse(_lsGet('fp_reto_pnl_v1')             || '[]'),
@@ -9323,6 +9465,13 @@ function applyBackupPayload(d){
   if(d.tp_max_streak_start_sale   !== undefined) _lsSet('tp_max_streak_start_sale',   d.tp_max_streak_start_sale);
   if(d.tp_max_streak_end_sale     !== undefined) _lsSet('tp_max_streak_end_sale',     d.tp_max_streak_end_sale);
   if(d.fp_reto_pnl_v1          !== undefined) _lsSet('fp_reto_pnl_v1',           JSON.stringify(d.fp_reto_pnl_v1));
+  if(d.fp_missed_ops_accounts !== undefined) {
+    try {
+      const mo = JSON.parse(d.fp_missed_ops_accounts || '{}');
+      // Keys stored as "{acc}_{YYYY-MM}"
+      Object.entries(mo).forEach(([k, val]) => _lsSet('fp_missed_ops_' + k, val));
+    } catch(e) {}
+  }
 }
 
 function backupCompleto(){
