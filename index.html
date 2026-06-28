@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)https://saintfortune-io.github.io/saintfortune/ -->
+<!-- saved from url=(0053)file:///C:/Users/34634/Downloads/indexover_fixed.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -860,6 +860,7 @@ select.form-input option{background:var(--bg2);}
 .exec-btn.active-missed{background:rgba(255,80,80,0.12);border-color:var(--red);color:#ff5050;}
 .exec-classify-toggle{font-size:9.5px;font-weight:700;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
 .exec-classify-toggle:hover{color:var(--blue);border-color:var(--blue);}
+.exec-classify-toggle.exec-classified{color:var(--text);border-color:var(--border2);}
 .exec-badge{font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid;white-space:nowrap;}
 .exec-badge-good{background:rgba(39,217,122,0.1);border-color:#27d97a;color:#27d97a;}
 .exec-badge-bad{background:rgba(255,174,48,0.1);border-color:var(--amber);color:var(--amber);}
@@ -1427,7 +1428,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       .firm-cycles-wrap { margin-top:5px; display:flex; flex-wrap:wrap; gap:4px; }
       .firm-cycle-pill { font-size:9.5px; padding:2px 8px; border-radius:4px; background:var(--green-dim); border:1px solid rgba(39,217,122,0.3); color:var(--green); font-weight:700; }
       .firm-cycle-open { background:rgba(39,217,122,0.04); border:1px dashed rgba(39,217,122,0.3); color:var(--muted); }
-    </style></head>
+    </style><style>#ao-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.3s;}#ao-overlay.ao-active{pointer-events:all;background:rgba(0,0,0,0.72);}#ao-card{max-width:480px;width:92vw;border-radius:20px;padding:2rem 2rem 1.5rem;text-align:center;opacity:0;transform:scale(0.88);transition:opacity 0.3s,transform 0.3s;}#ao-overlay.ao-active #ao-card{opacity:1;transform:scale(1);}#ao-card.ao-red{background:#1a0a0a;border:2.5px solid #ff4f4f;box-shadow:0 0 60px rgba(255,79,79,0.35),0 0 120px rgba(255,79,79,0.15);}#ao-card.ao-yellow{background:#1a1000;border:2.5px solid #ffae30;box-shadow:0 0 60px rgba(255,174,48,0.35),0 0 120px rgba(255,174,48,0.15);}@keyframes ao-pulse-red{0%,100%{box-shadow:0 0 40px rgba(255,79,79,0.3),0 0 80px rgba(255,79,79,0.1);border-color:#ff4f4f;}50%{box-shadow:0 0 80px rgba(255,79,79,0.7),0 0 160px rgba(255,79,79,0.3);border-color:#ff8888;}}@keyframes ao-pulse-yellow{0%,100%{box-shadow:0 0 40px rgba(255,174,48,0.3),0 0 80px rgba(255,174,48,0.1);border-color:#ffae30;}50%{box-shadow:0 0 80px rgba(255,174,48,0.7),0 0 160px rgba(255,174,48,0.3);border-color:#ffd060;}}#ao-card.ao-red.ao-flashing{animation:ao-pulse-red 1.1s ease-in-out infinite;}#ao-card.ao-yellow.ao-flashing{animation:ao-pulse-yellow 1.1s ease-in-out infinite;}#ao-icon{font-size:3rem;margin-bottom:0.5rem;}#ao-title{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;}#ao-card.ao-red #ao-title{color:#ff4f4f;}#ao-card.ao-yellow #ao-title{color:#ffae30;}#ao-body{font-size:0.95rem;line-height:1.7;color:#ccccd8;white-space:pre-line;margin-bottom:1.25rem;}#ao-timer{font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;opacity:0.6;}#ao-card.ao-red #ao-timer{color:#ff4f4f;}#ao-card.ao-yellow #ao-timer{color:#ffae30;}#ao-progress{height:3px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:1.25rem;overflow:hidden;}#ao-progress-fill{height:100%;border-radius:3px;width:100%;}#ao-card.ao-red #ao-progress-fill{background:#ff4f4f;}#ao-card.ao-yellow #ao-progress-fill{background:#ffae30;}#ao-dismiss{border:none;cursor:pointer;border-radius:10px;padding:0.6rem 2rem;font-size:0.85rem;font-weight:700;letter-spacing:0.04em;transition:opacity 0.2s;}#ao-dismiss:hover{opacity:0.8;}#ao-card.ao-red #ao-dismiss{background:rgba(255,79,79,0.15);color:#ff4f4f;border:1px solid rgba(255,79,79,0.4);}#ao-card.ao-yellow #ao-dismiss{background:rgba(255,174,48,0.15);color:#ffae30;border:1px solid rgba(255,174,48,0.4);}#ao-checklist-backdrop{position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}#ao-checklist-backdrop.ao-cl-active{opacity:1;pointer-events:all;}#ao-checklist-modal{max-width:520px;width:94vw;max-height:90vh;overflow-y:auto;background:#12121a;border:2px solid rgba(255,174,48,0.4);border-radius:18px;padding:1.75rem;box-shadow:0 0 80px rgba(255,174,48,0.2);transform:scale(0.9);transition:transform 0.3s;}#ao-checklist-backdrop.ao-cl-active #ao-checklist-modal{transform:scale(1);}.ao-cl-title{font-size:1.1rem;font-weight:800;color:#ffae30;margin-bottom:0.25rem;}.ao-cl-sub{font-size:0.8rem;color:#888899;margin-bottom:1.25rem;line-height:1.5;}.ao-cl-section{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#55556a;margin:1rem 0 0.5rem;}.ao-cl-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.8rem;border-radius:8px;margin-bottom:0.35rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background 0.15s;}.ao-cl-item:hover{background:rgba(255,174,48,0.06);}.ao-cl-item input[type=checkbox]{width:16px;height:16px;accent-color:#ffae30;flex-shrink:0;}.ao-cl-item span{font-size:0.85rem;color:#ccccd8;line-height:1.4;}.ao-cl-item.checked{background:rgba(39,217,122,0.06);border-color:rgba(39,217,122,0.2);}.ao-cl-item.checked span{color:#27d97a;}#ao-cl-submit{width:100%;margin-top:1.25rem;padding:0.8rem;border-radius:10px;cursor:pointer;background:rgba(255,174,48,0.12);color:#ffae30;border:1.5px solid rgba(255,174,48,0.35);font-size:0.9rem;font-weight:700;letter-spacing:0.03em;transition:all 0.2s;}#ao-cl-submit:hover{background:rgba(255,174,48,0.22);}#ao-cl-submit:disabled{opacity:0.4;cursor:not-allowed;}</style><style>#ao-l4-backdrop{position:fixed;inset:0;z-index:99997;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}#ao-l4-backdrop.ao-l4-active{opacity:1;pointer-events:all;}#ao-l4-modal{max-width:500px;width:92vw;background:#0e0a1a;border:2px solid rgba(160,122,255,0.5);border-radius:20px;padding:1.75rem;box-shadow:0 0 80px rgba(160,122,255,0.25);transform:scale(0.9);transition:transform 0.3s;}#ao-l4-backdrop.ao-l4-active #ao-l4-modal{transform:scale(1);}@keyframes ao-pulse-purple{0%,100%{box-shadow:0 0 40px rgba(160,122,255,0.2);}50%{box-shadow:0 0 80px rgba(160,122,255,0.5);}}#ao-l4-modal{animation:ao-pulse-purple 2s ease-in-out infinite;}.ao-l4-icon{font-size:2.5rem;text-align:center;margin-bottom:0.5rem;}.ao-l4-title{font-size:1.1rem;font-weight:800;color:#a07aff;text-align:center;margin-bottom:0.5rem;}.ao-l4-viol{font-size:0.85rem;color:#888899;text-align:center;line-height:1.6;margin-bottom:1.25rem;padding:0.6rem 0.9rem;background:rgba(160,122,255,0.07);border:1px solid rgba(160,122,255,0.2);border-radius:9px;}.ao-l4-purpose-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#55556a;margin-bottom:0.5rem;}.ao-l4-purpose-display{font-size:1rem;font-weight:700;color:#e0d8ff;line-height:1.6;padding:0.75rem 1rem;background:rgba(160,122,255,0.1);border:1px solid rgba(160,122,255,0.3);border-radius:10px;margin-bottom:0.4rem;white-space:pre-wrap;}.ao-l4-edit-btn{font-size:0.75rem;color:#a07aff;background:none;border:none;cursor:pointer;padding:0;margin-bottom:1rem;opacity:0.7;}.ao-l4-edit-btn:hover{opacity:1;}#ao-l4-purpose-input{width:100%;background:rgba(160,122,255,0.08);border:1px solid rgba(160,122,255,0.35);border-radius:10px;color:#e0d8ff;font-size:0.9rem;padding:0.75rem 1rem;line-height:1.6;resize:vertical;font-family:inherit;margin-bottom:1rem;min-height:80px;outline:none;}#ao-l4-purpose-input:focus{border-color:#a07aff;}#ao-l4-purpose-input::placeholder{color:#55556a;}.ao-l4-question{font-size:0.85rem;font-weight:700;color:#ccccd8;text-align:center;margin-bottom:0.75rem;}.ao-l4-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}.ao-l4-btn{padding:0.7rem;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;border:none;transition:opacity 0.2s;}.ao-l4-btn:hover{opacity:0.8;}.ao-l4-btn.yes{background:rgba(255,79,79,0.15);color:#ff4f4f;border:1px solid rgba(255,79,79,0.4);}.ao-l4-btn.no{background:rgba(39,217,122,0.12);color:#27d97a;border:1px solid rgba(39,217,122,0.35);}</style></head>
 <body>
 
 <!-- Boot loader — tapa la página hasta que el sistema de licencias resuelve qué mostrar -->
@@ -1564,14 +1565,23 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- Alertas visuales -->
-  <div id="alerts-banner" style="margin-bottom:1.25rem"></div>
+  <div id="alerts-banner" style="margin-bottom:1.25rem">
+    <div class="section-header" style="margin-bottom:8px">
+      <div class="section-title">🚨 Alertas Activas <span style="color:var(--amber)">· 1 aviso</span></div>
+    </div>
+    <div class="alert-banner-wrap">
+    <div class="alert-card alert-warning" onclick="showPage(&#39;BACKTESTING US30/US100&#39;)">
+      <div class="alert-card-main"><span>🔥</span><span class="alert-card-acc">BACKTESTING US30/US100</span><span>· 4 pérdidas seguidas</span></div>
+      <div class="alert-card-detail">-$1400</div>
+    </div></div>
+  </div>
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$2598,6</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value red" id="s-wr">53%</div><div class="stat-hint" id="s-wr-hint">9W / 8L</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$1198,6</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value red" id="s-wr">43%</div><div class="stat-hint" id="s-wr-hint">9W / 12L</div></div>
     <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$1583</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">17</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">21</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
     <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$184,94</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
@@ -1627,10 +1637,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING US30/US100&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-pnl red">-$1400</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>—</span></div>
-        <div class="acc-meta-item">Ops <span>0</span></div>
+        <div class="acc-meta-item">WR <span>0%</span></div>
+        <div class="acc-meta-item">Ops <span>4</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
@@ -2087,7 +2097,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-wd">Sáb</div>
       <div class="cal-wd" style="color:var(--blue);border-left:1px solid var(--border);margin-left:2px;">Sem.</div>
     </div>
-    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$800</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$2050</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$2783</div><div class="cal-day-trades">5 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-week-cell week-win"><div class="cal-week-label">semana</div><div class="cal-week-pnl green">+$5633</div><div class="cal-week-trades">10 op</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div></div><div class="cal-cell" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div></div><div class="cal-cell win" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div><div class="cal-day-pnl green">+$54,6</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div><div class="cal-day-pnl green">+$758,6</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell loss" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div><div class="cal-day-pnl red">-$855,1</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-week-cell week-loss"><div class="cal-week-label">semana</div><div class="cal-week-pnl red">-$41,9</div><div class="cal-week-trades">11 op</div></div><div class="cal-cell weekend today" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-week-cell week-empty"></div></div>
+    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$800</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$2050</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$2783</div><div class="cal-day-trades">5 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-week-cell week-win"><div class="cal-week-label">semana</div><div class="cal-week-pnl green">+$5633</div><div class="cal-week-trades">10 op</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div></div><div class="cal-cell" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div></div><div class="cal-cell win" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div><div class="cal-day-pnl green">+$54,6</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div><div class="cal-day-pnl green">+$758,6</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell loss" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div><div class="cal-day-pnl red">-$855,1</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-week-cell week-loss"><div class="cal-week-label">semana</div><div class="cal-week-pnl red">-$41,9</div><div class="cal-week-trades">11 op</div></div><div class="cal-cell weekend today loss" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div><div class="cal-day-pnl red">-$1400</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-week-cell week-loss"><div class="cal-week-label">semana</div><div class="cal-week-pnl red">-$1400</div><div class="cal-week-trades">4 op</div></div></div>
     <div class="cal-legend">
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--green)"></div> Ganador</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--red)"></div> Perdedor</div>
@@ -2326,8 +2336,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
-      <div class="page-title" id="detail-title">RETO CONSISTENCIA 3K <span class="acc-platform type-cfd-instant" style="font-size:13px;vertical-align:middle">⚡ Instant</span></div>
-      <div class="page-sub" id="detail-sub">Reto Consistencia 3K · METAQUOTES</div>
+      <div class="page-title" id="detail-title">BACKTESTING 100k NISH A+B <span class="acc-platform type-cfd-instant" style="font-size:13px;vertical-align:middle">⚡ Instant</span></div>
+      <div class="page-sub" id="detail-sub">CFD instant $100.000 · META QUOTES</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" id="detail-rename-btn" onclick="openRenameAccountModal()">✏ Renombrar</button>
@@ -2352,10 +2362,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: STATS -->
   <div class="tab-content" id="dtab-stats">
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value red" id="d-pnl">-$26,1</div></div>
-      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value green" id="d-wr">67%</div></div>
-      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">+$54,6</div></div>
-      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">3</div></div>
+      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value green" id="d-pnl">+$5,2</div></div>
+      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value red" id="d-wr">40%</div></div>
+      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">+$710</div></div>
+      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">5</div></div>
     </div>
     <div id="d-stats-extra"></div>
   </div>
@@ -2363,49 +2373,52 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: FUEL/CONSISTENCY -->
   <div class="tab-content" id="dtab-fuel">
     <div id="fuel-content">
-    
+    <div class="phase-separator">
+      <span class="phase-separator-label phase-live">⚡ INSTANT FUNDED</span>
+      <div class="phase-sep-line phase-sep-live" style="background:var(--green-dim)"></div>
+    </div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fuel-wrap">
-        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 100%)</div>
+        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 20%)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>100%</span><span style="margin-top:auto">0%</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:0%;background:var(--green)"></div>
-            <div class="fuel-gauge-line" style="bottom:100%;border-color:rgba(255,174,48,0.6)">
-              <div style="position:absolute;right:-48px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Límite 100%</div>
+            <div class="fuel-gauge-fill" style="height:100%;background:var(--red)"></div>
+            <div class="fuel-gauge-line" style="bottom:20%;border-color:rgba(255,174,48,0.6)">
+              <div style="position:absolute;right:-48px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Límite 20%</div>
             </div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--green)">52.9%</div>
+            <div class="fuel-pct" style="color:var(--red)">86.6%</div>
             <div class="fuel-sub">del total es tu mejor trade</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$54,6</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$26,1</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">100%</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$98,04</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$974</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$5,2</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">20%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$1068,75</span></div>
             </div>
-            <div class="fuel-status ok">✓ Consistencia OK</div>
+            <div class="fuel-status danger">✗ Excede límite</div>
           </div>
         </div>
       </div>
       <div class="fuel-wrap">
-        <div class="fuel-title">📅 Días rentables (mín 15 con ≥$15/día)</div>
+        <div class="fuel-title">📅 Días rentables (mín 5 con ≥$500/día)</div>
         <div class="fuel-bar-wrap">
-          <div class="fuel-labels"><span>15</span><span style="margin-top:auto">0</span></div>
+          <div class="fuel-labels"><span>5</span><span style="margin-top:auto">0</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:13.333333333333334%;background:var(--blue)"></div>
+            <div class="fuel-gauge-fill" style="height:20%;background:var(--blue)"></div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--blue)">2</div>
-            <div class="fuel-sub">de 15 días requeridos</div>
+            <div class="fuel-pct" style="color:var(--blue)">1</div>
+            <div class="fuel-sub">de 5 días requeridos</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">2 / 15</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Mín/día:</span><span class="fuel-item-val green">$15</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-50%</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-5%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">1 / 5</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mín/día:</span><span class="fuel-item-val green">$500</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-6%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-3%</span></div>
             </div>
-            <div class="fuel-status warn">⏳ Faltan 13 día(s)</div>
+            <div class="fuel-status warn">⏳ Faltan 4 día(s)</div>
           </div>
         </div>
       </div>
@@ -2414,9 +2427,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="cobro-btn-wrap">
       <div class="cobro-btn-title">Solicitud de cobro · Instant</div>
       <button class="cobro-btn disabled" onclick="void(0)">
-        🔒 Cobro bloqueado · Completa consistencia y días rentables (2/15)
+        🔒 Cobro bloqueado · Completa consistencia y días rentables (1/5)
       </button>
-      <div class="cobro-hint">Necesitas: consistencia ≤100% Y 15 días rentables</div>
+      <div class="cobro-hint">Necesitas: consistencia ≤20% Y 5 días rentables</div>
     </div>
   </div>
   </div>
@@ -2426,12 +2439,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div id="roi-content">
     
     <div class="roi-grid">
-      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value red">-$26,1</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
-      <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$0</div></div>
+      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value green">+$5,2</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
+      <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$4,94</div></div>
       <div class="roi-card"><div class="roi-label">Costo evaluación <span style="color:var(--muted);font-size:9px">editable</span></div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;RETO CONSISTENCIA 3K&#39;)">
-          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;RETO CONSISTENCIA 3K&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
+          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;BACKTESTING 100k NISH A+B&#39;)">
+          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;BACKTESTING 100k NISH A+B&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
         </div>
         <div style="font-size:10px;color:var(--red);margin-top:3px">Sin costo</div>
       </div>
@@ -2447,9 +2460,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="payout-bar">
       <div class="section-title">Ciclo de cobro <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(fecha de solicitud/pago, no de carga del certificado)</span></div>
       <div class="payout-grid">
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
-        <div class="payout-opt active" onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;BACKTESTING 100k NISH A+B&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
+        <div class="payout-opt active" onclick="setPayoutCycle(&#39;BACKTESTING 100k NISH A+B&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;BACKTESTING 100k NISH A+B&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
       </div>
     </div>
     <div class="info-box">Sin cobros registrados · Usa la pestaña de Consistencia para solicitar cuando estés habilitado</div>
@@ -2459,18 +2472,34 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: PARAMS -->
   <div class="tab-content" id="dtab-params">
     <div id="params-content">
-      <div class="section-header"><div class="section-title">Parámetros de gestión · Evaluación CFDs</div></div>
+      <div class="section-header"><div class="section-title">Parámetros de gestión · Instant CFDs</div></div>
       <div class="lot-params-grid">
         <div class="lot-param"><div class="lot-param-label">Lotaje sugerido</div><div class="lot-param-value blue">0.1</div><div class="lot-param-sub">lotes estándar</div></div>
         <div class="lot-param"><div class="lot-param-label">Lotaje máximo</div><div class="lot-param-value">1</div><div class="lot-param-sub">límite recomendado</div></div>
-        <div class="lot-param"><div class="lot-param-label">Max pérdida/día</div><div class="lot-param-value red">5% · $150</div><div class="lot-param-sub">SL diario estático</div></div>
-        <div class="lot-param"><div class="lot-param-label">Drawdown máx</div><div class="lot-param-value red">50%</div><div class="lot-param-sub">estático del saldo</div></div>
+        <div class="lot-param"><div class="lot-param-label">Max pérdida/día</div><div class="lot-param-value red">3% · $3000</div><div class="lot-param-sub">SL diario estático</div></div>
+        <div class="lot-param"><div class="lot-param-label">Drawdown máx</div><div class="lot-param-value red">6%</div><div class="lot-param-sub">estático del saldo</div></div>
       </div>
       
       <div class="divider"></div>
       <div class="section-header"><div class="section-title">Configurar parámetros editables</div></div>
       
       
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">📅 Días rentables mín</label>
+          <input class="form-input" type="number" id="p-mindays" value="5" step="1">
+        </div>
+        <div class="form-group"><label class="form-label">% Consistencia (mejor trade)</label>
+          <input class="form-input" type="number" id="p-consistency" value="20" step="1" placeholder="20">
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">% Cobro (split)</label>
+          <input class="form-input" type="number" id="p-payoutpct" value="95" step="1">
+        </div>
+        <div class="form-group"><label class="form-label">📉 Max DD %</label>
+          <input class="form-input" type="number" id="p-maxddpct" value="6" step="0.1">
+        </div>
+      </div>
       <div class="form-row-2">
         <div class="form-group"><label class="form-label">Lotaje sugerido</label>
           <input class="form-input" type="number" id="p-lots-def" value="0.1" step="0.01">
@@ -2487,16 +2516,16 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
       <div class="form-row-2">
         <div class="form-group"><label class="form-label">👤 Número de cuenta MT5</label>
-          <input class="form-input" type="text" id="p-userid" value="5052222379" placeholder="Ej: 12345678">
+          <input class="form-input" type="text" id="p-userid" value="108821487" placeholder="Ej: 12345678">
         </div>
         <div class="form-group"><label class="form-label">⏱ Intervalo auto-import (seg)</label>
           <input class="form-input" type="number" id="p-import-interval" value="1" min="1" max="60" step="1">
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;RETO CONSISTENCIA 3K&#39;)">Guardar parámetros</button>
-        <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;RETO CONSISTENCIA 3K&#39;)">⬇ Importar ahora</button>
-        <span id="mt5-status-RETO_CONSISTENCIA_3K" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 3 ya existían/omitidos · 20:27:58</span>
+        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;BACKTESTING 100k NISH A+B&#39;)">Guardar parámetros</button>
+        <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;BACKTESTING 100k NISH A+B&#39;)">⬇ Importar ahora</button>
+        <span id="mt5-status-BACKTESTING_100k_NISH_A_B" style="font-size:11px;color:var(--muted)">Última importación: 28/6/2026, 21:48:35 · 0 nuevo(s)</span>
       </div>
     </div>
   </div>
@@ -2504,12 +2533,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- TAB: PLAN DE TRADING -->
   <div class="tab-content" id="dtab-plan">
-    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · RETO CONSISTENCIA 3K</div><div class="tp-card-sub">Actualizado: 28 jun 2026</div></div><span class="tp-badge active">Activo</span></div><div class="tp-compliance warn"><div class="tp-compliance-dot"></div><div class="tp-compliance-text">Operas mayormente en Asia (no en tu sesión declarada).</div></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london selected" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york selected" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="2" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="5" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="5" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk" checked=""><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">NISH U OLI</textarea></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Plataforma &amp; Evidencia</div><div class="tp-divider-line"></div></div><div class="tp-field" style="margin-bottom:10px;"><label class="tp-field-label">🔗 Link del gráfico (TradingView u otra plataforma)</label><div style="display:flex;gap:6px;align-items:center;"><input class="tp-field-input" type="url" id="tp-chart-link" style="flex:1;" placeholder="https://es.tradingview.com/chart/..." value="https://es.tradingview.com/chart/XWYLZNRj/?symbol=FOREXCOM%3AXAUUSD"><a id="tp-open-link" href="https://es.tradingview.com/chart/XWYLZNRj/?symbol=FOREXCOM%3AXAUUSD" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;" onclick="(function(a){var u=document.getElementById(&quot;tp-chart-link&quot;).value;if(u){a.href=u;}else{event.preventDefault();}})(this)">↗ Abrir</a></div></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">📸 Screenshot de la operación (evidencia)</label><input type="hidden" id="tp-chart-img-data" value=""><label style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px dashed var(--border2);border-radius:9px;background:var(--bg3);cursor:pointer;color:var(--muted2);font-size:11px;" onmouseover="this.style.borderColor=&#39;var(--blue)&#39;" onmouseout="this.style.borderColor=&#39;var(--border2)&#39;"><span style="font-size:20px;">🖼️</span><span>Adjuntar screenshot · haz clic o arrastra aquí</span><input type="file" accept="image/*" style="display:none;" onchange="window._tpLoadImage(this)"></label></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div><div class="tp-stats-row"><div class="tp-stat"><div class="tp-stat-val blue">1.0</div><div class="tp-stat-label">Ops/día media</div></div><div class="tp-stat"><div class="tp-stat-val green">0</div><div class="tp-stat-label">Posible revancha</div></div><div class="tp-stat"><div class="tp-stat-val purple">Asia</div><div class="tp-stat-label">Sesión frecuente</div></div></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;RETO CONSISTENCIA 3K&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · RETO CONSISTENCIA 3K</div><div class="cd-section-line"></div></div><div id="cd-block-RETO_CONSISTENCIA_3K"><div class="cd-score"><div class="cd-score-circle high">100%</div><div><div class="cd-score-label">Plan respetado</div><div class="cd-score-sub">3 de 3 días dentro del plan · 0 violaciónes detectadas</div></div></div><div class="cd-alert warning"><div class="cd-alert-icon">🕐</div><div class="cd-alert-body"><div class="cd-alert-title">Sesión frecuente no coincide con tu plan</div><div class="cd-alert-sub">Operas mayormente en <b>sin sesión</b> (3 de 3 días). Tu plan declara otra sesión preferida. Puede ser intencional — si cambiaste tu estrategia, actualiza el plan.</div></div></div></div></div></div>
+    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · BACKTESTING US30/US100</div><div class="tp-card-sub">Actualizado: 27 jun 2026</div></div><span class="tp-badge active">Activo</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york selected" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="2" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="1" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk" checked=""><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">SOLO GRUPO US30 TP1 100 PUNTOS TP 2 100 PUNTOS</textarea></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Plataforma &amp; Evidencia</div><div class="tp-divider-line"></div></div><div class="tp-field" style="margin-bottom:10px;"><label class="tp-field-label">🔗 Link del gráfico (TradingView u otra plataforma)</label><div style="display:flex;gap:6px;align-items:center;"><input class="tp-field-input" type="url" id="tp-chart-link" style="flex:1;" placeholder="https://es.tradingview.com/chart/..." value=""><a id="tp-open-link" href="file:///C:/Users/34634/Downloads/indexover_fixed.html#" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;" onclick="(function(a){var u=document.getElementById(&quot;tp-chart-link&quot;).value;if(u){a.href=u;}else{event.preventDefault();}})(this)">↗ Abrir</a></div></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">📸 Screenshot de la operación (evidencia)</label><input type="hidden" id="tp-chart-img-data" value=""><label style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px dashed var(--border2);border-radius:9px;background:var(--bg3);cursor:pointer;color:var(--muted2);font-size:11px;" onmouseover="this.style.borderColor=&#39;var(--blue)&#39;" onmouseout="this.style.borderColor=&#39;var(--border2)&#39;"><span style="font-size:20px;">🖼️</span><span>Adjuntar screenshot · haz clic o arrastra aquí</span><input type="file" accept="image/*" style="display:none;" onchange="window._tpLoadImage(this)"></label></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div><div class="tp-stats-row"><div class="tp-stat"><div class="tp-stat-val blue">4.0</div><div class="tp-stat-label">Ops/día media</div></div><div class="tp-stat"><div class="tp-stat-val red">3</div><div class="tp-stat-label">Posible revancha</div></div><div class="tp-stat"><div class="tp-stat-val purple">Asia</div><div class="tp-stat-label">Sesión frecuente</div></div></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;BACKTESTING US30/US100&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · BACKTESTING US30/US100</div><div class="cd-section-line"></div></div><div id="cd-block-BACKTESTING_US30_US100"><div class="cd-score"><div class="cd-score-circle low">0%</div><div><div class="cd-score-label">Plan frecuentemente roto</div><div class="cd-score-sub">0 de 1 días dentro del plan · 4 violaciónes detectadas</div></div></div><div class="cd-alert violation"><div class="cd-alert-icon">⚡</div><div class="cd-alert-body"><div class="cd-alert-title">Superaste el máximo de 2 operaciónes/día en 1 día</div><div class="cd-alert-sub">Máximo registrado: <b>4 ops</b> en un día · Con división de riesgo activada, se agruparon entradas por dirección</div><div class="cd-alert-data">2026-06-28</div></div></div><div class="cd-alert violation"><div class="cd-alert-icon">📉</div><div class="cd-alert-body"><div class="cd-alert-title">Riesgo diario superado en 1 día</div><div class="cd-alert-sub">Límite declarado: <b>1.0%</b> · Peor día: <b style="color:var(--red);">2.8%</b> (-$1400)</div><div class="cd-alert-data">2026-06-28</div></div></div><div class="cd-alert warning"><div class="cd-alert-icon">🕐</div><div class="cd-alert-body"><div class="cd-alert-title">Sesión frecuente no coincide con tu plan</div><div class="cd-alert-sub">Operas mayormente en <b>ny</b> (4 de 1 días). Tu plan declara otra sesión preferida. Puede ser intencional — si cambiaste tu estrategia, actualiza el plan.</div></div></div><button class="cd-days-toggle" onclick="(function(b){var l=document.getElementById(&#39;cd-days-BACKTESTING_US30_US100&#39;);l.classList.toggle(&#39;open&#39;);b.querySelector(&#39;.cd-toggle-arr&#39;).textContent=l.classList.contains(&#39;open&#39;)?&#39;▲&#39;:&#39;▼&#39;;})(this)"><span class="cd-toggle-arr">▼</span> Ver días con desviaciones (1)</button><div class="cd-days-list" id="cd-days-BACKTESTING_US30_US100"><div class="cd-day-row viol"><div class="cd-day-dot"></div><div class="cd-day-date">2026-06-28</div><div class="cd-day-ops">4 ops</div><div class="cd-day-note">4 ops (máx 2) · riesgo 2.8% (máx 1.0%)</div></div></div></div></div></div>
   </div>
 
   <!-- TAB: INTELLIGENCE -->
   <div class="tab-content" id="dtab-intelligence">
-    <div id="ie-account-content"><div class="ie3-wrap"><div class="ie3-empty-state"><div class="ie3-empty-icon">🎯</div><div class="ie3-empty-title">Sin Plan de Trading definido</div><div>Ve a la pestaña <b style="color:var(--blue)">Plan de Trading</b> y define tus límites.<br>El engine necesita el plan para detectar desviaciones.</div></div></div></div>
+    <div id="ie-account-content"><div class="ie3-wrap"><div class="ie3-period-tabs"><div class="ie3-period-btn" onclick="renderIntelligenceTab(&#39;BACKTESTING US30/US100&#39;,&#39;today&#39;)">Hoy</div><div class="ie3-period-btn active" onclick="renderIntelligenceTab(&#39;BACKTESTING US30/US100&#39;,&#39;week&#39;)">Semana</div><div class="ie3-period-btn" onclick="renderIntelligenceTab(&#39;BACKTESTING US30/US100&#39;,&#39;month&#39;)">Mes</div></div><div class="ie3-score-row"><div class="ie3-score-ring"><svg width="68" height="68" viewBox="0 0 68 68"><circle cx="34" cy="34" r="24" fill="none" stroke="var(--bg3)" stroke-width="5"></circle><circle cx="34" cy="34" r="24" fill="none" stroke="var(--red)" stroke-width="5" stroke-dasharray="150.8" stroke-dashoffset="150.8" stroke-linecap="round"></circle></svg><div class="ie3-score-num" style="color:var(--red)">0%</div></div><div class="ie3-score-info"><div class="ie3-score-title">Semana del 22 jun</div><div class="ie3-score-sub">1 día operado · 0 dentro del plan · <span style="color:var(--red)">2 con desviación</span></div><div class="ie3-score-badge low">✗ Plan roto</div></div></div><div class="ie3-alert viol"><div class="ie3-alert-icon">⚡</div><div class="ie3-alert-body"><div class="ie3-alert-title">Overtrading — límite superado en 1 día</div><div class="ie3-alert-sub">Tu plan: máx <b>2 op/día</b>. Peor día: <b>4 operaciones</b> el 2026-06-28.</div><div class="ie3-alert-days"><span class="ie3-day-chip">2026-06-28 · 4 ops</span></div></div></div><div class="ie3-alert viol"><div class="ie3-alert-icon">📉</div><div class="ie3-alert-body"><div class="ie3-alert-title">Riesgo excedido en 1 día</div><div class="ie3-alert-sub">Límite: <b>1%</b>. Peor día: <b style="color:var(--red)">2.8%</b> el 2026-06-28.</div><div class="ie3-alert-days"><span class="ie3-day-chip">2026-06-28 · 2.8%</span></div></div></div><div class="ie3-alert viol"><div class="ie3-alert-icon">😤</div><div class="ie3-alert-body"><div class="ie3-alert-title">Posible revenge trading en 1 día</div><div class="ie3-alert-sub">El engine detectó 3 o más stops consecutivos o aumento de size tras pérdidas seguidas. Señal de operar desde la emoción, no desde el plan.</div><div class="ie3-alert-days"><span class="ie3-day-chip">2026-06-28</span></div></div></div><div class="ie3-alert warn"><div class="ie3-alert-icon">🕐</div><div class="ie3-alert-body"><div class="ie3-alert-title">Operaciones fuera de sesión en 1 día</div><div class="ie3-alert-sub">Tu plan declara sesiones: <b>new-york</b>. Se detectaron entradas en sesiones no declaradas.</div><div class="ie3-alert-days"><span class="ie3-day-chip" style="background:rgba(255,174,48,0.1);color:var(--amber);border-color:rgba(255,174,48,0.2);">2026-06-28 · 4 op</span></div></div></div></div><div class="ie4-wrap"><div class="ie4-header"><div class="ie4-header-line"></div><div class="ie4-header-title">🧠 Cruce Coach × Engine · Etapa 4</div><div class="ie4-header-line"></div></div><div class="ie4-card self-only"><div class="ie4-icon">📋</div><div class="ie4-body"><div class="ie4-title">Sin entradas del Coach en este período</div><div class="ie4-sub">Registra tu estado emocional diario en el Coach para activar el cruce de fuentes. El engine seguirá detectando señales en los datos del EA.</div></div></div></div></div>
   </div>
 
   <!-- TAB: TRADES -->
@@ -2562,9 +2591,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:8px;border-top:1px solid var(--border);">
       <span style="font-size:10px;color:var(--muted);white-space:nowrap;">❌ No ejecutadas en <strong style="color:var(--text)">semana 26 · 2026</strong>:</span>
-      <input type="number" min="0" max="999" value="0" id="missed-ops-input-RETO CONSISTENCIA 3K" onchange="execSaveMissed(&#39;RETO CONSISTENCIA 3K&#39;, &#39;2026-W26&#39;, this.value)" style="width:56px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:3px 7px;font-size:12px;font-weight:700;text-align:center;outline:none;">
+      <input type="number" min="0" max="999" value="0" id="missed-ops-input-BACKTESTING 100k NISH A+B" onchange="execSaveMissed(&#39;BACKTESTING 100k NISH A+B&#39;, &#39;2026-W26&#39;, this.value)" style="width:56px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:3px 7px;font-size:12px;font-weight:700;text-align:center;outline:none;">
       <span style="font-size:9.5px;color:var(--muted);font-style:italic;">Setups válidos que dejaste pasar este mes</span>
-      <button onclick="execResetMissed(&#39;RETO CONSISTENCIA 3K&#39;,&#39;2026-W26&#39;)" style="margin-left:auto;font-size:9px;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 7px;cursor:pointer;">Resetear</button>
+      <button onclick="execResetMissed(&#39;BACKTESTING 100k NISH A+B&#39;,&#39;2026-W26&#39;)" style="margin-left:auto;font-size:9px;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 7px;cursor:pointer;">Resetear</button>
     </div>
   </div>
     <div class="entry-item" style="flex-direction:column;align-items:stretch;">
@@ -2572,23 +2601,71 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="entry-date">2026-06-26</div>
         
         <div class="entry-result pill-loss">LOSS</div>
-        <div class="entry-pnl red">-$129,3</div>
+        <div class="entry-pnl red">-$164</div>
         <div class="entry-source source-manual">XAUUSD</div>
-        <div class="entry-source source-mt5">0.15</div>
+        <div class="entry-source source-mt5">0.4</div>
         
-        <div class="entry-note">Auto-importado · Ticket 56926949706</div>
+        <div class="entry-note">Auto-importado · Ticket 8934227088</div>
         
         <div class="entry-actions">
           
-          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479706755_7gaz&#39;)">▼ Clasificar</button>
-          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479706755_7gaz&#39;)">✏</button>
-          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479706755_7gaz&#39;)">✕</button>
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479562737_2u8z&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479562737_2u8z&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479562737_2u8z&#39;)">✕</button>
         </div>
       </div>
-      <div class="exec-classify-row" id="exec-row-1782479706755_7gaz">
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      <div class="exec-classify-row" id="exec-row-1782479562737_2u8z">
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_2u8z&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_2u8z&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_2u8z&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      </div>
+    </div>
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">2026-06-26</div>
+        
+        <div class="entry-result pill-loss">LOSS</div>
+        <div class="entry-pnl red">-$540,8</div>
+        <div class="entry-source source-manual">XAUUSD</div>
+        <div class="entry-source source-mt5">0.8</div>
+        
+        <div class="entry-note">Auto-importado · Ticket 8935123468</div>
+        
+        <div class="entry-actions">
+          
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479562737_0y7b&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479562737_0y7b&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479562737_0y7b&#39;)">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-1782479562737_0y7b">
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_0y7b&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_0y7b&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_0y7b&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      </div>
+    </div>
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">2026-06-25</div>
+        
+        <div class="entry-result pill-loss">LOSS</div>
+        <div class="entry-pnl red">-$415</div>
+        <div class="entry-source source-manual">XAUUSD</div>
+        <div class="entry-source source-mt5">1</div>
+        
+        <div class="entry-note">Auto-importado · Ticket 8922772692</div>
+        
+        <div class="entry-actions">
+          
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479562737_oqoh&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479562737_oqoh&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479562737_oqoh&#39;)">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-1782479562737_oqoh">
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_oqoh&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_oqoh&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_oqoh&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div>
     <div class="entry-item" style="flex-direction:column;align-items:stretch;">
@@ -2596,47 +2673,47 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="entry-date">2026-06-25</div>
         
         <div class="entry-result pill-win">WIN</div>
-        <div class="entry-pnl green">+$48,6</div>
+        <div class="entry-pnl green">+$974</div>
         <div class="entry-source source-manual">XAUUSD</div>
-        <div class="entry-source source-mt5">0.2</div>
+        <div class="entry-source source-mt5">1</div>
         
-        <div class="entry-note">Auto-importado · Ticket 56918704624</div>
+        <div class="entry-note">Auto-importado · Ticket 8922931155</div>
         
         <div class="entry-actions">
           
-          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479706755_v9sr&#39;)">▼ Clasificar</button>
-          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479706755_v9sr&#39;)">✏</button>
-          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479706755_v9sr&#39;)">✕</button>
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479562737_y1ab&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479562737_y1ab&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479562737_y1ab&#39;)">✕</button>
         </div>
       </div>
-      <div class="exec-classify-row" id="exec-row-1782479706755_v9sr">
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      <div class="exec-classify-row" id="exec-row-1782479562737_y1ab">
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_y1ab&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_y1ab&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_y1ab&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div>
     <div class="entry-item" style="flex-direction:column;align-items:stretch;">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <div class="entry-date">2026-06-24</div>
+        <div class="entry-date">2026-06-25</div>
         
         <div class="entry-result pill-win">WIN</div>
-        <div class="entry-pnl green">+$54,6</div>
+        <div class="entry-pnl green">+$151</div>
         <div class="entry-source source-manual">XAUUSD</div>
-        <div class="entry-source source-mt5">0.6</div>
+        <div class="entry-source source-mt5">0.2</div>
         
-        <div class="entry-note">Auto-importado · Ticket 56901217292</div>
+        <div class="entry-note">Auto-importado · Ticket 8922931156</div>
         
         <div class="entry-actions">
           
-          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479765634_zlh4&#39;)">▼ Clasificar</button>
-          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479765634_zlh4&#39;)">✏</button>
-          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479765634_zlh4&#39;)">✕</button>
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479562737_qb9o&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479562737_qb9o&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479562737_qb9o&#39;)">✕</button>
         </div>
       </div>
-      <div class="exec-classify-row" id="exec-row-1782479765634_zlh4">
-        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
-        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      <div class="exec-classify-row" id="exec-row-1782479562737_qb9o">
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_qb9o&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_qb9o&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479562737_qb9o&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div></div>
   </div>
@@ -3561,12 +3638,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
     <button class="modal-close" onclick="closeModal(&#39;blownModal&#39;)">✕</button>
     <div class="modal-title">🔴 Cuenta Bloqueada · DD Excedido</div>
-    <div class="modal-sub" id="blown-modal-sub">Cuenta: SURE · SURE LEVERAGE</div>
+    <div class="modal-sub" id="blown-modal-sub">Cuenta: BACKTESTING US30/US100 · META QUOTES</div>
     <div id="blown-modal-content" style="margin:0.75rem 0">
     <div style="background:var(--bg2);border-radius:8px;padding:10px 12px;font-size:12px;margin-bottom:8px">
-      <div style="color:var(--red);font-weight:700;margin-bottom:4px">⛔ Quemada definitivamente</div>
+      <div style="color:var(--red);font-weight:700;margin-bottom:4px">⛔ DD diario excedido el 2026-06-28: -$1700 (límite -$1500)</div>
       <div style="color:var(--muted);font-size:11px">
-        DD diario: -5% · DD total: -10% · Saldo: $25.000
+        DD diario: -3% · DD total: -6% · Saldo: $50.000
       </div>
     </div>
     <div style="font-size:11px;color:var(--muted2);line-height:1.6">
@@ -4378,7 +4455,7 @@ Cuentas a cobrar este mes: ..."></textarea>
 <!-- ───────── PAGE: VINCULACIÓN AUTO ───────── -->
 
 <!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-dot red" id="toast-dot"></div><span id="toast-msg">⚠ Ya existe una cuenta con ese nombre · cambia el nombre para evitar duplicados</span></div>
+<div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg">Entrada guardada ✓</span></div>
 
 
 
@@ -6172,9 +6249,9 @@ function renderTradesTab(acc, tf) {
     _monLabel = new Date(_yyyymm + '-01').toLocaleString('es', {month:'long', year:'numeric'});
   }
 
-  // Calcular good/bad solo con los trades filtrados (tf = filtered)
-  const good   = tf.filter(e => e.execution === 'good').length;
-  const bad    = tf.filter(e => e.execution === 'bad').length;
+  // Calcular good/bad con los trades filtrados (sorted = filtered ordenado)
+  const good   = sorted.filter(e => e.execution === 'good').length;
+  const bad    = sorted.filter(e => e.execution === 'bad').length;
 
   // Oportunidades perdidas por cuenta+mes
   const missedKey = 'fp_missed_ops_' + acc + '_' + _activeMon;
@@ -6187,15 +6264,15 @@ function renderTradesTab(acc, tf) {
   const tasaHTML = `<div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);margin-bottom:10px;">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <span style="font-size:11px;font-weight:700;color:var(--muted2);">📊 Tasa de Aplicabilidad</span>
-      <span style="font-size:22px;font-weight:900;color:var(--text);">${tasa !== null ? tasa+'%' : '—'}</span>
-      <span style="font-size:14px;">${semaforo}</span>
-      <span style="font-size:10.5px;color:var(--muted);font-style:italic;">${tasaLabel}</span>
-      <span style="margin-left:auto;font-size:9.5px;color:var(--muted);">✅ ${good} bien · ⚠️ ${bad} incorrecto · ❌ ${missedStored} no ejecutadas</span>
+      <span id="tasa-pct" style="font-size:22px;font-weight:900;color:var(--text);">${tasa !== null ? tasa+'%' : '—'}</span>
+      <span id="tasa-sem" style="font-size:14px;">${semaforo}</span>
+      <span id="tasa-lbl" style="font-size:10.5px;color:var(--muted);font-style:italic;">${tasaLabel}</span>
+      <span id="tasa-counts" style="margin-left:auto;font-size:9.5px;color:var(--muted);">✅ ${good} bien · ⚠️ ${bad} incorrecto · ❌ ${missedStored} no ejecutadas</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:8px;border-top:1px solid var(--border);">
       <span style="font-size:10px;color:var(--muted);white-space:nowrap;">❌ No ejecutadas en <strong style="color:var(--text)">${_monLabel}</strong>:</span>
       <input type="number" min="0" max="999" value="${missedStored}"
-        id="missed-ops-input-${acc}"
+        id="missed-ops-input"
         onchange="execSaveMissed('${acc}', '${_activeMon}', this.value)"
         style="width:56px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:3px 7px;font-size:12px;font-weight:700;text-align:center;outline:none;">
       <span style="font-size:9.5px;color:var(--muted);font-style:italic;">Setups válidos que dejaste pasar este mes</span>
@@ -6211,7 +6288,12 @@ function renderTradesTab(acc, tf) {
     return '';
   };
 
-  el.innerHTML = tasaHTML + sorted.map(e => `
+  el.innerHTML = tasaHTML + sorted.map(e => {
+    const toggleLabel = e.execution === 'good'   ? '✅ Bien ejecutado' :
+                        e.execution === 'bad'    ? '⚠️ Incorrecto' :
+                        e.execution === 'missed' ? '❌ No ejecuté' :
+                        '▼ Clasificar';
+    return `
     <div class="entry-item" style="flex-direction:column;align-items:stretch;${e.phase?'opacity:0.7':''}">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <div class="entry-date">${e.date}</div>
@@ -6224,18 +6306,18 @@ function renderTradesTab(acc, tf) {
         <div class="entry-note">${e.notes||'—'}</div>
         ${e.fileData?`<button class="entry-img-btn" onclick="viewEntryImg('${e.id}')">🖼</button>`:''}
         <div class="entry-actions">
-          ${execBadge(e)}
-          <button class="exec-classify-toggle" onclick="execToggle('${e.id}')">▼ Clasificar</button>
+          <button class="exec-classify-toggle${e.execution?' exec-classified':''}" onclick="execToggle('${e.id}')">${toggleLabel}</button>
           <button class="entry-edit-btn" onclick="openEditModal('${e.id}')">✏</button>
           <button class="entry-del-btn" onclick="deleteEntry('${e.id}')">✕</button>
         </div>
       </div>
-      <div class="exec-classify-row" id="exec-row-${e.id}">
+      <div class="exec-classify-row${e.execution?' open':''}" id="exec-row-${e.id}">
         <button class="exec-btn${e.execution==='good'?' active-good':''}" onclick="execSet('${e.id}','good')">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
         <button class="exec-btn${e.execution==='bad'?' active-bad':''}" onclick="execSet('${e.id}','bad')">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
         <button class="exec-btn${e.execution==='missed'?' active-missed':''}" onclick="execSet('${e.id}','missed')">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── Clasificación de ejecución ─────────────────────────────────
@@ -6249,8 +6331,45 @@ function execSet(id, val) {
   const entry = entries.find(e => e.id == id);
   if (!entry) return;
   entry.execution = val;
+
+  // 1. Feedback visual inmediato en los 3 botones de la fila
+  ['good','bad','missed'].forEach(function(v) {
+    var btn = document.querySelector('.exec-btn[onclick*="execSet(\'' + id + '\',\'' + v + '\')"]');
+    if (!btn) return;
+    btn.classList.remove('active-good','active-bad','active-missed');
+    if (v === val) btn.classList.add('active-' + v);
+  });
+
+  // 2. Actualizar texto del botón toggle inmediatamente
+  var toggleBtn = document.querySelector('.exec-classify-toggle[onclick*="execToggle(\'' + id + '\')"]');
+  if (toggleBtn) {
+    toggleBtn.textContent = val === 'good' ? '✅ Bien ejecutado' : val === 'bad' ? '⚠️ Incorrecto' : '❌ No ejecuté';
+    toggleBtn.classList.add('exec-classified');
+  }
+
+  // 3. Recalcular tasa en DOM al instante usando IDs fijos
+  var allAcc = entries.filter(function(e) { return e.account === currentAccount; });
+  var g  = allAcc.filter(function(e) { return e.execution === 'good'; }).length;
+  var b  = allAcc.filter(function(e) { return e.execution === 'bad'; }).length;
+  var mi = document.getElementById('missed-ops-input');
+  var ms = mi ? (parseInt(mi.value) || 0) : 0;
+  var denom = g + b + ms;
+  var tasa  = denom > 0 ? Math.round((g / denom) * 100) : null;
+  var sem   = tasa === null ? '' : tasa >= 80 ? '🟢' : tasa >= 70 ? '🟡' : '🔴';
+  var lbl   = tasa === null ? 'Sin clasificar aún' : tasa >= 80 ? 'Disciplina real' : tasa >= 70 ? 'Proceso en construcción' : 'Sabotaje operativo';
+  var elPct = document.getElementById('tasa-pct');
+  var elSem = document.getElementById('tasa-sem');
+  var elLbl = document.getElementById('tasa-lbl');
+  var elCnt = document.getElementById('tasa-counts');
+  if (elPct) elPct.textContent = tasa !== null ? tasa + '%' : '—';
+  if (elSem) elSem.textContent = sem;
+  if (elLbl) elLbl.textContent = lbl;
+  if (elCnt) elCnt.textContent = '✅ ' + g + ' bien · ⚠️ ' + b + ' incorrecto · ❌ ' + ms + ' no ejecutadas';
+
+  // 4. Guardar — sin re-render (el DOM ya está actualizado)
+  window._aoSkipEval = true;
   save();
-  renderTradesTab(currentAccount);
+  window._aoSkipEval = false;
 }
 
 function execSaveMissed(acc, mon, val) {
@@ -17202,6 +17321,11 @@ async function sbStartAutoSync(licKey) {
 //  2. sfApplyCloudData() → evalúa al recibir datos de la nube
 //                          (arranque, pull periódico, vuelta de pestaña).
 //
+//  THROTTLE DE TARJETAS (por nivel, se reinicia a medianoche):
+//  · Nivel 1 (roja):    máx 2 apariciones · mínimo 5 min entre cada una
+//  · Nivel 2 (amarilla):máx 3 apariciones · mínimo 5 min entre cada una
+//  · Nivel 3 (checklist): sin límite, siempre obligatorio
+//
 //  ESTADO CHECKLIST: se incluye en buildBackupPayload/applyBackupPayload
 //  para que viaje en Supabase y cualquier sesión/dispositivo lo vea.
 // ═══════════════════════════════════════════════════════════════════
@@ -17240,32 +17364,83 @@ async function sbStartAutoSync(licKey) {
     "Si dudo, no entro"
   ];
 
+  /* ── CONFIGURACIÓN DE THROTTLE ─────────────────────────────── */
+  var AO_MAX_RED    = 2;          // máx apariciones de tarjeta roja por día
+  var AO_MAX_YELLOW = 3;          // máx apariciones de tarjeta amarilla por día
+  var AO_MIN_GAP_MS = 0; // sin gap — cada nivel sale cuando el stop lo activa
+
   var _frasesIdx = { red: 0, yellow: 0 };
   var _flashTimer = null;
-  var _AO_CL_KEY = 'sf_ao_checklist_v1'; // clave en localStorage (con prefijo de licencia)
+  var _AO_CL_KEY    = 'sf_ao_checklist_v1';
+  var _AO_STATE_KEY = 'sf_ao_state_v1'; // guarda contadores y timestamps del día
 
-  /* ── Checklist done hoy: lee desde localStorage (puesto por applyBackupPayload desde nube) */
+  /* ── Estado del throttle: lee/escribe localStorage ─────────── */
+  function _aoGetState() {
+    var today = new Date().toISOString().slice(0, 10);
+    try {
+      var raw = _lsGet(_AO_STATE_KEY);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        // Si es de otro día, devuelve estado limpio
+        if (obj && obj.date === today) return obj;
+      }
+    } catch(e) {}
+    // Estado limpio para hoy
+    return { date: today, red: { count: 0, lastTs: 0, shownAtStop: 0 }, yellow: { count: 0, lastTs: 0, shownAtStop: 0 } };
+  }
+
+  function _aoSaveState(state) {
+    try { _lsSet(_AO_STATE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  /* ── ¿Puede salir la tarjeta de este nivel ahora? ──────────── */
+  // Devuelve true si:
+  //   · No se ha alcanzado el máximo de apariciones del día
+  //   · Han pasado al menos AO_MIN_GAP_MS desde la última vez
+  function _aoCanShow(level) {
+    var state = _aoGetState();
+    var slot  = level === 'red' ? state.red : state.yellow;
+    var max   = level === 'red' ? AO_MAX_RED : AO_MAX_YELLOW;
+    var now   = Date.now();
+    if (slot.count >= max) return false;
+    if (now - slot.lastTs < AO_MIN_GAP_MS) return false;
+    return true;
+  }
+
+  /* ── Registra que acaba de salir una tarjeta de este nivel ─── */
+  function _aoRegisterShow(level) {
+    var state = _aoGetState();
+    var slot  = level === 'red' ? state.red : state.yellow;
+    slot.count  += 1;
+    slot.lastTs  = Date.now();
+    if (level === 'red')    state.red    = slot;
+    else                    state.yellow = slot;
+    _aoSaveState(state);
+  }
+
+  /* ── Checklist done hoy ──────────────────────────────────────
+     Solo responde true si Supabase ya confirmó los datos en esta
+     sesión (_aoCloudReady). Evita leer un localStorage vacío o
+     del dispositivo anterior antes de que llegue el sbPull.      */
   function _aoChecklistDoneToday() {
+    if (!window._aoCloudReady) return false; // espera a que Supabase responda
     try {
       var v = _lsGet(_AO_CL_KEY);
       if (!v) return false;
       var obj = JSON.parse(v);
-      return obj && obj.date === new Date().toISOString().slice(0,10);
+      return obj && obj.date === new Date().toISOString().slice(0, 10);
     } catch(e) { return false; }
   }
 
   function _aoMarkChecklistDone() {
-    // Escribe en localStorage con prefijo de licencia
-    _lsSet(_AO_CL_KEY, JSON.stringify({ date: new Date().toISOString().slice(0,10) }));
-    // Llama save() para que el estado suba inmediatamente a Supabase
-    // (buildBackupPayload ya incluye sf_ao_checklist_v1 — ver patch más abajo)
+    _lsSet(_AO_CL_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10) }));
     if (typeof save === 'function') save();
   }
 
-  /* ── Contar stops de hoy desde entries (variable global, fuente de verdad) */
+  /* ── Contar stops de hoy desde entries (fuente de verdad) ───── */
   function _aoStopsHoy() {
-    var today = new Date().toISOString().slice(0,10);
-    var list = (typeof entries !== 'undefined' && Array.isArray(entries)) ? entries : [];
+    var today = new Date().toISOString().slice(0, 10);
+    var list  = (typeof entries !== 'undefined' && Array.isArray(entries)) ? entries : [];
     return list.filter(function(e) {
       return e.date === today && e.result === 'loss';
     }).length;
@@ -17326,9 +17501,11 @@ async function sbStartAutoSync(licKey) {
     document.body.appendChild(clBack);
   }
 
-  /* ── Mostrar tarjeta flash ─────────────────────────────────── */
+  /* ── Mostrar tarjeta flash (con throttle aplicado) ─────────── */
   function _aoShowCard(level, durationSec) {
+    if (!_aoCanShow(level)) return; // ya salió las veces permitidas o falta tiempo
     _aoInjectDOM();
+    _aoRegisterShow(level); // anota que va a salir ahora
     if (_flashTimer) { clearTimeout(_flashTimer); clearInterval(window._aoTickInterval); }
     var frases = level === 'red' ? FRASES_ROJO : FRASES_AMARILLO;
     var key    = level === 'red' ? 'red' : 'yellow';
@@ -17365,6 +17542,13 @@ async function sbStartAutoSync(licKey) {
 
   /* ── Mostrar checklist ─────────────────────────────────────── */
   function _aoShowChecklist() {
+    // Guard: solo se muestra una vez al día aunque el usuario lo cierre sin completar.
+    var today = new Date().toISOString().slice(0, 10);
+    try {
+      var shown = _lsGet('sf_ao_cl_shown_v1');
+      if (shown === today) return;
+      _lsSet('sf_ao_cl_shown_v1', today);
+    } catch(e) {}
     _aoInjectDOM();
     var pre = document.getElementById('ao-cl-pre');
     var dia = document.getElementById('ao-cl-dia');
@@ -17397,7 +17581,7 @@ async function sbStartAutoSync(licKey) {
   }
 
   window._aoChecklistSubmit = function() {
-    _aoMarkChecklistDone(); // escribe en localStorage + dispara save() → sbPush a Supabase
+    _aoMarkChecklistDone();
     var bd = document.getElementById('ao-checklist-backdrop');
     if (bd) bd.classList.remove('ao-cl-active');
     if (typeof toast === 'function') toast('✅ Checklist completado · ¡Opera con claridad!');
@@ -17406,15 +17590,37 @@ async function sbStartAutoSync(licKey) {
   /* ── EVALUACIÓN PRINCIPAL ──────────────────────────────────────
      Lee entries (variable global, ya actualizada por save() o por
      sfApplyCloudData tras un sbPull). silent=true → no muestra
-     tarjetas flash (solo activa checklist si corresponde).        */
+     tarjetas flash (solo activa checklist si corresponde).
+     El throttle (_aoCanShow) controla que no salgan más veces
+     de las permitidas ni más rápido de lo configurado.
+     Si el checklist ya fue completado hoy → silencio total.
+     Roja y amarilla tienen contadores independientes.            */
   window._aoEvaluar = function(silent) {
+    if (_aoChecklistDoneToday()) return;
     var stopsHoy = _aoStopsHoy();
-    if (stopsHoy >= 3 && !_aoChecklistDoneToday()) {
+    if (stopsHoy >= 3) {
       setTimeout(_aoShowChecklist, 600); return;
     }
     if (!silent) {
-      if (stopsHoy === 2) { setTimeout(function() { _aoShowCard('yellow', 20); }, 400); return; }
-      if (stopsHoy === 1) { setTimeout(function() { _aoShowCard('red', 20); }, 400); }
+      if (stopsHoy === 2) {
+        // Amarilla: sale si aún no hemos mostrado la amarilla para este número de stops
+        var stYellow = _aoGetState();
+        if (stYellow.yellow.shownAtStop !== 2) {
+          stYellow.yellow.shownAtStop = 2;
+          _aoSaveState(stYellow);
+          setTimeout(function() { _aoShowCard('yellow', 20); }, 400);
+        }
+        return;
+      }
+      if (stopsHoy === 1) {
+        // Roja: sale si aún no hemos mostrado la roja para este número de stops
+        var stRed = _aoGetState();
+        if (stRed.red.shownAtStop !== 1) {
+          stRed.red.shownAtStop = 1;
+          _aoSaveState(stRed);
+          setTimeout(function() { _aoShowCard('red', 20); }, 400);
+        }
+      }
     }
   };
 
@@ -17425,45 +17631,45 @@ async function sbStartAutoSync(licKey) {
     setTimeout(function() {
 
       // Hook en save() — se dispara cuando el usuario guarda una operación.
-      // entries ya está actualizado en memoria. save() escribe localStorage
-      // y llama sbPush (inmediato, 400ms debounce técnico).
       var origSave = window.save;
       if (typeof origSave === 'function') {
         window.save = function() {
           origSave.apply(this, arguments);
-          window._aoEvaluar(false);
+          if (!window._aoSkipEval) window._aoEvaluar(false);
         };
       }
 
-      // Hook en sfApplyCloudData() — se dispara después de cada sbPull:
-      // al arrancar sesión, cada 30s (poll entre sesiones paralelas),
-      // y al volver a una pestaña. entries ya está recargado desde localStorage
-      // que acaba de ser escrito por applyBackupPayload.
+      // Hook en sfApplyCloudData() — se dispara después de cada sbPull.
+      // Es el ÚNICO punto que dispara _aoEvaluar al cargar: garantiza que
+      // entries y el checklist ya vienen de Supabase, nunca de localStorage.
       var origApply = window.sfApplyCloudData;
       if (typeof origApply === 'function') {
         window.sfApplyCloudData = function() {
           origApply.apply(this, arguments);
-          // silent=true: no flash al sync automático; solo activa checklist si corresponde
+          window._aoCloudReady = true; // Supabase ya respondió al menos una vez
           setTimeout(function() { window._aoEvaluar(true); }, 400);
         };
       }
-
-      // Evaluación al cargar (silent — ya que los datos vienen de la nube via sfApplyCloudData)
-      setTimeout(function() { window._aoEvaluar(true); }, 2500);
+      // NO hay timeout ciego: _aoEvaluar solo corre cuando Supabase confirma los datos.
 
     }, 800);
   });
 
   /* ── PATCH buildBackupPayload / applyBackupPayload ────────────
-     Añade sf_ao_checklist_v1 al payload de Supabase para que el
-     estado "checklist completado hoy" viaje entre sesiones/dispositivos. */
+     Añade a Supabase:
+     · sf_ao_checklist_v1 → estado del checklist (completado/no hoy)
+     · sf_ao_state_v1     → contadores de tarjetas del día
+     Ambos viajan en el mismo payload que el resto del dashboard,
+     siguiendo exactamente la misma arquitectura.                 */
   document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
       var origBuild = window.buildBackupPayload;
       if (typeof origBuild === 'function') {
         window.buildBackupPayload = function() {
           var payload = origBuild.apply(this, arguments);
-          try { payload.sf_ao_checklist_v1 = _lsGet('sf_ao_checklist_v1') || ''; } catch(e) {}
+          try { payload[_AO_CL_KEY]    = _lsGet(_AO_CL_KEY)    || ''; } catch(e) {}
+          try { payload[_AO_STATE_KEY] = _lsGet(_AO_STATE_KEY) || ''; } catch(e) {}
+          try { payload['sf_ao_cl_shown_v1'] = _lsGet('sf_ao_cl_shown_v1') || ''; } catch(e) {}
           return payload;
         };
       }
@@ -17471,19 +17677,346 @@ async function sbStartAutoSync(licKey) {
       if (typeof origApplyPay === 'function') {
         window.applyBackupPayload = function(d) {
           origApplyPay.apply(this, arguments);
-          try { if (d && d.sf_ao_checklist_v1 !== undefined) _lsSet('sf_ao_checklist_v1', d.sf_ao_checklist_v1); } catch(e) {}
+          try { if (d && d[_AO_CL_KEY]    !== undefined) _lsSet(_AO_CL_KEY,    d[_AO_CL_KEY]);    } catch(e) {}
+          try { if (d && d[_AO_STATE_KEY] !== undefined) _lsSet(_AO_STATE_KEY, d[_AO_STATE_KEY]); } catch(e) {}
+          try { if (d && d['sf_ao_cl_shown_v1'] !== undefined) _lsSet('sf_ao_cl_shown_v1', d['sf_ao_cl_shown_v1']); } catch(e) {}
         };
       }
     }, 600);
   });
 
+  /* ── NIVEL 4: OPERACIÓN FUERA DEL PLAN ────────────────────────
+     Se activa SOLO cuando el checklist ya fue completado hoy y el
+     sistema detecta que la última operación guardada viola el plan:
+       · Más operaciones de las permitidas (considerando splitRisk)
+       · Sesión fuera de las declaradas en el plan
+     Muestra una tarjeta PÚRPURA con el propósito/visión personal.
+     La primera vez pide escribirlo. Después lo muestra guardado.
+     El trader elige si marcar esa operación como overtrading.      */
+
+  var _AO_PURPOSE_KEY  = 'sf_ao_purpose_v1';   // propósito guardado (permanente)
+  var _AO_L4_STATE_KEY = 'sf_ao_l4_state_v1';  // estado nivel 4 del día (viaja a Supabase)
+
+  function _aoGetPurpose() {
+    try { return _lsGet(_AO_PURPOSE_KEY) || ''; } catch(e) { return ''; }
+  }
+  function _aoSetPurpose(txt) {
+    try { _lsSet(_AO_PURPOSE_KEY, txt); } catch(e) {}
+  }
+
+  // Devuelve la última entry guardada hoy (la que acaba de guardar el usuario)
+  function _aoLastEntryToday() {
+    var today = new Date().toISOString().slice(0, 10);
+    var list  = (typeof entries !== 'undefined' && Array.isArray(entries)) ? entries : [];
+    var hoy   = list.filter(function(e) { return e.date === today; });
+    return hoy.length ? hoy[hoy.length - 1] : null;
+  }
+
+  // Detecta si hay una violación de plan en las operaciones de hoy
+  function _aoDetectPlanViolation() {
+    var today = new Date().toISOString().slice(0, 10);
+    var list  = (typeof entries !== 'undefined' && Array.isArray(entries)) ? entries : [];
+    var hoy   = list.filter(function(e) { return e.date === today; });
+    if (!hoy.length) return null;
+
+    // Leer todos los planes y buscar violaciones por cuenta
+    var plans = {};
+    try {
+      var raw = _lsGet('sf_trading_plans_v1');
+      plans = raw ? JSON.parse(raw) : {};
+    } catch(e) {}
+
+    var violation = null;
+
+    // Agrupa las operaciones de hoy por cuenta
+    var byAccount = {};
+    hoy.forEach(function(e) {
+      var acc = e.account || '__none__';
+      if (!byAccount[acc]) byAccount[acc] = [];
+      byAccount[acc].push(e);
+    });
+
+    Object.keys(byAccount).forEach(function(acc) {
+      if (violation) return; // ya encontramos una, no seguimos
+      var plan = plans[acc];
+      if (!plan) return;
+
+      var ops = byAccount[acc];
+      var maxOps = plan.maxOpsPerDay || 99;
+      var splitRisk = plan.splitRisk || false;
+      var allowedSessions = plan.sessions || [];
+
+      // Violación 1: demasiadas operaciones
+      // Si splitRisk está activo, varias entradas en la misma dirección
+      // (mismo par y mismo día) cuentan como 1 sola — respeta el plan
+      var countOps;
+      if (splitRisk) {
+        // Cuenta grupos únicos de par (asume que splits son mismo par)
+        var pares = {};
+        ops.forEach(function(e) { pares[e.pair || 'X'] = true; });
+        countOps = Object.keys(pares).length;
+      } else {
+        countOps = ops.length;
+      }
+      if (countOps > maxOps) {
+        violation = { type: 'ops', acc: acc, count: countOps, max: maxOps };
+        return;
+      }
+
+      // Violación 2: sesión fuera del plan (si el plan tiene sesiones declaradas
+      // y la operación tiene sesión registrada)
+      if (allowedSessions.length && !allowedSessions.includes('flexible')) {
+        // Mapeo entre los valores del form y los del plan
+        var sessionMap = { 'ny': 'new-york', 'london': 'london', 'asia': 'asia', 'overlap': 'flexible' };
+        ops.forEach(function(e) {
+          if (violation) return;
+          var sess = e.session || '';
+          if (!sess) return; // si no registró sesión, no penalizamos
+          var mapped = sessionMap[sess] || sess;
+          if (!allowedSessions.includes(mapped)) {
+            violation = { type: 'session', acc: acc, session: sess, allowed: allowedSessions };
+          }
+        });
+      }
+    });
+
+    return violation;
+  }
+
+  // Estado del nivel 4 hoy (cuántas veces salió, timestamp)
+  function _aoGetL4State() {
+    var today = new Date().toISOString().slice(0, 10);
+    try {
+      var raw = _lsGet(_AO_L4_STATE_KEY);
+      if (raw) {
+        var obj = JSON.parse(raw);
+        if (obj && obj.date === today) return obj;
+      }
+    } catch(e) {}
+    return { date: today, count: 0, lastTs: 0 };
+  }
+  function _aoSaveL4State(state) {
+    try { _lsSet(_AO_L4_STATE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  // La tarjeta L4 sale cuando el checklist ya está hecho y hay nueva operación
+  function _aoCanShowL4() {
+    var state = _aoGetL4State();
+    if (Date.now() - state.lastTs < 5000) return false; // mínimo 5s entre apariciones para no duplicar
+    return true;
+  }
+
+  function _aoShowL4Card(violation) {
+    if (!_aoCanShowL4()) return;
+    _aoInjectDOM();
+    _aoInjectL4DOM();
+
+    var state = _aoGetL4State();
+    state.count += 1;
+    state.lastTs = Date.now();
+    _aoSaveL4State(state);
+
+    var purpose = _aoGetPurpose();
+    var modal = document.getElementById('ao-l4-modal');
+    if (!modal) return;
+
+    // Texto de violación detectada
+    var violTxt = '';
+    if (violation && violation.type === 'ops') {
+      violTxt = 'Hoy llevas ' + violation.count + ' operación' + (violation.count > 1 ? 'es' : '') + ' en ' + violation.acc + '. Tu plan permite ' + violation.max + '.';
+    } else if (violation && violation.type === 'session') {
+      var sNames = { 'london': 'Londres', 'new-york': 'Nueva York', 'asia': 'Asia' };
+      var allowed = (violation.allowed || []).map(function(s) { return sNames[s] || s; }).join(', ');
+      violTxt = 'Registraste una operación fuera de tu sesión declarada (' + allowed + ').';
+    } else {
+      violTxt = 'Esta operación podría estar fuera de tu plan.';
+    }
+
+    document.getElementById('ao-l4-viol').textContent = violTxt;
+
+    // Mostrar campo de propósito o el propósito guardado
+    var purposeSection = document.getElementById('ao-l4-purpose-section');
+    var purposeDisplay = document.getElementById('ao-l4-purpose-display');
+    var purposeInput   = document.getElementById('ao-l4-purpose-input');
+
+    if (purpose) {
+      purposeSection.style.display = 'block';
+      purposeDisplay.textContent   = purpose;
+      purposeInput.style.display   = 'none';
+      document.getElementById('ao-l4-purpose-label').textContent = '¿Por qué estás aquí?';
+    } else {
+      purposeSection.style.display = 'block';
+      purposeDisplay.style.display = 'none';
+      purposeInput.style.display   = 'block';
+      document.getElementById('ao-l4-purpose-label').textContent = 'Escribe tu visión. ¿Por qué haces esto?';
+    }
+
+    document.getElementById('ao-l4-backdrop').classList.add('ao-l4-active');
+  }
+
+  window._aoL4Confirm = function(isOvertrading) {
+    // Guardar propósito si se escribió ahora
+    var input = document.getElementById('ao-l4-purpose-input');
+    if (input && input.style.display !== 'none' && input.value.trim()) {
+      _aoSetPurpose(input.value.trim());
+    }
+
+    if (isOvertrading) {
+      // Marcar la última operación de hoy como overtrading en entries
+      var last = _aoLastEntryToday();
+      if (last && typeof entries !== 'undefined') {
+        last.tags = last.tags || [];
+        if (!last.tags.includes('overtrading')) last.tags.push('overtrading');
+        last.overtrading = true;
+        // Guardar cambio y subir a Supabase inmediatamente (no esperar debounce)
+        window._aoSkipEval = true;
+        if (typeof save === 'function') save();
+        window._aoSkipEval = false;
+        // Push directo para que otras sesiones vean el tag al instante
+        try {
+          var licRaw = localStorage.getItem('fp_lic_v1_sale');
+          if (licRaw) { var ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+        } catch(e) {}
+        if (typeof toast === 'function') toast('⚠️ Operación marcada como overtrading en el journal');
+      }
+    }
+
+    var bd = document.getElementById('ao-l4-backdrop');
+    if (bd) bd.classList.remove('ao-l4-active');
+  };
+
+  window._aoL4EditPurpose = function() {
+    var display = document.getElementById('ao-l4-purpose-display');
+    var input   = document.getElementById('ao-l4-purpose-input');
+    var label   = document.getElementById('ao-l4-purpose-label');
+    if (!input) return;
+    input.value = _aoGetPurpose();
+    if (display) display.style.display = 'none';
+    input.style.display = 'block';
+    label.textContent   = 'Edita tu visión:';
+    input.focus();
+  };
+
+  function _aoInjectL4DOM() {
+    if (document.getElementById('ao-l4-backdrop')) return;
+    var style = document.createElement('style');
+    style.textContent =
+      '#ao-l4-backdrop{position:fixed;inset:0;z-index:99997;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}'
+      + '#ao-l4-backdrop.ao-l4-active{opacity:1;pointer-events:all;}'
+      + '#ao-l4-modal{max-width:500px;width:92vw;background:#0e0a1a;border:2px solid rgba(160,122,255,0.5);border-radius:20px;padding:1.75rem;box-shadow:0 0 80px rgba(160,122,255,0.25);transform:scale(0.9);transition:transform 0.3s;}'
+      + '#ao-l4-backdrop.ao-l4-active #ao-l4-modal{transform:scale(1);}'
+      + '@keyframes ao-pulse-purple{0%,100%{box-shadow:0 0 40px rgba(160,122,255,0.2);}50%{box-shadow:0 0 80px rgba(160,122,255,0.5);}}'
+      + '#ao-l4-modal{animation:ao-pulse-purple 2s ease-in-out infinite;}'
+      + '.ao-l4-icon{font-size:2.5rem;text-align:center;margin-bottom:0.5rem;}'
+      + '.ao-l4-title{font-size:1.1rem;font-weight:800;color:#a07aff;text-align:center;margin-bottom:0.5rem;}'
+      + '.ao-l4-viol{font-size:0.85rem;color:#888899;text-align:center;line-height:1.6;margin-bottom:1.25rem;padding:0.6rem 0.9rem;background:rgba(160,122,255,0.07);border:1px solid rgba(160,122,255,0.2);border-radius:9px;}'
+      + '.ao-l4-purpose-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#55556a;margin-bottom:0.5rem;}'
+      + '.ao-l4-purpose-display{font-size:1rem;font-weight:700;color:#e0d8ff;line-height:1.6;padding:0.75rem 1rem;background:rgba(160,122,255,0.1);border:1px solid rgba(160,122,255,0.3);border-radius:10px;margin-bottom:0.4rem;white-space:pre-wrap;}'
+      + '.ao-l4-edit-btn{font-size:0.75rem;color:#a07aff;background:none;border:none;cursor:pointer;padding:0;margin-bottom:1rem;opacity:0.7;}'
+      + '.ao-l4-edit-btn:hover{opacity:1;}'
+      + '#ao-l4-purpose-input{width:100%;background:rgba(160,122,255,0.08);border:1px solid rgba(160,122,255,0.35);border-radius:10px;color:#e0d8ff;font-size:0.9rem;padding:0.75rem 1rem;line-height:1.6;resize:vertical;font-family:inherit;margin-bottom:1rem;min-height:80px;outline:none;}'
+      + '#ao-l4-purpose-input:focus{border-color:#a07aff;}'
+      + '#ao-l4-purpose-input::placeholder{color:#55556a;}'
+      + '.ao-l4-question{font-size:0.85rem;font-weight:700;color:#ccccd8;text-align:center;margin-bottom:0.75rem;}'
+      + '.ao-l4-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}'
+      + '.ao-l4-btn{padding:0.7rem;border-radius:10px;font-size:0.85rem;font-weight:700;cursor:pointer;border:none;transition:opacity 0.2s;}'
+      + '.ao-l4-btn:hover{opacity:0.8;}'
+      + '.ao-l4-btn.yes{background:rgba(255,79,79,0.15);color:#ff4f4f;border:1px solid rgba(255,79,79,0.4);}'
+      + '.ao-l4-btn.no{background:rgba(39,217,122,0.12);color:#27d97a;border:1px solid rgba(39,217,122,0.35);}';
+    document.head.appendChild(style);
+
+    var bd = document.createElement('div');
+    bd.id = 'ao-l4-backdrop';
+    bd.innerHTML =
+      '<div id="ao-l4-modal">'
+      + '<div class="ao-l4-icon">🔮</div>'
+      + '<div class="ao-l4-title">Un momento antes de seguir</div>'
+      + '<div class="ao-l4-viol" id="ao-l4-viol"></div>'
+      + '<div id="ao-l4-purpose-section" style="display:none;margin-bottom:1rem;">'
+      +   '<div class="ao-l4-purpose-label" id="ao-l4-purpose-label">¿Por qué estás aquí?</div>'
+      +   '<div class="ao-l4-purpose-display" id="ao-l4-purpose-display"></div>'
+      +   '<button class="ao-l4-edit-btn" onclick="window._aoL4EditPurpose()">✏️ Editar visión</button>'
+      +   '<textarea id="ao-l4-purpose-input" placeholder="Tu libertad financiera. Ayudar a tu familia. Demostrar que puedes. Escríbelo."></textarea>'
+      + '</div>'
+      + '<div class="ao-l4-question">¿Esta operación fue overtrading?</div>'
+      + '<div class="ao-l4-btns">'
+      +   '<button class="ao-l4-btn yes" onclick="window._aoL4Confirm(true)">Sí · Marcar en el journal</button>'
+      +   '<button class="ao-l4-btn no" onclick="window._aoL4Confirm(false)">No · Estaba en el plan</button>'
+      + '</div>'
+      + '</div>';
+    document.body.appendChild(bd);
+  }
+
+  // Extiende _aoEvaluar para incluir detección de nivel 4
+  var _aoEvaluarOriginal = window._aoEvaluar;
+  window._aoEvaluar = function(silent) {
+    _aoEvaluarOriginal(silent);
+    // Nivel 4: se activa cuando el checklist ya está hecho y hay violación de plan.
+    // Cubre dos casos:
+    // 1. Checklist ya completado antes de este stop → L4 inmediato (700ms).
+    // 2. Checklist recién completado (el usuario venía del 3er stop) → L4 sale
+    //    después de que el usuario cierra el checklist (~2.5s de margen).
+    // En ambos casos NO vuelve a salir el checklist.
+    if (!silent) {
+      if (_aoChecklistDoneToday()) {
+        // Caso 1: checklist ya hecho → L4 directo siempre (con o sin plan configurado)
+        var violation = _aoDetectPlanViolation() || { type: 'generic' };
+        setTimeout(function() { _aoShowL4Card(violation); }, 700);
+      } else if (_aoStopsHoy() >= 3) {
+        // Caso 2: 3er stop, checklist sale ahora; cuando el usuario lo complete → L4
+        var violation2 = _aoDetectPlanViolation() || { type: 'generic' };
+        setTimeout(function() {
+          if (_aoChecklistDoneToday()) _aoShowL4Card(violation2);
+        }, 2500);
+      }
+    }
+  };
+
+  // El propósito y el estado L4 también viajan a Supabase
+  // (se añaden en el listener de buildBackupPayload que ya está parcheado)
+  // Extendemos el patch existente desde fuera del primer DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      var prevBuild = window.buildBackupPayload;
+      if (typeof prevBuild === 'function') {
+        window.buildBackupPayload = function() {
+          var payload = prevBuild.apply(this, arguments);
+          try { payload[_AO_PURPOSE_KEY]  = _lsGet(_AO_PURPOSE_KEY)  || ''; } catch(e) {}
+          try { payload[_AO_L4_STATE_KEY] = _lsGet(_AO_L4_STATE_KEY) || ''; } catch(e) {}
+          return payload;
+        };
+      }
+      var prevApply = window.applyBackupPayload;
+      if (typeof prevApply === 'function') {
+        window.applyBackupPayload = function(d) {
+          prevApply.apply(this, arguments);
+          try { if (d && d[_AO_PURPOSE_KEY]  !== undefined) _lsSet(_AO_PURPOSE_KEY,  d[_AO_PURPOSE_KEY]);  } catch(e) {}
+          try { if (d && d[_AO_L4_STATE_KEY] !== undefined) _lsSet(_AO_L4_STATE_KEY, d[_AO_L4_STATE_KEY]); } catch(e) {}
+        };
+      }
+    }, 700);
+  });
+
   /* ── API pública para pruebas ──────────────────────────────── */
+  // Nota: estas funciones sí respetan el throttle.
+  // Para forzar sin límites en desarrollo, llama directamente a
+  // _aoInjectDOM() + _aoShowCard/_aoShowChecklist desde la consola
+  // después de limpiar el estado: _lsSet('sf_ao_state_v1','')
   window._aoTriggerRed       = function() { _aoInjectDOM(); _aoShowCard('red', 20); };
   window._aoTriggerYellow    = function() { _aoInjectDOM(); _aoShowCard('yellow', 20); };
   window._aoTriggerChecklist = function() { _aoInjectDOM(); _aoShowChecklist(); };
+  // Limpia el estado del día para poder probar desde cero en la consola
+  window._aoResetState = function() {
+    try { _lsSet(_AO_STATE_KEY, ''); } catch(e) {}
+    try { _lsSet(_AO_CL_KEY, ''); } catch(e) {}
+    try { _lsSet('sf_ao_cl_shown_v1', ''); } catch(e) {}
+    try { _lsSet(_AO_L4_STATE_KEY, ''); } catch(e) {}
+    console.log('AO state FULL reset — rojo/amarillo/checklist/L4 limpiados');
+  };
 
 })(); // end SISTEMA ANTI-OVERTRADING
 </script>
 
 
-</body></html>
+<div id="ao-overlay" class=""><div id="ao-card" class="ao-flashing ao-yellow"><div id="ao-icon">⚠️</div><div id="ao-title">⚠️ Dos stops seguidos.</div><div id="ao-body">Estás en Stop Condition.
+Si entraste sin cumplir el plan al 100%: PARAS.</div><div id="ao-timer">Cerrando en 8s</div><div id="ao-progress"><div id="ao-progress-fill" style="transition: width 20s linear; width: 0%;"></div></div><button id="ao-dismiss" onclick="window._aoDismiss()">Entendido · Protejo la cuenta</button></div></div><div id="ao-checklist-backdrop" class=""><div id="ao-checklist-modal"><div class="ao-cl-title">⚠️ Checklist Anti-Overtrading</div><div class="ao-cl-sub">El sistema detectó un patrón de sobre-operativa.<br>Completa este checklist antes de continuar operando hoy.</div><div class="ao-cl-section">Antes de abrir una nueva evaluación</div><div id="ao-cl-pre"><label class="ao-cl-item checked" id="ao-cli-pre-0" onclick="window._aoClToggle(&#39;pre&#39;,0)"><input type="checkbox" id="ao-chk-pre-0"> <span>Sé cuántas operaciones máximas haré al día</span></label><label class="ao-cl-item checked" id="ao-cli-pre-1" onclick="window._aoClToggle(&#39;pre&#39;,1)"><input type="checkbox" id="ao-chk-pre-1"> <span>Sé qué señal me indica que estoy entrando en sobre-operativa</span></label><label class="ao-cl-item checked" id="ao-cli-pre-2" onclick="window._aoClToggle(&#39;pre&#39;,2)"><input type="checkbox" id="ao-chk-pre-2"> <span>Sé cuál es mi stop condition</span></label><label class="ao-cl-item checked" id="ao-cli-pre-3" onclick="window._aoClToggle(&#39;pre&#39;,3)"><input type="checkbox" id="ao-chk-pre-3"> <span>Tengo claro qué frase usaré para cortar</span></label><label class="ao-cl-item checked" id="ao-cli-pre-4" onclick="window._aoClToggle(&#39;pre&#39;,4)"><input type="checkbox" id="ao-chk-pre-4"> <span>Acepto que no todos los días se opera</span></label></div><div class="ao-cl-section">Durante el día</div><div id="ao-cl-dia"><label class="ao-cl-item checked" id="ao-cli-dia-0" onclick="window._aoClToggle(&#39;dia&#39;,0)"><input type="checkbox" id="ao-chk-dia-0"> <span>No entro por aburrimiento</span></label><label class="ao-cl-item checked" id="ao-cli-dia-1" onclick="window._aoClToggle(&#39;dia&#39;,1)"><input type="checkbox" id="ao-chk-dia-1"> <span>No entro por recuperar</span></label><label class="ao-cl-item checked" id="ao-cli-dia-2" onclick="window._aoClToggle(&#39;dia&#39;,2)"><input type="checkbox" id="ao-chk-dia-2"> <span>No bajo mis filtros</span></label><label class="ao-cl-item checked" id="ao-cli-dia-3" onclick="window._aoClToggle(&#39;dia&#39;,3)"><input type="checkbox" id="ao-chk-dia-3"> <span>Si dudo, no entro</span></label></div><button id="ao-cl-submit" onclick="window._aoChecklistSubmit()">✓ Confirmo que tengo claridad para operar</button></div></div><div id="ao-l4-backdrop" class=""><div id="ao-l4-modal"><div class="ao-l4-icon">🔮</div><div class="ao-l4-title">Un momento antes de seguir</div><div class="ao-l4-viol" id="ao-l4-viol">Registraste una operación fuera de tu sesión declarada (Nueva York).</div><div id="ao-l4-purpose-section" style="display: block; margin-bottom: 1rem;"><div class="ao-l4-purpose-label" id="ao-l4-purpose-label">Escribe tu visión. ¿Por qué haces esto?</div><div class="ao-l4-purpose-display" id="ao-l4-purpose-display" style="display: none;"></div><button class="ao-l4-edit-btn" onclick="window._aoL4EditPurpose()">✏️ Editar visión</button><textarea id="ao-l4-purpose-input" placeholder="Tu libertad financiera. Ayudar a tu familia. Demostrar que puedes. Escríbelo." style="display: block;"></textarea></div><div class="ao-l4-question">¿Esta operación fue overtrading?</div><div class="ao-l4-btns"><button class="ao-l4-btn yes" onclick="window._aoL4Confirm(true)">Sí · Marcar en el journal</button><button class="ao-l4-btn no" onclick="window._aoL4Confirm(false)">No · Estaba en el plan</button></div></div></div></body></html>
