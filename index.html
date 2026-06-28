@@ -1515,29 +1515,29 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
     <!-- ── Centro de Control (colapsable) ── -->
     <div style="margin-bottom:0.75rem;">
-      <div onclick="(function(){var b=document.getElementById('cc-body');var a=document.getElementById('cc-arrow');var open=b.style.display==='none';b.style.display=open?'flex':'none';a.textContent=open?'▲':'▼';_lsSet('cc_open',open?'1':'0');})()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:7px 10px;border-radius:8px;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.04);user-select:none;">
+      <div onclick="(function(){var b=document.getElementById(&#39;cc-body&#39;);var a=document.getElementById(&#39;cc-arrow&#39;);var open=b.style.display===&#39;none&#39;;b.style.display=open?&#39;flex&#39;:&#39;none&#39;;a.textContent=open?&#39;▲&#39;:&#39;▼&#39;;_lsSet(&#39;cc_open&#39;,open?&#39;1&#39;:&#39;0&#39;);})()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:7px 10px;border-radius:8px;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.04);user-select:none;">
         <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--gold-dark,#c9a84c);text-transform:uppercase;">🛠 Centro de Control</span>
-        <span id="cc-arrow" style="font-size:10px;color:#666;">▼</span>
+        <span id="cc-arrow" style="font-size:10px;color:#666;">▲</span>
       </div>
-      <div id="cc-body" style="display:none;flex-direction:column;gap:6px;margin-top:6px;padding:4px 2px;">
-        <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/FondeoProLogger.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(201,168,76);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,60,10);background:rgba(201,168,76,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">
+      <div id="cc-body" style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px; padding: 4px 2px;">
+        <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/FondeoProLogger.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(201,168,76);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,60,10);background:rgba(201,168,76,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(201,168,76,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(201,168,76,0.08)&#39;">
           <span style="font-size:14px">⬇</span> Descargar EA MT5 (FondeoProLogger.ex5)
         </a>
-        <a href="https://github.com/saintfortune-io/saintfortune/raw/main/SaintFortuneSync.zip" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(74,158,255);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(10,40,80);background:rgba(74,158,255,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background='rgba(74,158,255,0.18)'" onmouseout="this.style.background='rgba(74,158,255,0.08)'">
+        <a href="https://github.com/saintfortune-io/saintfortune/raw/main/SaintFortuneSync.zip" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(74,158,255);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(10,40,80);background:rgba(74,158,255,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(74,158,255,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(74,158,255,0.08)&#39;">
           <span style="font-size:14px">⬇</span> Descargar Logger NT8 (SaintFortuneSync.zip)
         </a>
-        <div onclick="backupCompleto()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(78,203,141);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(26,58,42);background:rgba(0,200,100,0.06);transition:0.15s;" onmouseover="this.style.background='rgba(0,200,100,0.14)'" onmouseout="this.style.background='rgba(0,200,100,0.06)'">
+        <div onclick="backupCompleto()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(78,203,141);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(26,58,42);background:rgba(0,200,100,0.06);transition:0.15s;" onmouseover="this.style.background=&#39;rgba(0,200,100,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(0,200,100,0.06)&#39;">
           <span style="font-size:14px">📦</span> Backup configuración .json
         </div>
-        <div onclick="restaurarBackup()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(126,184,232);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(26,42,58);background:rgba(0,120,220,0.06);transition:0.15s;" onmouseover="this.style.background='rgba(0,120,220,0.14)'" onmouseout="this.style.background='rgba(0,120,220,0.06)'">
+        <div onclick="restaurarBackup()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(126,184,232);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(26,42,58);background:rgba(0,120,220,0.06);transition:0.15s;" onmouseover="this.style.background=&#39;rgba(0,120,220,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(0,120,220,0.06)&#39;">
           <span style="font-size:14px">🔄</span> Restaurar backup
         </div>
-        <div onclick="forzarDescargaNube()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(255,200,80);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(58,50,26);background:rgba(220,160,0,0.06);transition:0.15s;" onmouseover="this.style.background='rgba(220,160,0,0.14)'" onmouseout="this.style.background='rgba(220,160,0,0.06)'">
+        <div onclick="forzarDescargaNube()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(255,200,80);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(58,50,26);background:rgba(220,160,0,0.06);transition:0.15s;" onmouseover="this.style.background=&#39;rgba(220,160,0,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(220,160,0,0.06)&#39;">
           <span style="font-size:14px">☁️</span> Recuperar desde nube
         </div>
         <div style="border-top:1px solid #2a1a1a;margin:4px 0;"></div>
         <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#884444;font-weight:700;padding:2px 4px;">⚠ Zona peligrosa</div>
-        <div onclick="confirmClear()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(204,51,51);cursor:pointer;padding:5px 8px;border-radius:6px;border:1px solid rgb(74,16,16);background:rgba(255,0,0,0.06);transition:0.15s;" onmouseover="this.style.background='rgba(255,0,0,0.14)'" onmouseout="this.style.background='rgba(255,0,0,0.06)'">
+        <div onclick="confirmClear()" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(204,51,51);cursor:pointer;padding:5px 8px;border-radius:6px;border:1px solid rgb(74,16,16);background:rgba(255,0,0,0.06);transition:0.15s;" onmouseover="this.style.background=&#39;rgba(255,0,0,0.14)&#39;" onmouseout="this.style.background=&#39;rgba(255,0,0,0.06)&#39;">
           <span style="font-size:13px">🗑</span> Limpiar todos los datos
         </div>
       </div>
@@ -1555,7 +1555,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <div class="page-title">Resumen Global 📈</div>
-      <div class="page-sub" id="overview-date">Sesión activa · sábado, 27 de junio de 2026</div>
+      <div class="page-sub" id="overview-date">Sesión activa · domingo, 28 de junio de 2026</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;calendar&#39;)">📅 Calendario</button>
@@ -1568,27 +1568,27 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- Global stats -->
   <div class="stat-row stat-row-5">
-    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$10.571,35</div><div class="stat-hint">todas las cuentas</div></div>
-    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value green" id="s-wr">75%</div><div class="stat-hint" id="s-wr-hint">15W / 5L</div></div>
-    <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$2960</div><div class="stat-hint">pico diario</div></div>
-    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">20</div><div class="stat-hint" id="s-days-hint">6 días con datos</div></div>
-    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$180</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
+    <div class="stat-card"><div class="stat-label">P&amp;L Neto Total</div><div class="stat-value green" id="s-pnl">+$2598,6</div><div class="stat-hint">todas las cuentas</div></div>
+    <div class="stat-card"><div class="stat-label">Efectividad Global</div><div class="stat-value red" id="s-wr">53%</div><div class="stat-hint" id="s-wr-hint">9W / 8L</div></div>
+    <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="s-best">+$1583</div><div class="stat-hint">pico diario</div></div>
+    <div class="stat-card"><div class="stat-label">Entradas Totales</div><div class="stat-value blue" id="s-total">17</div><div class="stat-hint" id="s-days-hint">5 días con datos</div></div>
+    <div class="stat-card"><div class="stat-label">Retiro Estimado</div><div class="stat-value green" id="s-payout" style="display:flex;align-items:center;gap:6px"><span>💰</span><span style="color:var(--green)">$184,94</span></div><div class="stat-hint" id="s-payout-hint">cuentas live · funded · instant</div></div>
   </div>
 
   <!-- CFD Section -->
-  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection('cfd')">
+  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection(&#39;cfd&#39;)">
     <div class="dot dot-blue"></div> CFDs · MT5
     <div class="group-line"></div>
     <span id="ov-arrow-cfd" style="font-size:11px;color:var(--muted);transition:transform 0.2s;display:inline-block;">▼</span>
   </div>
-  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING&#39;)">
+  <div id="cfd-overview-cards" class="accounts-grid" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;PROPXP 50K INSTANT&#39;)">
       <div class="acc-head">
-        <div class="acc-name">BACKTESTING</div>
+        <div class="acc-name">PROPXP 50K INSTANT</div>
         <div class="acc-badges">
           <span class="acc-platform tag-mt5">MT5</span>
           <span class="acc-platform type-cfd-instant">⚡ Instant</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROPXP 50K INSTANT&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
       <div class="acc-pnl neutral">+$0</div>
@@ -1599,37 +1599,55 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         
         
       </div>
-    </div><div class="acc-card blue-accent" onclick="showPage(&#39;PROXP TRADE 1&#39;)">
+    </div><div class="acc-card blue-accent" onclick="showPage(&#39;RETO CONSISTENCIA 3K&#39;)">
       <div class="acc-head">
-        <div class="acc-name">PROXP TRADE 1<span style="font-size:9px;color:var(--amber);margin-left:4px">🧪 BT</span></div>
+        <div class="acc-name">RETO CONSISTENCIA 3K<span style="font-size:9px;color:var(--amber);margin-left:4px">🧪 BT</span></div>
         <div class="acc-badges">
           <span class="acc-platform tag-mt5">MT5</span>
           <span class="acc-platform type-cfd-instant">⚡ Instant</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROXP TRADE 1&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;RETO CONSISTENCIA 3K&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$3273</div>
+      <div class="acc-pnl red">-$26,1</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>83%</span></div>
-        <div class="acc-meta-item">Ops <span>6</span></div>
+        <div class="acc-meta-item">WR <span>67%</span></div>
+        <div class="acc-meta-item">Ops <span>3</span></div>
+        <div class="acc-meta-item">DD <span>50%</span></div>
+        
+        
+      </div>
+    </div><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING US30/US100&#39;)">
+      <div class="acc-head">
+        <div class="acc-name">BACKTESTING US30/US100</div>
+        <div class="acc-badges">
+          <span class="acc-platform tag-mt5">MT5</span>
+          <span class="acc-platform type-cfd-instant">⚡ Instant</span>
+          
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING US30/US100&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+        </div>
+      </div>
+      <div class="acc-pnl neutral">+$0</div>
+      <div class="acc-meta">
+        <div class="acc-meta-item">WR <span>—</span></div>
+        <div class="acc-meta-item">Ops <span>0</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
         
       </div>
-    </div><div class="acc-card blue-accent" onclick="showPage(&#39;PROP XP TRADE 2&#39;)">
+    </div><div class="acc-card blue-accent" onclick="showPage(&#39;BACKTESTING 100k NISH A+B&#39;)">
       <div class="acc-head">
-        <div class="acc-name">PROP XP TRADE 2<span style="font-size:9px;color:var(--amber);margin-left:4px">🧪 BT</span></div>
+        <div class="acc-name">BACKTESTING 100k NISH A+B</div>
         <div class="acc-badges">
           <span class="acc-platform tag-mt5">MT5</span>
           <span class="acc-platform type-cfd-instant">⚡ Instant</span>
           
-          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;PROP XP TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;BACKTESTING 100k NISH A+B&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
       </div>
-      <div class="acc-pnl green">+$4678,85</div>
+      <div class="acc-pnl green">+$5,2</div>
       <div class="acc-meta">
-        <div class="acc-meta-item">WR <span>100%</span></div>
+        <div class="acc-meta-item">WR <span>40%</span></div>
         <div class="acc-meta-item">Ops <span>5</span></div>
         <div class="acc-meta-item">DD <span>6%</span></div>
         
@@ -1638,12 +1656,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div></div>
 
   <!-- Futures Section -->
-  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection('fut')">
+  <div class="group-header" style="cursor:pointer;user-select:none;" onclick="toggleOvSection(&#39;fut&#39;)">
     <div class="dot dot-purple"></div> Futuros · NinjaTrader
     <div class="group-line"></div>
-    <span id="ov-arrow-fut" style="font-size:11px;color:var(--muted);transition:transform 0.2s;display:inline-block;">▼</span>
+    <span id="ov-arrow-fut" style="font-size: 11px; color: var(--muted); transition: transform 0.2s; display: inline-block; transform: rotate(-90deg);">▼</span>
   </div>
-  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom:1.5rem"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
+  <div id="futures-overview-cards" class="accounts-grid accounts-grid-3" style="margin-bottom: 1.5rem; display: none;"><div class="acc-card blue-accent" onclick="showPage(&#39;FUTUROS TRADE 1&#39;)">
       <div class="acc-head">
         <div class="acc-name">FUTUROS TRADE 1</div>
         <div class="acc-badges">
@@ -2052,8 +2070,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:1px">
         <span style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:600;line-height:1">Días válidos mes</span>
         <div style="display:flex;align-items:center;gap:5px">
-          <span style="font-size:13px;font-weight:800;color:var(--muted2);line-height:1">11<span style="font-size:10px;font-weight:600;color:var(--muted)"> / 40</span></span>
-          <div style="width:42px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden"><div style="height:100%;width:27.500000000000004%;background:var(--muted2);border-radius:2px"></div></div>
+          <span style="font-size:13px;font-weight:800;color:var(--muted2);line-height:1">5<span style="font-size:10px;font-weight:600;color:var(--muted)"> / 45</span></span>
+          <div style="width:42px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden"><div style="height:100%;width:11.11111111111111%;background:var(--muted2);border-radius:2px"></div></div>
         </div>
       </div>
     </div>
@@ -2069,7 +2087,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-wd">Sáb</div>
       <div class="cal-wd" style="color:var(--blue);border-left:1px solid var(--border);margin-left:2px;">Sem.</div>
     </div>
-    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell win" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div><div class="cal-day-pnl green">+$1994,45</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-week-cell week-win"><div class="cal-week-label">semana</div><div class="cal-week-pnl green">+$1994,45</div><div class="cal-week-trades">2 op</div></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell win" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div><div class="cal-day-pnl green">+$1378,4</div><div class="cal-day-trades">2 op</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$2707</div><div class="cal-day-trades">3 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$3960</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$3545</div><div class="cal-day-trades">8 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-week-cell week-win"><div class="cal-week-label">semana</div><div class="cal-week-pnl green">+$11.590,4</div><div class="cal-week-trades">19 op</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div></div><div class="cal-cell" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div></div><div class="cal-cell" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div></div><div class="cal-cell" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div></div><div class="cal-cell today" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-week-cell week-empty"></div></div>
+    <div class="cal-grid"><div class="cal-cell empty"></div><div class="cal-cell" onclick="openDayModal(1,5,2026)"><div class="cal-day-num">1</div></div><div class="cal-cell" onclick="openDayModal(2,5,2026)"><div class="cal-day-num">2</div></div><div class="cal-cell" onclick="openDayModal(3,5,2026)"><div class="cal-day-num">3</div></div><div class="cal-cell" onclick="openDayModal(4,5,2026)"><div class="cal-day-num">4</div></div><div class="cal-cell" onclick="openDayModal(5,5,2026)"><div class="cal-day-num">5</div></div><div class="cal-cell weekend" onclick="openDayModal(6,5,2026)"><div class="cal-day-num">6</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(7,5,2026)"><div class="cal-day-num">7</div></div><div class="cal-cell" onclick="openDayModal(8,5,2026)"><div class="cal-day-num">8</div></div><div class="cal-cell" onclick="openDayModal(9,5,2026)"><div class="cal-day-num">9</div></div><div class="cal-cell" onclick="openDayModal(10,5,2026)"><div class="cal-day-num">10</div></div><div class="cal-cell" onclick="openDayModal(11,5,2026)"><div class="cal-day-num">11</div></div><div class="cal-cell" onclick="openDayModal(12,5,2026)"><div class="cal-day-num">12</div></div><div class="cal-cell weekend" onclick="openDayModal(13,5,2026)"><div class="cal-day-num">13</div></div><div class="cal-week-cell week-empty"></div><div class="cal-cell weekend" onclick="openDayModal(14,5,2026)"><div class="cal-day-num">14</div></div><div class="cal-cell" onclick="openDayModal(15,5,2026)"><div class="cal-day-num">15</div></div><div class="cal-cell win" onclick="openDayModal(16,5,2026)"><div class="cal-day-num">16</div><div class="cal-day-pnl green">+$800</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(17,5,2026)"><div class="cal-day-num">17</div><div class="cal-day-pnl green">+$2050</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell mixed" onclick="openDayModal(18,5,2026)"><div class="cal-day-num">18</div><div class="cal-day-pnl green">+$2783</div><div class="cal-day-trades">5 op</div></div><div class="cal-cell" onclick="openDayModal(19,5,2026)"><div class="cal-day-num">19</div></div><div class="cal-cell weekend" onclick="openDayModal(20,5,2026)"><div class="cal-day-num">20</div></div><div class="cal-week-cell week-win"><div class="cal-week-label">semana</div><div class="cal-week-pnl green">+$5633</div><div class="cal-week-trades">10 op</div></div><div class="cal-cell weekend" onclick="openDayModal(21,5,2026)"><div class="cal-day-num">21</div></div><div class="cal-cell" onclick="openDayModal(22,5,2026)"><div class="cal-day-num">22</div></div><div class="cal-cell" onclick="openDayModal(23,5,2026)"><div class="cal-day-num">23</div></div><div class="cal-cell win" onclick="openDayModal(24,5,2026)"><div class="cal-day-num">24</div><div class="cal-day-pnl green">+$54,6</div><div class="cal-day-trades">1 op</div></div><div class="cal-cell mixed" onclick="openDayModal(25,5,2026)"><div class="cal-day-num">25</div><div class="cal-day-pnl green">+$758,6</div><div class="cal-day-trades">4 op</div></div><div class="cal-cell loss" onclick="openDayModal(26,5,2026)"><div class="cal-day-num">26</div><div class="cal-day-pnl red">-$855,1</div><div class="cal-day-trades">6 op</div></div><div class="cal-cell weekend" onclick="openDayModal(27,5,2026)"><div class="cal-day-num">27</div></div><div class="cal-week-cell week-loss"><div class="cal-week-label">semana</div><div class="cal-week-pnl red">-$41,9</div><div class="cal-week-trades">11 op</div></div><div class="cal-cell weekend today" onclick="openDayModal(28,5,2026)"><div class="cal-day-num">28</div></div><div class="cal-cell" onclick="openDayModal(29,5,2026)"><div class="cal-day-num">29</div></div><div class="cal-cell" onclick="openDayModal(30,5,2026)"><div class="cal-day-num">30</div></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-week-cell week-empty"></div></div>
     <div class="cal-legend">
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--green)"></div> Ganador</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--red)"></div> Perdedor</div>
@@ -2077,7 +2095,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--border2)"></div> Sin datos</div>
       <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--amber);border-radius:2px"></div> 💰 Ciclo cobrado</div>
     </div>
-  </div><div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">4</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">2</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING&#39;,&#39;BACKTESTING&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="going" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROXP_TRADE_1&#39;,&#39;PROXP TRADE 1&#39;,&#39;cfd&#39;)" id="traz-chip-PROXP_TRADE_1" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--amber);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROXP TRADE 1</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--amber);margin:0 6px;flex-shrink:0">4/5 días</span><span id="traz-arrow-PROXP_TRADE_1" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROXP_TRADE_1" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="done" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROP_XP_TRADE_2&#39;,&#39;PROP XP TRADE 2&#39;,&#39;cfd&#39;)" id="traz-chip-PROP_XP_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 6px var(--green)"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROP XP TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--green);margin:0 6px;flex-shrink:0">5/5 días</span><span id="traz-arrow-PROP_XP_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROP_XP_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;RETO_CONSISTENCIA_3K&#39;,&#39;RETO CONSISTENCIA 3K&#39;,&#39;cfd&#39;)" id="traz-chip-RETO_CONSISTENCIA_3K" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">RETO CONSISTENCIA 3K</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/15 días</span><span id="traz-arrow-RETO_CONSISTENCIA_3K" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-RETO_CONSISTENCIA_3K" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
+  </div><div style="margin-top:1rem" id="traz-section"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px"><div class="section-title" style="margin-bottom:0">📊 Trazabilidad de Ciclos · Junio 2026</div><div style="display:flex;gap:5px"><div class="ov-tab active-cfd" id="traz-tab-cfd" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;cfd&#39;)"><div class="dot dot-blue"></div> CFDs <span class="ov-tab-count" id="traz-count-cfd">4</span></div><div class="ov-tab" id="traz-tab-fut" style="padding:4px 12px;font-size:11px;cursor:pointer" onclick="trazSwitchTab(&#39;fut&#39;)"><div class="dot dot-purple"></div> Futuros <span class="ov-tab-count" id="traz-count-fut">3</span></div></div></div><div id="traz-filter-bar" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"><button onclick="trazFilter(&#39;all&#39;)" id="trazf-all" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--blue);background:var(--blue-dim);color:var(--blue)">Todas</button><button onclick="trazFilter(&#39;going&#39;)" id="trazf-going" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">⚡ En curso</button><button onclick="trazFilter(&#39;done&#39;)" id="trazf-done" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">✅ Completadas</button><button onclick="trazFilter(&#39;new&#39;)" id="trazf-new" style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2)">🔄 Sin empezar</button></div><div id="traz-chips-cfd" style="display:flex;flex-direction:column;gap:4px;"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;PROPXP_50K_INSTANT&#39;,&#39;PROPXP 50K INSTANT&#39;,&#39;cfd&#39;)" id="traz-chip-PROPXP_50K_INSTANT" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">PROPXP 50K INSTANT</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-PROPXP_50K_INSTANT" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-PROPXP_50K_INSTANT" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;RETO_CONSISTENCIA_3K&#39;,&#39;RETO CONSISTENCIA 3K&#39;,&#39;cfd&#39;)" id="traz-chip-RETO_CONSISTENCIA_3K" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">RETO CONSISTENCIA 3K</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">2/15 días</span><span id="traz-arrow-RETO_CONSISTENCIA_3K" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-RETO_CONSISTENCIA_3K" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING_US30US100&#39;,&#39;BACKTESTING US30/US100&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING_US30US100" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING US30/US100</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-BACKTESTING_US30US100" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING_US30US100" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;BACKTESTING_100k_NISH_AB&#39;,&#39;BACKTESTING 100k NISH A+B&#39;,&#39;cfd&#39;)" id="traz-chip-BACKTESTING_100k_NISH_AB" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">BACKTESTING 100k NISH A+B</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-BACKTESTING_100k_NISH_AB" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-BACKTESTING_100k_NISH_AB" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div><div id="traz-chips-fut" style="display:flex;flex-direction:column;gap:4px;display:none"><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_TRADE_2&#39;,&#39;FUTUROS TRADE 2&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_TRADE_2" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS TRADE 2</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_TRADE_2" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_TRADE_2" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;NINJA_SIMULATED&#39;,&#39;NINJA SIMULATED&#39;,&#39;fut&#39;)" id="traz-chip-NINJA_SIMULATED" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">NINJA SIMULATED</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">0/5 días</span><span id="traz-arrow-NINJA_SIMULATED" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-NINJA_SIMULATED" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div><div data-traz-status="new" style="border-radius:9px;border:1px solid var(--border);background:var(--bg1);overflow:hidden"><button onclick="trazToggle(&#39;FUTUROS_ACELERATOR_&#39;,&#39;FUTUROS ACELERATOR +++&#39;,&#39;fut&#39;)" id="traz-chip-FUTUROS_ACELERATOR_" style="width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;cursor:pointer;text-align:left;transition:background 0.15s"><div style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted);"></div><span style="font-size:11.5px;font-weight:700;color:var(--text);flex:1">FUTUROS ACELERATOR +++</span><span style="font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;color:var(--amber);background:var(--amber-dim);flex-shrink:0">1er Ciclo</span><span style="font-size:11px;font-weight:700;color:var(--muted2);margin:0 6px;flex-shrink:0">1/5 días</span><span id="traz-arrow-FUTUROS_ACELERATOR_" style="font-size:9px;color:var(--muted);transition:transform 0.2s;flex-shrink:0">▶</span></button><div id="traz-panel-FUTUROS_ACELERATOR_" style="display:none;border-top:1px solid var(--border);padding:0.9rem 1.1rem"></div></div></div></div></div>
 </div>
 
 <!-- ───────── PAGE: CERTIFICATES ───────── -->
@@ -2261,7 +2279,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <span class="group-panel-letter" style="color:#4a9eff">🔵 A</span>
         <div>
           <div style="font-size:14px;font-weight:700">Grupo A CFD</div>
-          <div style="font-size:10px;color:var(--muted)">🟣 CFDs · 0 cuentas</div>
+          <div style="font-size:10px;color:var(--muted)">🟣 CFDs · 1 cuenta</div>
         </div>
       </div>
       <div style="display:flex;gap:4px">
@@ -2272,9 +2290,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
     <div class="tag-row">
       <span class="param-tag blue">Par: XAUUSD</span>
-      <span class="param-tag green">Lotes: 0.5</span>
+      <span class="param-tag green">Lotes: 0.3</span>
       
-      <span class="param-tag purple">Criterio: pair</span>
+      <span class="param-tag purple">Criterio: session</span>
     </div>
 
     <div class="group-summary-grid" style="margin-top:12px">
@@ -2287,7 +2305,17 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div style="margin-top:10px">
       <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;font-weight:600">Cuentas asignadas</div>
       <div class="group-accounts-list">
-        <div class="group-no-accounts">Sin cuentas · Usa ➕ para agregar</div>
+        <div class="group-acc-row">
+            <div class="group-acc-info">
+              <div class="group-acc-name">PROPXP 50K INSTANT</div>
+              <span class="acc-platform type-cfd-instant" style="font-size:9px">⚡ Instant</span>
+            </div>
+            <div class="group-acc-stats">
+              <div class="group-acc-stat">P&amp;L <span style="color:var(--muted)">+$0</span></div>
+              <div class="group-acc-stat">WR <span>—</span></div>
+            </div>
+            <button class="btn btn-ghost btn-xs" onclick="showPage(&#39;PROPXP 50K INSTANT&#39;)">→</button>
+          </div>
       </div>
     </div>
   </div></div></div>
@@ -2298,8 +2326,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <div class="topbar">
     <div>
       <button class="btn btn-ghost btn-sm" onclick="showPage(&#39;overview&#39;)" style="margin-bottom:8px">← Volver</button>
-      <div class="page-title" id="detail-title">NINJA SIMULATED <span class="acc-platform type-futures-live" style="font-size:13px;vertical-align:middle">✅ LIVE</span></div>
-      <div class="page-sub" id="detail-sub">Futuros Live $100.000 · NT8</div>
+      <div class="page-title" id="detail-title">RETO CONSISTENCIA 3K <span class="acc-platform type-cfd-instant" style="font-size:13px;vertical-align:middle">⚡ Instant</span></div>
+      <div class="page-sub" id="detail-sub">Reto Consistencia 3K · METAQUOTES</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-ghost btn-sm" id="detail-rename-btn" onclick="openRenameAccountModal()">✏ Renombrar</button>
@@ -2324,120 +2352,73 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- TAB: STATS -->
   <div class="tab-content" id="dtab-stats">
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value red" id="d-pnl">-$13,5</div></div>
-      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value red" id="d-wr">0%</div></div>
-      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">-$13,5</div></div>
-      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">2</div></div>
+      <div class="stat-card"><div class="stat-label">P&amp;L Total</div><div class="stat-value red" id="d-pnl">-$26,1</div></div>
+      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value green" id="d-wr">67%</div></div>
+      <div class="stat-card"><div class="stat-label">Mejor Día</div><div class="stat-value green" id="d-best">+$54,6</div></div>
+      <div class="stat-card"><div class="stat-label">Entradas</div><div class="stat-value blue" id="d-count">3</div></div>
     </div>
-    <div id="d-stats-extra"><div class="stat-row stat-row-3" style="margin-top:10px">
-      <div class="stat-card"><div class="stat-label">Saldo EOD actual</div><div class="stat-value blue">$99.986,5</div><div class="stat-hint">Pico: $100.000</div></div>
-      <div class="stat-card"><div class="stat-label">Límite EOD Trailing</div><div class="stat-value red">$98.000</div><div class="stat-hint">DD trailing: -$2000</div></div>
-      <div class="stat-card"><div class="stat-label">Margen disponible</div><div class="stat-value green">$1986,5</div><div style="display:flex;gap:4px;margin-top:6px"><input class="form-input" type="number" id="inline-evalcost" value="" placeholder="Costo exam" step="any" style="font-size:11px;padding:4px 8px"><button class="btn btn-primary btn-xs" onclick="saveInlineEvalCost(&#39;NINJA SIMULATED&#39;)">✓</button></div></div>
-    </div></div>
+    <div id="d-stats-extra"></div>
   </div>
 
   <!-- TAB: FUEL/CONSISTENCY -->
   <div class="tab-content" id="dtab-fuel">
     <div id="fuel-content">
-      <div class="info-box" style="margin-bottom:8px;border-color:var(--green-dim)">
-        ✅ <strong style="color:var(--green)">Evaluación completada</strong> · Esta cuenta pasó el examen y está activa en LIVE
-        
-      </div>
-      
-    <div class="phase-separator" style="margin-top:16px">
-      <span class="phase-separator-label phase-live">✅ LIVE · Futuros</span>
-      <div class="phase-sep-line" style="background:var(--green-dim)"></div>
-    </div>
+    
+    
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fuel-wrap">
-        <div class="fuel-title">⛽ Consistencia Live · WR ≥ 50%</div>
+        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 100%)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>100%</span><span style="margin-top:auto">0%</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:0%;background:var(--red)"></div>
-            <div class="fuel-gauge-line" style="bottom:50%;border-color:rgba(255,174,48,0.6)">
-              <div style="position:absolute;right:-44px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Mín 50%</div>
+            <div class="fuel-gauge-fill" style="height:0%;background:var(--green)"></div>
+            <div class="fuel-gauge-line" style="bottom:100%;border-color:rgba(255,174,48,0.6)">
+              <div style="position:absolute;right:-48px;top:-8px;font-size:8px;color:var(--amber);white-space:nowrap">Límite 100%</div>
             </div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--red)">0.0%</div>
-            <div class="fuel-sub">efectividad en live</div>
+            <div class="fuel-pct" style="color:var(--green)">52.9%</div>
+            <div class="fuel-sub">del total es tu mejor trade</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Límite EOD:</span><span class="fuel-item-val amber">$98.000</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Margen:</span><span class="fuel-item-val green">$1986,5</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Días rentables:</span><span class="fuel-item-val blue">0 / 5</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Mín diario:</span><span class="fuel-item-val green">+$150</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$54,6</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$26,1</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">100%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$98,04</span></div>
             </div>
-            <div class="fuel-status warn">⏳ Faltan 5 días</div>
+            <div class="fuel-status ok">✓ Consistencia OK</div>
           </div>
         </div>
       </div>
       <div class="fuel-wrap">
-        <div class="fuel-title">📅 Días rentables Live (mín 5 con +$150/día)</div>
+        <div class="fuel-title">📅 Días rentables (mín 15 con ≥$15/día)</div>
         <div class="fuel-bar-wrap">
-          <div class="fuel-labels"><span>5</span><span style="margin-top:auto">0</span></div>
+          <div class="fuel-labels"><span>15</span><span style="margin-top:auto">0</span></div>
           <div class="fuel-gauge-outer">
-            <div class="fuel-gauge-fill" style="height:0%;background:var(--blue)"></div>
+            <div class="fuel-gauge-fill" style="height:13.333333333333334%;background:var(--blue)"></div>
           </div>
           <div class="fuel-info">
-            <div class="fuel-pct" style="color:var(--blue)">0</div>
-            <div class="fuel-sub">de 5 días requeridos</div>
+            <div class="fuel-pct" style="color:var(--blue)">2</div>
+            <div class="fuel-sub">de 15 días requeridos</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">P&amp;L Total:</span><span class="fuel-item-val red">-$13,5</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Cobro 90%×50%:</span><span class="fuel-item-val blue">$6,08</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Mín cobro:</span><span class="fuel-item-val">$150</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Máx cobro:</span><span class="fuel-item-val">$2000</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">2 / 15</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mín/día:</span><span class="fuel-item-val green">$15</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-50%</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-5%</span></div>
             </div>
-            <div class="fuel-status warn">⏳ Faltan 5 día(s)</div>
+            <div class="fuel-status warn">⏳ Faltan 13 día(s)</div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Thermometer deseable target -->
-    <div class="thermo-wrap" style="margin-top:8px">
-      <div class="thermo-title">🌡 Objetivo deseable del ciclo · $4000</div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div style="flex:1">
-          <div class="thermo-track" style="height:20px">
-            <div class="thermo-fill" style="width:-0.3375%;background:linear-gradient(90deg,var(--red),var(--amber) 50%,var(--green));position:relative">
-              <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:9px;font-weight:700;color:#000;white-space:nowrap">-0%</div>
-            </div>
-          </div>
-          <div class="thermo-markers">
-            <span>$0</span><span style="color:var(--amber)">$2000</span><span style="color:var(--green)">$4000</span>
-          </div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:18px;font-weight:800;color:var(--red)">-$13,5</div>
-          <div style="font-size:10px;color:var(--muted)">de $4000</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cobro-btn-wrap" style="margin-top:12px">
-      <div class="cobro-btn-title">💳 Solicitud de cobro · Ciclo Live</div>
+    
+    <div class="cobro-btn-wrap">
+      <div class="cobro-btn-title">Solicitud de cobro · Instant</div>
       <button class="cobro-btn disabled" onclick="void(0)">
-        🔒 Cobro bloqueado · Faltan 5 días
+        🔒 Cobro bloqueado · Completa consistencia y días rentables (2/15)
       </button>
-      <div class="cobro-hint">El ROI final se calcula al solicitar el retiro · Cobro = 90% × 50% de lo generado en el ciclo</div>
+      <div class="cobro-hint">Necesitas: consistencia ≤100% Y 15 días rentables</div>
     </div>
-
-    <!-- Trazabilidad -->
-    <div style="margin-top:10px">
-      <div class="section-title" style="margin-bottom:6px">📍 Trazabilidad de la cuenta</div>
-      <div class="roi-track">
-        <div class="roi-step done">📋 Examen</div>
-        <div class="roi-step done">✅ Live</div>
-        <div class="roi-step pending">💰 Cobro</div>
-        <div class="roi-step pending">📊 ROI Final</div>
-      </div>
-      <div class="info-box" style="margin-top:8px;font-size:10px">
-        📌 El ROI solo se calcula al registrar un cobro. Mientras no se retire, la cuenta puede continuar en ciclo o reservarse. Si se pierde, el ROI será negativo.
-      </div>
-    </div>
-  
-    </div>
+  </div>
   </div>
 
   <!-- TAB: ROI -->
@@ -2445,12 +2426,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div id="roi-content">
     
     <div class="roi-grid">
-      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value red">-$13,5</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
+      <div class="roi-card"><div class="roi-label">P&amp;L Ciclo Actual</div><div class="roi-value red">-$26,1</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Ciclo #1</div></div>
       <div class="roi-card"><div class="roi-label">Retiro estimado</div><div class="roi-value blue">$0</div></div>
       <div class="roi-card"><div class="roi-label">Costo evaluación <span style="color:var(--muted);font-size:9px">editable</span></div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;NINJA SIMULATED&#39;)">
-          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;NINJA SIMULATED&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
+          <input type="number" id="roi-evalcost-input" value="" placeholder="0" step="any" style="background:var(--bg2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:16px;font-weight:700;width:100px;padding:3px 8px;outline:none;" onkeydown="if(event.key===&#39;Enter&#39;)saveROIEvalCost(&#39;RETO CONSISTENCIA 3K&#39;)">
+          <button class="btn btn-ghost btn-xs" onclick="saveROIEvalCost(&#39;RETO CONSISTENCIA 3K&#39;)" style="color:var(--green);border-color:var(--green-dim);white-space:nowrap">💾 OK</button>
         </div>
         <div style="font-size:10px;color:var(--red);margin-top:3px">Sin costo</div>
       </div>
@@ -2458,7 +2439,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         — (sin cobros)
       </div></div>
       <div class="roi-card"><div class="roi-label">Total cobrado</div><div class="roi-value green">$0</div><div style="font-size:9px;color:var(--muted);margin-top:3px">0 cobros</div></div>
-      <div class="roi-card"><div class="roi-label">Ciclo de pago</div><div class="roi-value" style="font-size:16px">Mensual</div></div>
+      <div class="roi-card"><div class="roi-label">Ciclo de pago</div><div class="roi-value" style="font-size:16px">Quincenal</div></div>
     </div>
     <div class="info-box" style="margin-bottom:1rem">
       📌 El <strong>ROI acumulado</strong> suma todos los cobros realizados sobre el costo del examen. El P&amp;L de cada ciclo se resetea al cobrar, pero los certificados quedan permanentes.
@@ -2466,9 +2447,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <div class="payout-bar">
       <div class="section-title">Ciclo de cobro <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(fecha de solicitud/pago, no de carga del certificado)</span></div>
       <div class="payout-grid">
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;NINJA SIMULATED&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
-        <div class="payout-opt " onclick="setPayoutCycle(&#39;NINJA SIMULATED&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
-        <div class="payout-opt active" onclick="setPayoutCycle(&#39;NINJA SIMULATED&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;weekly&#39;)"><div class="payout-opt-title">Semanal</div><div class="payout-opt-sub">Cada 7 días</div></div>
+        <div class="payout-opt active" onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;biweekly&#39;)"><div class="payout-opt-title">Quincenal</div><div class="payout-opt-sub">Cada 15 días</div></div>
+        <div class="payout-opt " onclick="setPayoutCycle(&#39;RETO CONSISTENCIA 3K&#39;,&#39;monthly&#39;)"><div class="payout-opt-title">Mensual</div><div class="payout-opt-sub">Fin de mes</div></div>
       </div>
     </div>
     <div class="info-box">Sin cobros registrados · Usa la pestaña de Consistencia para solicitar cuando estés habilitado</div>
@@ -2476,72 +2457,46 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: PARAMS -->
-  <div class="tab-content active" id="dtab-params">
+  <div class="tab-content" id="dtab-params">
     <div id="params-content">
-      <div class="section-header"><div class="section-title">Parámetros · Futuros · LIVE</div></div>
+      <div class="section-header"><div class="section-title">Parámetros de gestión · Evaluación CFDs</div></div>
       <div class="lot-params-grid">
-        <div class="lot-param"><div class="lot-param-label">Micros default</div><div class="lot-param-value blue">2</div><div class="lot-param-sub">contratos micro</div></div>
-        <div class="lot-param"><div class="lot-param-label">Micros máx</div><div class="lot-param-value">4</div><div class="lot-param-sub">límite</div></div>
-        <div class="lot-param"><div class="lot-param-label">DD EOD máx</div><div class="lot-param-value red">-$2000</div><div class="lot-param-sub">fin de día</div></div>
-        <div class="lot-param"><div class="lot-param-label">Costo examen</div><div class="lot-param-value amber">No set</div><div class="lot-param-sub">pago por examen</div></div>
-      </div>
-      <div class="info-box">
-        <strong style="color:#4a9eff">🔵 Grupo A · Parámetros ATM:</strong><br>
-        <div class="tag-row" style="margin-top:6px">
-          <span class="param-tag blue">4 micros</span>
-          <span class="param-tag red">SL 100 ticks (~$200)</span>
-          <span class="param-tag green">TP 150 ticks (~$300)</span>
-          <span class="param-tag purple">RR 1.50</span>
-          <span class="param-tag amber">Max SL/día: $400 (2 tiros)</span>
-          <span class="param-tag blue">Par: MGC</span>
-          <span class="param-tag purple">Sesión: LONDON</span>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="section-header"><div class="section-title">Configurar micros y parámetros</div></div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Micros default</label>
-          <input class="form-input" type="number" id="p-micros-def" value="2" step="1">
-        </div>
-        <div class="form-group"><label class="form-label">Micros máximo</label>
-          <input class="form-input" type="number" id="p-micros-max" value="4" step="1">
-        </div>
+        <div class="lot-param"><div class="lot-param-label">Lotaje sugerido</div><div class="lot-param-value blue">0.1</div><div class="lot-param-sub">lotes estándar</div></div>
+        <div class="lot-param"><div class="lot-param-label">Lotaje máximo</div><div class="lot-param-value">1</div><div class="lot-param-sub">límite recomendado</div></div>
+        <div class="lot-param"><div class="lot-param-label">Max pérdida/día</div><div class="lot-param-value red">5% · $150</div><div class="lot-param-sub">SL diario estático</div></div>
+        <div class="lot-param"><div class="lot-param-label">Drawdown máx</div><div class="lot-param-value red">50%</div><div class="lot-param-sub">estático del saldo</div></div>
       </div>
       
+      <div class="divider"></div>
+      <div class="section-header"><div class="section-title">Configurar parámetros editables</div></div>
+      
+      
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">💵 Costo Examen ($) <span style="color:var(--muted);font-size:10px">solo ROI</span></label>
-          <input class="form-input" type="number" id="p-evalcost" value="" placeholder="Ej: 499" step="any">
+        <div class="form-group"><label class="form-label">Lotaje sugerido</label>
+          <input class="form-input" type="number" id="p-lots-def" value="0.1" step="0.01">
         </div>
-        <div class="form-group"><label class="form-label">Días mín live</label>
-          <input class="form-input" type="number" id="p-livedays" value="5" step="1">
-        </div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">💰 Mínimo diario live ($)</label>
-          <input class="form-input" type="number" id="p-liveminday" value="150" step="any">
-        </div>
-        <div class="form-group"><label class="form-label">% Cobro</label>
-          <input class="form-input" type="number" id="p-payoutpct" value="90" step="1">
+        <div class="form-group"><label class="form-label">Lotaje máximo</label>
+          <input class="form-input" type="number" id="p-lots-max" value="1" step="0.01">
         </div>
       </div>
       <div class="divider"></div>
-      <div class="section-header"><div class="section-title">🤖 Importación automática NinjaTrader 8</div></div>
+      <div class="section-header"><div class="section-title">🤖 Importación automática MT5</div></div>
       <div class="info-box" style="border-color:#1a3060;background:var(--blue-dim);">
-        <strong style="color:var(--blue)">Conecta esta cuenta a tu logger de NT8</strong><br>
+        <strong style="color:var(--blue)">Conecta esta cuenta a tu EA Logger de MT5</strong><br>
         Los trades cerrados se importarán automáticamente desde Supabase cada X minutos.
       </div>
       <div class="form-row-2">
-        <div class="form-group"><label class="form-label">👤 Número de cuenta NT8</label>
-          <input class="form-input" type="text" id="p-nt8-userid" value="Sim101" placeholder="Ej: Sim101">
+        <div class="form-group"><label class="form-label">👤 Número de cuenta MT5</label>
+          <input class="form-input" type="text" id="p-userid" value="5052222379" placeholder="Ej: 12345678">
         </div>
         <div class="form-group"><label class="form-label">⏱ Intervalo auto-import (seg)</label>
-          <input class="form-input" type="number" id="p-nt8-import-interval" value="1" min="10" max="3600" step="1">
+          <input class="form-input" type="number" id="p-import-interval" value="1" min="1" max="60" step="1">
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;NINJA SIMULATED&#39;)">Guardar parámetros</button>
-        <button class="btn btn-green btn-sm" onclick="importarNT8Ahora(&#39;NINJA SIMULATED&#39;)">⬇ Importar ahora</button>
-        <span id="nt8-status-NINJA_SIMULATED" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 2 ya existían/omitidos · 21:29:45</span>
+        <button class="btn btn-primary btn-sm" onclick="saveParams(&#39;RETO CONSISTENCIA 3K&#39;)">Guardar parámetros</button>
+        <button class="btn btn-green btn-sm" onclick="importarMT5Ahora(&#39;RETO CONSISTENCIA 3K&#39;)">⬇ Importar ahora</button>
+        <span id="mt5-status-RETO_CONSISTENCIA_3K" style="font-size: 11px; color: var(--muted2);">✓ 0 nuevo(s) · 3 ya existían/omitidos · 20:27:58</span>
       </div>
     </div>
   </div>
@@ -2549,7 +2504,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <!-- TAB: PLAN DE TRADING -->
   <div class="tab-content" id="dtab-plan">
-    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · NINJA SIMULATED</div><div class="tp-card-sub">Sin plan guardado todavía</div></div><span class="tp-badge ">Sin configurar</span></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="1" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="2" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk"><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup."></textarea></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;NINJA SIMULATED&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · NINJA SIMULATED</div><div class="cd-section-line"></div></div><div id="cd-block-NINJA_SIMULATED"><div class="cd-no-data">Define primero el Plan de Trading para activar la detección.</div></div></div></div>
+    <div id="trading-plan-content"><div class="tp-card"><div class="tp-card-header"><div><div class="tp-card-title">🎯 Plan de Trading · RETO CONSISTENCIA 3K</div><div class="tp-card-sub">Actualizado: 28 jun 2026</div></div><span class="tp-badge active">Activo</span></div><div class="tp-compliance warn"><div class="tp-compliance-dot"></div><div class="tp-compliance-text">Operas mayormente en Asia (no en tu sesión declarada).</div></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Sesión preferida</div><div class="tp-divider-line"></div></div><div id="tp-session-btns" class="tp-sessions"><button class="tp-session-btn london selected" data-session="london" onclick="window._tpToggleSession(this)">🇬🇧 Londres</button><button class="tp-session-btn new-york selected" data-session="new-york" onclick="window._tpToggleSession(this)">🗽 Nueva York</button><button class="tp-session-btn asia" data-session="asia" onclick="window._tpToggleSession(this)">🌏 Asia</button><button class="tp-session-btn flexible" data-session="flexible" onclick="window._tpToggleSession(this)">🔄 Flexible</button></div><div class="tp-divider" style="margin-top:14px;"><div class="tp-divider-line"></div><div class="tp-divider-label">Límites de operación</div><div class="tp-divider-line"></div></div><div class="tp-grid"><div class="tp-field"><label class="tp-field-label">Máx ops por día</label><input class="tp-field-input" type="number" id="tp-max-ops" min="1" max="20" step="1" value="2" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo por op (%)</label><input class="tp-field-input" type="number" id="tp-risk-per-op" min="0.1" max="10" step="0.1" value="5" placeholder="1"></div><div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label><input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="5" placeholder="2"></div></div><div class="tp-toggle-row"><div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div><div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div><label class="tp-toggle"><input type="checkbox" id="tp-split-risk" checked=""><span class="tp-toggle-slider"></span></label></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label><textarea class="tp-field-input" id="tp-notes" rows="2" style="resize:vertical;font-family:inherit;" placeholder="Ej: Solo opero si hay confluencia en H1 y M15. Máximo 2 intentos por setup.">NISH U OLI</textarea></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Plataforma &amp; Evidencia</div><div class="tp-divider-line"></div></div><div class="tp-field" style="margin-bottom:10px;"><label class="tp-field-label">🔗 Link del gráfico (TradingView u otra plataforma)</label><div style="display:flex;gap:6px;align-items:center;"><input class="tp-field-input" type="url" id="tp-chart-link" style="flex:1;" placeholder="https://es.tradingview.com/chart/..." value="https://es.tradingview.com/chart/XWYLZNRj/?symbol=FOREXCOM%3AXAUUSD"><a id="tp-open-link" href="https://es.tradingview.com/chart/XWYLZNRj/?symbol=FOREXCOM%3AXAUUSD" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;" onclick="(function(a){var u=document.getElementById(&quot;tp-chart-link&quot;).value;if(u){a.href=u;}else{event.preventDefault();}})(this)">↗ Abrir</a></div></div><div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">📸 Screenshot de la operación (evidencia)</label><input type="hidden" id="tp-chart-img-data" value=""><label style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px dashed var(--border2);border-radius:9px;background:var(--bg3);cursor:pointer;color:var(--muted2);font-size:11px;" onmouseover="this.style.borderColor=&#39;var(--blue)&#39;" onmouseout="this.style.borderColor=&#39;var(--border2)&#39;"><span style="font-size:20px;">🖼️</span><span>Adjuntar screenshot · haz clic o arrastra aquí</span><input type="file" accept="image/*" style="display:none;" onchange="window._tpLoadImage(this)"></label></div><div class="tp-divider"><div class="tp-divider-line"></div><div class="tp-divider-label">Tu historial dice</div><div class="tp-divider-line"></div></div><div class="tp-stats-row"><div class="tp-stat"><div class="tp-stat-val blue">1.0</div><div class="tp-stat-label">Ops/día media</div></div><div class="tp-stat"><div class="tp-stat-val green">0</div><div class="tp-stat-label">Posible revancha</div></div><div class="tp-stat"><div class="tp-stat-val purple">Asia</div><div class="tp-stat-label">Sesión frecuente</div></div></div><button class="tp-save-btn" onclick="window.saveTradingPlan(&#39;RETO CONSISTENCIA 3K&#39;)">✓ Guardar Plan de Trading</button></div><div class="cd-section"><div class="cd-section-header"><div class="cd-section-line"></div><div class="cd-section-title">Análisis conductual · RETO CONSISTENCIA 3K</div><div class="cd-section-line"></div></div><div id="cd-block-RETO_CONSISTENCIA_3K"><div class="cd-score"><div class="cd-score-circle high">100%</div><div><div class="cd-score-label">Plan respetado</div><div class="cd-score-sub">3 de 3 días dentro del plan · 0 violaciónes detectadas</div></div></div><div class="cd-alert warning"><div class="cd-alert-icon">🕐</div><div class="cd-alert-body"><div class="cd-alert-title">Sesión frecuente no coincide con tu plan</div><div class="cd-alert-sub">Operas mayormente en <b>sin sesión</b> (3 de 3 días). Tu plan declara otra sesión preferida. Puede ser intencional — si cambiaste tu estrategia, actualiza el plan.</div></div></div></div></div></div>
   </div>
 
   <!-- TAB: INTELLIGENCE -->
@@ -2558,7 +2513,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
 
   <!-- TAB: TRADES -->
-  <div class="tab-content" id="dtab-trades">
+  <div class="tab-content active" id="dtab-trades">
     <div class="section-header" style="margin-bottom:0.75rem">
       <div class="section-title">Operaciones</div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
@@ -2597,35 +2552,91 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <button class="btn btn-ghost btn-xs" onclick="opsCalClear()" style="color:var(--red);">✕ Limpiar</button>
       </div>
     </div>
-    <div class="entry-list" id="detail-entries">
-    <div class="entry-item" style="">
-      <div class="entry-date">2026-06-26</div>
-      
-      <div class="entry-result pill-loss">LOSS</div>
-      <div class="entry-pnl red">-$7,5</div>
-      <div class="entry-source source-manual">MNQ SEP26</div>
-      <div class="entry-source source-mt5">5</div>
-      
-      <div class="entry-note">Auto-importado NT8 · MNQ SEP26 · NT-4e3bf</div>
-      
-      <div class="entry-actions">
-        <button class="entry-edit-btn" onclick="openEditModal(&#39;1782508236135_ojzv&#39;)">✏</button>
-        <button class="entry-del-btn" onclick="deleteEntry(&#39;1782508236135_ojzv&#39;)">✕</button>
+    <div class="entry-list" id="detail-entries"><div style="padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:11px;font-weight:700;color:var(--muted2);">📊 Tasa de Aplicabilidad</span>
+      <span style="font-size:22px;font-weight:900;color:var(--text);">—</span>
+      <span style="font-size:14px;"></span>
+      <span style="font-size:10.5px;color:var(--muted);font-style:italic;">Sin clasificar aún</span>
+      <span style="margin-left:auto;font-size:9.5px;color:var(--muted);">✅ 0 bien · ⚠️ 0 incorrecto · ❌ 0 no ejecutadas</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:8px;border-top:1px solid var(--border);">
+      <span style="font-size:10px;color:var(--muted);white-space:nowrap;">❌ No ejecutadas en <strong style="color:var(--text)">semana 26 · 2026</strong>:</span>
+      <input type="number" min="0" max="999" value="0" id="missed-ops-input-RETO CONSISTENCIA 3K" onchange="execSaveMissed(&#39;RETO CONSISTENCIA 3K&#39;, &#39;2026-W26&#39;, this.value)" style="width:56px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:3px 7px;font-size:12px;font-weight:700;text-align:center;outline:none;">
+      <span style="font-size:9.5px;color:var(--muted);font-style:italic;">Setups válidos que dejaste pasar este mes</span>
+      <button onclick="execResetMissed(&#39;RETO CONSISTENCIA 3K&#39;,&#39;2026-W26&#39;)" style="margin-left:auto;font-size:9px;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 7px;cursor:pointer;">Resetear</button>
+    </div>
+  </div>
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">2026-06-26</div>
+        
+        <div class="entry-result pill-loss">LOSS</div>
+        <div class="entry-pnl red">-$129,3</div>
+        <div class="entry-source source-manual">XAUUSD</div>
+        <div class="entry-source source-mt5">0.15</div>
+        
+        <div class="entry-note">Auto-importado · Ticket 56926949706</div>
+        
+        <div class="entry-actions">
+          
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479706755_7gaz&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479706755_7gaz&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479706755_7gaz&#39;)">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-1782479706755_7gaz">
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_7gaz&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div>
-    <div class="entry-item" style="">
-      <div class="entry-date">2026-06-26</div>
-      
-      <div class="entry-result pill-loss">LOSS</div>
-      <div class="entry-pnl red">-$6</div>
-      <div class="entry-source source-manual">MNQ SEP26</div>
-      <div class="entry-source source-mt5">1</div>
-      
-      <div class="entry-note">Auto-importado NT8 · MNQ SEP26 · NT-a9712</div>
-      
-      <div class="entry-actions">
-        <button class="entry-edit-btn" onclick="openEditModal(&#39;1782508236135_8xg7&#39;)">✏</button>
-        <button class="entry-del-btn" onclick="deleteEntry(&#39;1782508236135_8xg7&#39;)">✕</button>
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">2026-06-25</div>
+        
+        <div class="entry-result pill-win">WIN</div>
+        <div class="entry-pnl green">+$48,6</div>
+        <div class="entry-source source-manual">XAUUSD</div>
+        <div class="entry-source source-mt5">0.2</div>
+        
+        <div class="entry-note">Auto-importado · Ticket 56918704624</div>
+        
+        <div class="entry-actions">
+          
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479706755_v9sr&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479706755_v9sr&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479706755_v9sr&#39;)">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-1782479706755_v9sr">
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479706755_v9sr&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
+      </div>
+    </div>
+    <div class="entry-item" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="entry-date">2026-06-24</div>
+        
+        <div class="entry-result pill-win">WIN</div>
+        <div class="entry-pnl green">+$54,6</div>
+        <div class="entry-source source-manual">XAUUSD</div>
+        <div class="entry-source source-mt5">0.6</div>
+        
+        <div class="entry-note">Auto-importado · Ticket 56901217292</div>
+        
+        <div class="entry-actions">
+          
+          <button class="exec-classify-toggle" onclick="execToggle(&#39;1782479765634_zlh4&#39;)">▼ Clasificar</button>
+          <button class="entry-edit-btn" onclick="openEditModal(&#39;1782479765634_zlh4&#39;)">✏</button>
+          <button class="entry-del-btn" onclick="deleteEntry(&#39;1782479765634_zlh4&#39;)">✕</button>
+        </div>
+      </div>
+      <div class="exec-classify-row" id="exec-row-1782479765634_zlh4">
+        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;good&#39;)">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;bad&#39;)">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
+        <button class="exec-btn" onclick="execSet(&#39;1782479765634_zlh4&#39;,&#39;missed&#39;)">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
       </div>
     </div></div>
   </div>
@@ -2820,7 +2831,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">🚦 Semáforo Mental — 30 días</span>
         </div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">Verde si operaste en peak · Amarillo si con precaución · Rojo si zona de riesgo</div>
-        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="29 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">29</div><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div><div title="24 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">24</div><div title="25 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">25</div><div title="26 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div><div title="27 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">27</div></div>
+        <div id="tp-history-sem" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;"><div title="30 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">30</div><div title="31 may — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">31</div><div title="1 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">1</div><div title="2 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">2</div><div title="3 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">3</div><div title="4 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">4</div><div title="5 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">5</div><div title="6 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">6</div><div title="7 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">7</div><div title="8 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">8</div><div title="9 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">9</div><div title="10 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">10</div><div title="11 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">11</div><div title="12 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">12</div><div title="13 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">13</div><div title="14 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">14</div><div title="15 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">15</div><div title="16 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">16</div><div title="17 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">17</div><div title="18 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">18</div><div title="19 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">19</div><div title="20 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">20</div><div title="21 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">21</div><div title="22 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">22</div><div title="23 jun — 🔴 Riesgo psicológico elevado — NO operes" style="aspect-ratio:1;border-radius:6px;background:rgba(255,79,79,0.18);border:1px solid #ff4f4f;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">23</div><div title="24 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">24</div><div title="25 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">25</div><div title="26 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">26</div><div title="27 jun — Sin registro" style="aspect-ratio:1;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">27</div><div title="28 jun — 🟢 Operativa normal" style="aspect-ratio:1;border-radius:6px;background:rgba(39,217,122,0.18);border:1px solid #27d97a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted2);">28</div></div>
         <div style="display:flex;gap:10px;margin-top:8px;font-size:9px;color:var(--muted);">
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(39,217,122,0.4);margin-right:3px;"></span>🟢 Peak</span>
           <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(255,174,48,0.4);margin-right:3px;"></span>🟡 Precaución</span>
@@ -3224,7 +3235,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
     <div class="form-group">
       <label class="form-label">Modo de cuenta</label>
-      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active cyan">⚡ Instant</div><div class="type-pill">📋 Eval F1</div><div class="type-pill">📋 Eval F2</div><div class="type-pill">🏆 Funded</div></div>
+      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
     </div>
 
     <!-- Base fields -->
@@ -3251,7 +3262,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- FUTURES EVAL fields -->
-    <div id="modal-section-fut-eval" class="form-section" style="display: none;">
+    <div id="modal-section-fut-eval" class="form-section" style="">
       <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
@@ -3344,7 +3355,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- CFD INSTANT fields -->
-    <div id="modal-section-cfd-instant" class="form-section" style="">
+    <div id="modal-section-cfd-instant" class="form-section" style="display: none;">
       <div class="form-section-title">⚡ Parámetros Instant · CFD</div>
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-inst-maxdd" placeholder="6" step="0.1"></div>
@@ -3362,7 +3373,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div>
 
     <!-- Grupo assignment (futures) -->
-    <div id="modal-group-select" class="form-group" style="display: none;">
+    <div id="modal-group-select" class="form-group" style="">
       <label class="form-label">Grupo de estrategia</label>
       <select class="form-input" id="na-group">
         <option value="A">🔵 Grupo A</option>
@@ -3837,9 +3848,9 @@ Cuentas a cobrar este mes: ..."></textarea>
       <span style="font-size:11px;font-weight:700;color:var(--muted2);white-space:nowrap;">🔗 Cuenta vinculada:</span>
       <select id="reto-linked-account" onchange="retoLinkedAccountChange()" style="flex:1;min-width:160px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:7px;padding:5px 10px;font-size:11.5px;font-weight:600;outline:none;cursor:pointer;">
         <option value="">— Sin vincular (entrada manual) —</option>
-      </select>
-      <button onclick="retoImportFromAccount()" id="reto-import-btn" style="display:none;background:linear-gradient(135deg,rgba(74,158,255,0.15),rgba(160,122,255,0.1));border:1px solid rgba(74,158,255,0.4);color:var(--blue);border-radius:8px;padding:6px 14px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.15s;">⬇ Importar trades</button>
-      <span id="reto-linked-info" style="font-size:10px;color:var(--muted);width:100%;margin-top:2px;"></span>
+      <option value="BACKTESTING 100k NISH A+B">BACKTESTING 100k NISH A+B</option><option value="BACKTESTING US30/US100">BACKTESTING US30/US100</option><option value="PROPXP 50K INSTANT">PROPXP 50K INSTANT</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option></select>
+      <button onclick="retoImportFromAccount()" id="reto-import-btn" style="display: inline-flex; background: linear-gradient(135deg, rgba(74, 158, 255, 0.15), rgba(160, 122, 255, 0.1)); border: 1px solid rgba(74, 158, 255, 0.4); color: var(--blue); border-radius: 8px; padding: 6px 14px; font-size: 11.5px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: 0.15s;">⬇ Importar trades</button>
+      <span id="reto-linked-info" style="font-size:10px;color:var(--muted);width:100%;margin-top:2px;">RETO CONSISTENCIA 3K · 3 trades · 3 días con actividad</span>
     </div>
 
     <!-- Card principal del reto -->
@@ -4494,8 +4505,7 @@ function save() {
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a la nube inmediatamente — la nube es la fuente de verdad
-  // Debounce corto (200ms) solo para evitar llamadas duplicadas en ráfaga
+  // Subir a la nube con debounce (espera 600ms para asegurar que localStorage está escrito)
   clearTimeout(_sfPushTimer);
   _sfPushTimer = setTimeout(function() {
     try {
@@ -4505,7 +4515,7 @@ function save() {
         if (licData && licData.key) sbPush(licData.key);
       }
     } catch(e) {}
-  }, 200);
+  }, 400);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -16897,14 +16907,13 @@ function licOcultarBoot() {
   // Primero descargar nube, luego mostrar UI — así nunca se ve localStorage vacío
   if (data.key) {
     try {
-      const cloudData = await sbPull(data.key);
-      if (cloudData) {
-        // Aplicar directo a memoria desde la nube — no pasar por localStorage
-        entries   = Array.isArray(cloudData.fp_entries_v4_sale)   ? cloudData.fp_entries_v4_sale   : [];
-        accounts  = cloudData.fp_accounts_v4_sale  || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-        groups    = cloudData.fp_groups_v4_sale    || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-        certs     = Array.isArray(cloudData.fp_certs_v4_sale)     ? cloudData.fp_certs_v4_sale     : [];
-        firmStats = cloudData.fp_firmstats_v4_sale || {};
+      const pulled = await sbPull(data.key);
+      if (pulled) {
+        entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+        accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+        groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+        certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+        firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
         console.log('SF Cloud: datos pre-cargados antes de mostrar UI');
       }
     } catch(e) { console.warn('SF Cloud: fallo pre-carga', e); }
@@ -17057,9 +17066,9 @@ async function forzarDescargaNube() {
     const licData = JSON.parse(licRaw);
     if (!licData || !licData.key) { toast('No hay sesión activa', true); return; }
     toast('☁️ Descargando datos desde la nube...');
-    const cloudData = await sbPull(licData.key);
-    if (cloudData) {
-      sfApplyCloudData(cloudData);
+    const pulled = await sbPull(licData.key);
+    if (pulled) {
+      sfApplyCloudData();
       toast('✅ Datos restaurados desde la nube');
     } else {
       toast('⚠️ No se encontraron datos en la nube', true);
@@ -17100,32 +17109,19 @@ async function sbPull(licKey) {
     if (!res.ok) return false;
     const rows = await res.json();
     if (!rows || !rows.length || !rows[0].data) return false;
-    // Aplicar al localStorage (caché local) Y devolver el payload para uso inmediato en memoria
     applyBackupPayload(rows[0].data);
-    return rows[0].data; // devuelve el objeto completo, no solo true
+    return true;
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
 
 // ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
-// Aplica datos de la nube a memoria y re-renderiza la UI completa.
-// Acepta opcionalmente el payload ya descargado para evitar re-leer localStorage.
-function sfApplyCloudData(cloudPayload) {
+function sfApplyCloudData() {
   try {
-    if (cloudPayload) {
-      // Fuente de verdad: el objeto bajado de la nube, aplicado directo a memoria
-      entries   = Array.isArray(cloudPayload.fp_entries_v4_sale)   ? cloudPayload.fp_entries_v4_sale   : JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-      accounts  = cloudPayload.fp_accounts_v4_sale  || JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-      groups    = cloudPayload.fp_groups_v4_sale    || JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-      certs     = Array.isArray(cloudPayload.fp_certs_v4_sale)     ? cloudPayload.fp_certs_v4_sale     : JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-      firmStats = cloudPayload.fp_firmstats_v4_sale || JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
-    } else {
-      // Fallback: leer desde localStorage (caché local)
-      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
-    }
+    entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+    accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+    groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+    certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+    firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
     if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
     if (typeof renderOverview      === 'function') renderOverview();
     if (typeof renderGroups        === 'function') renderGroups();
@@ -17136,46 +17132,38 @@ function sfApplyCloudData(cloudPayload) {
     if (typeof initOvSections      === 'function') initOvSections();
     if (typeof renderCalendar      === 'function') try { renderCalendar(); } catch(e) {}
     if (typeof retoLinkedAccountInit === 'function') try { retoLinkedAccountInit(); } catch(e) {}
-    // Re-renderizar pestaña activa de cuenta si procede
-    if (currentAccount && typeof renderDetail === 'function') try { renderDetail(); } catch(e) {}
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
 
-  // 1. Traer datos de la nube ANTES de mostrar la UI — la nube manda siempre
-  const cloudData = await sbPull(licKey);
-  if (cloudData) {
+  // 1. Traer datos de la nube ANTES de mostrar la UI
+  const pulled = await sbPull(licKey);
+  if (pulled) {
     setTimeout(() => {
-      sfApplyCloudData(cloudData);
-      console.log('SF Cloud: datos pre-cargados desde la nube');
+      sfApplyCloudData();
+      console.log('SF Cloud datos restaurados desde la nube');
     }, 300);
   }
 
-  // 2. Cada 10s: primero pull (para no sobreescribir cambios de otra sesión),
-  //    luego push con el estado local actualizado
+  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos
   setInterval(async () => {
-    const remote = await sbPull(licKey);
-    if (remote) {
-      // Fusionar: la nube tiene prioridad sobre localStorage, pero respetamos
-      // cambios locales no subidos aún (los entries en memoria son la copia viva)
-      sfApplyCloudData(remote);
-    }
-    // Después de aplicar la nube, subir nuestro estado actualizado
     await sbPush(licKey);
-  }, 10000);
+    // Después del push, hacer pull para detectar cambios de otra sesión
+    const remotePulled = await sbPull(licKey);
+    if (remotePulled) sfApplyCloudData();
+  }, 30000);
 
-  // 3. Al cerrar/cambiar pestaña: subir inmediatamente
+  // 3. Guardar al cerrar/cambiar pestaña
   window.addEventListener('beforeunload', () => sbPush(licKey));
   document.addEventListener('visibilitychange', async () => {
     if (document.hidden) {
-      // Al salir: guardar en la nube
       await sbPush(licKey);
     } else {
-      // Al volver: descargar desde la nube primero — puede haber cambios de otra sesión
-      const remote = await sbPull(licKey);
-      if (remote) sfApplyCloudData(remote);
+      // Al volver a la pestaña, descargar cambios que pudo hacer otra sesión
+      const remotePulled = await sbPull(licKey);
+      if (remotePulled) sfApplyCloudData();
     }
   });
 }
@@ -17198,6 +17186,303 @@ async function sbStartAutoSync(licKey) {
     setTimeout(_startAutoSave, 2000);
   });
 })();
+
+// ═══════════════════════════════════════════════════════════════════
+// ⚡ SISTEMA ANTI-OVERTRADING · 3 NIVELES
+//
+// ARQUITECTURA (respeta el flujo real del dashboard):
+//
+//  Al arrancar:  sbPull → localStorage → entries en memoria → UI
+//  Al guardar:   entries → save() → localStorage → sbPush → Nube (inmediato)
+//
+//  HOOKS:
+//  1. save()             → evalúa stops justo después de que entries
+//                          está actualizado en memoria Y el push a la
+//                          nube ya fue disparado.
+//  2. sfApplyCloudData() → evalúa al recibir datos de la nube
+//                          (arranque, pull periódico, vuelta de pestaña).
+//
+//  ESTADO CHECKLIST: se incluye en buildBackupPayload/applyBackupPayload
+//  para que viaje en Supabase y cualquier sesión/dispositivo lo vea.
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+
+  /* ── FRASES NIVEL 1: 1 stop en el día ─────────────────────── */
+  var FRASES_ROJO = [
+    ["🛑 PARA.", "La pérdida ya está asumida.\nLo siguiente es proteger la cuenta,\nno arreglar el ego."],
+    ["🚫 No reduces las exigencias.", "No entres en la siguiente por impulso.\nEl plan no cambia después de una pérdida."],
+    ["⛔ No aumentas el tamaño.", "Nunca compenses una pérdida\noperando más grande. Jamás."],
+    ["🔇 No aceleres ni fuerzas.", "El proceso natural del trading\nno se rompe por una pérdida."],
+    ["🧘 Respira.", "\"Ahora mismo no necesito operar.\nNecesito proteger la cuenta.\""]
+  ];
+
+  /* ── FRASES NIVEL 2: 2 stops en el día ─────────────────────── */
+  var FRASES_AMARILLO = [
+    ["⚠️ Dos stops seguidos.", "Estás en Stop Condition.\nSi entraste sin cumplir el plan al 100%: PARAS."],
+    ["🟡 Atención: patrón detectado.", "No entro por aburrimiento.\nNo entro por recuperar.\nSi dudo, no entro."],
+    ["🛑 Stop Condition (no negociable).", "Si entras en dos operaciones seguidas\nsin cumplir el plan al 100%: PARAS.\n¡Da igual el resultado!"],
+    ["🔴 Ya no operas con claridad.", "Tu objetivo es una ejecución consistente\ncon tus reglas de entrada\ny con la gestión del riesgo."],
+    ["⚡ Frase para cortar la racha:", "\"Ahora mismo no necesito operar.\nNecesito proteger la cuenta.\"\nNo es motivacional. Es volver a tener claros tus objetivos."]
+  ];
+
+  /* ── CHECKLIST NIVEL 3 ─────────────────────────────────────── */
+  var CHECKLIST_PRE = [
+    "Sé cuántas operaciones máximas haré al día",
+    "Sé qué señal me indica que estoy entrando en sobre-operativa",
+    "Sé cuál es mi stop condition",
+    "Tengo claro qué frase usaré para cortar",
+    "Acepto que no todos los días se opera"
+  ];
+  var CHECKLIST_DIA = [
+    "No entro por aburrimiento",
+    "No entro por recuperar",
+    "No bajo mis filtros",
+    "Si dudo, no entro"
+  ];
+
+  var _frasesIdx = { red: 0, yellow: 0 };
+  var _flashTimer = null;
+  var _AO_CL_KEY = 'sf_ao_checklist_v1'; // clave en localStorage (con prefijo de licencia)
+
+  /* ── Checklist done hoy: lee desde localStorage (puesto por applyBackupPayload desde nube) */
+  function _aoChecklistDoneToday() {
+    try {
+      var v = _lsGet(_AO_CL_KEY);
+      if (!v) return false;
+      var obj = JSON.parse(v);
+      return obj && obj.date === new Date().toISOString().slice(0,10);
+    } catch(e) { return false; }
+  }
+
+  function _aoMarkChecklistDone() {
+    // Escribe en localStorage con prefijo de licencia
+    _lsSet(_AO_CL_KEY, JSON.stringify({ date: new Date().toISOString().slice(0,10) }));
+    // Llama save() para que el estado suba inmediatamente a Supabase
+    // (buildBackupPayload ya incluye sf_ao_checklist_v1 — ver patch más abajo)
+    if (typeof save === 'function') save();
+  }
+
+  /* ── Contar stops de hoy desde entries (variable global, fuente de verdad) */
+  function _aoStopsHoy() {
+    var today = new Date().toISOString().slice(0,10);
+    var list = (typeof entries !== 'undefined' && Array.isArray(entries)) ? entries : [];
+    return list.filter(function(e) {
+      return e.date === today && e.result === 'loss';
+    }).length;
+  }
+
+  /* ── Inject DOM (una sola vez) ─────────────────────────────── */
+  function _aoInjectDOM() {
+    if (document.getElementById('ao-overlay')) return;
+    var style = document.createElement('style');
+    style.textContent = '#ao-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.3s;}'
+      + '#ao-overlay.ao-active{pointer-events:all;background:rgba(0,0,0,0.72);}'
+      + '#ao-card{max-width:480px;width:92vw;border-radius:20px;padding:2rem 2rem 1.5rem;text-align:center;opacity:0;transform:scale(0.88);transition:opacity 0.3s,transform 0.3s;}'
+      + '#ao-overlay.ao-active #ao-card{opacity:1;transform:scale(1);}'
+      + '#ao-card.ao-red{background:#1a0a0a;border:2.5px solid #ff4f4f;box-shadow:0 0 60px rgba(255,79,79,0.35),0 0 120px rgba(255,79,79,0.15);}'
+      + '#ao-card.ao-yellow{background:#1a1000;border:2.5px solid #ffae30;box-shadow:0 0 60px rgba(255,174,48,0.35),0 0 120px rgba(255,174,48,0.15);}'
+      + '@keyframes ao-pulse-red{0%,100%{box-shadow:0 0 40px rgba(255,79,79,0.3),0 0 80px rgba(255,79,79,0.1);border-color:#ff4f4f;}50%{box-shadow:0 0 80px rgba(255,79,79,0.7),0 0 160px rgba(255,79,79,0.3);border-color:#ff8888;}}'
+      + '@keyframes ao-pulse-yellow{0%,100%{box-shadow:0 0 40px rgba(255,174,48,0.3),0 0 80px rgba(255,174,48,0.1);border-color:#ffae30;}50%{box-shadow:0 0 80px rgba(255,174,48,0.7),0 0 160px rgba(255,174,48,0.3);border-color:#ffd060;}}'
+      + '#ao-card.ao-red.ao-flashing{animation:ao-pulse-red 1.1s ease-in-out infinite;}'
+      + '#ao-card.ao-yellow.ao-flashing{animation:ao-pulse-yellow 1.1s ease-in-out infinite;}'
+      + '#ao-icon{font-size:3rem;margin-bottom:0.5rem;}'
+      + '#ao-title{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;}'
+      + '#ao-card.ao-red #ao-title{color:#ff4f4f;}#ao-card.ao-yellow #ao-title{color:#ffae30;}'
+      + '#ao-body{font-size:0.95rem;line-height:1.7;color:#ccccd8;white-space:pre-line;margin-bottom:1.25rem;}'
+      + '#ao-timer{font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;opacity:0.6;}'
+      + '#ao-card.ao-red #ao-timer{color:#ff4f4f;}#ao-card.ao-yellow #ao-timer{color:#ffae30;}'
+      + '#ao-progress{height:3px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:1.25rem;overflow:hidden;}'
+      + '#ao-progress-fill{height:100%;border-radius:3px;width:100%;}'
+      + '#ao-card.ao-red #ao-progress-fill{background:#ff4f4f;}#ao-card.ao-yellow #ao-progress-fill{background:#ffae30;}'
+      + '#ao-dismiss{border:none;cursor:pointer;border-radius:10px;padding:0.6rem 2rem;font-size:0.85rem;font-weight:700;letter-spacing:0.04em;transition:opacity 0.2s;}'
+      + '#ao-dismiss:hover{opacity:0.8;}'
+      + '#ao-card.ao-red #ao-dismiss{background:rgba(255,79,79,0.15);color:#ff4f4f;border:1px solid rgba(255,79,79,0.4);}'
+      + '#ao-card.ao-yellow #ao-dismiss{background:rgba(255,174,48,0.15);color:#ffae30;border:1px solid rgba(255,174,48,0.4);}'
+      + '#ao-checklist-backdrop{position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}'
+      + '#ao-checklist-backdrop.ao-cl-active{opacity:1;pointer-events:all;}'
+      + '#ao-checklist-modal{max-width:520px;width:94vw;max-height:90vh;overflow-y:auto;background:#12121a;border:2px solid rgba(255,174,48,0.4);border-radius:18px;padding:1.75rem;box-shadow:0 0 80px rgba(255,174,48,0.2);transform:scale(0.9);transition:transform 0.3s;}'
+      + '#ao-checklist-backdrop.ao-cl-active #ao-checklist-modal{transform:scale(1);}'
+      + '.ao-cl-title{font-size:1.1rem;font-weight:800;color:#ffae30;margin-bottom:0.25rem;}'
+      + '.ao-cl-sub{font-size:0.8rem;color:#888899;margin-bottom:1.25rem;line-height:1.5;}'
+      + '.ao-cl-section{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#55556a;margin:1rem 0 0.5rem;}'
+      + '.ao-cl-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.8rem;border-radius:8px;margin-bottom:0.35rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background 0.15s;}'
+      + '.ao-cl-item:hover{background:rgba(255,174,48,0.06);}'
+      + '.ao-cl-item input[type=checkbox]{width:16px;height:16px;accent-color:#ffae30;flex-shrink:0;}'
+      + '.ao-cl-item span{font-size:0.85rem;color:#ccccd8;line-height:1.4;}'
+      + '.ao-cl-item.checked{background:rgba(39,217,122,0.06);border-color:rgba(39,217,122,0.2);}'
+      + '.ao-cl-item.checked span{color:#27d97a;}'
+      + '#ao-cl-submit{width:100%;margin-top:1.25rem;padding:0.8rem;border-radius:10px;cursor:pointer;background:rgba(255,174,48,0.12);color:#ffae30;border:1.5px solid rgba(255,174,48,0.35);font-size:0.9rem;font-weight:700;letter-spacing:0.03em;transition:all 0.2s;}'
+      + '#ao-cl-submit:hover{background:rgba(255,174,48,0.22);}#ao-cl-submit:disabled{opacity:0.4;cursor:not-allowed;}';
+    document.head.appendChild(style);
+
+    var overlay = document.createElement('div');
+    overlay.id = 'ao-overlay';
+    overlay.innerHTML = '<div id="ao-card"><div id="ao-icon">⚡</div><div id="ao-title">STOP</div><div id="ao-body"></div><div id="ao-timer"></div><div id="ao-progress"><div id="ao-progress-fill"></div></div><button id="ao-dismiss" onclick="window._aoDismiss()">Entendido · Protejo la cuenta</button></div>';
+    document.body.appendChild(overlay);
+
+    var clBack = document.createElement('div');
+    clBack.id = 'ao-checklist-backdrop';
+    clBack.innerHTML = '<div id="ao-checklist-modal"><div class="ao-cl-title">⚠️ Checklist Anti-Overtrading</div><div class="ao-cl-sub">El sistema detectó un patrón de sobre-operativa.<br>Completa este checklist antes de continuar operando hoy.</div><div class="ao-cl-section">Antes de abrir una nueva evaluación</div><div id="ao-cl-pre"></div><div class="ao-cl-section">Durante el día</div><div id="ao-cl-dia"></div><button id="ao-cl-submit" onclick="window._aoChecklistSubmit()" disabled>✓ Confirmo que tengo claridad para operar</button></div>';
+    document.body.appendChild(clBack);
+  }
+
+  /* ── Mostrar tarjeta flash ─────────────────────────────────── */
+  function _aoShowCard(level, durationSec) {
+    _aoInjectDOM();
+    if (_flashTimer) { clearTimeout(_flashTimer); clearInterval(window._aoTickInterval); }
+    var frases = level === 'red' ? FRASES_ROJO : FRASES_AMARILLO;
+    var key    = level === 'red' ? 'red' : 'yellow';
+    var frase  = frases[_frasesIdx[key] % frases.length];
+    _frasesIdx[key] = (_frasesIdx[key] + 1) % frases.length;
+
+    var card    = document.getElementById('ao-card');
+    var overlay = document.getElementById('ao-overlay');
+    var fill    = document.getElementById('ao-progress-fill');
+    var timerEl = document.getElementById('ao-timer');
+
+    card.className = 'ao-flashing ' + (level === 'red' ? 'ao-red' : 'ao-yellow');
+    document.getElementById('ao-icon').textContent  = level === 'red' ? '🛑' : '⚠️';
+    document.getElementById('ao-title').textContent = frase[0];
+    document.getElementById('ao-body').textContent  = frase[1];
+    fill.style.transition = 'none'; fill.style.width = '100%';
+    overlay.classList.add('ao-active');
+
+    var remaining = durationSec;
+    timerEl.textContent = 'Cerrando en ' + remaining + 's';
+    setTimeout(function() { fill.style.transition = 'width ' + durationSec + 's linear'; fill.style.width = '0%'; }, 50);
+    window._aoTickInterval = setInterval(function() { remaining--; timerEl.textContent = remaining > 0 ? 'Cerrando en ' + remaining + 's' : ''; }, 1000);
+    _flashTimer = setTimeout(function() { clearInterval(window._aoTickInterval); _aoDismissCard(); }, durationSec * 1000);
+  }
+
+  window._aoDismiss = function() {
+    if (_flashTimer) { clearTimeout(_flashTimer); clearInterval(window._aoTickInterval); }
+    _aoDismissCard();
+  };
+  function _aoDismissCard() {
+    var o = document.getElementById('ao-overlay');
+    if (o) o.classList.remove('ao-active');
+  }
+
+  /* ── Mostrar checklist ─────────────────────────────────────── */
+  function _aoShowChecklist() {
+    _aoInjectDOM();
+    var pre = document.getElementById('ao-cl-pre');
+    var dia = document.getElementById('ao-cl-dia');
+    if (!pre || !dia) return;
+    pre.innerHTML = ''; dia.innerHTML = '';
+    CHECKLIST_PRE.forEach(function(txt, i) {
+      pre.innerHTML += '<label class="ao-cl-item" id="ao-cli-pre-' + i + '" onclick="window._aoClToggle(\'pre\',' + i + ')"><input type="checkbox" id="ao-chk-pre-' + i + '"> <span>' + txt + '</span></label>';
+    });
+    CHECKLIST_DIA.forEach(function(txt, i) {
+      dia.innerHTML += '<label class="ao-cl-item" id="ao-cli-dia-' + i + '" onclick="window._aoClToggle(\'dia\',' + i + ')"><input type="checkbox" id="ao-chk-dia-' + i + '"> <span>' + txt + '</span></label>';
+    });
+    document.getElementById('ao-checklist-backdrop').classList.add('ao-cl-active');
+    _aoUpdateClSubmit();
+  }
+
+  window._aoClToggle = function(group, i) {
+    var chk = document.getElementById('ao-chk-' + group + '-' + i);
+    if (!chk) return;
+    chk.checked = !chk.checked;
+    var lbl = document.getElementById('ao-cli-' + group + '-' + i);
+    if (lbl) lbl.classList.toggle('checked', chk.checked);
+    _aoUpdateClSubmit();
+  };
+  function _aoUpdateClSubmit() {
+    var all = true;
+    CHECKLIST_PRE.forEach(function(_, i) { var c = document.getElementById('ao-chk-pre-' + i); if (c && !c.checked) all = false; });
+    CHECKLIST_DIA.forEach(function(_, i) { var c = document.getElementById('ao-chk-dia-' + i); if (c && !c.checked) all = false; });
+    var btn = document.getElementById('ao-cl-submit');
+    if (btn) btn.disabled = !all;
+  }
+
+  window._aoChecklistSubmit = function() {
+    _aoMarkChecklistDone(); // escribe en localStorage + dispara save() → sbPush a Supabase
+    var bd = document.getElementById('ao-checklist-backdrop');
+    if (bd) bd.classList.remove('ao-cl-active');
+    if (typeof toast === 'function') toast('✅ Checklist completado · ¡Opera con claridad!');
+  };
+
+  /* ── EVALUACIÓN PRINCIPAL ──────────────────────────────────────
+     Lee entries (variable global, ya actualizada por save() o por
+     sfApplyCloudData tras un sbPull). silent=true → no muestra
+     tarjetas flash (solo activa checklist si corresponde).        */
+  window._aoEvaluar = function(silent) {
+    var stopsHoy = _aoStopsHoy();
+    if (stopsHoy >= 3 && !_aoChecklistDoneToday()) {
+      setTimeout(_aoShowChecklist, 600); return;
+    }
+    if (!silent) {
+      if (stopsHoy === 2) { setTimeout(function() { _aoShowCard('yellow', 20); }, 400); return; }
+      if (stopsHoy === 1) { setTimeout(function() { _aoShowCard('red', 20); }, 400); }
+    }
+  };
+
+  /* ── HOOKS en save() y sfApplyCloudData() ─────────────────────
+     Se parchean después de DOMContentLoaded para asegurar que las
+     funciones originales ya están definidas.                      */
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+
+      // Hook en save() — se dispara cuando el usuario guarda una operación.
+      // entries ya está actualizado en memoria. save() escribe localStorage
+      // y llama sbPush (inmediato, 400ms debounce técnico).
+      var origSave = window.save;
+      if (typeof origSave === 'function') {
+        window.save = function() {
+          origSave.apply(this, arguments);
+          window._aoEvaluar(false);
+        };
+      }
+
+      // Hook en sfApplyCloudData() — se dispara después de cada sbPull:
+      // al arrancar sesión, cada 30s (poll entre sesiones paralelas),
+      // y al volver a una pestaña. entries ya está recargado desde localStorage
+      // que acaba de ser escrito por applyBackupPayload.
+      var origApply = window.sfApplyCloudData;
+      if (typeof origApply === 'function') {
+        window.sfApplyCloudData = function() {
+          origApply.apply(this, arguments);
+          // silent=true: no flash al sync automático; solo activa checklist si corresponde
+          setTimeout(function() { window._aoEvaluar(true); }, 400);
+        };
+      }
+
+      // Evaluación al cargar (silent — ya que los datos vienen de la nube via sfApplyCloudData)
+      setTimeout(function() { window._aoEvaluar(true); }, 2500);
+
+    }, 800);
+  });
+
+  /* ── PATCH buildBackupPayload / applyBackupPayload ────────────
+     Añade sf_ao_checklist_v1 al payload de Supabase para que el
+     estado "checklist completado hoy" viaje entre sesiones/dispositivos. */
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      var origBuild = window.buildBackupPayload;
+      if (typeof origBuild === 'function') {
+        window.buildBackupPayload = function() {
+          var payload = origBuild.apply(this, arguments);
+          try { payload.sf_ao_checklist_v1 = _lsGet('sf_ao_checklist_v1') || ''; } catch(e) {}
+          return payload;
+        };
+      }
+      var origApplyPay = window.applyBackupPayload;
+      if (typeof origApplyPay === 'function') {
+        window.applyBackupPayload = function(d) {
+          origApplyPay.apply(this, arguments);
+          try { if (d && d.sf_ao_checklist_v1 !== undefined) _lsSet('sf_ao_checklist_v1', d.sf_ao_checklist_v1); } catch(e) {}
+        };
+      }
+    }, 600);
+  });
+
+  /* ── API pública para pruebas ──────────────────────────────── */
+  window._aoTriggerRed       = function() { _aoInjectDOM(); _aoShowCard('red', 20); };
+  window._aoTriggerYellow    = function() { _aoInjectDOM(); _aoShowCard('yellow', 20); };
+  window._aoTriggerChecklist = function() { _aoInjectDOM(); _aoShowChecklist(); };
+
+})(); // end SISTEMA ANTI-OVERTRADING
 </script>
 
 
