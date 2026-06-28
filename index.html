@@ -4494,7 +4494,8 @@ function save() {
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a la nube con debounce (espera 600ms para asegurar que localStorage está escrito)
+  // Subir a la nube inmediatamente — la nube es la fuente de verdad
+  // Debounce corto (200ms) solo para evitar llamadas duplicadas en ráfaga
   clearTimeout(_sfPushTimer);
   _sfPushTimer = setTimeout(function() {
     try {
@@ -4504,7 +4505,7 @@ function save() {
         if (licData && licData.key) sbPush(licData.key);
       }
     } catch(e) {}
-  }, 400);
+  }, 200);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -16896,13 +16897,14 @@ function licOcultarBoot() {
   // Primero descargar nube, luego mostrar UI — así nunca se ve localStorage vacío
   if (data.key) {
     try {
-      const pulled = await sbPull(data.key);
-      if (pulled) {
-        entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-        accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-        groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-        certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-        firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+      const cloudData = await sbPull(data.key);
+      if (cloudData) {
+        // Aplicar directo a memoria desde la nube — no pasar por localStorage
+        entries   = Array.isArray(cloudData.fp_entries_v4_sale)   ? cloudData.fp_entries_v4_sale   : [];
+        accounts  = cloudData.fp_accounts_v4_sale  || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+        groups    = cloudData.fp_groups_v4_sale    || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+        certs     = Array.isArray(cloudData.fp_certs_v4_sale)     ? cloudData.fp_certs_v4_sale     : [];
+        firmStats = cloudData.fp_firmstats_v4_sale || {};
         console.log('SF Cloud: datos pre-cargados antes de mostrar UI');
       }
     } catch(e) { console.warn('SF Cloud: fallo pre-carga', e); }
@@ -17055,9 +17057,9 @@ async function forzarDescargaNube() {
     const licData = JSON.parse(licRaw);
     if (!licData || !licData.key) { toast('No hay sesión activa', true); return; }
     toast('☁️ Descargando datos desde la nube...');
-    const pulled = await sbPull(licData.key);
-    if (pulled) {
-      sfApplyCloudData();
+    const cloudData = await sbPull(licData.key);
+    if (cloudData) {
+      sfApplyCloudData(cloudData);
       toast('✅ Datos restaurados desde la nube');
     } else {
       toast('⚠️ No se encontraron datos en la nube', true);
@@ -17098,19 +17100,32 @@ async function sbPull(licKey) {
     if (!res.ok) return false;
     const rows = await res.json();
     if (!rows || !rows.length || !rows[0].data) return false;
+    // Aplicar al localStorage (caché local) Y devolver el payload para uso inmediato en memoria
     applyBackupPayload(rows[0].data);
-    return true;
+    return rows[0].data; // devuelve el objeto completo, no solo true
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
 
 // ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
-function sfApplyCloudData() {
+// Aplica datos de la nube a memoria y re-renderiza la UI completa.
+// Acepta opcionalmente el payload ya descargado para evitar re-leer localStorage.
+function sfApplyCloudData(cloudPayload) {
   try {
-    entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
-    accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
-    groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
-    certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
-    firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+    if (cloudPayload) {
+      // Fuente de verdad: el objeto bajado de la nube, aplicado directo a memoria
+      entries   = Array.isArray(cloudPayload.fp_entries_v4_sale)   ? cloudPayload.fp_entries_v4_sale   : JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+      accounts  = cloudPayload.fp_accounts_v4_sale  || JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+      groups    = cloudPayload.fp_groups_v4_sale    || JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+      certs     = Array.isArray(cloudPayload.fp_certs_v4_sale)     ? cloudPayload.fp_certs_v4_sale     : JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+      firmStats = cloudPayload.fp_firmstats_v4_sale || JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+    } else {
+      // Fallback: leer desde localStorage (caché local)
+      entries   = JSON.parse(_lsGet('fp_entries_v4_sale')   || '[]');
+      accounts  = JSON.parse(_lsGet('fp_accounts_v4_sale')  || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+      groups    = JSON.parse(_lsGet('fp_groups_v4_sale')    || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
+      certs     = JSON.parse(_lsGet('fp_certs_v4_sale')     || '[]');
+      firmStats = JSON.parse(_lsGet('fp_firmstats_v4_sale') || '{}');
+    }
     if (typeof buildSidebarDynamic === 'function') buildSidebarDynamic();
     if (typeof renderOverview      === 'function') renderOverview();
     if (typeof renderGroups        === 'function') renderGroups();
@@ -17121,38 +17136,46 @@ function sfApplyCloudData() {
     if (typeof initOvSections      === 'function') initOvSections();
     if (typeof renderCalendar      === 'function') try { renderCalendar(); } catch(e) {}
     if (typeof retoLinkedAccountInit === 'function') try { retoLinkedAccountInit(); } catch(e) {}
+    // Re-renderizar pestaña activa de cuenta si procede
+    if (currentAccount && typeof renderDetail === 'function') try { renderDetail(); } catch(e) {}
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
 
-  // 1. Traer datos de la nube ANTES de mostrar la UI
-  const pulled = await sbPull(licKey);
-  if (pulled) {
+  // 1. Traer datos de la nube ANTES de mostrar la UI — la nube manda siempre
+  const cloudData = await sbPull(licKey);
+  if (cloudData) {
     setTimeout(() => {
-      sfApplyCloudData();
-      console.log('SF Cloud datos restaurados desde la nube');
+      sfApplyCloudData(cloudData);
+      console.log('SF Cloud: datos pre-cargados desde la nube');
     }, 300);
   }
 
-  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos
+  // 2. Cada 10s: primero pull (para no sobreescribir cambios de otra sesión),
+  //    luego push con el estado local actualizado
   setInterval(async () => {
+    const remote = await sbPull(licKey);
+    if (remote) {
+      // Fusionar: la nube tiene prioridad sobre localStorage, pero respetamos
+      // cambios locales no subidos aún (los entries en memoria son la copia viva)
+      sfApplyCloudData(remote);
+    }
+    // Después de aplicar la nube, subir nuestro estado actualizado
     await sbPush(licKey);
-    // Después del push, hacer pull para detectar cambios de otra sesión
-    const remotePulled = await sbPull(licKey);
-    if (remotePulled) sfApplyCloudData();
-  }, 30000);
+  }, 10000);
 
-  // 3. Guardar al cerrar/cambiar pestaña
+  // 3. Al cerrar/cambiar pestaña: subir inmediatamente
   window.addEventListener('beforeunload', () => sbPush(licKey));
   document.addEventListener('visibilitychange', async () => {
     if (document.hidden) {
+      // Al salir: guardar en la nube
       await sbPush(licKey);
     } else {
-      // Al volver a la pestaña, descargar cambios que pudo hacer otra sesión
-      const remotePulled = await sbPull(licKey);
-      if (remotePulled) sfApplyCloudData();
+      // Al volver: descargar desde la nube primero — puede haber cambios de otra sesión
+      const remote = await sbPull(licKey);
+      if (remote) sfApplyCloudData(remote);
     }
   });
 }
