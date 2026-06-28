@@ -4463,20 +4463,24 @@ let activeGroupTab = 'A';
 let editingGroupAssign = null;
 let blownTargetAccount = null; // for blown modal
 
+var _sfPushTimer = null;
 function save() {
   _lsSet('fp_entries_v4_sale', JSON.stringify(entries));
   _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a la nube inmediatamente en cada cambio
-  try {
-    const licRaw = localStorage.getItem('fp_lic_v1_sale');
-    if (licRaw) {
-      const licData = JSON.parse(licRaw);
-      if (licData && licData.key) sbPush(licData.key);
-    }
-  } catch(e) {}
+  // Subir a la nube con debounce (espera 600ms para asegurar que localStorage está escrito)
+  clearTimeout(_sfPushTimer);
+  _sfPushTimer = setTimeout(function() {
+    try {
+      const licRaw = localStorage.getItem('fp_lic_v1_sale');
+      if (licRaw) {
+        const licData = JSON.parse(licRaw);
+        if (licData && licData.key) sbPush(licData.key);
+      }
+    } catch(e) {}
+  }, 600);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -16865,23 +16869,33 @@ function sfApplyCloudData() {
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
 
-  // 1. Traer datos de la nube y esperar a que el DOM esté listo
+  // 1. Traer datos de la nube ANTES de mostrar la UI
   const pulled = await sbPull(licKey);
   if (pulled) {
-    // Esperar a que el render inicial haya terminado antes de re-renderizar
     setTimeout(() => {
       sfApplyCloudData();
       console.log('SF Cloud datos restaurados desde la nube');
     }, 300);
   }
 
-  // 2. Auto-guardar en nube cada 60s
-  setInterval(() => sbPush(licKey), 60000);
+  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos
+  setInterval(async () => {
+    await sbPush(licKey);
+    // Después del push, hacer pull para detectar cambios de otra sesión
+    const remotePulled = await sbPull(licKey);
+    if (remotePulled) sfApplyCloudData();
+  }, 30000);
 
   // 3. Guardar al cerrar/cambiar pestaña
   window.addEventListener('beforeunload', () => sbPush(licKey));
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) sbPush(licKey);
+  document.addEventListener('visibilitychange', async () => {
+    if (document.hidden) {
+      await sbPush(licKey);
+    } else {
+      // Al volver a la pestaña, descargar cambios que pudo hacer otra sesión
+      const remotePulled = await sbPull(licKey);
+      if (remotePulled) sfApplyCloudData();
+    }
   });
 }
 
