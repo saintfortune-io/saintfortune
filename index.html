@@ -9296,11 +9296,17 @@ function applyBackupPayload(d){
   if(d.tp_daily) {
     Object.keys(d.tp_daily).forEach(k => _lsSet(k, d.tp_daily[k]));
   }
-  if(d.tp_badtrades_sale        !== undefined) _lsSet('tp_badtrades_sale',        JSON.stringify(d.tp_badtrades_sale));
-  if(d.tp_month_archive_v1_sale !== undefined) _lsSet('tp_month_archive_v1_sale', JSON.stringify(d.tp_month_archive_v1_sale));
-  if(d.sf_trading_plans_v1      !== undefined) _lsSet('sf_trading_plans_v1',      JSON.stringify(d.sf_trading_plans_v1));
-  if(d.sf_coach_v1_sale         !== undefined) _lsSet('sf_coach_v1_sale',         JSON.stringify(d.sf_coach_v1_sale));
-  if(d.fp_reto_1k10k_v1        !== undefined) _lsSet('fp_reto_1k10k_v1',         JSON.stringify(d.fp_reto_1k10k_v1));
+  if(d.tp_badtrades_sale          !== undefined) _lsSet('tp_badtrades_sale',          JSON.stringify(d.tp_badtrades_sale));
+  if(d.tp_month_archive_v1_sale   !== undefined) _lsSet('tp_month_archive_v1_sale',   JSON.stringify(d.tp_month_archive_v1_sale));
+  if(d.sf_trading_plans_v1        !== undefined) _lsSet('sf_trading_plans_v1',        JSON.stringify(d.sf_trading_plans_v1));
+  if(d.sf_coach_v1_sale           !== undefined) _lsSet('sf_coach_v1_sale',           JSON.stringify(d.sf_coach_v1_sale));
+  if(d.fp_reto_1k10k_v1          !== undefined) _lsSet('fp_reto_1k10k_v1',           JSON.stringify(d.fp_reto_1k10k_v1));
+  if(d.fp_reto_pnl_v1            !== undefined) _lsSet('fp_reto_pnl_v1',             JSON.stringify(d.fp_reto_pnl_v1));
+  if(d.fp_reto_diasfuera_v1      !== undefined) _lsSet('fp_reto_diasfuera_v1',       JSON.stringify(d.fp_reto_diasfuera_v1));
+  if(d.fp_reto_reflections_sale   !== undefined) _lsSet('fp_reto_reflections_sale',   JSON.stringify(d.fp_reto_reflections_sale));
+  if(d.tp_max_streak_sale         !== undefined) _lsSet('tp_max_streak_sale',         String(d.tp_max_streak_sale));
+  if(d.tp_max_streak_start_sale   !== undefined) _lsSet('tp_max_streak_start_sale',   d.tp_max_streak_start_sale);
+  if(d.tp_max_streak_end_sale     !== undefined) _lsSet('tp_max_streak_end_sale',     d.tp_max_streak_end_sale);
   if(d.fp_reto_pnl_v1          !== undefined) _lsSet('fp_reto_pnl_v1',           JSON.stringify(d.fp_reto_pnl_v1));
   if(d.fp_reto_diasfuera_v1    !== undefined) _lsSet('fp_reto_diasfuera_v1',     JSON.stringify(d.fp_reto_diasfuera_v1));
   if(d.fp_reto_reflections_sale !== undefined) _lsSet('fp_reto_reflections_sale', JSON.stringify(d.fp_reto_reflections_sale));
@@ -15484,7 +15490,7 @@ window.renderTradingPlanTab = function(acc) {
     + '<label class="tp-field-label">🔗 Link del gráfico (TradingView u otra plataforma)</label>'
     + '<div style="display:flex;gap:6px;align-items:center;">'
     + '<input class="tp-field-input" type="url" id="tp-chart-link" style="flex:1;" placeholder="https://es.tradingview.com/chart/..." value="' + (plan && plan.chartLink ? plan.chartLink.replace(/"/g,'&quot;') : '') + '">'
-    + (plan && plan.chartLink ? '<a href="' + plan.chartLink.replace(/"/g,'&quot;') + '" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">↗ Abrir</a>' : '')
+    + '<a id="tp-open-link" href="' + (plan && plan.chartLink ? plan.chartLink.replace(/"/g,'&quot;') : '#') + '" target="_blank" rel="noopener" style="flex-shrink:0;padding:6px 11px;border-radius:7px;background:rgba(74,158,255,0.1);color:var(--blue);border:1px solid rgba(74,158,255,0.3);font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;" onclick="(function(a){var u=document.getElementById(&quot;tp-chart-link&quot;).value;if(u){a.href=u;}else{event.preventDefault();}})(this)">↗ Abrir</a>'
     + '</div>'
     + '</div>'
 
