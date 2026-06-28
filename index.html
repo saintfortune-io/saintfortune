@@ -13744,7 +13744,7 @@ coachRenderInsights = function() {
       var d = new Date(monday); d.setDate(monday.getDate() + i);
       var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
       var entry = null;
-      try { var raw = localStorage.getItem('diary_'+iso); if(raw) entry = JSON.parse(raw); } catch(e) {}
+      try { var raw = _lsGet('diary_'+iso); if(raw) entry = JSON.parse(raw); } catch(e) {}
       var el = document.getElementById('cwb-'+dayKeys[i]);
       if (!el) continue;
       if (!entry) {
@@ -15250,7 +15250,7 @@ function _tpInjectCSS() {
 var TP_KEY = 'sf_trading_plans_v1';
 
 function _tpLoad() {
-  try { return JSON.parse(localStorage.getItem(TP_KEY) || '{}'); } catch(e) { return {}; }
+  try { return JSON.parse(_lsGet(TP_KEY) || '{}'); } catch(e) { return {}; }
 }
 
 function _tpSave(plans) {
@@ -15305,10 +15305,8 @@ window.saveTradingPlan = function(acc) {
 function _tpCalcStats(acc, plan) {
   var trades = [];
   try {
-    var all = JSON.parse(localStorage.getItem('sf_trades_v1') || '{}');
-    trades = all[acc] ? all[acc] : [];
-    // También buscar en entries del sistema principal
-    if (!trades.length && typeof entries !== 'undefined') {
+    // Usar siempre las entradas del sistema principal (van a la nube)
+    if (typeof entries !== 'undefined') {
       trades = entries.filter(function(e){ return e.account === acc; }).map(function(e){
         return { pnl: e.pnl, openTime: e.date, closeTime: e.date, lots: e.lots };
       });
