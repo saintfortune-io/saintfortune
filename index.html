@@ -18069,6 +18069,270 @@ async function sbStartAutoSync(licKey) {
   };
 
 })(); // end SISTEMA ANTI-OVERTRADING
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SF · INTELLIGENCE v5: tarjetas colapsables + filtro quincenal + contador OT
+// Se inyecta al final del script existente — no modifica nada anterior
+// ─────────────────────────────────────────────────────────────────────────────
+(function() {
+
+// 1. CSS
+function _v5CSS() {
+  if (document.getElementById('sf-ie5-css')) return;
+  var s = document.createElement('style');
+  s.id = 'sf-ie5-css';
+  s.textContent = [
+    '.ie5-tabs{display:flex;gap:5px;margin-bottom:14px;}',
+    '.ie5-tab{flex:1;padding:7px 0;border-radius:8px;font-size:10.5px;font-weight:700;cursor:pointer;border:1.5px solid var(--border2);background:var(--bg2);color:var(--muted2);transition:all .15s;text-align:center;}',
+    '.ie5-tab.on{background:rgba(74,158,255,.12);border-color:rgba(74,158,255,.4);color:var(--blue);}',
+    '.ie5-tab:hover:not(.on){color:var(--text);}',
+    '.ot-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:11px;margin-bottom:12px;background:var(--bg1);border:1.5px solid var(--border);position:relative;overflow:hidden;}',
+    '.ot-bar::before{content:"";position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--blue),var(--purple));}',
+    '.ot-bar.ot-warn::before{background:linear-gradient(90deg,var(--amber),#e07800);}',
+    '.ot-bar.ot-danger{background:rgba(255,79,79,.06);border-color:rgba(255,79,79,.35);}',
+    '.ot-bar.ot-danger::before{background:linear-gradient(90deg,var(--red),#c0392b);}',
+    '.ot-ring{width:52px;height:52px;flex-shrink:0;position:relative;}',
+    '.ot-ring svg{transform:rotate(-90deg);}',
+    '.ot-ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;}',
+    '.ot-info{flex:1;min-width:0;}',
+    '.ot-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}',
+    '.ot-sub{font-size:10.5px;color:var(--muted2);line-height:1.5;}',
+    '.ot-badge{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:2px 9px;border-radius:20px;margin-top:5px;display:inline-block;}',
+    '.ot-badge.ot-ok{background:rgba(39,217,122,.1);color:var(--green);border:1px solid rgba(39,217,122,.3);}',
+    '.ot-badge.ot-warn{background:rgba(255,174,48,.1);color:var(--amber);border:1px solid rgba(255,174,48,.3);}',
+    '.ot-badge.ot-danger{background:rgba(255,79,79,.1);color:var(--red);border:1px solid rgba(255,79,79,.3);}',
+    '.ie5-card{border-radius:11px;margin-bottom:7px;border:1.5px solid;overflow:hidden;}',
+    '.ie5-card.c-ok{background:rgba(39,217,122,.05);border-color:rgba(39,217,122,.2);}',
+    '.ie5-card.c-viol{background:rgba(255,79,79,.06);border-color:rgba(255,79,79,.3);}',
+    '.ie5-card.c-warn{background:rgba(255,174,48,.06);border-color:rgba(255,174,48,.28);}',
+    '.ie5-hdr{display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;user-select:none;}',
+    '.ie5-hdr:hover{background:rgba(255,255,255,.03);}',
+    '.ie5-hdr-icon{font-size:16px;flex-shrink:0;}',
+    '.ie5-hdr-title{flex:1;font-size:11.5px;font-weight:700;line-height:1.35;}',
+    '.ie5-card.c-ok .ie5-hdr-title{color:var(--green);}',
+    '.ie5-card.c-viol .ie5-hdr-title{color:var(--red);}',
+    '.ie5-card.c-warn .ie5-hdr-title{color:var(--amber);}',
+    '.ie5-hdr-meta{font-size:9.5px;color:var(--muted);margin-right:4px;}',
+    '.ie5-arr{font-size:9px;color:var(--muted);transition:transform .2s;width:14px;text-align:center;}',
+    '.ie5-card.open .ie5-arr{transform:rotate(180deg);}',
+    '.ie5-body{display:none;padding:0 13px 12px;font-size:10.5px;color:var(--muted2);line-height:1.6;border-top:1px solid rgba(255,255,255,.05);}',
+    '.ie5-card.open .ie5-body{display:block;}',
+    '.ie5-chips{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;}',
+    '.ie5-chip{font-size:10px;padding:2px 8px;border-radius:5px;background:rgba(255,79,79,.1);color:var(--red);border:1px solid rgba(255,79,79,.2);}',
+    '.ie5-chip.amber{background:rgba(255,174,48,.1);color:var(--amber);border-color:rgba(255,174,48,.2);}'
+  ].join('');
+  document.head.appendChild(s);
+}
+
+// 2. Overtrading counter
+function _otCount(acc) {
+  var today = new Date().toISOString().slice(0,10);
+  var plan  = window.getTradingPlan ? window.getTradingPlan(acc) : null;
+  var max   = plan ? (plan.maxOpsPerDay || 2) : 2;
+  var split = plan ? (plan.splitRisk || false) : false;
+  var all   = typeof entries !== 'undefined' ? entries : [];
+  var todayT = all.filter(function(e) { return e.account === acc && e.date === today; });
+  var eff = todayT.length;
+  if (split && eff > 1) {
+    var b = todayT.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('buy') >= 0; }).length;
+    var s2= todayT.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('sell')>= 0; }).length;
+    if (todayT.some(function(t){ return t.eaType; })) eff = (b>0?1:0)+(s2>0?1:0);
+  }
+  return { count:eff, max:max, raw:todayT.length };
+}
+
+function _buildOT(acc) {
+  var d = _otCount(acc);
+  var pct = d.max > 0 ? Math.min(d.count/d.max, 1) : 0;
+  var rem = Math.max(d.max - d.count, 0);
+  var st  = d.count >= d.max ? 'danger' : (d.count === d.max-1 && d.max > 1) ? 'warn' : 'ok';
+  var col = st==='danger' ? 'var(--red)' : st==='warn' ? 'var(--amber)' : 'var(--green)';
+  var C   = 2*Math.PI*20;
+  var off = C - C*pct;
+  var badge = st==='danger' ? 'Limite alcanzado'
+            : st==='warn'   ? 'Ultima entrada permitida'
+            : rem===d.max   ? 'Sin operar hoy'
+            : rem+' entrada'+(rem!==1?'s':'')+' disponible'+(rem!==1?'s':'');
+  var sub = d.count===0
+    ? 'Aun no has operado. Plan: max <b>'+d.max+'</b> entradas.'
+    : st==='danger'
+    ? '<b>'+d.count+'</b>/'+d.max+' operaciones. Limite del plan superado.'
+    : '<b>'+d.count+'</b> de <b>'+d.max+'</b> operaciones usadas hoy.';
+  var h = '<div class="ot-bar ot-'+st+'" id="ot-live">';
+  h += '<div class="ot-ring"><svg width="52" height="52" viewBox="0 0 52 52">';
+  h += '<circle cx="26" cy="26" r="20" fill="none" stroke="var(--bg3)" stroke-width="4.5"/>';
+  h += '<circle cx="26" cy="26" r="20" fill="none" stroke="'+col+'" stroke-width="4.5" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" stroke-linecap="round"/>';
+  h += '</svg><div class="ot-ring-num" style="color:'+col+'">'+d.count+'</div></div>';
+  h += '<div class="ot-info"><div class="ot-title">Entradas hoy</div>';
+  h += '<div class="ot-sub">'+sub+'</div>';
+  h += '<span class="ot-badge ot-'+st+'">'+badge+'</span></div></div>';
+  return h;
+}
+
+// 3. Period filter
+var _ie5P = {};
+function _filterDays(details, period) {
+  var now = new Date();
+  var cut;
+  if (period==='today') { cut=now.toISOString().slice(0,10); return details.filter(function(d){return d.date===cut;}); }
+  if (period==='week')  { var a=new Date(now); a.setDate(a.getDate()-7);  cut=a.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
+  if (period==='quin')  { var b=new Date(now); b.setDate(b.getDate()-15); cut=b.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
+  if (period==='month') { var c=new Date(now); c.setDate(c.getDate()-30); cut=c.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
+  return details;
+}
+var _plabels = {today:'hoy',week:'esta semana',quin:'ultimas 2 semanas',month:'este mes'};
+
+function _buildTabs(acc, active) {
+  var ps = [['today','Hoy'],['week','Semana'],['quin','Quincenal'],['month','Mes']];
+  var h = '<div class="ie5-tabs">';
+  for (var i=0;i<ps.length;i++) {
+    var p=ps[i], sa=acc.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    h += '<div class="ie5-tab'+(p[0]===active?' on':'')+'" onclick="window._ie5Render(\''+sa+'\',\''+p[0]+'\')">'+p[1]+'</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+// 4. Collapsible card
+var _open = {};
+function _card(type, icon, title, meta, body, chips, chipCls) {
+  var id  = 'c5-'+(Math.random().toString(36).slice(2,6));
+  var key = type+title;
+  var op  = !!_open[key];
+  var safek = key.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+  var ch  = '';
+  if (chips && chips.length) {
+    ch = '<div class="ie5-chips">';
+    for (var i=0;i<Math.min(chips.length,5);i++) ch += '<span class="ie5-chip'+(chipCls?' '+chipCls:'')+'">'+(chips[i])+'</span>';
+    ch += '</div>';
+  }
+  var h = '<div class="ie5-card c-'+type+(op?' open':'')+'" id="'+id+'">';
+  h += '<div class="ie5-hdr" onclick="window._ie5Toggle(\''+id+'\',\''+safek+'\')">';
+  h += '<span class="ie5-hdr-icon">'+icon+'</span>';
+  h += '<span class="ie5-hdr-title">'+title+'</span>';
+  if (meta) h += '<span class="ie5-hdr-meta">'+meta+'</span>';
+  h += '<span class="ie5-arr">&#9660;</span></div>';
+  h += '<div class="ie5-body">'+body+ch+'</div>';
+  h += '</div>';
+  return h;
+}
+
+window._ie5Toggle = function(id, key) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+  _open[key] = el.classList.contains('open');
+};
+
+// 5. Main render
+window._ie5Render = function(acc, period) {
+  var cont = document.getElementById('ie-account-content');
+  if (!cont) return;
+  _v5CSS();
+  if (!period) period = _ie5P[acc] || 'week';
+  _ie5P[acc] = period;
+
+  var plan = window.getTradingPlan ? window.getTradingPlan(acc) : null;
+  var r    = window.getConductualAnalysis ? window.getConductualAnalysis(acc) : null;
+  var html = _buildTabs(acc, period);
+
+  if (period==='today' || period==='week') html += _buildOT(acc);
+
+  if (!plan) {
+    html += '<div class="ie3-empty-state"><div class="ie3-empty-icon">&#127919;</div><div class="ie3-empty-title">Sin Plan de Trading</div><div>Define tus limites en la pestana Plan de Trading.</div></div>';
+    cont.innerHTML = html; return;
+  }
+  if (!r || r.noData) {
+    html += '<div class="ie3-empty-state"><div class="ie3-empty-icon">&#128202;</div><div class="ie3-empty-title">Sin operaciones</div><div>Importa datos del EA.</div></div>';
+    cont.innerHTML = html; return;
+  }
+
+  var days  = _filterDays(r.dayDetails, period);
+  var label = _plabels[period] || period;
+  if (!days.length) {
+    html += '<div class="ie3-no-activity">&#128235; Sin operaciones '+label+'.</div>';
+    cont.innerHTML = html; return;
+  }
+
+  var total  = days.length;
+  var clean  = days.filter(function(d){return d.clean;}).length;
+  var score  = Math.round(clean/total*100);
+  var oV     = days.filter(function(d){return d.opsViol;});
+  var rV     = days.filter(function(d){return d.riskViol;});
+  var eV     = days.filter(function(d){return d.escalation;});
+  var revV   = days.filter(function(d){return d.revenge;});
+  var outV   = days.filter(function(d){return d.outOfSession;});
+
+  var scol   = score>=80?'var(--green)':score>=50?'var(--amber)':'var(--red)';
+  var scls   = score>=80?'high':score>=50?'mid':'low';
+  var slbl   = score>=80?'&#10003; Plan respetado':score>=50?'&#9888; Parcial':'&#10007; Plan roto';
+  var C2     = 2*Math.PI*24;
+  var off2   = C2 - C2*score/100;
+  var capL   = label.charAt(0).toUpperCase()+label.slice(1);
+
+  html += '<div class="ie3-score-row">';
+  html += '<div class="ie3-score-ring"><svg width="68" height="68" viewBox="0 0 68 68">';
+  html += '<circle cx="34" cy="34" r="24" fill="none" stroke="var(--bg3)" stroke-width="5"/>';
+  html += '<circle cx="34" cy="34" r="24" fill="none" stroke="'+scol+'" stroke-width="5" stroke-dasharray="'+C2.toFixed(1)+'" stroke-dashoffset="'+off2.toFixed(1)+'" stroke-linecap="round"/>';
+  html += '</svg><div class="ie3-score-num" style="color:'+scol+'">'+score+'%</div></div>';
+  html += '<div class="ie3-score-info"><div class="ie3-score-title">'+capL+'</div>';
+  html += '<div class="ie3-score-sub">'+total+' dia'+(total!==1?'s':'')+' &middot; '+clean+' en plan';
+  if (oV.length+rV.length>0) html += ' &middot; <span style="color:var(--red)">'+(oV.length+rV.length)+' desviacion'+(oV.length+rV.length!==1?'es':'')+'</span>';
+  html += '</div><div class="ie3-score-badge '+scls+'">'+slbl+'</div></div></div>';
+
+  if (!oV.length && !rV.length && !eV.length) {
+    html += _card('ok','&#9989;','Todo dentro del plan','','Sin desviaciones detectadas en este periodo.',[]);
+  }
+  if (oV.length) {
+    var wr = oV.slice().sort(function(a,b){return b.ops-a.ops;})[0];
+    var ch2=[]; for(var i=0;i<Math.min(oV.length,5);i++) ch2.push(oV[i].date+' &middot; '+oV[i].ops+' ops');
+    html += _card('viol','&#9889;','Overtrading &mdash; '+oV.length+' dia'+(oV.length!==1?'s':''),oV.length+' dia'+(oV.length!==1?'s':''),
+      'Plan: max <b>'+plan.maxOpsPerDay+' op/dia</b>. Peor dia: <b>'+wr.ops+' ops</b> el '+wr.date+'.',ch2,'');
+  }
+  if (rV.length) {
+    var wr2=rV.slice().sort(function(a,b){return b.riskUsed-a.riskUsed;})[0];
+    var ch3=[]; for(var j=0;j<Math.min(rV.length,5);j++) ch3.push(rV[j].date+(rV[j].riskUsed?' &middot; '+rV[j].riskUsed.toFixed(1)+'%':''));
+    html += _card('viol','&#128197;','Riesgo excedido &mdash; '+rV.length+' dia'+(rV.length!==1?'s':''),rV.length+' dia'+(rV.length!==1?'s':''),
+      'Limite: <b>'+plan.maxDailyRisk+'%</b>. Peor: <b>'+(wr2.riskUsed?wr2.riskUsed.toFixed(1)+'%':'?')+'</b> el '+wr2.date+'.',ch3,'');
+  }
+  if (eV.length) {
+    var ch4=[]; for(var k=0;k<Math.min(eV.length,5);k++) ch4.push(eV[k].date);
+    html += _card('warn','&#128200;','Lotaje aumento tras perdida &mdash; '+eV.length+' dia'+(eV.length!==1?'s':''),eV.length+' obs.',
+      'Size mayor tras stop. Contrastalo con tu estrategia.',ch4,'amber');
+  }
+  if (revV.length) {
+    var ch5=[]; for(var l=0;l<Math.min(revV.length,5);l++) ch5.push(revV[l].date);
+    html += _card('viol','&#128544;','Revenge trading posible &mdash; '+revV.length+' dia'+(revV.length!==1?'s':''),revV.length+' dia'+(revV.length!==1?'s':''),
+      '3+ stops seguidos o size creciente tras perdidas.',ch5,'');
+  }
+  if (outV.length) {
+    var ch6=[]; for(var m=0;m<Math.min(outV.length,5);m++) ch6.push(outV[m].date+' &middot; '+outV[m].outOfSession+' op');
+    html += _card('warn','&#128336;','Fuera de sesion &mdash; '+outV.length+' dia'+(outV.length!==1?'s':''),outV.length+' dia'+(outV.length!==1?'s':''),
+      'Sesiones declaradas: <b>'+(plan.sessions||[]).join(', ')+'</b>.',ch6,'amber');
+  }
+
+  cont.innerHTML = html;
+};
+
+// 6. Hook: intercept existing renderIntelligenceTab
+var _orig = window.renderIntelligenceTab;
+window.renderIntelligenceTab = function(acc, period) {
+  window._ie5Render(acc, period);
+};
+
+// 7. Refresh counter every 30s
+setInterval(function() {
+  var el = document.getElementById('ot-live');
+  if (!el) return;
+  var acc = typeof currentAccount !== 'undefined' ? currentAccount : null;
+  if (!acc) return;
+  var tmp = document.createElement('div');
+  tmp.innerHTML = _buildOT(acc);
+  el.parentNode.replaceChild(tmp.firstChild, el);
+}, 30000);
+
+})();
+// ─────────────────────────────────────────────────────────────────────────────
 </script>
 
 
