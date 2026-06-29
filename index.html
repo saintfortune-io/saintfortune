@@ -10043,7 +10043,7 @@ const GOAL_MILESTONE_DEFAULTS = {
   240000: {emoji:'👑', label:'Imperio Personal'}
 };
 let goalMilestones = JSON.parse(_lsGet('fp_goal_milestones_v1_sale') || 'null') || JSON.parse(JSON.stringify(GOAL_MILESTONE_DEFAULTS));
-function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); if (typeof save === 'function') save(); }
+function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); if (typeof save === 'function') save(); try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {} }
 
 function getTotalWithdrawn() {
   return certs.reduce((s,c) => s + (c.amount || 0), 0);
@@ -10362,7 +10362,7 @@ function switchFaqInner(tab) {
 let diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
 let selectedDiaryMood = '';
 
-function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); if (typeof save === 'function') save(); }
+function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); if (typeof save === 'function') save(); try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {} }
 
 function localDateStr(d) {
   const dt = d ? new Date(d) : new Date();
@@ -10538,7 +10538,30 @@ const BUILT_IN_QUOTES = [
   {emoji:'💡',text:'Tu peor enemigo en el trading eres tú mismo. Domínate a ti mismo antes de dominar el mercado.',author:'Anónimo'},
 ];
 
-let customQuotes = JSON.parse(_lsGet('fondeo_quotes_sale') || '[]');
+const _CUSTOM_QUOTES_DEFAULTS = [
+  {emoji:'🙏', text:'Fe y Acción. Permito que mis sueños y mi vida estable y feliz sea una realidad cada día. +Tiempo +Dinero +Amor +Paz.', author:'Yo'},
+  {emoji:'💪', text:'Confianza. Ejecuto con decisión, sin duda y sin miedo. Confío en mi lectura y mi proceso. Cada trade es profesional, no es emocional.', author:'Yo'},
+  {emoji:'📊', text:'Estadística · Sistema Exitoso. Acepto ganancias y pérdidas con la misma serenidad. Mi ventaja se expresa ejecutando.', author:'Yo'},
+  {emoji:'🙌', text:'Gratitud. Gracias por mi profesión, mi habilidad, mi foco. Agradezco cada lección y logro y cierro con orden, humildad. Merezco descansar.', author:'Yo'},
+  {emoji:'🎯', text:'Foco. Hoy me alineo con el mercado, inicio con claridad y respeto por mí y mi plan. Solo ejecuto lo que cumple mis reglas.', author:'Yo'},
+  {emoji:'🛡', text:'Honro lo logrado respetando mi riesgo. No controlo el resultado pero sí mi disciplina. Estoy en PAZ. SOY FIRME.', author:'Yo'},
+  {emoji:'🔥', text:'Sistema = Pilar. Yo no solo opero. Yo ejecuto con propósito cada día. Alineada con mi vida soñada. El sistema me sostiene.', author:'Yo'},
+  {emoji:'⭐', text:'Siempre has logrado todo lo que te has propuesto. No dudo de mí jamás.', author:'Yo'},
+  {emoji:'🛡', text:'Protección · Disciplina. Protejo mi capital, mi mente y mi energía. Opero solo lo necesario. Menos es más. Priorizo la consistencia.', author:'Yo'},
+  {emoji:'✨', text:'Por derecho divino tengo acceso a la abundancia y al logro de mis legítimos deseos.', author:'Yo'},
+  {emoji:'⏳', text:'Paciencia. El mercado te dará la entrada, tú solo ejecuta. No te anticipes.', author:'Yo'}
+];
+
+let customQuotes = JSON.parse(_lsGet('fondeo_quotes_sale') || 'null');
+if (customQuotes === null) {
+  // Primera vez: cargar frases personales y subir a nube
+  customQuotes = _CUSTOM_QUOTES_DEFAULTS;
+  _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+  } catch(e) {}
+}
 let currentQuoteIdx = 0;
 
 function initQuotes() {
@@ -10563,6 +10586,13 @@ function showNextQuote() {
   showCurrentQuote();
 }
 
+function _quotesSyncCloud() {
+  try {
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+  } catch(e) {}
+}
+
 function addCustomQuote() {
   const text = document.getElementById('custom-quote-text').value.trim();
   const author = document.getElementById('custom-quote-author').value.trim();
@@ -10573,6 +10603,8 @@ function addCustomQuote() {
   document.getElementById('custom-quote-author').value = '';
   renderCustomQuotes();
   toast('Frase añadida ✓');
+  // ── Sync inmediato a la nube ──
+  _quotesSyncCloud();
 }
 
 function deleteCustomQuote(idx) {
@@ -10580,6 +10612,8 @@ function deleteCustomQuote(idx) {
   _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
   renderCustomQuotes();
   toast('Frase eliminada', false, 'red');
+  // ── Sync inmediato a la nube ──
+  _quotesSyncCloud();
 }
 
 function renderCustomQuotes() {
@@ -10852,11 +10886,18 @@ function tpMonthStart() {
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-01';
 }
 
+// ── Helper sync nube para Control del Trader ──
+function _tpSyncCloud() {
+  try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {}
+}
+
 // ── Semáforo ──
 window.tpSetSemaforo = function(val) {
   try { _lsSet(tpTodayKey('tp_sem_sale_'), val); } catch(e) {}
   tpRenderSemaforo(val);
   tpRenderHistory30();
+  // ── Sync inmediato a la nube ──
+  _tpSyncCloud();
 };
 function tpRenderSemaforo(val) {
   document.querySelectorAll('.tp-sem-opt').forEach(el => {
@@ -10937,6 +10978,8 @@ window.tpUpdateChecklist = function() {
   const state = Array.from(items).map(i => i.checked);
   try { _lsSet(tpTodayKey('tp_check_sale_'), JSON.stringify(state)); } catch(e) {}
   tpRenderHistory30();
+  // ── Sync inmediato a la nube ──
+  _tpSyncCloud();
 };
 
 // ── Bad trades ──
@@ -15739,6 +15782,9 @@ function _tpSave(plans) {
   try {
     _lsSet(TP_KEY, JSON.stringify(plans));
     if (typeof save === 'function') save();
+    // ── Sync inmediato a la nube ──
+    const licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
   } catch(e) {}
 }
 
