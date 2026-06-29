@@ -10884,6 +10884,7 @@ window.tpSetSemaforo = function(val) {
   try { _lsSet(tpTodayKey('tp_sem_sale_'), val); } catch(e) {}
   tpRenderSemaforo(val);
   tpRenderHistory30();
+  _sbPushNow(); // Supabase-first: semáforo viaja a nube
 };
 function tpRenderSemaforo(val) {
   document.querySelectorAll('.tp-sem-opt').forEach(el => {
@@ -10964,6 +10965,7 @@ window.tpUpdateChecklist = function() {
   const state = Array.from(items).map(i => i.checked);
   try { _lsSet(tpTodayKey('tp_check_sale_'), JSON.stringify(state)); } catch(e) {}
   tpRenderHistory30();
+  _sbPushNow(); // Supabase-first: checklist viaja a nube
 };
 
 // ── Bad trades ──
@@ -11522,6 +11524,7 @@ window.ddUpdate = function() {
 
   // Guardar y refrescar historial
   try { _lsSet(ddTodayKey(), JSON.stringify(state)); } catch(e) {}
+  _sbPushNow(); // Supabase-first: disciplina del día viaja a nube
   if (typeof tpRenderHistory30 === 'function') tpRenderHistory30();
 };
 
@@ -17471,6 +17474,8 @@ function sfApplyCloudData() {
     try {
       if (typeof coachLoadDate === 'function') coachLoadDate();
       if (typeof coachRenderHistory === 'function') coachRenderHistory();
+      // Re-renderizar insights y Intelligence Engine del Coach con datos frescos de la nube
+      if (typeof coachRenderInsights === 'function') coachRenderInsights();
     } catch(e) {}
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
