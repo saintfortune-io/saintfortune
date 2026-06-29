@@ -3782,7 +3782,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div style="padding:12px 16px;border-radius:9px;background:rgba(74,158,255,0.06);border-left:3px solid var(--blue);font-size:12px;line-height:1.55;color:var(--text);">Mi trabajo no es <strong style="color:var(--blue);">recuperar</strong>.<br>Mi trabajo es <strong style="color:var(--purple);">ejecutar</strong>.</div>
         <div style="padding:12px 16px;border-radius:9px;background:rgba(160,122,255,0.06);border-left:3px solid var(--purple);font-size:12px;line-height:1.55;color:var(--text);">Un trade fuera de plan te <strong style="color:var(--red);">cuesta</strong> más que cualquier <strong style="color:var(--amber);">Stop Loss</strong>.</div>
-        <div style="padding:12px 16px;border-radius:9px;background:rgba(39,217,122,0.06);border-left:3px solid var(--green);font-size:12px;line-height:1.55;color:var(--text);">Protejo el <strong style="color:var(--green);">capital primero</strong>.</div>
+        <div style="padding:12px 16px;border-radius:9px;background:rgba(74,158,255,0.06);border-left:3px solid var(--blue);font-size:12px;line-height:1.55;color:var(--text);">El <strong style="color:var(--blue);">coach emocional</strong> analiza tus patrones de trading para ayudarte a operar con más disciplina.</div>
       </div>
     </div>
   </div>
@@ -4592,7 +4592,7 @@ function save() {
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a la nube con debounce (espera 600ms para asegurar que localStorage está escrito)
+  // Subir a Supabase inmediatamente (300ms debounce para agrupar cambios rápidos)
   clearTimeout(_sfPushTimer);
   _sfPushTimer = setTimeout(function() {
     try {
@@ -4602,7 +4602,7 @@ function save() {
         if (licData && licData.key) sbPush(licData.key);
       }
     } catch(e) {}
-  }, 400);
+  }, 300);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -6341,13 +6341,14 @@ function renderTradesTab(acc, tf) {
   };
 
   el.innerHTML = tasaHTML + sorted.map(e => {
-    const toggleLabel = e.execution === 'good'   ? '✅ Bien ejecutado' :
-                        e.execution === 'bad'    ? '⚠️ Incorrecto' :
-                        e.execution === 'missed' ? '❌ No ejecuté' :
-                        '▼ Clasificar';
+    const execPills = `
+      <div style="display:flex;gap:3px;flex-shrink:0;">
+        <button title="Bien ejecutado" onclick="execSet('${e.id}','good')" style="padding:2px 7px;border-radius:12px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid ${e.execution==='good'?'#27d97a':'var(--border2)'};background:${e.execution==='good'?'rgba(39,217,122,0.15)':'transparent'};color:${e.execution==='good'?'#27d97a':'var(--muted)'};transition:all 0.12s;">✅</button>
+        <button title="Incorrecto" onclick="execSet('${e.id}','bad')" style="padding:2px 7px;border-radius:12px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid ${e.execution==='bad'?'var(--amber)':'var(--border2)'};background:${e.execution==='bad'?'rgba(255,174,48,0.15)':'transparent'};color:${e.execution==='bad'?'var(--amber)':'var(--muted)'};transition:all 0.12s;">⚠️</button>
+        <button title="No ejecuté" onclick="execSet('${e.id}','missed')" style="padding:2px 7px;border-radius:12px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid ${e.execution==='missed'?'var(--red)':'var(--border2)'};background:${e.execution==='missed'?'rgba(255,80,80,0.15)':'transparent'};color:${e.execution==='missed'?'var(--red)':'var(--muted)'};transition:all 0.12s;">❌</button>
+      </div>`;
     return `
-    <div class="entry-item" style="flex-direction:column;align-items:stretch;${e.phase?'opacity:0.7':''}">
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <div class="entry-item" style="${e.phase?'opacity:0.7':''}">
         <div class="entry-date">${e.date}</div>
         ${e.phase?`<span style="font-size:9px;padding:2px 5px;border-radius:4px;background:var(--bg3);color:var(--muted)">${getCycleLabel(e.phase)||phaseLabels[e.phase]||e.phase}</span>`:''}
         <div class="entry-result ${e.result==='win'?'pill-win':'pill-loss'}">${e.result==='win'?'WIN':'LOSS'}</div>
@@ -6355,19 +6356,13 @@ function renderTradesTab(acc, tf) {
         ${e.pair?`<div class="entry-source source-manual">${e.pair}</div>`:''}
         ${e.lots?`<div class="entry-source source-mt5">${e.lots}</div>`:''}
         ${e.session?`<div class="entry-source source-ninja">${e.session}</div>`:''}
-        <div class="entry-note">${e.notes||'—'}</div>
-        ${e.fileData?`<button class="entry-img-btn" onclick="viewEntryImg('${e.id}')">🖼</button>`:''}
+        <div class="entry-note" style="flex:1;">${e.notes||'—'}</div>
+        ${execPills}
         <div class="entry-actions">
-          <button class="exec-classify-toggle${e.execution?' exec-classified':''}" onclick="execToggle('${e.id}')">${toggleLabel}</button>
+          ${e.fileData?`<button class="entry-img-btn" onclick="viewEntryImg('${e.id}')">🖼</button>`:''}
           <button class="entry-edit-btn" onclick="openEditModal('${e.id}')">✏</button>
           <button class="entry-del-btn" onclick="deleteEntry('${e.id}')">✕</button>
         </div>
-      </div>
-      <div class="exec-classify-row${e.execution?' open':''}" id="exec-row-${e.id}">
-        <button class="exec-btn${e.execution==='good'?' active-good':''}" onclick="execSet('${e.id}','good')">✅ Bien ejecutado<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía y lo tomé</span></button>
-        <button class="exec-btn${e.execution==='bad'?' active-bad':''}" onclick="execSet('${e.id}','bad')">⚠️ Incorrecto<br><span style="font-size:9px;font-weight:400;opacity:0.8">No debía tomarlo pero lo tomé</span></button>
-        <button class="exec-btn${e.execution==='missed'?' active-missed':''}" onclick="execSet('${e.id}','missed')">❌ No ejecuté<br><span style="font-size:9px;font-weight:400;opacity:0.8">El sistema lo ofrecía pero no entré</span></button>
-      </div>
     </div>`;
   }).join('');
 }
@@ -6384,22 +6379,24 @@ function execSet(id, val) {
   if (!entry) return;
   entry.execution = val;
 
-  // 1. Feedback visual inmediato en los 3 botones de la fila
+  // 1. Feedback visual inmediato en las píldoras de la fila
+  // Los botones ahora son inline con estilos directos — los actualizamos por atributo onclick
+  var colorMap = {
+    good:   { border:'#27d97a',   bg:'rgba(39,217,122,0.15)',  color:'#27d97a'  },
+    bad:    { border:'var(--amber)', bg:'rgba(255,174,48,0.15)', color:'var(--amber)' },
+    missed: { border:'var(--red)', bg:'rgba(255,80,80,0.15)',   color:'var(--red)'   },
+  };
   ['good','bad','missed'].forEach(function(v) {
-    var btn = document.querySelector('.exec-btn[onclick*="execSet(\'' + id + '\',\'' + v + '\')"]');
+    var btn = document.querySelector('button[onclick="execSet(\''+id+'\',\''+v+'\')"]');
     if (!btn) return;
-    btn.classList.remove('active-good','active-bad','active-missed');
-    if (v === val) btn.classList.add('active-' + v);
+    var isActive = (v === val);
+    var c = colorMap[v];
+    btn.style.borderColor = isActive ? c.border : 'var(--border2)';
+    btn.style.background  = isActive ? c.bg     : 'transparent';
+    btn.style.color       = isActive ? c.color  : 'var(--muted)';
   });
 
-  // 2. Actualizar texto del botón toggle inmediatamente
-  var toggleBtn = document.querySelector('.exec-classify-toggle[onclick*="execToggle(\'' + id + '\')"]');
-  if (toggleBtn) {
-    toggleBtn.textContent = val === 'good' ? '✅ Bien ejecutado' : val === 'bad' ? '⚠️ Incorrecto' : '❌ No ejecuté';
-    toggleBtn.classList.add('exec-classified');
-  }
-
-  // 3. Recalcular tasa en DOM al instante usando IDs fijos
+  // 2. Recalcular tasa en DOM al instante usando IDs fijos
   var allAcc = entries.filter(function(e) { return e.account === currentAccount; });
   var g  = allAcc.filter(function(e) { return e.execution === 'good'; }).length;
   var b  = allAcc.filter(function(e) { return e.execution === 'bad'; }).length;
@@ -17318,13 +17315,13 @@ async function sbStartAutoSync(licKey) {
     }, 300);
   }
 
-  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos
+  // 2. Cada 10s: subir cambios locales Y bajar cambios remotos
   setInterval(async () => {
     await sbPush(licKey);
     // Después del push, hacer pull para detectar cambios de otra sesión
     const remotePulled = await sbPull(licKey);
     if (remotePulled) sfApplyCloudData();
-  }, 30000);
+  }, 10000);
 
   // 3. Guardar al cerrar/cambiar pestaña
   window.addEventListener('beforeunload', () => sbPush(licKey));
