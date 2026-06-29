@@ -4592,22 +4592,50 @@ var _sfPushTimer = null;
 function _getLicKey() {
   try { const r = localStorage.getItem('fp_lic_v1_sale'); if(r){ const d=JSON.parse(r); return (d&&d.key)?d.key:null; } } catch(e){} return null;
 }
-function _sbPushNow() {
+// ── Supabase-FIRST: la nube es la fuente de verdad ───────────────────────
+// Flujo: datos en memoria → push a Supabase → si OK → escribe en localStorage
+// Si falla la red: escribe en localStorage como fallback para no perder nada
+async function _sbPushNow() {
   const key = _getLicKey();
-  if (key) sbPush(key).catch(e => console.warn('SF Cloud push error', e));
+  if (!key || typeof sbPush !== 'function') {
+    // Sin licencia: solo localStorage
+    try {
+      _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
+      _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+      _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
+      _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
+      _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
+    } catch(e) {}
+    return;
+  }
+  try {
+    // 1. Subir a Supabase PRIMERO
+    await sbPush(key);
+    // 2. Solo despues de confirmar subida, actualizar localStorage como cache
+    try {
+      _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
+      _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+      _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
+      _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
+      _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
+    } catch(e) {}
+  } catch(e) {
+    // Sin red: fallback a localStorage para no perder datos en memoria
+    console.warn('SF Cloud push error — usando localStorage como fallback', e);
+    try {
+      _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
+      _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+      _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
+      _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
+      _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
+    } catch(e2) {}
+  }
 }
 function save() {
-  // Caché local PRIMERO (por si falla la red no se pierden datos en memoria)
-  try {
-    _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
-    _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
-    _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
-    _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
-    _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
-  } catch(e) {}
-  // Supabase: push con debounce 300ms para agrupar cambios rápidos
-  clearTimeout(_sfPushTimer);
-  _sfPushTimer = setTimeout(_sbPushNow, 300);
+  // Marcar que hay cambios pendientes para el sync periodico
+  if (typeof _sfHasPendingChanges !== 'undefined') _sfHasPendingChanges = true;
+  // Supabase es la fuente de verdad; _sbPushNow sube a la nube primero
+  _sbPushNow();
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -10367,21 +10395,28 @@ function switchFaqInner(tab) {
 let diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
 let selectedDiaryMood = '';
 
-function saveDiaryLS(statusElId) {
-  // Supabase-first: nube primero, localStorage como fallback/caché
+async function saveDiaryLS(statusElId) {
+  // SUPABASE-FIRST: sube a la nube primero, localStorage solo como cache/fallback
   const st = statusElId ? document.getElementById(statusElId) : document.getElementById('diary-save-status');
   const licKey = _getLicKey();
-  _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); // caché local mientras sube
   if (licKey && typeof sbPush === 'function') {
     if (st) st.textContent = '☁ Subiendo...';
-    sbPush(licKey)
-      .then(() => { if (st) { st.textContent = '☁ Sincronizado ✓'; setTimeout(() => { if (st) st.textContent = ''; }, 2500); } })
-      .catch(e => {
-        console.warn('SF Cloud push error (diary)', e);
-        if (st) { st.textContent = '⚠ Guardado local (sin conexión)'; setTimeout(() => { if (st) st.textContent = ''; }, 3000); }
-      });
+    try {
+      // 1. Subir a Supabase PRIMERO
+      await sbPush(licKey);
+      // 2. Confirmar en localStorage solo despues de que la nube responda OK
+      _lsSet('fondeo_diary_sale', JSON.stringify(diaryData));
+      if (st) { st.textContent = '☁ Guardado en la nube ✓'; setTimeout(() => { if (st) st.textContent = ''; }, 2500); }
+    } catch(e) {
+      // Sin red: fallback a localStorage para no perder datos
+      console.warn('SF Cloud push error (diary)', e);
+      _lsSet('fondeo_diary_sale', JSON.stringify(diaryData));
+      if (st) { st.textContent = '⚠ Guardado local (sin conexión)'; setTimeout(() => { if (st) st.textContent = ''; }, 3000); }
+    }
   } else {
-    _sbPushNow();
+    // Sin licencia activa: solo localStorage
+    _lsSet('fondeo_diary_sale', JSON.stringify(diaryData));
+    if (st) { st.textContent = '💾 Guardado local'; setTimeout(() => { if (st) st.textContent = ''; }, 2000); }
   }
 }
 
@@ -10519,15 +10554,31 @@ function loadNotes() {
   });
 }
 
-function saveNotes(key) {
+async function saveNotes(key) {
   const el = document.getElementById('notes-'+key);
   if(!el) return;
-  // Supabase-first: caché local + push inmediato a nube
-  _lsSet('fondeo_notes_sale_'+key, el.value);
-  _sbPushNow();
+  const licKey = _getLicKey();
   const msg = document.getElementById('notes-saved-msg');
-  if(msg) { msg.textContent = '☁️ Guardado en la nube'; setTimeout(()=>{ msg.textContent=''; },2500); }
-  toast('Notas guardadas en la nube ✓');
+  // SUPABASE-FIRST: sube a la nube primero
+  if (licKey && typeof sbPush === 'function') {
+    if (msg) msg.textContent = '☁ Subiendo...';
+    try {
+      // 1. Guardar en localStorage primero para que buildBackupPayload lo incluya
+      _lsSet('fondeo_notes_sale_'+key, el.value);
+      // 2. Subir a Supabase
+      await sbPush(licKey);
+      if (msg) { msg.textContent = '☁ Guardado en la nube ✓'; setTimeout(()=>{ msg.textContent=''; },2500); }
+      toast('Notas guardadas en la nube ✓');
+    } catch(e) {
+      console.warn('SF Cloud push error (notes)', e);
+      if (msg) { msg.textContent = '⚠ Guardado local (sin conexión)'; setTimeout(()=>{ msg.textContent=''; },3000); }
+      toast('Notas guardadas localmente (sin conexión)');
+    }
+  } else {
+    _lsSet('fondeo_notes_sale_'+key, el.value);
+    if (msg) { msg.textContent = '💾 Guardado local'; setTimeout(()=>{ msg.textContent=''; },2000); }
+    toast('Notas guardadas ✓');
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -12725,20 +12776,25 @@ const COACH_KEY = 'sf_coach_v1_sale';
 function coachLoad() {
   try { return JSON.parse(_lsGet(COACH_KEY) || '{}'); } catch(e) { return {}; }
 }
-function coachSaveLS(data) {
-  // Supabase-first: nube primero, localStorage como fallback/caché
+async function coachSaveLS(data) {
+  // SUPABASE-FIRST: la nube es la fuente de verdad
   const st = document.getElementById('coach-save-status');
   const licKey = _getLicKey();
   if (licKey && typeof sbPush === 'function') {
     if (st) st.textContent = '☁ Subiendo...';
-    _lsSet(COACH_KEY, JSON.stringify(data)); // caché local mientras sube
-    sbPush(licKey)
-      .then(() => { if (st) { st.textContent = '☁ Sincronizado ✓'; setTimeout(() => { if (st) st.textContent = ''; }, 2500); } })
-      .catch(e => {
-        console.warn('SF Cloud push error (coach)', e);
-        if (st) { st.textContent = '⚠ Guardado local (sin conexión)'; setTimeout(() => { if (st) st.textContent = ''; }, 3000); }
-      });
+    try {
+      // 1. Escribir en localStorage para que buildBackupPayload lo incluya en el push
+      _lsSet(COACH_KEY, JSON.stringify(data));
+      // 2. Subir a Supabase PRIMERO y esperar confirmacion
+      await sbPush(licKey);
+      if (st) { st.textContent = '☁ Guardado en la nube ✓'; setTimeout(() => { if (st) st.textContent = ''; }, 2500); }
+    } catch(e) {
+      // Sin red: los datos ya estan en localStorage como fallback
+      console.warn('SF Cloud push error (coach)', e);
+      if (st) { st.textContent = '⚠ Guardado local (sin conexión)'; setTimeout(() => { if (st) st.textContent = ''; }, 3000); }
+    }
   } else {
+    // Sin licencia activa: solo localStorage
     _lsSet(COACH_KEY, JSON.stringify(data));
     if (st) { st.textContent = '💾 Guardado local'; setTimeout(() => { if (st) st.textContent = ''; }, 2000); }
   }
@@ -15788,12 +15844,20 @@ function _tpLoad() {
   try { return JSON.parse(_lsGet(TP_KEY) || '{}'); } catch(e) { return {}; }
 }
 
-function _tpSave(plans) {
-  try {
-    // Supabase-first: caché local + push inmediato a nube
-    _lsSet(TP_KEY, JSON.stringify(plans));
-    _sbPushNow();
-  } catch(e) {}
+async function _tpSave(plans) {
+  // SUPABASE-FIRST: sube a la nube primero, localStorage como cache/fallback
+  const licKey = _getLicKey();
+  if (licKey && typeof sbPush === 'function') {
+    try {
+      _lsSet(TP_KEY, JSON.stringify(plans)); // necesario para buildBackupPayload
+      await sbPush(licKey);
+    } catch(e) {
+      console.warn('SF Cloud push error (trading plan)', e);
+      _lsSet(TP_KEY, JSON.stringify(plans)); // fallback
+    }
+  } else {
+    try { _lsSet(TP_KEY, JSON.stringify(plans)); } catch(e) {}
+  }
 }
 
 // ── Guardar plan de una cuenta ────────────────────────────────────────────────
@@ -16236,7 +16300,10 @@ window.getAllTradingPlans = function() {
       var dayLoss  = dayTrades.reduce(function(s,t){ return s + Math.min(parseFloat(t.pnl)||0, 0); }, 0);
       var riskUsed = balance > 0 ? (Math.abs(dayLoss) / balance * 100) : null;
 
-      var opsViol  = effectiveOps > maxOps;
+      // Overtrading: siempre se compara el conteo REAL de operaciones contra el plan.
+      // effectiveOps puede ser menor (splitRisk agrupa por dirección), pero si el trader
+      // hizo más ops reales que el máximo declarado, se flaggea igualmente con contexto.
+      var opsViol  = opsCount > maxOps;
       var riskViol = riskUsed !== null && riskUsed > maxRisk;
 
       // Detección de size escalation tras pérdida
@@ -16442,7 +16509,13 @@ window.getAllTradingPlans = function() {
         '<div class="cd-days-list" id="' + cdId + '">';
       violDays.slice(0,30).forEach(function(d) {
         var notes = [];
-        if (d.opsViol)  notes.push(d.effectiveOps + ' ops (máx ' + r.plan.maxOpsPerDay + ')');
+        if (d.opsViol) {
+          var opsNoteReal = d.ops + ' ops reales (máx ' + r.plan.maxOpsPerDay + ')';
+          if (r.plan.splitRisk && d.effectiveOps !== d.ops) {
+            opsNoteReal += ' · ' + d.effectiveOps + ' efectivas con split';
+          }
+          notes.push(opsNoteReal);
+        }
         if (d.riskViol) notes.push('riesgo ' + fmtPct(d.riskUsed) + ' (máx ' + fmtPct(r.plan.maxDailyRisk) + ')');
         html += '<div class="cd-day-row viol">' +
           '<div class="cd-day-dot"></div>' +
@@ -17444,6 +17517,7 @@ async function sbPush(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return;
   try {
     const payload = buildBackupPayload();
+    const nowTs = new Date().toISOString();
     await fetch(SB_URL + '/rest/v1/client_data', {
       method: 'POST',
       headers: {
@@ -17455,13 +17529,43 @@ async function sbPush(licKey) {
       body: JSON.stringify({
         license_key: licKey,
         data: payload,
-        updated_at: new Date().toISOString()
+        updated_at: nowTs
       })
     });
+    // Actualizar el timestamp del ultimo push para que el proximo pull
+    // no lo considere como datos nuevos de otra sesion
+    if (typeof _sfLastPulledAt !== 'undefined') _sfLastPulledAt = nowTs;
   } catch(e) { console.warn('SF Cloud: error al subir datos', e); }
 }
 
+// ── Push con keepalive: funciona aunque el documento se esté cerrando ──
+function sbPushKeepAlive(licKey) {
+  if (!licKey || typeof SB_URL === 'undefined') return;
+  try {
+    const payload = buildBackupPayload();
+    const body = JSON.stringify({
+      license_key: licKey,
+      data: payload,
+      updated_at: new Date().toISOString()
+    });
+    // fetch con keepalive sobrevive al cierre de la pestaña
+    fetch(SB_URL + '/rest/v1/client_data', {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: body,
+      keepalive: true
+    }).catch(e => console.warn('SF Cloud: error en push keepalive', e));
+  } catch(e) { console.warn('SF Cloud: error preparando push keepalive', e); }
+}
+
 // ── Descargar datos de la nube y aplicarlos al localStorage ──────
+// Devuelve true solo si habia datos NUEVOS (updated_at mas reciente que el ultimo pull)
+var _sfLastPulledAt = null;
 async function sbPull(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return false;
   try {
@@ -17472,6 +17576,10 @@ async function sbPull(licKey) {
     if (!res.ok) return false;
     const rows = await res.json();
     if (!rows || !rows.length || !rows[0].data) return false;
+    const remoteTs = rows[0].updated_at || null;
+    // Solo aplicar si la nube tiene datos mas nuevos que el ultimo pull
+    if (_sfLastPulledAt && remoteTs && remoteTs <= _sfLastPulledAt) return false;
+    _sfLastPulledAt = remoteTs || new Date().toISOString();
     applyBackupPayload(rows[0].data);
     return true;
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
@@ -17523,6 +17631,10 @@ function sfApplyCloudData() {
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
+// ── Flag: hubo cambios locales desde el ultimo push ──────────────
+var _sfHasPendingChanges = false;
+var _sfMarkDirty = function() { _sfHasPendingChanges = true; };
+
 async function sbStartAutoSync(licKey) {
   if (!licKey) return;
 
@@ -17531,43 +17643,71 @@ async function sbStartAutoSync(licKey) {
   if (pulled) {
     setTimeout(() => {
       sfApplyCloudData();
-      console.log('SF Cloud datos restaurados desde la nube');
+      console.log('SF Cloud: datos restaurados desde la nube');
     }, 300);
   }
 
-  // 2. Cada 10s: subir cambios locales Y bajar cambios remotos
+  // 2. Cada 5s: push solo si hay cambios locales, pull solo si hay datos nuevos en la nube
   setInterval(async () => {
-    await sbPush(licKey);
-    // Después del push, hacer pull para detectar cambios de otra sesión
+    if (_sfHasPendingChanges) {
+      _sfHasPendingChanges = false;
+      await sbPush(licKey);
+    }
+    // Pull: sbPull ya compara timestamps y devuelve false si no hay nada nuevo
     const remotePulled = await sbPull(licKey);
-    if (remotePulled) sfApplyCloudData();
-  }, 10000);
+    if (remotePulled) {
+      sfApplyCloudData();
+      console.log('SF Cloud: datos nuevos recibidos de otra sesion');
+    }
+  }, 5000);
 
-  // 3. Guardar al cerrar/cambiar pestaña
-  window.addEventListener('beforeunload', () => sbPush(licKey));
+  // 3. Al cerrar/cambiar pestaña: push con keepalive para garantizar subida
+  window.addEventListener('beforeunload', () => {
+    if (_sfHasPendingChanges) sbPushKeepAlive(licKey);
+  });
   document.addEventListener('visibilitychange', async () => {
     if (document.hidden) {
-      await sbPush(licKey);
+      // Al salir: push inmediato con keepalive
+      sbPushKeepAlive(licKey);
+      _sfHasPendingChanges = false;
     } else {
-      // Al volver a la pestaña, descargar cambios que pudo hacer otra sesión
+      // Al volver: pull para ver si otra sesion hizo cambios
       const remotePulled = await sbPull(licKey);
-      if (remotePulled) sfApplyCloudData();
+      if (remotePulled) {
+        sfApplyCloudData();
+        console.log('SF Cloud: datos actualizados al volver a la pestana');
+      }
     }
   });
 }
 
-// ── Auto-guardado local cada 45s ──────────────────────────────────
+// ── Auto-guardado local cada 15s + push a Supabase ───────────────
 (function() {
   let _autoSaveTimer = null;
   function _autoSave() {
     try { save(); } catch(e) {}
   }
+  function _autoSaveAndPush() {
+    // Guarda en localStorage Y sube a Supabase con keepalive
+    try {
+      _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
+      _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+      _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
+      _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
+      _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
+    } catch(e) {}
+    try {
+      const key = _getLicKey();
+      if (key && typeof sbPushKeepAlive === 'function') sbPushKeepAlive(key);
+    } catch(e) {}
+  }
   function _startAutoSave() {
     if (_autoSaveTimer) clearInterval(_autoSaveTimer);
-    _autoSaveTimer = setInterval(_autoSave, 45000);
-    window.addEventListener('beforeunload', _autoSave);
+    _autoSaveTimer = setInterval(_autoSave, 15000);
+    // Al cerrar o cambiar pestaña: push con keepalive para garantizar subida
+    window.addEventListener('beforeunload', _autoSaveAndPush);
     document.addEventListener('visibilitychange', function() {
-      if (document.hidden) _autoSave();
+      if (document.hidden) _autoSaveAndPush();
     });
   }
   document.addEventListener('DOMContentLoaded', function() {
