@@ -4586,23 +4586,28 @@ let editingGroupAssign = null;
 let blownTargetAccount = null; // for blown modal
 
 var _sfPushTimer = null;
+// ══ ARQUITECTURA SUPABASE-FIRST ══
+// ESCRITURA: Supabase primero → localStorage como caché
+// LECTURA:   sbPull al arrancar → localStorage si offline → UI
+function _getLicKey() {
+  try { const r = localStorage.getItem('fp_lic_v1_sale'); if(r){ const d=JSON.parse(r); return (d&&d.key)?d.key:null; } } catch(e){} return null;
+}
+function _sbPushNow() {
+  const key = _getLicKey();
+  if (key) sbPush(key).catch(e => console.warn('SF Cloud push error', e));
+}
 function save() {
-  _lsSet('fp_entries_v4_sale', JSON.stringify(entries));
-  _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
-  _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
-  _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
-  _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a Supabase inmediatamente (300ms debounce para agrupar cambios rápidos)
+  // Caché local PRIMERO (por si falla la red no se pierden datos en memoria)
+  try {
+    _lsSet('fp_entries_v4_sale',  JSON.stringify(entries));
+    _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
+    _lsSet('fp_groups_v4_sale',   JSON.stringify(groups));
+    _lsSet('fp_certs_v4_sale',    JSON.stringify(certs));
+    _lsSet('fp_firmstats_v4_sale',JSON.stringify(firmStats));
+  } catch(e) {}
+  // Supabase: push con debounce 300ms para agrupar cambios rápidos
   clearTimeout(_sfPushTimer);
-  _sfPushTimer = setTimeout(function() {
-    try {
-      const licRaw = localStorage.getItem('fp_lic_v1_sale');
-      if (licRaw) {
-        const licData = JSON.parse(licRaw);
-        if (licData && licData.key) sbPush(licData.key);
-      }
-    } catch(e) {}
-  }, 300);
+  _sfPushTimer = setTimeout(_sbPushNow, 300);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -10043,7 +10048,7 @@ const GOAL_MILESTONE_DEFAULTS = {
   240000: {emoji:'👑', label:'Imperio Personal'}
 };
 let goalMilestones = JSON.parse(_lsGet('fp_goal_milestones_v1_sale') || 'null') || JSON.parse(JSON.stringify(GOAL_MILESTONE_DEFAULTS));
-function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); if (typeof save === 'function') save(); try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {} }
+function saveGoalMilestonesLS() { _lsSet('fp_goal_milestones_v1_sale', JSON.stringify(goalMilestones)); if (typeof save === 'function') save(); }
 
 function getTotalWithdrawn() {
   return certs.reduce((s,c) => s + (c.amount || 0), 0);
@@ -10362,7 +10367,7 @@ function switchFaqInner(tab) {
 let diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
 let selectedDiaryMood = '';
 
-function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); if (typeof save === 'function') save(); try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {} }
+function saveDiaryLS() { _lsSet('fondeo_diary_sale', JSON.stringify(diaryData)); _sbPushNow(); } // Supabase-first
 
 function localDateStr(d) {
   const dt = d ? new Date(d) : new Date();
@@ -10462,7 +10467,7 @@ function renderWeeklySummary(dateStr) {
 }
 
 // ═══════════════════════════════════════════
-// NOTAS PERSONALES
+// NOTAS PERSONALES — SUPABASE-FIRST
 // ═══════════════════════════════════════════
 const _NOTES_DEFAULTS = {
   rules: `CINCO VERDADES FUNDAMENTALES:
@@ -10488,17 +10493,14 @@ function loadNotes() {
   ['rules','goals','free'].forEach(k => {
     const el = document.getElementById('notes-'+k);
     if (!el) return;
+    // Supabase-first: los datos ya vienen del pull inicial via applyBackupPayload
     const saved = _lsGet('fondeo_notes_sale_'+k);
     if (saved !== null && saved !== undefined && saved !== '') {
       el.value = saved;
     } else if (_NOTES_DEFAULTS[k]) {
-      // Primera vez: cargar el contenido por defecto y guardarlo en nube
       el.value = _NOTES_DEFAULTS[k];
       _lsSet('fondeo_notes_sale_'+k, _NOTES_DEFAULTS[k]);
-      try {
-        const licRaw = localStorage.getItem('fp_lic_v1_sale');
-        if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
-      } catch(e) {}
+      setTimeout(_sbPushNow, 800); // subir defaults a nube
     }
   });
 }
@@ -10506,15 +10508,12 @@ function loadNotes() {
 function saveNotes(key) {
   const el = document.getElementById('notes-'+key);
   if(!el) return;
+  // Supabase-first: caché local + push inmediato a nube
   _lsSet('fondeo_notes_sale_'+key, el.value);
+  _sbPushNow();
   const msg = document.getElementById('notes-saved-msg');
-  if(msg) { msg.textContent = '✅ Notas guardadas'; setTimeout(()=>{ msg.textContent=''; },2000); }
-  toast('Notas guardadas ✓');
-  // ── Sync inmediato a la nube ──
-  try {
-    const licRaw = localStorage.getItem('fp_lic_v1_sale');
-    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
-  } catch(e) {}
+  if(msg) { msg.textContent = '☁️ Guardado en la nube'; setTimeout(()=>{ msg.textContent=''; },2500); }
+  toast('Notas guardadas en la nube ✓');
 }
 
 // ═══════════════════════════════════════════
@@ -10538,6 +10537,7 @@ const BUILT_IN_QUOTES = [
   {emoji:'💡',text:'Tu peor enemigo en el trading eres tú mismo. Domínate a ti mismo antes de dominar el mercado.',author:'Anónimo'},
 ];
 
+// Frases personalizadas — defaults del plan de trading (mismas que index.html)
 const _CUSTOM_QUOTES_DEFAULTS = [
   {emoji:'🙏', text:'Fe y Acción. Permito que mis sueños y mi vida estable y feliz sea una realidad cada día. +Tiempo +Dinero +Amor +Paz.', author:'Yo'},
   {emoji:'💪', text:'Confianza. Ejecuto con decisión, sin duda y sin miedo. Confío en mi lectura y mi proceso. Cada trade es profesional, no es emocional.', author:'Yo'},
@@ -10551,18 +10551,14 @@ const _CUSTOM_QUOTES_DEFAULTS = [
   {emoji:'✨', text:'Por derecho divino tengo acceso a la abundancia y al logro de mis legítimos deseos.', author:'Yo'},
   {emoji:'⏳', text:'Paciencia. El mercado te dará la entrada, tú solo ejecuta. No te anticipes.', author:'Yo'}
 ];
-
+// Supabase-first: cargar desde caché (que viene del pull al arrancar)
 let customQuotes = (function() {
   try {
     const raw = _lsGet('fondeo_quotes_sale');
     const parsed = JSON.parse(raw || 'null');
-    // Si es null, undefined, o array vacío → cargar defaults
     if (!parsed || !Array.isArray(parsed) || parsed.length === 0) {
       _lsSet('fondeo_quotes_sale', JSON.stringify(_CUSTOM_QUOTES_DEFAULTS));
-      try {
-        const licRaw = localStorage.getItem('fp_lic_v1_sale');
-        if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
-      } catch(e) {}
+      setTimeout(_sbPushNow, 800);
       return _CUSTOM_QUOTES_DEFAULTS.slice();
     }
     return parsed;
@@ -10592,34 +10588,25 @@ function showNextQuote() {
   showCurrentQuote();
 }
 
-function _quotesSyncCloud() {
-  try {
-    const licRaw = localStorage.getItem('fp_lic_v1_sale');
-    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
-  } catch(e) {}
-}
-
 function addCustomQuote() {
   const text = document.getElementById('custom-quote-text').value.trim();
   const author = document.getElementById('custom-quote-author').value.trim();
   if(!text) { toast('Escribe una frase primero', true); return; }
   customQuotes.push({emoji:'✍️', text, author});
   _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  _sbPushNow(); // Supabase-first
   document.getElementById('custom-quote-text').value = '';
   document.getElementById('custom-quote-author').value = '';
   renderCustomQuotes();
-  toast('Frase añadida ✓');
-  // ── Sync inmediato a la nube ──
-  _quotesSyncCloud();
+  toast('Frase guardada en la nube ✓');
 }
 
 function deleteCustomQuote(idx) {
   customQuotes.splice(idx, 1);
   _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  _sbPushNow(); // Supabase-first
   renderCustomQuotes();
   toast('Frase eliminada', false, 'red');
-  // ── Sync inmediato a la nube ──
-  _quotesSyncCloud();
 }
 
 function renderCustomQuotes() {
@@ -10892,18 +10879,11 @@ function tpMonthStart() {
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-01';
 }
 
-// ── Helper sync nube para Control del Trader ──
-function _tpSyncCloud() {
-  try { const licRaw = localStorage.getItem('fp_lic_v1_sale'); if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); } } catch(e) {}
-}
-
 // ── Semáforo ──
 window.tpSetSemaforo = function(val) {
   try { _lsSet(tpTodayKey('tp_sem_sale_'), val); } catch(e) {}
   tpRenderSemaforo(val);
   tpRenderHistory30();
-  // ── Sync inmediato a la nube ──
-  _tpSyncCloud();
 };
 function tpRenderSemaforo(val) {
   document.querySelectorAll('.tp-sem-opt').forEach(el => {
@@ -10984,8 +10964,6 @@ window.tpUpdateChecklist = function() {
   const state = Array.from(items).map(i => i.checked);
   try { _lsSet(tpTodayKey('tp_check_sale_'), JSON.stringify(state)); } catch(e) {}
   tpRenderHistory30();
-  // ── Sync inmediato a la nube ──
-  _tpSyncCloud();
 };
 
 // ── Bad trades ──
@@ -12731,13 +12709,9 @@ function coachLoad() {
   try { return JSON.parse(_lsGet(COACH_KEY) || '{}'); } catch(e) { return {}; }
 }
 function coachSaveLS(data) {
+  // Supabase-first: caché local + push inmediato a nube
   _lsSet(COACH_KEY, JSON.stringify(data));
-  if (typeof save === 'function') save();
-  // ── Sync inmediato a la nube (coach no pasa por save() → sbPush) ──
-  try {
-    const licRaw = localStorage.getItem('fp_lic_v1_sale');
-    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
-  } catch(e) {}
+  _sbPushNow();
 }
 
 // ── Inicializar página ──
@@ -15786,11 +15760,9 @@ function _tpLoad() {
 
 function _tpSave(plans) {
   try {
+    // Supabase-first: caché local + push inmediato a nube
     _lsSet(TP_KEY, JSON.stringify(plans));
-    if (typeof save === 'function') save();
-    // ── Sync inmediato a la nube ──
-    const licRaw = localStorage.getItem('fp_lic_v1_sale');
-    if (licRaw) { const ld = JSON.parse(licRaw); if (ld && ld.key) sbPush(ld.key); }
+    _sbPushNow();
   } catch(e) {}
 }
 
@@ -16548,6 +16520,13 @@ function _ie3InjectCSS() {
     '.ie3-day-chip{font-size:10px;padding:2px 8px;border-radius:5px;background:rgba(255,79,79,0.1);color:var(--red);border:1px solid rgba(255,79,79,0.2);}',
     // Sin actividad en período
     '.ie3-no-activity{text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:11px;line-height:1.7;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);}',
+    // ── Acordeón desplegable ──
+    '.ie3-accordion{cursor:pointer;user-select:none;transition:opacity 0.15s;}',
+    '.ie3-accordion:hover{opacity:0.9;}',
+    '.ie3-acc-arrow{font-size:9px;color:var(--muted);flex-shrink:0;align-self:center;transition:transform 0.2s;margin-left:6px;}',
+    '.ie3-accordion.ie3-open .ie3-acc-arrow{transform:rotate(180deg);}',
+    '.ie3-alert-detail{display:none;font-size:10.5px;color:var(--muted2);margin-top:6px;line-height:1.55;}',
+    '.ie3-accordion.ie3-open .ie3-alert-detail{display:block;}',
   ].join('');
   document.head.appendChild(s);
 }
@@ -16674,83 +16653,161 @@ window.renderIntelligenceTab = function(acc, period) {
     + '</div></div>';
 
   // Alertas
+  // helper para alertas desplegables
+  var _ieAlert = function(type, icon, title, body) {
+    return '<div class="ie3-alert ' + type + ' ie3-accordion" onclick="this.classList.toggle(&apos;ie3-open&apos;)">'
+      + '<div class="ie3-alert-icon">' + icon + '</div>'
+      + '<div class="ie3-alert-body" style="flex:1">'
+      + '<div class="ie3-alert-title">' + title + '</div>'
+      + '<div class="ie3-alert-detail">' + body + '</div>'
+      + '</div>'
+      + '<div class="ie3-acc-arrow">&#9660;</div>'
+      + '</div>';
+  };
+
   if (!opsViols.length && !riskViols.length && !escDays.length) {
-    html += '<div class="ie3-alert ok"><div class="ie3-alert-icon">✅</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Todo dentro del plan</div>'
-      + '<div class="ie3-alert-sub">El engine no detecta ninguna desviación en este período. Operaciones y riesgo dentro de los límites declarados.</div>'
-      + '</div></div>';
+    html += _ieAlert('ok', '✅', 'Todo dentro del plan',
+      'El engine no detecta ninguna desviación en este período. Operaciones y riesgo dentro de los límites declarados.');
   }
 
   if (opsViols.length) {
     var worst = opsViols.slice().sort(function(a,b){ return b.ops - a.ops; })[0];
-    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">⚡</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Overtrading — límite superado en ' + opsViols.length + ' día' + (opsViols.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">Tu plan: máx <b>' + plan.maxOpsPerDay + ' op/día</b>. '
-      + 'Peor día: <b>' + worst.ops + ' operaciones</b> el ' + worst.date + '.</div>'
-      + '<div class="ie3-alert-days">' + opsViols.slice(0,5).map(function(d){
+    var bodyOps = 'Tu plan: máx <b>' + plan.maxOpsPerDay + ' op/día</b>. '
+      + 'Peor día: <b>' + worst.ops + ' operaciones</b> el ' + worst.date + '.'
+      + '<div class="ie3-alert-days" style="margin-top:6px">' + opsViols.slice(0,5).map(function(d){
           return '<span class="ie3-day-chip">' + d.date + ' · ' + d.ops + ' ops</span>';
-        }).join('') + '</div>'
-      + '</div></div>';
+        }).join('') + '</div>';
+    html += _ieAlert('viol', '⚡', '🚨 Overtrading — límite superado en ' + opsViols.length + ' día' + (opsViols.length !== 1 ? 's' : ''), bodyOps);
   }
 
   if (riskViols.length) {
     var worstR = riskViols.slice().sort(function(a,b){ return b.riskUsed - a.riskUsed; })[0];
-    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">📉</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Riesgo excedido en ' + riskViols.length + ' día' + (riskViols.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">Límite: <b>' + plan.maxDailyRisk + '%</b>. '
-      + 'Peor día: <b style="color:var(--red)">' + (worstR.riskUsed ? worstR.riskUsed.toFixed(1) + '%' : '—') + '</b> el ' + worstR.date + '.</div>'
-      + '<div class="ie3-alert-days">' + riskViols.slice(0,5).map(function(d){
+    var bodyRisk = 'Límite: <b>' + plan.maxDailyRisk + '%</b>. '
+      + 'Peor día: <b style="color:var(--red)">' + (worstR.riskUsed ? worstR.riskUsed.toFixed(1) + '%' : '—') + '</b> el ' + worstR.date + '.'
+      + '<div class="ie3-alert-days" style="margin-top:6px">' + riskViols.slice(0,5).map(function(d){
           return '<span class="ie3-day-chip">' + d.date + (d.riskUsed ? ' · ' + d.riskUsed.toFixed(1) + '%' : '') + '</span>';
-        }).join('') + '</div>'
-      + '</div></div>';
+        }).join('') + '</div>';
+    html += _ieAlert('viol', '📉', 'Riesgo excedido en ' + riskViols.length + ' día' + (riskViols.length !== 1 ? 's' : ''), bodyRisk);
   }
 
   if (escDays.length) {
-    html += '<div class="ie3-alert warn"><div class="ie3-alert-icon">📈</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Lotaje aumentó tras pérdida en ' + escDays.length + ' día' + (escDays.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">Observación: el size de la siguiente entrada fue mayor tras un stop. Contrástalo con tu estrategia.</div>'
-      + '</div></div>';
+    html += _ieAlert('warn', '📈', 'Lotaje aumentó tras pérdida en ' + escDays.length + ' día' + (escDays.length !== 1 ? 's' : ''),
+      'El size de la siguiente entrada fue mayor tras un stop. Contrástalo con tu estrategia.');
   }
 
   // Revenge trading
   var revengeDays = days.filter(function(d){ return d.revenge; });
   if (revengeDays.length) {
-    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">😤</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Posible revenge trading en ' + revengeDays.length + ' día' + (revengeDays.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">El engine detectó 3 o más stops consecutivos o aumento de size tras pérdidas seguidas. Señal de operar desde la emoción, no desde el plan.</div>'
-      + '<div class="ie3-alert-days">' + revengeDays.slice(0,5).map(function(d){
+    var bodyRev = 'El engine detectó 3 o más stops consecutivos o aumento de size tras pérdidas seguidas. Señal de operar desde la emoción, no desde el plan.'
+      + '<div class="ie3-alert-days" style="margin-top:6px">' + revengeDays.slice(0,5).map(function(d){
           return '<span class="ie3-day-chip">' + d.date + '</span>';
-        }).join('') + '</div>'
-      + '</div></div>';
+        }).join('') + '</div>';
+    html += _ieAlert('viol', '😤', 'Posible revenge trading en ' + revengeDays.length + ' día' + (revengeDays.length !== 1 ? 's' : ''), bodyRev);
   }
 
   // Fuera de sesión
   var outDays = days.filter(function(d){ return d.outOfSession; });
   if (outDays.length) {
-    html += '<div class="ie3-alert warn"><div class="ie3-alert-icon">🕐</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Operaciones fuera de sesión en ' + outDays.length + ' día' + (outDays.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">Tu plan declara sesiones: <b>' + (plan.sessions || []).join(', ') + '</b>. Se detectaron entradas en sesiones no declaradas.</div>'
-      + '<div class="ie3-alert-days">' + outDays.slice(0,5).map(function(d){
+    var bodyOut = 'Tu plan declara sesiones: <b>' + (plan.sessions || []).join(', ') + '</b>. Se detectaron entradas en sesiones no declaradas.'
+      + '<div class="ie3-alert-days" style="margin-top:6px">' + outDays.slice(0,5).map(function(d){
           return '<span class="ie3-day-chip" style="background:rgba(255,174,48,0.1);color:var(--amber);border-color:rgba(255,174,48,0.2);">' + d.date + ' · ' + d.outOfSession + ' op</span>';
-        }).join('') + '</div>'
-      + '</div></div>';
+        }).join('') + '</div>';
+    html += _ieAlert('warn', '🕐', 'Operaciones fuera de sesión en ' + outDays.length + ' día' + (outDays.length !== 1 ? 's' : ''), bodyOut);
   }
 
   // Rachas peligrosas
   var streaks = r.dangerStreaks ? _ie3FilterStreaks(r.dangerStreaks, period) : [];
   if (streaks.length) {
-    html += '<div class="ie3-alert viol"><div class="ie3-alert-icon">🔴</div>'
-      + '<div class="ie3-alert-body"><div class="ie3-alert-title">Racha peligrosa detectada — ' + streaks.length + ' episodio' + (streaks.length !== 1 ? 's' : '') + '</div>'
-      + '<div class="ie3-alert-sub">3 días consecutivos con pérdida acumulando más del doble de tu riesgo diario máximo. Señal de no tomar el stop global del día.</div>'
-      + '<div class="ie3-alert-days">' + streaks.slice(0,3).map(function(s){
+    var bodyStreak = '3 días consecutivos con pérdida acumulando más del doble de tu riesgo diario máximo. Señal de no tomar el stop global del día.'
+      + '<div class="ie3-alert-days" style="margin-top:6px">' + streaks.slice(0,3).map(function(s){
           return '<span class="ie3-day-chip">' + s.dates[0] + ' → ' + s.dates[2] + '</span>';
-        }).join('') + '</div>'
-      + '</div></div>';
+        }).join('') + '</div>';
+    html += _ieAlert('viol', '🔴', 'Racha peligrosa detectada — ' + streaks.length + ' episodio' + (streaks.length !== 1 ? 's' : ''), bodyStreak);
   }
+
+  // ── Cruce Coach × Engine: leer del caché (viene del sbPull al arrancar) ──
+  html += _ie4CoachCross(acc, period, days);
 
   html += '</div>';
   container.innerHTML = html;
 };
+
+// ── Bloque Cruce Coach × Engine con datos de Supabase ────────────────────────
+function _ie4CoachCross(acc, period, days) {
+  var coachAll = {};
+  try { coachAll = JSON.parse(_lsGet('sf_coach_v1_sale') || '{}'); } catch(e) {}
+  // Filtrar entradas del coach según el período
+  var now = new Date(); var cutoff = new Date();
+  if (period === 'today') { cutoff.setHours(0,0,0,0); }
+  else if (period === 'week') { cutoff.setDate(now.getDate() - 7); }
+  else { cutoff.setDate(now.getDate() - 30); }
+  var coachEntries = Object.entries(coachAll).filter(function(kv) {
+    return new Date(kv[0]+'T12:00:00') >= cutoff;
+  }).sort(function(a,b){ return b[0].localeCompare(a[0]); });
+
+  var h = '<div class="ie4-wrap">'
+    + '<div class="ie4-header"><div class="ie4-header-line"></div>'
+    + '<div class="ie4-header-title">🧠 Cruce Coach × Engine · Datos en tiempo real</div>'
+    + '<div class="ie4-header-line"></div></div>';
+
+  if (!coachEntries.length) {
+    h += '<div class="ie4-card self-only ie3-accordion" onclick="this.classList.toggle(&apos;ie3-open&apos;)">'
+      + '<div class="ie4-icon">📋</div>'
+      + '<div class="ie4-body"><div class="ie4-title">Sin entradas del Coach en este período</div>'
+      + '<div class="ie4-sub ie3-alert-detail">Registra tu estado emocional diario en el Coach para activar el cruce de fuentes. El engine seguirá detectando señales en los datos del EA.</div>'
+      + '</div><div class="ie3-acc-arrow">▼</div></div>';
+    h += '</div>'; return h;
+  }
+
+  // Cruzar cada día del coach con los datos del engine
+  coachEntries.slice(0, 10).forEach(function(kv) {
+    var date = kv[0]; var entry = kv[1];
+    var dayData = days.find(function(d){ return d.date === date; });
+    var mood = entry.mood || entry.estado || '';
+    var moodLabel = ({
+      '🚀':'Enfocado y confiado','😊':'Bien','😐':'Normal',
+      '😤':'Frustrado','😰':'Ansioso','🔥':'FOMO/Revenge'
+    })[mood] || mood;
+    var moodColor = ({'🚀':'var(--green)','😊':'var(--green)','😐':'var(--muted2)',
+      '😤':'var(--amber)','😰':'var(--amber)','🔥':'var(--red)'})[mood] || 'var(--muted2)';
+
+    // Detección de conflicto emocional vs comportamiento
+    var conflict = '';
+    if (dayData) {
+      if ((mood === '🚀' || mood === '😊') && dayData.opsViol) {
+        conflict = '⚠️ Reportaste buen estado pero el engine detectó overtrading ese día.';
+      } else if ((mood === '😤' || mood === '😰' || mood === '🔥') && dayData.clean) {
+        conflict = '✅ A pesar del estado emocional difícil, respetaste el plan. Excelente disciplina.';
+      } else if ((mood === '😤' || mood === '🔥') && (dayData.opsViol || dayData.revenge)) {
+        conflict = '🔴 Estado emocional comprometido + violación detectada por el engine. Patrón de riesgo.';
+      }
+    }
+
+    var engineLine = dayData
+      ? (dayData.clean
+          ? '<span style="color:var(--green)">✓ Plan respetado</span>'
+          : '<span style="color:var(--red)">✗ ' + (dayData.opsViol ? 'Overtrading · ' : '') + (dayData.riskViol ? 'Riesgo excedido' : '') + '</span>')
+      : '<span style="color:var(--muted)">Sin ops registradas</span>';
+
+    var bodyDetail = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px">'
+      + '<span>Estado: <b style="color:' + moodColor + '">' + (mood ? mood + ' ' : '') + moodLabel + '</b></span>'
+      + '<span>Engine: ' + engineLine + '</span>'
+      + '</div>'
+      + (conflict ? '<div style="margin-top:6px;padding:6px 10px;border-radius:6px;background:var(--bg3);font-size:11px;color:var(--text)">' + conflict + '</div>' : '')
+      + (entry.good ? '<div style="margin-top:5px;font-size:10.5px;color:var(--muted2)">✅ ' + entry.good.slice(0,120) + '</div>' : '')
+      + (entry.improve ? '<div style="margin-top:3px;font-size:10.5px;color:var(--muted2)">⚠️ ' + entry.improve.slice(0,120) + '</div>' : '');
+
+    var titleDate = new Date(date+'T12:00:00').toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
+    h += '<div class="ie4-card ie3-accordion" onclick="this.classList.toggle(&apos;ie3-open&apos;)">'
+      + '<div class="ie4-icon">' + (mood || '📅') + '</div>'
+      + '<div class="ie4-body" style="flex:1">'
+      + '<div class="ie4-title">' + titleDate + '</div>'
+      + '<div class="ie4-sub ie3-alert-detail">' + bodyDetail + '</div>'
+      + '</div><div class="ie3-acc-arrow">▼</div></div>';
+  });
+
+  h += '</div>'; return h;
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function _ie3Tabs(acc, active) {
@@ -17394,6 +17451,22 @@ function sfApplyCloudData() {
     if (typeof initOvSections      === 'function') initOvSections();
     if (typeof renderCalendar      === 'function') try { renderCalendar(); } catch(e) {}
     if (typeof retoLinkedAccountInit === 'function') try { retoLinkedAccountInit(); } catch(e) {}
+    // ── Recargar notas, frases, diario y coach desde caché (recién actualizada por sbPull) ──
+    if (typeof loadNotes === 'function') try { loadNotes(); } catch(e) {}
+    if (typeof renderCustomQuotes === 'function') {
+      try {
+        const raw = _lsGet('fondeo_quotes_sale');
+        const parsed = JSON.parse(raw || 'null');
+        if (parsed && Array.isArray(parsed)) { customQuotes = parsed; }
+        renderCustomQuotes();
+      } catch(e) {}
+    }
+    if (typeof renderDiaryRecent === 'function') {
+      try {
+        diaryData = JSON.parse(_lsGet('fondeo_diary_sale') || '{}');
+        renderDiaryRecent();
+      } catch(e) {}
+    }
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
@@ -18163,324 +18236,6 @@ async function sbStartAutoSync(licKey) {
   };
 
 })(); // end SISTEMA ANTI-OVERTRADING
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SF · INTELLIGENCE v5: tarjetas colapsables + filtro quincenal + contador OT
-// Se inyecta al final del script existente — no modifica nada anterior
-// ─────────────────────────────────────────────────────────────────────────────
-(function() {
-
-// 1. CSS
-function _v5CSS() {
-  if (document.getElementById('sf-ie5-css')) return;
-  var s = document.createElement('style');
-  s.id = 'sf-ie5-css';
-  s.textContent = [
-    /* ── Period tabs ── */
-    '.ie5-tabs{display:flex;gap:3px;margin-bottom:10px;background:var(--bg1);border-radius:8px;padding:2px;}',
-    '.ie5-tab{flex:1;padding:5px 0;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s;text-align:center;}',
-    '.ie5-tab.on{background:var(--bg3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3);}',
-    '.ie5-tab:hover:not(.on){color:var(--muted2);}',
-    /* ── OT bar — compact ── */
-    '.ot-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;margin-bottom:10px;background:var(--bg1);border:1px solid var(--border);position:relative;overflow:hidden;}',
-    '.ot-bar::after{content:"";position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--green);border-radius:0 1px 1px 0;}',
-    '.ot-bar.ot-warn::after{background:var(--amber);}',
-    '.ot-bar.ot-danger{background:rgba(255,79,79,.03);border-color:rgba(255,79,79,.2);}',
-    '.ot-bar.ot-danger::after{background:var(--red);}',
-    '.ot-ring{width:38px;height:38px;flex-shrink:0;position:relative;}',
-    '.ot-ring svg{transform:rotate(-90deg);}',
-    '.ot-ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}',
-    '.ot-info{flex:1;min-width:0;}',
-    '.ot-title{font-size:9.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1px;}',
-    '.ot-count{font-size:14px;font-weight:800;color:var(--text);line-height:1;margin-bottom:2px;}',
-    '.ot-sub{font-size:10px;color:var(--muted2);line-height:1.4;}',
-    '.ot-badge{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-top:4px;display:inline-block;}',
-    '.ot-badge.ot-ok{background:rgba(39,217,122,.08);color:var(--green);border:1px solid rgba(39,217,122,.2);}',
-    '.ot-badge.ot-warn{background:rgba(255,174,48,.08);color:var(--amber);border:1px solid rgba(255,174,48,.2);}',
-    '.ot-badge.ot-danger{background:rgba(255,79,79,.08);color:var(--red);border:1px solid rgba(255,79,79,.2);}',
-    /* ── Cards — compact & subtle ── */
-    '.ie5-card{border-radius:9px;margin-bottom:5px;border:1px solid var(--border);background:var(--bg1);overflow:hidden;transition:border-color .15s;}',
-    '.ie5-card.c-ok{border-left:2px solid var(--green);}',
-    '.ie5-card.c-viol{border-left:2px solid var(--red);}',
-    '.ie5-card.c-warn{border-left:2px solid var(--amber);}',
-    '.ie5-card.open{border-color:var(--border2);}',
-    /* ── Card header — slim ── */
-    '.ie5-hdr{display:flex;align-items:center;gap:8px;padding:8px 11px;cursor:pointer;user-select:none;transition:background .12s;}',
-    '.ie5-hdr:hover{background:rgba(255,255,255,.02);}',
-    '.ie5-icon-wrap{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}',
-    '.c-ok  .ie5-icon-wrap{background:rgba(39,217,122,.1);}',
-    '.c-viol .ie5-icon-wrap{background:rgba(255,79,79,.1);}',
-    '.c-warn .ie5-icon-wrap{background:rgba(255,174,48,.1);}',
-    '.ie5-hdr-info{flex:1;min-width:0;}',
-    '.ie5-hdr-title{font-size:11px;font-weight:600;line-height:1.3;}',
-    '.c-ok  .ie5-hdr-title{color:var(--green);}',
-    '.c-viol .ie5-hdr-title{color:var(--red);}',
-    '.c-warn .ie5-hdr-title{color:var(--amber);}',
-    '.ie5-hdr-meta{font-size:9.5px;color:var(--muted);}',
-    '.ie5-arr{font-size:9px;color:var(--muted);transition:transform .18s;flex-shrink:0;}',
-    '.ie5-card.open .ie5-arr{transform:rotate(180deg);}',
-    /* ── Card body ── */
-    '.ie5-body{display:none;padding:0 11px 10px;border-top:1px solid rgba(255,255,255,.03);}',
-    '.ie5-card.open .ie5-body{display:block;}',
-    '.ie5-body-desc{font-size:10.5px;color:var(--muted2);line-height:1.6;padding-top:8px;}',
-    '.ie5-advice{display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding:7px 9px;border-radius:7px;background:rgba(74,158,255,.06);border:1px solid rgba(74,158,255,.15);}',
-    '.ie5-advice-icon{font-size:11px;flex-shrink:0;margin-top:1px;}',
-    '.ie5-advice-text{font-size:10px;color:var(--blue);line-height:1.5;font-weight:500;}',
-    '.ie5-divider{height:1px;background:rgba(255,255,255,.03);margin:8px 0;}',
-    '.ie5-chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;}',
-    '.ie5-chips-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:4px;margin-top:8px;}',
-    '.ie5-chip{font-size:9.5px;padding:2px 7px;border-radius:5px;font-weight:600;}',
-    '.c-viol .ie5-chip{background:rgba(255,79,79,.08);color:var(--red);border:1px solid rgba(255,79,79,.15);}',
-    '.c-warn .ie5-chip{background:rgba(255,174,48,.08);color:var(--amber);border:1px solid rgba(255,174,48,.15);}',
-    '.c-ok  .ie5-chip{background:rgba(39,217,122,.08);color:var(--green);border:1px solid rgba(39,217,122,.15);}'
-  ].join('');
-  document.head.appendChild(s);
-}
-
-// 2. Overtrading counter
-function _otCount(acc) {
-  var today = new Date().toISOString().slice(0,10);
-  var plan  = window.getTradingPlan ? window.getTradingPlan(acc) : null;
-  var max   = plan ? (plan.maxOpsPerDay || 2) : 2;
-  var split = plan ? (plan.splitRisk || false) : false;
-  var all   = typeof entries !== 'undefined' ? entries : [];
-  var todayT = all.filter(function(e) { return e.account === acc && e.date === today; });
-  var eff = todayT.length;
-  if (split && eff > 1) {
-    var b = todayT.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('buy') >= 0; }).length;
-    var s2= todayT.filter(function(t){ return (t.eaType||'').toLowerCase().indexOf('sell')>= 0; }).length;
-    if (todayT.some(function(t){ return t.eaType; })) eff = (b>0?1:0)+(s2>0?1:0);
-  }
-  return { count:eff, max:max, raw:todayT.length };
-}
-
-function _buildOT(acc) {
-  var d = _otCount(acc);
-  var pct = d.max > 0 ? Math.min(d.count/d.max, 1) : 0;
-  var rem = Math.max(d.max - d.count, 0);
-  var st  = d.count >= d.max ? 'danger' : (d.count === d.max-1 && d.max > 1) ? 'warn' : 'ok';
-  var col = st==='danger' ? 'var(--red)' : st==='warn' ? 'var(--amber)' : 'var(--green)';
-  var C   = 2*Math.PI*22;
-  var off = C - C*pct;
-  var badge = st==='danger' ? '&#9940; Límite alcanzado'
-            : st==='warn'   ? '&#9888; Última entrada permitida'
-            : rem===d.max   ? 'Sin operar hoy'
-            : rem+' entrada'+(rem!==1?'s':'')+' disponible'+(rem!==1?'s':'');
-  var sub = d.count===0
-    ? 'Aún no has operado · Plan: máx <b>'+d.max+'</b>'
-    : st==='danger'
-    ? '<b>'+d.count+'</b>/'+d.max+' ops · Límite del plan superado'
-    : '<b>'+d.count+'</b> de <b>'+d.max+'</b> entradas usadas hoy';
-  var h = '<div class="ot-bar ot-'+st+'" id="ot-live">';
-  h += '<div class="ot-ring"><svg width="58" height="58" viewBox="0 0 58 58" style="color:'+col+'">';
-  h += '<circle cx="29" cy="29" r="22" fill="none" stroke="var(--bg3)" stroke-width="4.5"/>';
-  h += '<circle cx="29" cy="29" r="22" fill="none" stroke="'+col+'" stroke-width="4.5" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" stroke-linecap="round"/>';
-  h += '</svg><div class="ot-ring-num" style="color:'+col+'">'+d.count+'</div></div>';
-  h += '<div class="ot-info">';
-  h += '<div class="ot-title">Entradas hoy</div>';
-  h += '<div class="ot-count" style="color:'+col+'">'+d.count+' / '+d.max+'</div>';
-  h += '<div class="ot-sub">'+sub+'</div>';
-  h += '<span class="ot-badge ot-'+st+'">'+badge+'</span>';
-  h += '</div></div>';
-  return h;
-}
-
-// 3. Period filter
-var _ie5P = {};
-function _filterDays(details, period) {
-  var now = new Date();
-  var cut;
-  if (period==='today') { cut=now.toISOString().slice(0,10); return details.filter(function(d){return d.date===cut;}); }
-  if (period==='week')  { var a=new Date(now); a.setDate(a.getDate()-7);  cut=a.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
-  if (period==='quin')  { var b=new Date(now); b.setDate(b.getDate()-15); cut=b.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
-  if (period==='month') { var c=new Date(now); c.setDate(c.getDate()-30); cut=c.toISOString().slice(0,10); return details.filter(function(d){return d.date>=cut;}); }
-  return details;
-}
-var _plabels = {today:'hoy',week:'esta semana',quin:'ultimas 2 semanas',month:'este mes'};
-
-function _buildTabs(acc, active) {
-  var ps = [['today','Hoy'],['week','Semana'],['quin','Quincenal'],['month','Mes']];
-  var h = '<div class="ie5-tabs">';
-  for (var i=0;i<ps.length;i++) {
-    var p=ps[i], sa=acc.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    h += '<div class="ie5-tab'+(p[0]===active?' on':'')+'" onclick="window._ie5Render(\''+sa+'\',\''+p[0]+'\')">'+p[1]+'</div>';
-  }
-  h += '</div>';
-  return h;
-}
-
-// 4. Collapsible card — premium redesign
-var _open = {};
-var _ADVICE = {
-  'overtrading':  '🎯 La próxima vez que llegues al límite, cierra la plataforma. No es debilidad, es el plan.',
-  'riesgo':       '🛡 Antes de cada entrada revisa: ¿este riesgo está dentro de mi límite diario? Si no, no entras.',
-  'lotaje':       '📐 Perder no justifica aumentar el tamaño. El siguiente trade tiene que ser igual o menor.',
-  'revenge':      '🧘 3 stops seguidos = parar el día. No es negociable. Anótalo en tu plan.',
-  'sesion':       '🕐 Opera solo en las sesiones que declaraste. Fuera de horario el mercado no te debe nada.',
-  'ok':           '✅ Sigue así. La consistencia se construye día a día respetando el plan.'
-};
-function _getAdvice(type, title) {
-  var t = title.toLowerCase();
-  if (type==='ok')                      return _ADVICE['ok'];
-  if (t.indexOf('overtrading') >= 0)    return _ADVICE['overtrading'];
-  if (t.indexOf('riesgo') >= 0)         return _ADVICE['riesgo'];
-  if (t.indexOf('lotaje') >= 0)         return _ADVICE['lotaje'];
-  if (t.indexOf('revenge') >= 0)        return _ADVICE['revenge'];
-  if (t.indexOf('sesion') >= 0 || t.indexOf('sesión') >= 0) return _ADVICE['sesion'];
-  return '';
-}
-function _card(type, icon, title, meta, body, chips, chipCls) {
-  var id   = 'c5-'+(Math.random().toString(36).slice(2,7));
-  var key  = type+title;
-  var op   = !!_open[key];
-  var safek = key.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-  var advice = _getAdvice(type, title);
-
-  var chipsHtml = '';
-  if (chips && chips.length) {
-    chipsHtml += '<div class="ie5-chips-label">Días detectados</div><div class="ie5-chips">';
-    for (var i=0; i<Math.min(chips.length,5); i++) {
-      chipsHtml += '<span class="ie5-chip">'+(chips[i])+'</span>';
-    }
-    chipsHtml += '</div>';
-  }
-
-  var adviceHtml = advice
-    ? '<div class="ie5-advice"><span class="ie5-advice-icon">💡</span><span class="ie5-advice-text">'+advice+'</span></div>'
-    : '';
-
-  var h = '<div class="ie5-card c-'+type+(op?' open':'')+'" id="'+id+'">';
-  h += '<div class="ie5-hdr" onclick="window._ie5Toggle(\''+id+'\',\''+safek+'\')">'; 
-  h += '<div class="ie5-icon-wrap">'+icon+'</div>';
-  h += '<div class="ie5-hdr-info">';
-  h += '<div class="ie5-hdr-title">'+title+'</div>';
-  if (meta) h += '<div class="ie5-hdr-meta">'+meta+'</div>';
-  h += '</div>';
-  h += '<span class="ie5-arr">&#9660;</span></div>';
-  h += '<div class="ie5-body">';
-  h += '<div class="ie5-body-desc">'+body+'</div>';
-  if (adviceHtml) { h += '<div class="ie5-divider"></div>'+adviceHtml; }
-  if (chipsHtml)  { h += chipsHtml; }
-  h += '</div></div>';
-  return h;
-}
-
-window._ie5Toggle = function(id, key) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  el.classList.toggle('open');
-  _open[key] = el.classList.contains('open');
-};
-
-// 5. Main render
-window._ie5Render = function(acc, period) {
-  var cont = document.getElementById('ie-account-content');
-  if (!cont) return;
-  _v5CSS();
-  if (!period) period = _ie5P[acc] || 'week';
-  _ie5P[acc] = period;
-
-  var plan = window.getTradingPlan ? window.getTradingPlan(acc) : null;
-  var r    = window.getConductualAnalysis ? window.getConductualAnalysis(acc) : null;
-  var html = _buildTabs(acc, period);
-
-  if (period==='today' || period==='week') html += _buildOT(acc);
-
-  if (!plan) {
-    html += '<div class="ie3-empty-state"><div class="ie3-empty-icon">&#127919;</div><div class="ie3-empty-title">Sin Plan de Trading</div><div>Define tus limites en la pestana Plan de Trading.</div></div>';
-    cont.innerHTML = html; return;
-  }
-  if (!r || r.noData) {
-    html += '<div class="ie3-empty-state"><div class="ie3-empty-icon">&#128202;</div><div class="ie3-empty-title">Sin operaciones</div><div>Importa datos del EA.</div></div>';
-    cont.innerHTML = html; return;
-  }
-
-  var days  = _filterDays(r.dayDetails, period);
-  var label = _plabels[period] || period;
-  if (!days.length) {
-    html += '<div class="ie3-no-activity">&#128235; Sin operaciones '+label+'.</div>';
-    cont.innerHTML = html; return;
-  }
-
-  var total  = days.length;
-  var clean  = days.filter(function(d){return d.clean;}).length;
-  var score  = Math.round(clean/total*100);
-  var oV     = days.filter(function(d){return d.opsViol;});
-  var rV     = days.filter(function(d){return d.riskViol;});
-  var eV     = days.filter(function(d){return d.escalation;});
-  var revV   = days.filter(function(d){return d.revenge;});
-  var outV   = days.filter(function(d){return d.outOfSession;});
-
-  var scol   = score>=80?'var(--green)':score>=50?'var(--amber)':'var(--red)';
-  var scls   = score>=80?'high':score>=50?'mid':'low';
-  var slbl   = score>=80?'&#10003; Plan respetado':score>=50?'&#9888; Parcial':'&#10007; Plan roto';
-  var C2     = 2*Math.PI*24;
-  var off2   = C2 - C2*score/100;
-  var capL   = label.charAt(0).toUpperCase()+label.slice(1);
-
-  html += '<div class="ie3-score-row">';
-  html += '<div class="ie3-score-ring"><svg width="68" height="68" viewBox="0 0 68 68">';
-  html += '<circle cx="34" cy="34" r="24" fill="none" stroke="var(--bg3)" stroke-width="5"/>';
-  html += '<circle cx="34" cy="34" r="24" fill="none" stroke="'+scol+'" stroke-width="5" stroke-dasharray="'+C2.toFixed(1)+'" stroke-dashoffset="'+off2.toFixed(1)+'" stroke-linecap="round"/>';
-  html += '</svg><div class="ie3-score-num" style="color:'+scol+'">'+score+'%</div></div>';
-  html += '<div class="ie3-score-info"><div class="ie3-score-title">'+capL+'</div>';
-  html += '<div class="ie3-score-sub">'+total+' dia'+(total!==1?'s':'')+' &middot; '+clean+' en plan';
-  if (oV.length+rV.length>0) html += ' &middot; <span style="color:var(--red)">'+(oV.length+rV.length)+' desviacion'+(oV.length+rV.length!==1?'es':'')+'</span>';
-  html += '</div><div class="ie3-score-badge '+scls+'">'+slbl+'</div></div></div>';
-
-  if (!oV.length && !rV.length && !eV.length) {
-    html += _card('ok','&#9989;','Todo dentro del plan','','Sin desviaciones detectadas en este periodo.',[]);
-  }
-  if (oV.length) {
-    var wr = oV.slice().sort(function(a,b){return b.ops-a.ops;})[0];
-    var ch2=[]; for(var i=0;i<Math.min(oV.length,5);i++) ch2.push(oV[i].date+' &middot; '+oV[i].ops+' ops');
-    html += _card('viol','&#9889;','Overtrading &mdash; '+oV.length+' dia'+(oV.length!==1?'s':''),oV.length+' dia'+(oV.length!==1?'s':''),
-      'Plan: max <b>'+plan.maxOpsPerDay+' op/dia</b>. Peor dia: <b>'+wr.ops+' ops</b> el '+wr.date+'.',ch2,'');
-  }
-  if (rV.length) {
-    var wr2=rV.slice().sort(function(a,b){return b.riskUsed-a.riskUsed;})[0];
-    var ch3=[]; for(var j=0;j<Math.min(rV.length,5);j++) ch3.push(rV[j].date+(rV[j].riskUsed?' &middot; '+rV[j].riskUsed.toFixed(1)+'%':''));
-    html += _card('viol','&#128197;','Riesgo excedido &mdash; '+rV.length+' dia'+(rV.length!==1?'s':''),rV.length+' dia'+(rV.length!==1?'s':''),
-      'Limite: <b>'+plan.maxDailyRisk+'%</b>. Peor: <b>'+(wr2.riskUsed?wr2.riskUsed.toFixed(1)+'%':'?')+'</b> el '+wr2.date+'.',ch3,'');
-  }
-  if (eV.length) {
-    var ch4=[]; for(var k=0;k<Math.min(eV.length,5);k++) ch4.push(eV[k].date);
-    html += _card('warn','&#128200;','Lotaje aumento tras perdida &mdash; '+eV.length+' dia'+(eV.length!==1?'s':''),eV.length+' obs.',
-      'Size mayor tras stop. Contrastalo con tu estrategia.',ch4,'amber');
-  }
-  if (revV.length) {
-    var ch5=[]; for(var l=0;l<Math.min(revV.length,5);l++) ch5.push(revV[l].date);
-    html += _card('viol','&#128544;','Revenge trading posible &mdash; '+revV.length+' dia'+(revV.length!==1?'s':''),revV.length+' dia'+(revV.length!==1?'s':''),
-      '3+ stops seguidos o size creciente tras perdidas.',ch5,'');
-  }
-  if (outV.length) {
-    var ch6=[]; for(var m=0;m<Math.min(outV.length,5);m++) ch6.push(outV[m].date+' &middot; '+outV[m].outOfSession+' op');
-    html += _card('warn','&#128336;','Fuera de sesion &mdash; '+outV.length+' dia'+(outV.length!==1?'s':''),outV.length+' dia'+(outV.length!==1?'s':''),
-      'Sesiones declaradas: <b>'+(plan.sessions||[]).join(', ')+'</b>.',ch6,'amber');
-  }
-
-  cont.innerHTML = html;
-};
-
-// 6. Hook: intercept existing renderIntelligenceTab
-var _orig = window.renderIntelligenceTab;
-window.renderIntelligenceTab = function(acc, period) {
-  window._ie5Render(acc, period);
-};
-
-// 7. Refresh counter every 30s
-setInterval(function() {
-  var el = document.getElementById('ot-live');
-  if (!el) return;
-  var acc = typeof currentAccount !== 'undefined' ? currentAccount : null;
-  if (!acc) return;
-  var tmp = document.createElement('div');
-  tmp.innerHTML = _buildOT(acc);
-  el.parentNode.replaceChild(tmp.firstChild, el);
-}, 30000);
-
-})();
-// ─────────────────────────────────────────────────────────────────────────────
 </script>
 
 
