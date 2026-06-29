@@ -17467,6 +17467,11 @@ function sfApplyCloudData() {
         renderDiaryRecent();
       } catch(e) {}
     }
+    // ── Recargar Coach Emocional desde localStorage (recién poblado por sbPull) ──
+    try {
+      if (typeof coachLoadDate === 'function') coachLoadDate();
+      if (typeof coachRenderHistory === 'function') coachRenderHistory();
+    } catch(e) {}
   } catch(e) { console.warn('SF Cloud: error al aplicar datos en UI', e); }
 }
 
