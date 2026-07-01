@@ -3001,6 +3001,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);margin-bottom:10px;">
           <label for="coach-prep-hour" style="font-size:12px;color:var(--muted2);flex:1;">🕐 Hora de preparación</label>
           <input type="time" id="coach-prep-hour" class="form-input" style="width:110px;font-size:12px;padding:5px 8px;" onchange="coachSavePrepHour(this.value)">
+          <button type="button" class="btn btn-ghost btn-sm" style="white-space:nowrap;font-size:11px;padding:5px 10px;" onclick="coachOpenRitual()" title="Ver el ritual de reglas y verdades ahora, sin esperar la hora programada">👁️ Ver ritual ahora</button>
         </div>
 
         <!-- Checklist preparación -->
@@ -10568,8 +10569,25 @@ function _coachSettingsGet() {
     return { prepHour: '07:00', lastRitualDate: '', quoteShownDate: '', quoteShownAM: -1, quoteShownPM: -1 };
   }
 }
-function _coachSettingsSave(patch) {
-  const s = Object.assign(_coachSettingsGet(), patch || {});
+async function _coachSettingsSave(patch) {
+  // Merge-antes-de-push: trae primero la version mas reciente de la nube
+  // para no pisar cambios hechos desde otro dispositivo/sesion en paralelo.
+  let base = _coachSettingsGet(); // fallback: lo que hay en cache local
+  const licKey = (typeof _getLicKey === 'function') ? _getLicKey() : null;
+  if (licKey && typeof SB_URL !== 'undefined') {
+    try {
+      const res = await fetch(
+        SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(licKey) + '&select=data',
+        { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
+      );
+      if (res.ok) {
+        const rows = await res.json();
+        const remoteSettings = rows && rows[0] && rows[0].data && rows[0].data.sf_coach_settings_v1;
+        if (remoteSettings) base = Object.assign({}, base, remoteSettings); // la nube manda sobre el cache local viejo
+      }
+    } catch(e) { console.warn('SF Coach: no se pudo traer settings remotos, se usa cache local', e); }
+  }
+  const s = Object.assign({}, base, patch || {}); // el cambio nuevo (patch) siempre gana al final
   _lsSet('sf_coach_settings_v1', JSON.stringify(s));
   _sbPushNow(); // Supabase-first
   return s;
