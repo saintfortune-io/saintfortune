@@ -2997,6 +2997,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           </div>
         </div>
 
+        <!-- Hora de preparación (Supabase-first) -->
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);margin-bottom:10px;">
+          <label for="coach-prep-hour" style="font-size:12px;color:var(--muted2);flex:1;">🕐 Hora de preparación</label>
+          <input type="time" id="coach-prep-hour" class="form-input" style="width:110px;font-size:12px;padding:5px 8px;" onchange="coachSavePrepHour(this.value)">
+        </div>
+
         <!-- Checklist preparación -->
         <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;" id="coach-prep-checks">
           <label class="tp-check-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 8px; cursor: pointer; background: var(--bg3); border: 1px solid transparent; transition: 0.2s;">
@@ -9652,13 +9658,15 @@ function buildBackupPayload(){
       }, {})
     ),
     sf_coach_v1_sale:           JSON.parse(_lsGet('sf_coach_v1_sale')           || '{}'),
+    sf_ie_history_v1:           JSON.parse(_lsGet('sf_ie_history_v1')           || '{}'),
     fp_reto_1k10k_v1:           JSON.parse(_lsGet('fp_reto_1k10k_v1')           || 'null'),
     fp_reto_pnl_v1:             JSON.parse(_lsGet('fp_reto_pnl_v1')             || '[]'),
     fp_reto_diasfuera_v1:       JSON.parse(_lsGet('fp_reto_diasfuera_v1')       || '[]'),
     fp_reto_reflections_sale:   JSON.parse(_lsGet('fp_reto_reflections_sale')   || '[]'),
     tp_max_streak_sale:         _lsGet('tp_max_streak_sale') || '0',
     tp_max_streak_start_sale:   _lsGet('tp_max_streak_start_sale') || '',
-    tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || ''
+    tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || '',
+    sf_coach_settings_v1:       JSON.parse(_lsGet('sf_coach_settings_v1')       || 'null')
   };
 }
 
@@ -9695,12 +9703,14 @@ function applyBackupPayload(d){
   if(d.sf_trading_plans_v1        !== undefined) _lsSet('sf_trading_plans_v1',        JSON.stringify(d.sf_trading_plans_v1));
   if(d.fp_reto_linked_account_v1  !== undefined) _lsSet('fp_reto_linked_account_v1',  d.fp_reto_linked_account_v1);
   if(d.sf_coach_v1_sale           !== undefined) _lsSet('sf_coach_v1_sale',           JSON.stringify(d.sf_coach_v1_sale));
+  if(d.sf_ie_history_v1           !== undefined) _lsSet('sf_ie_history_v1',           JSON.stringify(d.sf_ie_history_v1));
   if(d.fp_reto_1k10k_v1          !== undefined) _lsSet('fp_reto_1k10k_v1',           JSON.stringify(d.fp_reto_1k10k_v1));
   if(d.fp_reto_diasfuera_v1      !== undefined) _lsSet('fp_reto_diasfuera_v1',       JSON.stringify(d.fp_reto_diasfuera_v1));
   if(d.fp_reto_reflections_sale   !== undefined) _lsSet('fp_reto_reflections_sale',   JSON.stringify(d.fp_reto_reflections_sale));
   if(d.tp_max_streak_sale         !== undefined) _lsSet('tp_max_streak_sale',         String(d.tp_max_streak_sale));
   if(d.tp_max_streak_start_sale   !== undefined) _lsSet('tp_max_streak_start_sale',   d.tp_max_streak_start_sale);
   if(d.tp_max_streak_end_sale     !== undefined) _lsSet('tp_max_streak_end_sale',     d.tp_max_streak_end_sale);
+  if(d.sf_coach_settings_v1       !== undefined && d.sf_coach_settings_v1) _lsSet('sf_coach_settings_v1', JSON.stringify(d.sf_coach_settings_v1));
   if(d.fp_reto_pnl_v1          !== undefined) _lsSet('fp_reto_pnl_v1',           JSON.stringify(d.fp_reto_pnl_v1));
   if(d.fp_missed_ops_accounts !== undefined) {
     try {
@@ -10545,6 +10555,159 @@ function renderWeeklySummary(dateStr) {
 // ═══════════════════════════════════════════
 // NOTAS PERSONALES — SUPABASE-FIRST
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// COACH SETTINGS (hora de preparación, ritual diario, frases flotantes)
+// SUPABASE-FIRST: sf_coach_settings_v1
+// ═══════════════════════════════════════════
+function _coachSettingsGet() {
+  try {
+    const raw = _lsGet('sf_coach_settings_v1');
+    const parsed = JSON.parse(raw || 'null');
+    return Object.assign({ prepHour: '07:00', lastRitualDate: '', quoteShownDate: '', quoteShownAM: -1, quoteShownPM: -1 }, parsed || {});
+  } catch(e) {
+    return { prepHour: '07:00', lastRitualDate: '', quoteShownDate: '', quoteShownAM: -1, quoteShownPM: -1 };
+  }
+}
+function _coachSettingsSave(patch) {
+  const s = Object.assign(_coachSettingsGet(), patch || {});
+  _lsSet('sf_coach_settings_v1', JSON.stringify(s));
+  _sbPushNow(); // Supabase-first
+  return s;
+}
+
+// ═══════════════════════════════════════════
+// RITUAL DIARIO: Reglas + Verdades (una vez al día, avance manual)
+// ═══════════════════════════════════════════
+const _RITUAL_CARDS = [
+  { tag: 'VERDAD 1/5', text: 'Cualquier cosa puede suceder.' },
+  { tag: 'VERDAD 2/5', text: 'No necesito saber qué va a suceder para lograr hacer dinero.' },
+  { tag: 'VERDAD 3/5', text: 'Hay una distribución aleatoria entre operaciones ganadoras y perdedoras para cualquier conjunto de variables que definen una probabilidad.' },
+  { tag: 'VERDAD 4/5', text: 'Un patrón no es nada más que la predicción de una mayor probabilidad de que suceda alguna cosa en cierto momento.' },
+  { tag: 'VERDAD 5/5', text: 'En cualquier momento en el mercado es único.' },
+  { tag: 'REGLA 1/7', text: 'Identifico objetivamente mis oportunidades.' },
+  { tag: 'REGLA 2/7', text: 'Predefino el riesgo de cada operación.' },
+  { tag: 'REGLA 3/7', text: 'Acepto completamente el riesgo de cada operación y estoy dispuesto a cancelarlo si se vuelve en mi contra.' },
+  { tag: 'REGLA 4/7', text: 'Actúo de acuerdo a mi sistema sin duda y sin vacilación.' },
+  { tag: 'REGLA 5/7', text: 'Me pago a mí mismo mientras que el mercado va poniendo dinero a mi disposición.' },
+  { tag: 'REGLA 6/7', text: 'Continuamente controlo mi propensión de cometer errores.' },
+  { tag: 'REGLA 7/7', text: 'Entiendo la necesidad absoluta de estos principios de éxito consistente y por lo tanto, nunca los violo.' }
+];
+let _ritualCardIdx = 0;
+
+function coachCheckDailyRitual() {
+  const s = _coachSettingsGet();
+  const today = localDateStr();
+  if (s.lastRitualDate === today) return; // ya se mostró hoy
+  const [h, m] = (s.prepHour || '07:00').split(':').map(Number);
+  const now = new Date();
+  const prepMoment = new Date(now); prepMoment.setHours(h||0, m||0, 0, 0);
+  if (now < prepMoment) return; // aún no llega la hora de preparación de hoy
+  _ritualCardIdx = 0;
+  coachOpenRitual();
+}
+
+function coachOpenRitual() {
+  let overlay = document.getElementById('coach-ritual-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'coach-ritual-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(5,5,10,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
+    overlay.innerHTML = `<div class="modal" style="width:480px;max-width:96vw;text-align:center;" onclick="event.stopPropagation()">
+      <div style="font-size:10px;font-weight:800;letter-spacing:0.12em;color:var(--purple);margin-bottom:10px;" id="coach-ritual-tag">—</div>
+      <div style="font-size:15px;line-height:1.6;font-weight:600;color:var(--text);min-height:90px;display:flex;align-items:center;justify-content:center;" id="coach-ritual-text">—</div>
+      <div style="display:flex;gap:6px;justify-content:center;margin:14px 0 4px;" id="coach-ritual-dots"></div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+        <button class="btn btn-ghost btn-sm" onclick="coachCloseRitual()">Cerrar</button>
+        <button class="btn btn-primary" id="coach-ritual-next-btn" onclick="coachRitualNext()">Siguiente →</button>
+      </div>
+    </div>`;
+    document.body.appendChild(overlay);
+  }
+  overlay.style.display = 'flex';
+  coachRenderRitualCard();
+}
+
+function coachRenderRitualCard() {
+  const card = _RITUAL_CARDS[_ritualCardIdx];
+  const tagEl = document.getElementById('coach-ritual-tag');
+  const textEl = document.getElementById('coach-ritual-text');
+  const dotsEl = document.getElementById('coach-ritual-dots');
+  const btnEl = document.getElementById('coach-ritual-next-btn');
+  if (tagEl) tagEl.textContent = card.tag;
+  if (textEl) textEl.textContent = card.text;
+  if (dotsEl) {
+    dotsEl.innerHTML = _RITUAL_CARDS.map((_, i) =>
+      `<div style="width:6px;height:6px;border-radius:50%;background:${i===_ritualCardIdx?'var(--purple)':'var(--border2)'};"></div>`
+    ).join('');
+  }
+  const isLast = _ritualCardIdx === _RITUAL_CARDS.length - 1;
+  if (btnEl) btnEl.textContent = isLast ? 'Ir a Coach Emocional →' : 'Siguiente →';
+}
+
+function coachRitualNext() {
+  const isLast = _ritualCardIdx === _RITUAL_CARDS.length - 1;
+  if (isLast) {
+    coachFinishRitual();
+    if (typeof showPage === 'function') showPage('coach');
+    return;
+  }
+  _ritualCardIdx++;
+  coachRenderRitualCard();
+}
+
+function coachCloseRitual() {
+  coachFinishRitual();
+  const overlay = document.getElementById('coach-ritual-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function coachFinishRitual() {
+  _coachSettingsSave({ lastRitualDate: localDateStr() }); // Supabase-first
+  const overlay = document.getElementById('coach-ritual-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+// ═══════════════════════════════════════════
+// FRASES FLOTANTES 2X/DÍA (solo frases propias, sin repetir)
+// ═══════════════════════════════════════════
+function coachCheckFloatingQuote() {
+  if (!Array.isArray(customQuotes) || customQuotes.length === 0) return; // solo frases propias
+  const s = _coachSettingsGet();
+  const today = localDateStr();
+  const now = new Date();
+  const isPM = now.getHours() >= 13;
+  const slotShown = today === s.quoteShownDate && ((isPM && s.quoteShownPM >= 0) || (!isPM && s.quoteShownAM >= 0));
+  if (slotShown) return;
+
+  const prevIdx = isPM ? s.quoteShownAM : s.quoteShownPM; // evita repetir la última mostrada
+  let idx = Math.floor(Math.random() * customQuotes.length);
+  if (customQuotes.length > 1) {
+    while (idx === prevIdx) idx = Math.floor(Math.random() * customQuotes.length);
+  }
+
+  coachShowFloatingQuote(customQuotes[idx]);
+
+  const patch = { quoteShownDate: today };
+  if (isPM) patch.quoteShownPM = idx; else patch.quoteShownAM = idx;
+  _coachSettingsSave(patch); // Supabase-first
+}
+
+function coachShowFloatingQuote(q) {
+  let el = document.getElementById('coach-floating-quote');
+  if (el) el.remove();
+  el = document.createElement('div');
+  el.id = 'coach-floating-quote';
+  el.style.cssText = 'position:fixed;bottom:20px;right:20px;max-width:300px;background:var(--bg1);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,0.4);z-index:9998;animation:retoSlideDown 0.4s ease;';
+  el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+    <div style="font-size:18px;">${q.emoji || '✍️'}</div>
+    <button onclick="document.getElementById('coach-floating-quote').remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;">✕</button>
+  </div>
+  <div style="font-size:12px;color:var(--text);line-height:1.5;margin-top:4px;">${q.text}</div>
+  <div style="font-size:10px;color:var(--muted);margin-top:6px;">— ${q.author || 'Yo'}</div>`;
+  document.body.appendChild(el);
+  setTimeout(() => { const e = document.getElementById('coach-floating-quote'); if (e) e.remove(); }, 15000);
+}
+
 const _NOTES_DEFAULTS = {
   rules: `CINCO VERDADES FUNDAMENTALES:
 
@@ -10701,14 +10864,53 @@ function deleteCustomQuote(idx) {
   toast('Frase eliminada', false, 'red');
 }
 
+let _editingQuoteIdx = -1;
+
 function renderCustomQuotes() {
   const el = document.getElementById('custom-quotes-list');
   if(!el) return;
   if(!customQuotes.length) { el.innerHTML = '<div class="faqs-empty">Sin frases añadidas aún</div>'; return; }
-  el.innerHTML = customQuotes.map((q,i) => `<div class="faqs-quote-item">
+  el.innerHTML = customQuotes.map((q,i) => {
+    if (i === _editingQuoteIdx) {
+      return `<div class="faqs-quote-item" style="flex-direction:column;align-items:stretch;gap:6px;">
+        <textarea id="edit-quote-text-${i}" class="form-input" rows="2" style="font-size:11px;resize:vertical;">${(q.text||'').replace(/</g,'&lt;')}</textarea>
+        <input id="edit-quote-author-${i}" class="form-input" style="font-size:11px;" value="${(q.author||'').replace(/"/g,'&quot;')}" placeholder="Autor (opcional)">
+        <div style="display:flex;gap:6px;justify-content:flex-end;">
+          <button onclick="cancelEditCustomQuote()" class="btn btn-ghost btn-sm">Cancelar</button>
+          <button onclick="saveEditCustomQuote(${i})" class="btn btn-primary btn-sm">Guardar</button>
+        </div>
+      </div>`;
+    }
+    return `<div class="faqs-quote-item">
     <div style="flex:1"><div style="font-size:11px;color:var(--text);line-height:1.5">${q.text}</div><div style="font-size:10px;color:var(--muted);margin-top:2px">— ${q.author||'Anónimo'}</div></div>
+    <button onclick="editCustomQuote(${i})" class="faqs-quote-del" title="Editar" style="margin-right:4px;">✏️</button>
     <button onclick="deleteCustomQuote(${i})" class="faqs-quote-del" title="Eliminar">✕</button>
-  </div>`).join('');
+  </div>`;
+  }).join('');
+}
+
+function editCustomQuote(idx) {
+  _editingQuoteIdx = idx;
+  renderCustomQuotes();
+}
+
+function cancelEditCustomQuote() {
+  _editingQuoteIdx = -1;
+  renderCustomQuotes();
+}
+
+function saveEditCustomQuote(idx) {
+  const textEl = document.getElementById('edit-quote-text-'+idx);
+  const authorEl = document.getElementById('edit-quote-author-'+idx);
+  const text = textEl ? textEl.value.trim() : '';
+  const author = authorEl ? authorEl.value.trim() : '';
+  if (!text) { toast('La frase no puede quedar vacía', true); return; }
+  customQuotes[idx] = Object.assign({}, customQuotes[idx], { text, author });
+  _lsSet('fondeo_quotes_sale', JSON.stringify(customQuotes));
+  _sbPushNow(); // Supabase-first
+  _editingQuoteIdx = -1;
+  renderCustomQuotes();
+  toast('Frase actualizada en la nube ✓');
 }
 
 function renderFAQs() {
@@ -12937,10 +13139,24 @@ function coachUpdateDateSub() {
   sub.textContent = d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 }
 
+// ── Hora de preparación (Supabase-first) ──
+function coachInitPrepHour() {
+  const inp = document.getElementById('coach-prep-hour');
+  if (!inp) return;
+  const s = _coachSettingsGet();
+  inp.value = s.prepHour || '07:00';
+}
+function coachSavePrepHour(val) {
+  if (!val) return;
+  _coachSettingsSave({ prepHour: val });
+  toast('Hora de preparación guardada en la nube ✓');
+}
+
 // ── Cargar fecha ──
 async function coachLoadDate() {
   coachSelectedDate = document.getElementById('coach-date-picker').value;
   coachUpdateDateSub();
+  coachInitPrepHour();
 
   // Si localStorage está vacío (cambio de documento), hacer pull fresco antes de leer
   let all = coachLoad();
@@ -15400,8 +15616,18 @@ function _ieGatherData() {
   var allDates = Object.keys(allCoach).sort();
   if (allDates.length < 2) return null;
 
+  // NOTA: antes esto leía 'sf_trades_v1', una clave que nunca se escribe en
+  // ninguna parte de la app → el cruce PnL/operaciones siempre daba 0.
+  // Los trades reales viven en el array 'entries' (persistido en Supabase).
   var tradesByDate = {};
-  try { tradesByDate = JSON.parse(localStorage.getItem('sf_trades_v1') || '{}'); } catch(e) {}
+  try {
+    (typeof entries !== 'undefined' ? entries : []).forEach(function(e) {
+      var d = (e.date || '').slice(0, 10);
+      if (!d) return;
+      if (!tradesByDate[d]) tradesByDate[d] = [];
+      tradesByDate[d].push({ pnl: e.pnl, account: e.account });
+    });
+  } catch(e) {}
 
   var allTrades = [];
   Object.keys(tradesByDate).forEach(function(d) {
@@ -15820,6 +16046,307 @@ if (typeof coachSaveEntry === 'function') {
 })(); // fin IIFE Intelligence Engine v2
 
 // ── FIN INTELLIGENCE ENGINE · Saint Fortune™ ─────────────────────────────────
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · IE HISTORY
+// Snapshot Supabase-first del cruce Coach Emocional + Engine, por día.
+// El Coach se resetea a diario (diseño correcto), pero antes de resetearse,
+// este módulo congela el cruce (errores, emociones, semáforo, PnL real,
+// overtrading) y lo guarda de forma permanente en 'sf_ie_history_v1' → Supabase.
+// Así el histórico nunca se pierde aunque el Coach del día siguiente esté limpio
+// o los trades cambien/se borren más adelante.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+(function() {
+
+var _IEH_KEY = 'sf_ie_history_v1';
+
+function _iehLoad() {
+  try { return JSON.parse(_lsGet(_IEH_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+// Supabase-first: igual patrón que coachSaveLS / _tpSave — escribe local
+// (para que buildBackupPayload lo incluya) y sube a la nube de inmediato.
+async function _iehSave(data) {
+  _lsSet(_IEH_KEY, JSON.stringify(data));
+  var licKey = (typeof _getLicKey === 'function') ? _getLicKey() : null;
+  if (licKey && typeof sbPush === 'function') {
+    try { await sbPush(licKey); }
+    catch(e) { console.warn('SF Cloud push error (ie history)', e); }
+  }
+}
+
+var _IEH_ERROR_LABELS = {
+  fomo:'FOMO', cansada:'Operar cansada', sobreoperar:'Sobreoperar',
+  impulsiva:'Entrada impulsiva', tardia:'Entrada tardía', stop:'Mover el stop',
+  venganza:'Revenge trading', confianza:'Exceso de confianza', plan:'Saltar el plan', size:'Tamaño excesivo'
+};
+var _IEH_EMO_LABELS = {
+  ansiosa:'Ansiosa', tranquila:'Tranquila', enfocada:'Enfocada',
+  frustrada:'Frustrada', 'eufórica':'Eufórica', motivada:'Motivada',
+  cansada:'Cansada', neutral:'Neutral', insegura:'Insegura', confiada:'Confiada'
+};
+
+function _iehFmt(n) {
+  n = n || 0;
+  return (n >= 0 ? '+$' : '-$') + Math.abs(Math.round(n)).toLocaleString('es-ES');
+}
+
+// ── ¿Hubo overtrading ese día? Cruza el resultado del asesor experto (trades
+//    reales) con lo que marcó el Coach emocional ese mismo día ───────────────
+function _iehDetectOvertrading(entry, dayTrades) {
+  var tradeCount = dayTrades.length;
+  var errors = entry.errors || [];
+  var hasOTError = errors.indexOf('sobreoperar') >= 0;
+  var hasEuforia = (entry.emoBefore || []).indexOf('eufórica') >= 0;
+  return hasOTError || (tradeCount > 5 && (hasOTError || hasEuforia));
+}
+
+function _iehCrossText(snap) {
+  var parts = [];
+
+  if (snap.overtrade) {
+    parts.push('<strong>⚠️ Overtrading detectado</strong>: ' + snap.tradeCount + ' operación(es) con ' +
+      (snap.errors.indexOf('sobreoperar') >= 0 ? 'el error "Sobreoperar" marcado' : 'señales emocionales de euforia') + '.');
+  }
+  if (snap.sem === 'rojo' && snap.tradeCount > 0) {
+    parts.push('<strong>🔴 Semáforo rojo + trades activos</strong>: operaste en condición de riesgo.');
+  }
+  if (snap.sem === 'amarillo' && snap.pnl < 0) {
+    parts.push('<strong>🟡 Precaución ignorada</strong>: semáforo amarillo y resultado negativo (' + _iehFmt(snap.pnl) + ').');
+  }
+  if (snap.errors.length > 0 && snap.pnl < 0) {
+    var errLabels = snap.errors.map(function(e){ return _IEH_ERROR_LABELS[e] || e; }).join(', ');
+    parts.push('<strong>Errores del día</strong> [' + errLabels + '] correlacionan con pérdida de ' + _iehFmt(snap.pnl) + '.');
+  }
+  if (snap.errors.length === 0 && snap.pnl > 0 && snap.sem === 'verde') {
+    parts.push('<strong>✅ Día limpio</strong>: sin errores marcados, semáforo verde, resultado positivo.');
+  }
+  if (!parts.length) parts.push('Sin patrones de riesgo cruzados este día.');
+  return parts.join(' ');
+}
+
+// ── Tomar snapshot al guardar un día del Coach (antes de que se resetee) ─────
+async function _iehTakeSnapshot(date) {
+  try {
+    if (!date) return;
+    var allCoach = coachLoad();
+    var entry = allCoach[date];
+    if (!entry) return;
+
+    // Trades reales de ese día (todas las cuentas), fuente: 'entries' → Supabase
+    var dayTrades = (typeof entries !== 'undefined' ? entries : []).filter(function(e){
+      return (e.date || '').slice(0,10) === date;
+    });
+    var pnl = dayTrades.reduce(function(s, t){ return s + (parseFloat(t.pnl) || 0); }, 0);
+
+    var snap = {
+      date:       date,
+      ts:         Date.now(),
+      pnl:        pnl,
+      tradeCount: dayTrades.length,
+      sem:        entry.sem || entry.semaforo || null,
+      errors:     entry.errors || [],
+      emoBefore:  entry.emoBefore || [],
+      emoAfter:   entry.emoAfter || [],
+      noTraded:   entry.noTraded || false,
+      note:       entry.note || ''
+    };
+    snap.overtrade = _iehDetectOvertrading(entry, dayTrades);
+    snap.crossText = _iehCrossText(snap);
+
+    var history = _iehLoad();
+    history[date] = snap;
+    await _iehSave(history); // ✅ Supabase-first — nunca se pierde
+  } catch(e) {
+    console.warn('[IE History] Error al tomar snapshot:', e);
+  }
+}
+
+// ── CSS ──────────────────────────────────────────────────────────────────────
+function _iehInjectCSS() {
+  if (document.getElementById('sf-ieh-css')) return;
+  var s = document.createElement('style');
+  s.id = 'sf-ieh-css';
+  s.textContent = [
+    '.ieh-wrap{margin-top:10px;}',
+    '.ieh-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;user-select:none;}',
+    '.ieh-header-line{flex:1;height:1px;background:var(--border);}',
+    '.ieh-header-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);white-space:nowrap;padding:0 6px;}',
+    '.ieh-toggle-icon{font-size:10px;color:var(--muted);}',
+    '.ieh-list{display:none;}',
+    '.ieh-list.open{display:block;}',
+    '.ieh-card{border:1px solid var(--border);border-radius:10px;padding:10px 13px;margin-bottom:7px;background:var(--bg2);position:relative;overflow:hidden;}',
+    '.ieh-card::before{content:"";position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}',
+    '.ieh-card.positive{border-color:rgba(39,217,122,0.2);background:rgba(39,217,122,0.03);}',
+    '.ieh-card.positive::before{background:rgba(39,217,122,0.6);}',
+    '.ieh-card.negative{border-color:rgba(255,79,79,0.2);background:rgba(255,79,79,0.03);}',
+    '.ieh-card.negative::before{background:rgba(255,79,79,0.5);}',
+    '.ieh-card.neutral{border-color:rgba(255,174,48,0.2);background:rgba(255,174,48,0.03);}',
+    '.ieh-card.neutral::before{background:rgba(255,174,48,0.5);}',
+    '.ieh-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:4px;}',
+    '.ieh-date{font-size:10px;font-weight:700;color:var(--muted2);}',
+    '.ieh-pnl{font-size:12px;font-weight:800;}',
+    '.ieh-pnl.pos{color:var(--green);}',
+    '.ieh-pnl.neg{color:var(--red);}',
+    '.ieh-pnl.zero{color:var(--muted);}',
+    '.ieh-sem-badge{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:2px 8px;border-radius:20px;}',
+    '.ieh-sem-badge.verde{background:rgba(39,217,122,0.1);color:var(--green);border:1px solid rgba(39,217,122,0.25);}',
+    '.ieh-sem-badge.amarillo{background:rgba(255,174,48,0.1);color:var(--amber);border:1px solid rgba(255,174,48,0.25);}',
+    '.ieh-sem-badge.rojo{background:rgba(255,79,79,0.1);color:var(--red);border:1px solid rgba(255,79,79,0.25);}',
+    '.ieh-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px;}',
+    '.ieh-pill{font-size:9.5px;padding:2px 8px;border-radius:5px;font-weight:600;background:var(--bg3);border:1px solid var(--border2);color:var(--muted2);}',
+    '.ieh-pill.error{background:rgba(255,79,79,0.07);color:var(--red);border-color:rgba(255,79,79,0.2);}',
+    '.ieh-pill.emo{background:rgba(74,158,255,0.07);color:var(--blue);border-color:rgba(74,158,255,0.2);}',
+    '.ieh-pill.ot{background:rgba(255,79,79,0.1);color:var(--red);border-color:rgba(255,79,79,0.3);font-weight:700;}',
+    '.ieh-cross{margin-top:7px;padding:7px 10px;border-radius:8px;background:rgba(160,122,255,0.06);border:1px solid rgba(160,122,255,0.15);font-size:10.5px;color:var(--muted2);line-height:1.55;}',
+    '.ieh-cross strong{color:var(--text);}',
+    '.ieh-empty{text-align:center;padding:1.5rem 1rem;color:var(--muted);font-size:11px;line-height:1.7;}',
+  ].join('');
+  document.head.appendChild(s);
+}
+
+// ── Asegura que el bloque exista en el DOM, justo debajo de la card del Engine ─
+function _iehEnsureBlock() {
+  var panel = document.getElementById('coach-insights-panel');
+  if (!panel) return null;
+  _iehInjectCSS();
+
+  var wrap = document.getElementById('sf-ieh-wrap');
+  if (wrap) return wrap;
+
+  wrap = document.createElement('div');
+  wrap.className = 'ieh-wrap';
+  wrap.id = 'sf-ieh-wrap';
+  wrap.innerHTML =
+    '<div class="ieh-header" onclick="window._iehToggle()">' +
+      '<div class="ieh-header-line"></div>' +
+      '<span class="ieh-header-title">📚 Histórico Engine · Coach cruzado</span>' +
+      '<div class="ieh-header-line"></div>' +
+      '<span class="ieh-toggle-icon" id="sf-ieh-icon">▶</span>' +
+    '</div>' +
+    '<div class="ieh-list" id="sf-ieh-list">' +
+      '<div id="sf-ieh-block"><div class="ieh-empty">Cargando...</div></div>' +
+    '</div>';
+
+  var ieCard = document.getElementById('sf-intelligence-engine');
+  if (ieCard && ieCard.parentNode === panel) {
+    ieCard.insertAdjacentElement('afterend', wrap);
+  } else {
+    panel.insertBefore(wrap, panel.firstChild);
+  }
+
+  if (_lsGet('sf_ieh_open') === '1') {
+    wrap.querySelector('#sf-ieh-list').classList.add('open');
+    wrap.querySelector('#sf-ieh-icon').textContent = '▲';
+  }
+  return wrap;
+}
+
+window._iehToggle = function() {
+  var list = document.getElementById('sf-ieh-list');
+  var icon = document.getElementById('sf-ieh-icon');
+  if (!list) return;
+  var open = list.classList.contains('open');
+  if (open) {
+    list.classList.remove('open');
+    if (icon) icon.textContent = '▶';
+    _lsSet('sf_ieh_open', '0');
+  } else {
+    list.classList.add('open');
+    if (icon) icon.textContent = '▲';
+    _lsSet('sf_ieh_open', '1');
+    _iehRenderList();
+  }
+};
+
+// ── Render de la lista histórica ──────────────────────────────────────────────
+function _iehRenderList() {
+  var container = document.getElementById('sf-ieh-block');
+  if (!container) return;
+
+  var history = _iehLoad();
+  var dates = Object.keys(history).sort().reverse();
+
+  if (!dates.length) {
+    container.innerHTML = '<div class="ieh-empty">📭 El histórico se genera automáticamente cada vez que guardas un día en el Coach Emocional.</div>';
+    return;
+  }
+
+  var DAY_NAMES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var html = '';
+
+  dates.forEach(function(date) {
+    var s = history[date];
+    var pnlClass = s.pnl > 0 ? 'pos' : (s.pnl < 0 ? 'neg' : 'zero');
+    var cardClass = s.pnl > 0 ? 'positive' : (s.pnl < 0 ? 'negative' : 'neutral');
+    if (s.noTraded) cardClass = 'neutral';
+
+    var d = new Date(date + 'T12:00:00');
+    var dayLabel = DAY_NAMES[d.getDay()] + ' ' + date;
+
+    html += '<div class="ieh-card ' + cardClass + '">';
+    html += '<div class="ieh-card-top">';
+    html += '<span class="ieh-date">' + dayLabel + '</span>';
+    html += '<div style="display:flex;align-items:center;gap:6px;">';
+    if (s.sem) html += '<span class="ieh-sem-badge ' + s.sem + '">' + (s.sem === 'verde' ? '🟢' : s.sem === 'amarillo' ? '🟡' : '🔴') + ' ' + s.sem + '</span>';
+    if (s.noTraded) {
+      html += '<span class="ieh-pnl zero">🛡️ Sin operar</span>';
+    } else {
+      html += '<span class="ieh-pnl ' + pnlClass + '">' + _iehFmt(s.pnl) + ' · ' + s.tradeCount + ' trade(s)</span>';
+    }
+    html += '</div></div>';
+
+    if (s.overtrade) {
+      html += '<div style="margin-bottom:5px;"><span class="ieh-pill ot">⚠️ OVERTRADING</span></div>';
+    }
+    if (s.emoBefore && s.emoBefore.length) {
+      html += '<div class="ieh-row">';
+      s.emoBefore.forEach(function(e){ html += '<span class="ieh-pill emo">😐 ' + (_IEH_EMO_LABELS[e] || e) + '</span>'; });
+      html += '</div>';
+    }
+    if (s.errors && s.errors.length) {
+      html += '<div class="ieh-row">';
+      s.errors.forEach(function(e){ html += '<span class="ieh-pill error">⚡ ' + (_IEH_ERROR_LABELS[e] || e) + '</span>'; });
+      html += '</div>';
+    }
+
+    html += '<div class="ieh-cross">' + s.crossText + '</div>';
+
+    if (s.note) {
+      html += '<div style="margin-top:5px;font-size:10px;color:var(--muted);font-style:italic;padding:5px 8px;background:var(--bg3);border-radius:6px;border:1px solid var(--border);">📝 ' + s.note + '</div>';
+    }
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+// ── Hooks: tomar snapshot al guardar + refrescar en cada render de insights ──
+// (se engancha al final, así captura la versión de coachSaveEntry / coachRenderInsights
+//  ya envuelta por el Coach y por el Intelligence Engine v2 de arriba)
+var _iehPrevSave = coachSaveEntry;
+coachSaveEntry = async function() {
+  await _iehPrevSave.apply(this, arguments);
+  var date = (typeof coachSelectedDate !== 'undefined') ? coachSelectedDate : null;
+  if (date) {
+    await _iehTakeSnapshot(date);
+    _iehEnsureBlock();
+    _iehRenderList();
+  }
+};
+
+var _iehPrevInsights = coachRenderInsights;
+coachRenderInsights = function() {
+  _iehPrevInsights();
+  _iehEnsureBlock();
+  _iehRenderList();
+};
+
+})(); // fin IIFE IE History
+
+// ── FIN IE HISTORY · Saint Fortune™ ──────────────────────────────────────────
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -17425,6 +17952,11 @@ function licOcultarBoot() {
   if (data.key) {
     sbStartAutoSync(data.key);
   }
+
+  // ── Ritual diario + frases flotantes (Supabase-first, tras tener datos frescos) ──
+  setTimeout(function() { try { coachCheckDailyRitual(); coachCheckFloatingQuote(); } catch(e) { console.warn('SF ritual/quote check', e); } }, 1200);
+  // Revisa cada 5 min por si la sesión sigue abierta y cruza la hora de preparación o las 13:00
+  setInterval(function() { try { coachCheckDailyRitual(); coachCheckFloatingQuote(); } catch(e) {} }, 5 * 60 * 1000);
 
   if (!data.admin && !isOwner && data.expiry) {
     const dias = Math.ceil((data.expiry - Date.now()) / 86400000);
