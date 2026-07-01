@@ -2840,8 +2840,12 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
 
 
-      <!-- ── SEMÁFORO MENTAL (vinculado al checklist de prep) ── -->
-      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;">
+      <!-- ── SEMÁFORO MENTAL (vinculado al checklist de prep) ──
+           Oculto visualmente: SAINT ahora comunica este resultado en voz
+           durante la preparación (ver saintAskEmoState → saintDeriveSemaforo).
+           Elementos y funciones intactos — coachSelectSem sigue guardando
+           el mismo dato de siempre, solo cambia dónde se ve. ── -->
+      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;display:none;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
           <span style="font-size:9px;padding:2px 7px;border-radius:8px;background:var(--blue-dim);color:var(--blue);border:1px solid #1a3060;font-weight:700;letter-spacing:0.04em;">AUTO</span>
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">Semáforo Mental</span>
@@ -2875,8 +2879,11 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div id="csem-status" style="margin-top: 8px; padding: 6px 10px; border-radius: 7px; font-size: 10.5px; font-weight: 700; text-align: center; letter-spacing: 0.03em; background: rgba(255, 79, 79, 0.08); border: 1px solid rgba(255, 79, 79, 0.4); color: var(--red); transition: 0.3s;">🔴 Riesgo psicológico elevado — NO operes</div>
       </div>
 
-      <!-- ── PREPARACIÓN MENTAL / MEDITACIÓN ── -->
-      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;">
+      <!-- ── PREPARACIÓN MENTAL / MEDITACIÓN ──
+           Oculto visualmente: SAINT ya confirma en voz que la rutina
+           quedó completada (saintFinishPrep → saintPick('finish')).
+           DOM intacto, mismo guardado de siempre. ── -->
+      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;display:none;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
           <div style="width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 5px var(--pink);flex-shrink:0;"></div>
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">Preparación Mental</span>
@@ -3167,6 +3174,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div></div>
 
+        <!-- Estado emocional post-operativa + errores + nota: oculto
+             visualmente (igual que Capa 1/Capa 2) porque ahora esto
+             es parte de la conversación con SAINT (saintAskEmoAfter /
+             saintAskErrorTags). Los elementos siguen intactos en el
+             DOM -- SAINT los opera por script con las mismas funciones
+             (coachToggleEmo, coachToggleError) y el mismo dato real. -->
+        <div id="coach-capa3-card" style="display:none;">
         <!-- Estado emocional post-operativa -->
         <div style="margin-top:10px;">
           <div class="faqs-field-label" style="margin-bottom:4px;">¿Cómo me siento después de operar?</div>
@@ -3203,6 +3217,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div style="margin-top:10px;">
           <div class="faqs-field-label" style="margin-bottom:4px;">📝 Nota del día (opcional)</div>
           <textarea id="coach-note" class="form-input" rows="2" style="resize:vertical;font-size:12px;line-height:1.6;" placeholder="¿Qué aprendiste hoy? ¿Qué harías diferente?"></textarea>
+        </div>
+
         </div>
       </div>
 
@@ -4607,6 +4623,9 @@ const DEFAULT_GROUPS = {
 // ═══════════════════════════════════════════
 let entries    = JSON.parse(_lsGet('fp_entries_v4_sale') || '[]');
 let accounts   = JSON.parse(_lsGet('fp_accounts_v4_sale') || 'null') || JSON.parse(JSON.stringify(CORE_ACCOUNTS));
+// ── Lectura pura (sin mutar nada) para que SAINT, en un <script> aparte,
+//    pueda enumerar las cuentas existentes sin duplicar estado propio.
+window.getAllAccountKeys = function(){ return Object.keys(accounts || {}); };
 let groups     = JSON.parse(_lsGet('fp_groups_v4_sale')   || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
 let certs      = JSON.parse(_lsGet('fp_certs_v4_sale')    || '[]');
 // firmStats: {firmName: {extraPassed:0, extraLost:0, extraNotes:''}} — manual overrides
@@ -16363,6 +16382,10 @@ window.getAllTradingPlans = function() {
     return result;
   };
 
+  // ── Exposición de solo lectura: permite que SAINT (en su propio
+  //    <script>) agregue hallazgos de TODAS las cuentas sin duplicar
+  //    ni un solo cálculo — llama a este mismo analizador por cuenta.
+  window._cdAnalyze = _cdAnalyze;
 })(); // fin IIFE Detección Conductual
 // ── FIN DETECCIÓN CONDUCTUAL · Saint Fortune™ ────────────────────────────────
 
@@ -17379,9 +17402,9 @@ async function sbStartAutoSync(licKey) {
     <div class="saint-config-field">
       <label class="saint-config-label">Nivel de exigencia</label>
       <select id="saint-cfg-exigencia" class="saint-config-select">
-        <option value="suave">Suave</option>
+        <option value="suave">Base — disciplina constante</option>
         <option value="equilibrado" selected>Equilibrado</option>
-        <option value="exigente">Exigente</option>
+        <option value="exigente">Exigente — sin concesiones</option>
       </select>
     </div>
 
@@ -17435,7 +17458,14 @@ async function sbStartAutoSync(licKey) {
       prepMinutes: 30,
       configured: false,
       lastTrigger: ''     // 'YYYY-MM-DD:sessionId' — evita repetir el aviso el mismo día
-    }
+    },
+    // Historial invisible de "intención del día": se acumula sesión a
+    // sesión sin mostrarse al trader como módulo aparte. No es un dato
+    // de Engine (Engine no calcula intenciones) — es contexto propio de
+    // SAINT que retroalimenta saintBuildProfile() con el tiempo, sin
+    // pedirle al trader ningún campo o etiqueta adicional.
+    // [{date:'YYYY-MM-DD', sessionId, recommended, chosen, source:'accepted'|'changed'}]
+    dailyIntent: []
   };
 
   function loadState(){
@@ -17622,7 +17652,7 @@ async function sbStartAutoSync(licKey) {
   // los mismos elementos reales del DOM (ocultos visualmente), así
   // que el dato guardado es exactamente el mismo que antes.
   // ══════════════════════════════════════════════════════════════
-  var _saintPrep = { active:false, checklistKeys:[], checklistIdx:0 };
+  var _saintPrep = { active:false, checklistKeys:[], checklistIdx:0, checklistNoCount:0 };
 
   // ── Tono según personalidad configurada. Mismo dato, mismo flujo,
   //    solo cambia CÓMO se dice — no QUÉ se pregunta ni QUÉ se guarda.
@@ -17631,9 +17661,9 @@ async function sbStartAutoSync(licKey) {
     // naturaleza — plantea el propósito del sistema y pasa directo a
     // conocer al trader (segunda mitad del flujo: saintAskTraderName).
     greeting_first: {
-      directo:   'Bienvenido.<br>Hoy comienza la construcción de tu sistema operativo como trader.<br>No se trata de una estrategia nueva — se trata de ejecutar la tuya con disciplina.<br>Antes de empezar, vamos a conocerte.',
-      cercano:   'Bienvenido.<br>Hoy empieza la construcción de tu sistema operativo como trader.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya cuando aparezca la presión.<br>Antes de avanzar, vamos a conocerte.',
-      analitico: 'Bienvenido.<br>Hoy comienza la construcción de tu sistema operativo como trader.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con disciplina, medible sesión a sesión.<br>Antes de empezar, vamos a conocerte.'
+      directo:   'Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>No se trata de una estrategia nueva — se trata de ejecutar la tuya con máxima disciplina y enfoque.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.',
+      cercano:   'Bienvenido a Treyuder.<br>Hoy empieza la construcción de tu sistema operativo como Treyuder Elite.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya, con disciplina y enfoque, cuando aparezca la presión.<br>Vamos a construir tu imperio, juntos.<br>Antes de avanzar, vamos a conocerte.',
+      analitico: 'Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con máxima disciplina y enfoque, medible sesión a sesión.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.'
     },
     // Se dice justo después de que el trader confirma (o no) su nombre.
     // Cierra el primer contacto y da paso a los quick replies.
@@ -17697,6 +17727,21 @@ async function sbStartAutoSync(licKey) {
       cercano:   'Sin prisa — puedes definirlo cuando quieras desde el icono de configuración.',
       analitico: 'Pendiente de definir. Disponible desde el icono de configuración.'
     },
+    // Nivel de exigencia elegido durante el primer contacto. El texto
+    // base es igual en los 3 niveles — lo que cambia es el matiz que
+    // añade SAINT_EXIGENCIA_SUFFIX.exigencia_confirm, para reforzar
+    // que la base del sistema nunca se relaja, ni siquiera en el
+    // nivel más suave.
+    exigencia_confirm: {
+      directo:   'Nivel de exigencia registrado.',
+      cercano:   'Gracias por decirme cómo prefieres que te acompañe.',
+      analitico: 'Parámetro de exigencia configurado.'
+    },
+    exigencia_skip: {
+      directo:   'Queda en equilibrado por ahora. Puedes cambiarlo cuando quieras desde el icono de configuración.',
+      cercano:   'Sin prisa — te acompaño en equilibrado por ahora. Cambia cuando quieras desde el icono de configuración.',
+      analitico: 'Nivel equilibrado por defecto. Ajustable desde el icono de configuración.'
+    },
     routine_skip: {
       directo:   'Sin problema.<br>Puedes configurar tu rutina cuando quieras desde el icono de configuración.',
       cercano:   'Sin problema, {name}.<br>Configura tu rutina cuando te sientas listo, desde el icono de configuración.',
@@ -17721,6 +17766,131 @@ async function sbStartAutoSync(licKey) {
       directo:   'Días confirmados. Ese es tu calendario de entrenamiento.',
       cercano:   'Días confirmados, gracias.',
       analitico: 'Calendario semanal registrado.'
+    },
+    // Cierre de sesión: se dice DESPUÉS de la hora de fin configurada
+    // (nunca antes), cuando Engine ya tiene su análisis calculado.
+    // {finding} es el primer hallazgo relevante, leído tal cual del
+    // DOM por saintReadEngineFindings() y solo parafraseado aquí.
+    session_close_findings: {
+      directo:   '{name}, tu sesión de {session} cerró.<br>Punto de mejora: {finding}',
+      cercano:   '{name}, terminaste tu sesión de {session}.<br>Esto es lo que tu sistema vio hoy: {finding}',
+      analitico: 'Sesión de {session} cerrada.<br>Hallazgo del análisis: {finding}'
+    },
+    // Línea de refuerzo (coach de élite): lo que SÍ se respetó, para no
+    // reducir el cierre a solo lo que falló. Se añade después de
+    // session_close_findings cuando hay algo que reforzar.
+    session_close_strength: {
+      directo:   'A favor: {strength}. Llévalo a la próxima sesión.',
+      cercano:   'Y algo que sí funcionó: {strength}. Sigue así.',
+      analitico: 'Aspecto sostenido: {strength}.'
+    },
+    session_close_clean: {
+      directo:   '{name}, tu sesión de {session} cerró dentro de tu plan.<br>Sin desviaciones que reportar.',
+      cercano:   '{name}, cerraste tu sesión de {session} y todo se mantuvo dentro de tu plan.',
+      analitico: 'Sesión de {session} cerrada.<br>Sin violaciones detectadas respecto al plan configurado.'
+    },
+    // Post-sesión: reemplaza la tarjeta "¿Cómo me siento después de
+    // operar?" del Coach Emocional. Se pregunta solo si SAINT confirmó
+    // que hubo operativa hoy (ver saintStartSessionClose).
+    emo_after_question: {
+      directo:   '¿Cómo te sentiste operando hoy?',
+      cercano:   '¿Cómo te quedaste después de esta sesión?',
+      analitico: '¿Qué estado predominó al cierre de la sesión?'
+    },
+    // Solo se muestran las etiquetas que Engine no puede inferir por sí
+    // solo (ver SAINT_ERROR_TAGS_REDUNDANT) — nunca se repite lo que el
+    // hallazgo de cierre ya comunicó.
+    error_tags_question: {
+      directo:   '¿Alguna de estas se te coló hoy? Marca las que apliquen, o sigue si ninguna.',
+      cercano:   '¿Notaste algo de esto en ti hoy? Marca lo que sientas que aplicó.',
+      analitico: '¿Cuáles de estos patrones estuvieron presentes hoy?'
+    },
+    session_close_thanks: {
+      directo:   'Registrado. Nos vemos en la próxima sesión.',
+      cercano:   'Quedó guardado, gracias por contarme cómo te fue.',
+      analitico: 'Registro cerrado. Disponible para el próximo análisis.'
+    },
+    // ── Apertura contextual de preparación (saintStartRoutinePrep). Se
+    //    antepone al routine_prep_trigger de siempre — no lo reemplaza,
+    //    lo precede en la misma tarjeta. Nunca etiqueta al trader como
+    //    identidad fija: siempre encuadra el patrón como algo de esta
+    //    racha reciente, a trabajar hoy.
+    prep_context_revenge: {
+      directo:   'Tus últimas sesiones muestran el mismo patrón: recuperar la pérdida de inmediato. Hoy trabajamos en romper ese impulso.',
+      cercano:   '{name}, vengo notando que después de una pérdida buscas recuperarla enseguida. Hoy vamos a frenar ese impulso, con calma.',
+      analitico: 'Patrón detectado en las últimas sesiones: recuperación inmediata tras pérdida. Objetivo de hoy: interrumpir ese ciclo.'
+    },
+    prep_context_overconfidence: {
+      directo:   'Después de tu última racha ganadora, el riesgo se disparó. Hoy sostenemos el mismo plan, gane o pierda.',
+      cercano:   '{name}, noté que tras ganar sueles relajar el plan. Hoy sostenemos la misma disciplina, pase lo que pase.',
+      analitico: 'Señal detectada: relajación del plan tras resultado positivo previo. Objetivo: mismo criterio, sin importar el resultado anterior.'
+    },
+    prep_context_clean: {
+      directo:   'Tus últimas sesiones estuvieron dentro del plan. No hace falta más esfuerzo — solo sostenerlo.',
+      cercano:   '{name}, vienes sosteniendo tu plan las últimas sesiones. Hoy se trata de seguir así.',
+      analitico: 'Últimas sesiones dentro del plan declarado. Objetivo: mantener el mismo estándar.'
+    },
+    prep_context_new: {
+      directo:   'Todavía te estoy conociendo. Con cada sesión voy a entender mejor cómo trabajas.',
+      cercano:   '{name}, todavía te estoy conociendo. Con cada sesión te voy a entender mejor.',
+      analitico: 'Historial insuficiente todavía. El perfil se construye con cada sesión registrada.'
+    },
+    // ── Intención del día: UNA sola pregunta, con el enfoque recomendado
+    //    por el perfil ya elegido de antemano.
+    intent_question: {
+      directo:   'Enfócate hoy en: {focus}. ¿Vamos con eso o prefieres cambiar el objetivo?',
+      cercano:   'Pensé que hoy podríamos poner el foco en: {focus}. ¿Te parece, o prefieres otro enfoque?',
+      analitico: 'Enfoque sugerido para hoy: {focus}. ¿Confirmas o seleccionas otro?'
+    },
+    intent_options_intro: {
+      directo:   'Elige tu enfoque para hoy.',
+      cercano:   'Elige con calma en qué quieres poner tu atención hoy.',
+      analitico: 'Selecciona el enfoque operativo de la sesión.'
+    },
+    // ── Cierre: nota de evolución respecto al propio promedio reciente
+    //    (consistencia30 de saintBuildProfile). No es una segunda fuente
+    //    de verdad — el hallazgo operativo sigue siendo 100% de
+    //    saintReadEngineFindings(); esto solo agrega la comparación
+    //    contra la propia evolución del trader, que Engine no calcula.
+    session_close_vs_history_up: {
+      directo:   'Esto está por encima de tu {consistencia}% de consistencia reciente. Sostenlo.',
+      cercano:   'Vas mejor que tu promedio reciente de {consistencia}%. Se nota el trabajo.',
+      analitico: 'Consistencia reciente: {consistencia}%. Esta sesión mejora ese promedio.'
+    },
+    session_close_vs_history_down: {
+      directo:   'Esto se aleja de tu {consistencia}% de consistencia reciente. Vuelve al plan mañana.',
+      cercano:   'Hoy quedó por debajo de tu {consistencia}% habitual. Mañana retomamos.',
+      analitico: 'Consistencia reciente: {consistencia}%. Esta sesión se desvía de ese promedio.'
+    },
+    // ── Semáforo dicho en voz (antes se guardaba en silencio). Mismo
+    //    dato, mismo cálculo (saintDeriveSemaforo) — solo que ahora se
+    //    comunica antes de seguir al checklist.
+    semaforo_verde: {
+      directo:   'Semáforo en verde. Operativa normal — vamos con el checklist.',
+      cercano:   'Estás en verde, {name}. Buen punto de partida — seguimos con el checklist.',
+      analitico: 'Semáforo: verde. Condición óptima para operar. Continuamos con el checklist.'
+    },
+    semaforo_amarillo: {
+      directo:   'Semáforo en amarillo. Precaución — opera con cuidado hoy.',
+      cercano:   'Hoy estás en amarillo, {name}. Nada grave, solo ve con más cuidado.',
+      analitico: 'Semáforo: amarillo. Condición de precaución. Ajusta tu criterio de entrada hoy.'
+    },
+    semaforo_rojo: {
+      directo:   'Semáforo en rojo. Hoy no operes — tu propio sistema lo marca.',
+      cercano:   '{name}, hoy estás en rojo. Mejor no operar — cuídate primero.',
+      analitico: 'Semáforo: rojo. Riesgo psicológico elevado. Recomendación: no operar hoy.'
+    },
+    // ── Racha "días sin trades fuera de plan", en tono de juego —
+    //    refuerzo breve, nunca un módulo aparte.
+    streak_mention: {
+      directo:   '🔥 Llevas {days} días dentro de tu plan. Sigue así.',
+      cercano:   '🔥 Vas {days} días seguidos respetando tu plan. Se nota el esfuerzo.',
+      analitico: '🔥 Racha activa: {days} días consecutivos dentro del plan.'
+    },
+    streak_record: {
+      directo:   '🏆 Es tu mejor racha hasta ahora: {days} días. Sostenla.',
+      cercano:   '🏆 ¡Nuevo récord personal! {days} días seguidos. Vas muy bien.',
+      analitico: '🏆 Nuevo máximo histórico: {days} días consecutivos.'
     }
   };
 
@@ -17776,6 +17946,131 @@ async function sbStartAutoSync(licKey) {
   }
   window.saintReadExistingInsight = saintReadExistingInsight;
 
+  // ── Racha derivada de Engine, no del registro manual del panel de
+  //    "Días sin trades fuera de plan": cuenta días consecutivos (desde
+  //    el más reciente hacia atrás) en los que TODAS las cuentas
+  //    evaluadas estuvieron limpias — misma unión que usa el resto de
+  //    SAINT (si una sola cuenta tuvo violación ese día, el día no
+  //    cuenta como limpio). Lee _cdAnalyze por cuenta, el mismo
+  //    analizador de siempre; no inventa ningún cálculo de Engine, solo
+  //    agrega en el tiempo lo que Engine ya marca día a día.
+  function saintComputeEngineStreak(){
+    try {
+      var accKeys = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+      if (!accKeys.length) return null;
+      var byDate = {}; // 'YYYY-MM-DD' -> limpio en TODAS las cuentas con datos ese día
+      accKeys.forEach(function(acc){
+        var r = (typeof window._cdAnalyze === 'function') ? window._cdAnalyze(acc) : null;
+        if (!r || r.noData) return;
+        (r.dayDetails || []).forEach(function(d){
+          if (!(d.date in byDate)) byDate[d.date] = true;
+          if (!d.clean) byDate[d.date] = false;
+        });
+      });
+      var dates = Object.keys(byDate).sort();
+      if (!dates.length) return null;
+
+      var current = 0;
+      for (var i = dates.length - 1; i >= 0; i--){
+        if (!byDate[dates[i]]) break;
+        current++;
+      }
+      var best = 0, run = 0;
+      dates.forEach(function(d){
+        if (byDate[d]) { run++; if (run > best) best = run; }
+        else run = 0;
+      });
+      return { current: current, best: Math.max(best, current) };
+    } catch(e){ return null; }
+  }
+  window.saintComputeEngineStreak = saintComputeEngineStreak;
+
+  // ── Lee la racha a mostrar: prioriza la racha real de Engine (plan +
+  //    EA cruzados). Si todavía no hay datos suficientes de Engine para
+  //    calcularla (cuenta recién creada, sin plan, etc.), cae al panel
+  //    manual de "días sin trades fuera de plan" (hoy oculto) como
+  //    respaldo — nunca se pierde el dato, solo cambia la fuente.
+  function saintReadStreak(){
+    var eng = saintComputeEngineStreak();
+    if (eng) return eng;
+    try {
+      if (typeof window.tpRenderBadTrades === 'function') window.tpRenderBadTrades();
+      var curEl = document.getElementById('tp-streak-display');
+      var maxEl = document.getElementById('tp-max-streak-val');
+      var current = curEl ? parseInt(curEl.textContent, 10) : NaN;
+      var best = maxEl ? parseInt(maxEl.textContent, 10) : NaN;
+      if (isNaN(current)) return null;
+      return { current: current, best: isNaN(best) ? current : best };
+    } catch(e){ return null; }
+  }
+  window.saintReadStreak = saintReadStreak;
+
+  // ── Construye, cuando aporta algo (racha activa), una línea corta y
+  //    amena tipo "juego" para reforzar la racha — nunca un módulo
+  //    aparte, solo una frase más dentro del mensaje que ya se envía.
+  function _saintStreakLine(){
+    var s = saintReadStreak();
+    if (!s || s.current <= 0) return '';
+    if (s.current >= s.best && s.best > 1) return saintPick('streak_record', {days: s.current});
+    return saintPick('streak_mention', {days: s.current});
+  }
+
+  // ── Lee (sin duplicar lógica de cálculo) los hallazgos que Engine ya
+  //    calcula por cuenta (window._cdAnalyze, el mismo analizador que usa
+  //    window.renderConductualBlock) y los agrega en UN análisis general
+  //    de HOY, sea cual sea la cuenta que estuviera abierta en pantalla.
+  //    Regla del cliente: si hubo overtrading en una cuenta, hubo
+  //    overtrading — no importa que otras 15 estuvieran perfectas. Por
+  //    eso esto es una UNIÓN entre cuentas, nunca un desglose cuenta por
+  //    cuenta. También junta lo que SÍ se respetó, para que SAINT pueda
+  //    reforzar como coach de élite y no solo señalar fallos.
+  function saintReadEngineFindings(){
+    try {
+      if (typeof window._cdAnalyze !== 'function' || typeof window.getAllAccountKeys !== 'function') {
+        // Fallback si los helpers globales no están disponibles: lectura
+        // DOM tal como existía antes (solo la cuenta visible en pantalla).
+        var nodes = document.querySelectorAll('.cd-alert.violation .cd-alert-title, .cd-alert.warning .cd-alert-title');
+        var out = [];
+        nodes.forEach(function(el){ var t=(el.textContent||'').trim(); if (t) out.push(t); });
+        return out;
+      }
+
+      var todayStr = _saintTodayStr();
+      var accKeys  = window.getAllAccountKeys();
+      var opsViolN = 0, riskViolN = 0, revengeN = 0, escN = 0, sessionMismatchN = 0;
+      var evaluated = 0, maxOpsSeen = 0, maxOpsPlan = 0;
+
+      accKeys.forEach(function(acc){
+        var r = window._cdAnalyze(acc);
+        if (!r || r.noData) return;
+        var today = (r.dayDetails || []).filter(function(d){ return d.date === todayStr; })[0];
+        if (!today) return;
+        evaluated++;
+        if (today.opsViol)  { opsViolN++;  if (today.effectiveOps > maxOpsSeen){ maxOpsSeen = today.effectiveOps; maxOpsPlan = r.plan.maxOpsPerDay; } }
+        if (today.riskViol) riskViolN++;
+        if (today.escalation) escN++;
+        if (today.revenge)  revengeN++;
+        if (r.sessionMismatch) sessionMismatchN++;
+      });
+
+      if (!evaluated) return { weak: [], strong: [], clean: true, noData: true };
+
+      var weak = [], strong = [];
+      if (opsViolN > 0) weak.push('hiciste overtrading' + (maxOpsPlan ? (' (superaste el máximo de ' + maxOpsPlan + ' operación' + (maxOpsPlan!==1?'es':'') + '/día)') : ''));
+      else strong.push('respetaste tu límite de operaciones diarias');
+
+      if (riskViolN > 0) weak.push('el riesgo diario superó el límite que declaraste en tu plan');
+      else strong.push('tu riesgo se mantuvo dentro del plan');
+
+      if (revengeN > 0) weak.push('se detectó un patrón compatible con revenge trading tras pérdidas');
+      if (escN > 0) weak.push('aumentaste el tamaño de posición después de una pérdida');
+      if (sessionMismatchN > 0) weak.push('operaste fuera de la sesión que declaraste en tu plan');
+
+      return { weak: weak, strong: strong, clean: (weak.length === 0), noData: false };
+    } catch(e){ return { weak: [], strong: [], clean: true, noData: true }; }
+  }
+  window.saintReadEngineFindings = saintReadEngineFindings;
+
   var SAINT_PREP_QUESTIONS = {
     meditacion: {
       directo:   '¿Hiciste tu rutina mental? La cabeza se prepara antes que las manos.',
@@ -17808,6 +18103,142 @@ async function sbStartAutoSync(licKey) {
       analitico: '¿Riesgo máximo por operación fijado y no negociable?'
     }
   };
+
+  function _saintDaysAgoStr(n){
+    try {
+      var d = new Date();
+      d.setDate(d.getDate() - n);
+      return (typeof localDateStr === 'function') ? localDateStr(d) : d.toISOString().slice(0,10);
+    } catch(e){ return ''; }
+  }
+
+  // ── Parser de hora en texto libre: acepta "8:30", "08:30", "8:30 am",
+  //    "8pm", "20:30", etc. y devuelve siempre 'HH:MM' en 24h — mismo
+  //    formato que ya espera saintCheckRoutineTrigger (parseInt sobre
+  //    split(':')). Devuelve null si no puede interpretarlo.
+  function _saintParseTime(raw){
+    try {
+      if (!raw) return null;
+      var s = raw.trim().toLowerCase().replace(/\s+/g, ' ');
+      var m = s.match(/^(\d{1,2})(?:[:.](\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?$/);
+      if (!m) return null;
+      var h = parseInt(m[1], 10);
+      var min = m[2] ? parseInt(m[2], 10) : 0;
+      var ampm = m[3] ? m[3].replace(/\./g, '') : null;
+      if (isNaN(h) || isNaN(min) || min > 59) return null;
+      if (ampm) {
+        if (h < 1 || h > 12) return null;
+        if (ampm === 'am') { if (h === 12) h = 0; }
+        else { if (h !== 12) h += 12; }
+      } else if (h > 23) return null;
+      if (h < 0 || h > 23) return null;
+      return (h < 10 ? '0' : '') + h + ':' + (min < 10 ? '0' : '') + min;
+    } catch(e){ return null; }
+  }
+
+  // ── Perfil evolutivo del trader: construido en vivo (sin guardar
+  //    duplicado — todo lo que lee ya vive en la nube) a partir de las
+  //    3 únicas fuentes confirmadas:
+  //      1. Historial de pre-sesión (hoy Coach Emocional, mañana SAINT
+  //         mismo) → coachLoad(), clave sf_coach_v1_sale.
+  //      2. Plan de Trading declarado → window.getTradingPlan(acc).
+  //      3. EA + Engine (cruce real de operaciones) → window._cdAnalyze(acc).
+  //    No etiqueta al trader ("eres impulsivo"): produce señales que
+  //    sirven para personalizar el entrenamiento, no para clasificarlo.
+  //    No se invoca todavía desde ninguna conversación — es la base
+  //    para la siguiente fase (aperturas contextuales).
+  function saintBuildProfile(){
+    try {
+      var coachAll = (typeof coachLoad === 'function') ? coachLoad() : {};
+      var dates7  = Object.keys(coachAll).filter(function(d){ return d >= _saintDaysAgoStr(7); });
+      var dates30 = Object.keys(coachAll).filter(function(d){ return d >= _saintDaysAgoStr(30); });
+
+      // ── Disciplina de preparación: % de ítems del checklist completados.
+      function prepScore(list){
+        var total = 0, done = 0;
+        list.forEach(function(d){
+          var e = coachAll[d];
+          if (e && e.prep){
+            Object.keys(e.prep).forEach(function(k){ total++; if (e.prep[k]) done++; });
+          }
+        });
+        return total ? Math.round(done / total * 100) : null;
+      }
+      var disciplina7  = prepScore(dates7);
+      var disciplina30 = prepScore(dates30);
+
+      // ── Estado emocional más frecuente antes de operar (últimos 30 días).
+      var emoCounts = {};
+      dates30.forEach(function(d){
+        var e = coachAll[d];
+        (e && e.emoBefore || []).forEach(function(em){ emoCounts[em] = (emoCounts[em]||0) + 1; });
+      });
+      var topEmoEntry = Object.keys(emoCounts).sort(function(a,b){ return emoCounts[b]-emoCounts[a]; })[0];
+
+      // ── Error que el propio trader más se marca a sí mismo.
+      var errCounts = {};
+      dates30.forEach(function(d){
+        var e = coachAll[d];
+        (e && e.errors || []).forEach(function(er){ errCounts[er] = (errCounts[er]||0) + 1; });
+      });
+      var topErrorEntry = Object.keys(errCounts).sort(function(a,b){ return errCounts[b]-errCounts[a]; })[0];
+
+      // ── Engine (EA cruzado con el plan), agregado en TODAS las cuentas
+      //    — mismo principio de unión que en el cierre de sesión.
+      var accKeys = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+      var opsViolDays = 0, riskViolDays = 0, revengeDays = 0, escDays = 0, cleanDays = 0, totalEvalDays = 0;
+      var recentPatternRevenge = false, recentPatternClean = false, recentPatternOverconfidence = false;
+
+      accKeys.forEach(function(acc){
+        var r = (typeof window._cdAnalyze === 'function') ? window._cdAnalyze(acc) : null;
+        if (!r || r.noData) return;
+        var days30 = (r.dayDetails || []).filter(function(d){ return d.date >= _saintDaysAgoStr(30); });
+        days30.forEach(function(d){
+          totalEvalDays++;
+          if (d.opsViol)   opsViolDays++;
+          if (d.riskViol)  riskViolDays++;
+          if (d.revenge)   revengeDays++;
+          if (d.escalation) escDays++;
+          if (d.clean)      cleanDays++;
+        });
+        // Últimas 3 sesiones con datos, ordenadas de más reciente a más antigua.
+        var lastN = (r.dayDetails || []).slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; }).slice(0,3);
+        if (lastN.length === 3 && lastN.every(function(d){ return d.revenge; })) recentPatternRevenge = true;
+        if (lastN.length === 3 && lastN.every(function(d){ return d.clean; }))   recentPatternClean = true;
+        // Sobreconfianza tras ganancias: no existe hoy una señal directa de
+        // Engine para esto, así que se infiere de la misma data ya leída
+        // (dayDetails), sin calcular nada nuevo fuera de lo expuesto: el
+        // día limpio más reciente con ganancia neta (dayLoss >= 0) fue
+        // seguido, en la sesión inmediatamente posterior con datos, por
+        // una violación de operaciones o de riesgo.
+        if (lastN.length >= 2 && lastN[1].clean && lastN[1].dayLoss >= 0 &&
+            (lastN[0].opsViol || lastN[0].riskViol)) {
+          recentPatternOverconfidence = true;
+        }
+      });
+
+      var consistencia30 = totalEvalDays ? Math.round(cleanDays / totalEvalDays * 100) : null;
+
+      return {
+        hasHistory: (Object.keys(coachAll).length > 0) || totalEvalDays > 0,
+        disciplina7: disciplina7,
+        disciplina30: disciplina30,
+        consistencia30: consistencia30,
+        topEmotion: topEmoEntry || null,
+        topError: topErrorEntry || null,
+        opsViolDays30: opsViolDays,
+        riskViolDays30: riskViolDays,
+        revengeDays30: revengeDays,
+        escalationDays30: escDays,
+        totalEvalDays30: totalEvalDays,
+        cleanDays30: cleanDays,
+        recentPatternRevenge: recentPatternRevenge,
+        recentPatternClean: recentPatternClean,
+        recentPatternOverconfidence: recentPatternOverconfidence
+      };
+    } catch(e){ return { hasHistory: false }; }
+  }
+  window.saintBuildProfile = saintBuildProfile;
 
   function _saintTodayStr(){
     try { return (typeof localDateStr === 'function') ? localDateStr() : new Date().toISOString().slice(0,10); }
@@ -17874,7 +18305,6 @@ async function sbStartAutoSync(licKey) {
 
     contBtn.addEventListener('click', function(){
       if (!coachEntry.emoBefore || !coachEntry.emoBefore.length) return;
-      saintDeriveSemaforo();
       card.remove();
       SAINT.say(saintPick('emo_confirm'), {tag:'Preparación'});
       setTimeout(saintIntroChecklist, 400);
@@ -17883,10 +18313,11 @@ async function sbStartAutoSync(licKey) {
     body.scrollTop = body.scrollHeight;
   }
 
-  // Deriva el semáforo (verde/amarillo/rojo) a partir del color de las
-  // emociones elegidas, y lo guarda con la MISMA función coachSelectSem
-  // que usa el formulario original — no se inventa un dato nuevo.
-  function saintDeriveSemaforo(){
+  // ── Color del semáforo derivado SOLO del estado emocional elegido
+  //    (color de las emociones marcadas). Es una de las dos señales que
+  //    combina saintDeriveSemaforo() — la otra es el cumplimiento real
+  //    del checklist.
+  function _saintEmoColor(){
     try {
       var counts = {verde:0, amarillo:0, rojo:0};
       var map = {green:'verde', amber:'amarillo', red:'rojo'};
@@ -17897,10 +18328,35 @@ async function sbStartAutoSync(licKey) {
       var order = ['rojo','amarillo','verde']; // en empate, prioriza precaución
       var chosen = null, max = 0;
       order.forEach(function(k){ if (counts[k] > max){ max = counts[k]; chosen = k; } });
-      if (!chosen) return;
+      return chosen;
+    } catch(e){ return null; }
+  }
+
+  var SAINT_SEM_RANK = {verde:1, amarillo:2, rojo:3};
+
+  // ── Semáforo final: se decide al TERMINAR toda la preparación (no
+  //    justo tras elegir el estado emocional), combinando cómo llegó el
+  //    trader (color de las emociones) con si de verdad completó su
+  //    checklist (SAINT_ERROR: contador de "No" en saintAnswerCheck).
+  //    Ante cualquier señal de precaución, gana la más cautelosa de las
+  //    dos — mismo criterio de "en empate, prioriza precaución" que ya
+  //    se usa en el resto de SAINT. Se guarda con la MISMA función
+  //    coachSelectSem del formulario original — no se inventa dato
+  //    nuevo, solo se decide en qué momento se aplica.
+  function saintDeriveSemaforo(){
+    try {
+      var emoColor = _saintEmoColor();
+      var noCount = _saintPrep.checklistNoCount || 0;
+      var checklistColor = noCount === 0 ? 'verde' : (noCount <= 2 ? 'amarillo' : 'rojo');
+      var candidates = [emoColor, checklistColor].filter(Boolean);
+      if (!candidates.length) return null;
+      var chosen = candidates.reduce(function(worst, c){
+        return (SAINT_SEM_RANK[c] > SAINT_SEM_RANK[worst]) ? c : worst;
+      });
       var semEl = document.querySelector('#coach-sem-opts [data-sem="' + chosen + '"]');
       if (semEl) coachSelectSem(semEl);
-    } catch(e){}
+      return chosen;
+    } catch(e){ return null; }
   }
 
   function saintIntroChecklist(){
@@ -17908,6 +18364,7 @@ async function sbStartAutoSync(licKey) {
     var boxes = Array.prototype.slice.call(document.querySelectorAll('#coach-prep-checks input[type=checkbox]'));
     _saintPrep.checklistKeys = boxes.map(function(b){ return b.dataset.prep; });
     _saintPrep.checklistIdx = 0;
+    _saintPrep.checklistNoCount = 0;
     setTimeout(saintAskNextCheck, 450);
   }
 
@@ -17937,13 +18394,22 @@ async function sbStartAutoSync(licKey) {
       // Dispara el mismo onchange="coachUpdatePrep(this);coachUpdateLeftSemaforo();" que el checkbox real
       inp.dispatchEvent(new Event('change', {bubbles:true}));
     }
+    if (!val) _saintPrep.checklistNoCount = (_saintPrep.checklistNoCount || 0) + 1;
     _saintPrep.checklistIdx++;
     setTimeout(saintAskNextCheck, 350);
   }
 
   function saintFinishPrep(){
     if (typeof coachSaveEntry === 'function') coachSaveEntry(); // mismo guardado exacto que el botón "💾 Guardar día"
-    SAINT.say(saintPick('finish'), {tag:'Listo'});
+    // Semáforo final de la preparación completa (emoción + checklist),
+    // dicho aquí — no antes, y no en un panel aparte.
+    var semColor = saintDeriveSemaforo();
+    var semKey = semColor === 'rojo' ? 'semaforo_rojo' : semColor === 'amarillo' ? 'semaforo_amarillo' : semColor === 'verde' ? 'semaforo_verde' : null;
+    var finishMsg = saintPick('finish');
+    if (semKey) finishMsg += '<br>' + saintPick(semKey);
+    var streakLine = _saintStreakLine();
+    if (streakLine) finishMsg += '<br>' + streakLine;
+    SAINT.say(finishMsg, {tag:'Listo'});
     _saintPrep.active = false;
     // Si el Coach Emocional ya tiene un hallazgo calculado, SAINT lo
     // parafrasea en su propia voz — solo lectura, no se duplica la
@@ -18004,26 +18470,124 @@ async function sbStartAutoSync(licKey) {
 
   function saintStartRoutineSetup(){
     SAINT.closeConfig();
-    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null };
+    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null, pendingNames:null };
     SAINT.clear();
     SAINT.open();
     SAINT.renderHeader();
     SAINT.say(saintPick('routine_intro'), {tag:'Configurar mi rutina'});
-    setTimeout(saintAskSessionCount, 550);
+    setTimeout(saintAskSessions, 550);
   }
   window.saintStartRoutineSetup = saintStartRoutineSetup;
 
-  function saintAskSessionCount(){
-    SAINT.say('¿Cuántas sesiones operativas realizas normalmente?', {
-      tag: 'Rutina · sesiones',
-      quickReplies: [
-        { label: 'Una',      onClick: function(){ saintSetSessionCount(1, false); } },
-        { label: 'Dos',      onClick: function(){ saintSetSessionCount(2, false); } },
-        { label: 'Tres',     onClick: function(){ saintSetSessionCount(3, false); } },
-        { label: 'Flexible', onClick: function(){ saintSetSessionCount(1, true); } },
-        { label: 'Ahora no', onClick: function(){ saintSkipRoutineSetup(); } }
-      ]
+  // ── Pregunta única: qué sesiones opera el trader (selección múltiple).
+  //    Sustituye al viejo par "¿cuántas sesiones?" + "nombre de cada
+  //    sesión" (que preguntaba esencialmente lo mismo dos veces). El
+  //    nombre queda resuelto aquí mismo; saintAskSessionName ya no
+  //    vuelve a preguntarlo cuando viene de este flujo (ver pendingNames).
+  function saintAskSessions(){
+    var body = document.getElementById('saint-body');
+    if (!body) return;
+    var card = document.createElement('div');
+    card.className = 'saint-card saint-from-saint';
+    var OPTS = ['Londres', 'Nueva York', 'Asia'];
+    var chipsHtml = '';
+    OPTS.forEach(function(name){
+      chipsHtml += '<div class="saint-quick-btn" data-sess="' + name + '">' + name + '</div>';
     });
+    chipsHtml += '<div class="saint-quick-btn" id="saint-sess-add-custom">+ Otra</div>';
+    card.innerHTML =
+      '<div class="saint-card-tag">Rutina · sesiones</div>' +
+      '<div class="saint-card-text">¿Qué sesiones operas? Puedes elegir varias.</div>' +
+      '<div class="saint-quick-row" id="saint-sess-options" style="margin-top:8px;flex-wrap:wrap;">' + chipsHtml + '</div>' +
+      '<div class="saint-quick-row" style="margin-top:10px;">' +
+        '<div class="saint-quick-btn" id="saint-sess-flexible">Flexible (sin horario fijo)</div>' +
+      '</div>' +
+      '<div class="saint-quick-row" style="margin-top:8px;">' +
+        '<div class="saint-quick-btn" id="saint-sess-continue" style="opacity:0.5;">Continuar →</div>' +
+        '<div class="saint-quick-btn" id="saint-sess-skip">Ahora no</div>' +
+      '</div>';
+    body.appendChild(card);
+
+    var selected = [];
+    var contBtn = card.querySelector('#saint-sess-continue');
+    var optionsRow = card.querySelector('#saint-sess-options');
+
+    function refreshCont(){ contBtn.style.opacity = selected.length ? '1' : '0.5'; }
+
+    function wireChip(chip, name){
+      chip.addEventListener('click', function(){
+        var pos = selected.indexOf(name);
+        var willSelect = (pos === -1);
+        if (willSelect) selected.push(name); else selected.splice(pos, 1);
+        chip.style.borderColor = willSelect ? 'var(--gold)' : '';
+        chip.style.color = willSelect ? 'var(--gold-bright)' : '';
+        chip.style.background = willSelect ? 'var(--gold-dim)' : '';
+        refreshCont();
+      });
+    }
+
+    Array.prototype.slice.call(card.querySelectorAll('[data-sess]')).forEach(function(chip){
+      wireChip(chip, chip.getAttribute('data-sess'));
+    });
+
+    card.querySelector('#saint-sess-add-custom').addEventListener('click', function(){
+      var inputCard = document.createElement('div');
+      inputCard.className = 'saint-card saint-from-saint';
+      inputCard.innerHTML =
+        '<div class="saint-card-tag">Nombre personalizado</div>' +
+        '<div style="display:flex;gap:6px;margin-top:6px;">' +
+          '<input type="text" id="saint-sess-custom-input" maxlength="24" placeholder="Ej. Pre-mercado" ' +
+            'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
+          '<div class="saint-quick-btn" id="saint-sess-custom-save">Añadir</div>' +
+        '</div>';
+      body.appendChild(inputCard);
+      var inp = inputCard.querySelector('#saint-sess-custom-input');
+      var btn2 = inputCard.querySelector('#saint-sess-custom-save');
+      function commit(){
+        var v = (inp.value || '').trim();
+        inputCard.remove();
+        if (v && selected.indexOf(v) === -1){
+          selected.push(v);
+          var chip = document.createElement('div');
+          chip.className = 'saint-quick-btn';
+          chip.setAttribute('data-sess', v);
+          chip.textContent = v;
+          chip.style.borderColor = 'var(--gold)';
+          chip.style.color = 'var(--gold-bright)';
+          chip.style.background = 'var(--gold-dim)';
+          wireChip(chip, v);
+          optionsRow.appendChild(chip);
+          refreshCont();
+        }
+        body.scrollTop = body.scrollHeight;
+      }
+      btn2.addEventListener('click', commit);
+      inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') commit(); });
+      body.scrollTop = body.scrollHeight;
+      setTimeout(function(){ inp.focus(); }, 60);
+    });
+
+    card.querySelector('#saint-sess-flexible').addEventListener('click', function(){
+      card.remove();
+      saintSetSessionCount(1, true);
+    });
+
+    card.querySelector('#saint-sess-skip').addEventListener('click', function(){
+      card.remove();
+      saintSkipRoutineSetup();
+    });
+
+    contBtn.addEventListener('click', function(){
+      if (!selected.length) return;
+      card.remove();
+      _saintRoutine.numSessions = selected.length;
+      _saintRoutine.flexible = false;
+      _saintRoutine.idx = 0;
+      _saintRoutine.pendingNames = selected.slice();
+      setTimeout(saintAskSessionName, 400);
+    });
+
+    body.scrollTop = body.scrollHeight;
   }
 
   function saintSetSessionCount(n, flexible){
@@ -18037,6 +18601,12 @@ async function sbStartAutoSync(licKey) {
     var i = _saintRoutine.idx;
     if (i >= _saintRoutine.numSessions){ setTimeout(saintAskPrepMinutes, 400); return; }
     _saintRoutine.current = { id: 's' + Date.now() + '_' + i, name:'', start:'', end:'', days:[] };
+    if (_saintRoutine.pendingNames && _saintRoutine.pendingNames[i] !== undefined){
+      // El nombre ya se eligió en saintAskSessions (selección múltiple) —
+      // no se repite la pregunta, se pasa directo a horario.
+      saintSaveSessionName(_saintRoutine.pendingNames[i]);
+      return;
+    }
     var tag = 'Rutina · sesión ' + (i + 1) + (_saintRoutine.numSessions > 1 ? ('/' + _saintRoutine.numSessions) : '');
     var q = _saintRoutine.flexible ? 'Nombre de tu sesión:' : ('Nombre de la sesión ' + (i + 1) + ':');
     SAINT.say(q, {
@@ -18091,7 +18661,7 @@ async function sbStartAutoSync(licKey) {
       '<div class="saint-card-tag">Hora de inicio</div>' +
       '<div class="saint-card-text">¿A qué hora empieza tu sesión de ' + _saintRoutine.current.name + '?</div>' +
       '<div style="display:flex;gap:6px;margin-top:8px;">' +
-        '<input type="time" id="saint-session-start-input" ' +
+        '<input type="text" inputmode="numeric" id="saint-session-start-input" placeholder="Ej: 8:30 am" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-start-save">Listo</div>' +
       '</div>';
@@ -18099,14 +18669,15 @@ async function sbStartAutoSync(licKey) {
     var inp = card.querySelector('#saint-session-start-input');
     var btn = card.querySelector('#saint-session-start-save');
     function commit(){
-      var v = inp.value;
-      if (!v) return;
+      var v = _saintParseTime(inp.value);
+      if (!v) { inp.style.borderColor = 'var(--red)'; inp.focus(); return; }
       _saintRoutine.current.start = v;
       card.remove();
       SAINT.say(saintPick('routine_start_confirm', {time: v}), {tag:'Confirmado'});
       setTimeout(saintAskSessionEnd, 350);
     }
     btn.addEventListener('click', commit);
+    inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') commit(); });
     body.scrollTop = body.scrollHeight;
     setTimeout(function(){ inp.focus(); }, 60);
   }
@@ -18120,7 +18691,7 @@ async function sbStartAutoSync(licKey) {
       '<div class="saint-card-tag">Hora aproximada de finalización</div>' +
       '<div class="saint-card-text">¿Y a qué hora sueles terminar?</div>' +
       '<div style="display:flex;gap:6px;margin-top:8px;">' +
-        '<input type="time" id="saint-session-end-input" ' +
+        '<input type="text" inputmode="numeric" id="saint-session-end-input" placeholder="Ej: 11:00 am" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-end-save">Listo</div>' +
       '</div>';
@@ -18128,14 +18699,15 @@ async function sbStartAutoSync(licKey) {
     var inp = card.querySelector('#saint-session-end-input');
     var btn = card.querySelector('#saint-session-end-save');
     function commit(){
-      var v = inp.value;
-      if (!v) return;
+      var v = _saintParseTime(inp.value);
+      if (!v) { inp.style.borderColor = 'var(--red)'; inp.focus(); return; }
       _saintRoutine.current.end = v;
       card.remove();
       SAINT.say(saintPick('routine_end_confirm', {time: v}), {tag:'Confirmado'});
       setTimeout(saintAskSessionDays, 350);
     }
     btn.addEventListener('click', commit);
+    inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') commit(); });
     body.scrollTop = body.scrollHeight;
     setTimeout(function(){ inp.focus(); }, 60);
   }
@@ -18249,17 +18821,310 @@ async function sbStartAutoSync(licKey) {
           break;
         }
       }
+
+      // ── Cierre de sesión: dispara DESPUÉS de la hora de fin que el
+      //    propio trader configuró — nunca antes, aunque ya haya
+      //    terminado de operar. No es una señal del EA ni un flag
+      //    nuevo: es el mismo horario que ya vive en routine.sessions.
+      //    Ventana de 2h tras el cierre para dar tiempo a que Engine
+      //    termine de procesar los datos del día antes de reportar.
+      for (var j = 0; j < r.sessions.length; j++){
+        var sc = r.sessions[j];
+        if (!sc.end || !sc.days || sc.days.indexOf(todayKey) === -1) continue;
+        var endParts = sc.end.split(':');
+        if (endParts.length < 2) continue;
+        var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(endParts[0], 10), parseInt(endParts[1], 10));
+        var closeWindowEnd = new Date(endDate.getTime() + 120 * 60000);
+        var closeKey = todayStr + ':close:' + (sc.id || j);
+        if (r.lastCloseTrigger === closeKey) continue;
+        if (now >= endDate && now < closeWindowEnd){
+          r.lastCloseTrigger = closeKey;
+          saveState(SAINT.state);
+          saintStartSessionClose(sc);
+          break;
+        }
+      }
     } catch(e){}
   }
   window.saintCheckRoutineTrigger = saintCheckRoutineTrigger;
+
+  // ── Cierre de sesión: lee (sin recalcular nada) lo que Engine ya
+  //    tiene disponible y lo comunica en la voz de SAINT. Igual que
+  //    con la preparación, no interrumpe si el trader ya tiene el
+  //    panel abierto (ver guardas en saintCheckRoutineTrigger).
+  // ── Nota de evolución respecto al propio promedio reciente. El
+  //    hallazgo operativo del día sigue siendo 100% de
+  //    saintReadEngineFindings() — esto solo agrega, cuando aporta algo
+  //    distinto, cómo se compara la sesión de hoy contra la propia
+  //    consistencia de los últimos 30 días (saintBuildProfile). Nunca
+  //    se activa si no hay suficiente historial para comparar.
+  function _saintCloseHistoryNote(clean, profile){
+    try {
+      if (!profile || typeof profile.consistencia30 !== 'number') return '';
+      if (clean && profile.consistencia30 < 70) {
+        return saintPick('session_close_vs_history_up', {consistencia: profile.consistencia30});
+      }
+      if (!clean && profile.consistencia30 >= 80) {
+        return saintPick('session_close_vs_history_down', {consistencia: profile.consistencia30});
+      }
+      return '';
+    } catch(e){ return ''; }
+  }
+
+  function saintStartSessionClose(session){
+    SAINT.clear();
+    SAINT.open();
+    SAINT.renderHeader();
+    var res = saintReadEngineFindings();
+    var isLegacy = Array.isArray(res);
+    // "¿Operó hoy?" viene del mismo dato que ya usa saintReadEngineFindings:
+    // si ninguna cuenta tuvo un día evaluado hoy (res.noData), no hubo
+    // operativa que reportar — y por lo tanto tampoco tiene sentido
+    // preguntar "¿cómo te sentiste después de operar?".
+    var tradedToday = isLegacy ? (res.length > 0) : !res.noData;
+    var msg;
+    if (isLegacy) {
+      // Fallback de compatibilidad: lectura DOM antigua (helpers globales
+      // no disponibles). Mantiene el comportamiento previo.
+      msg = res.length
+        ? saintPick('session_close_findings', {session: session.name, finding: res[0]})
+        : saintPick('session_close_clean', {session: session.name});
+    } else if (res.noData || res.clean) {
+      msg = saintPick('session_close_clean', {session: session.name});
+      if (!res.noData) {
+        var profileC = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+        var noteC = _saintCloseHistoryNote(true, profileC);
+        if (noteC) msg += '<br>' + noteC;
+      }
+    } else {
+      var findingText = res.weak.join('. ') + '.';
+      msg = saintPick('session_close_findings', {session: session.name, finding: findingText});
+      if (res.strong.length){
+        msg += '<br>' + saintPick('session_close_strength', {strength: res.strong.join(' y ')});
+      }
+      var profileW = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+      var noteW = _saintCloseHistoryNote(false, profileW);
+      if (noteW) msg += '<br>' + noteW;
+    }
+    SAINT.say(msg, {tag:'Cierre · ' + session.name});
+    SAINT.attention(true);
+
+    // ── Continúa la conversación hacia el estado emocional post-sesión
+    //    solo si hubo operativa real hoy. Migra la tarjeta "¿Cómo me
+    //    siento después de operar?" del Coach Emocional (oculta
+    //    visualmente, intacta en el DOM) a la voz de SAINT — mismo
+    //    patrón que ya se usó con la preparación (saintAskEmoState).
+    if (tradedToday) {
+      setTimeout(function(){ saintAskEmoAfter(); }, 2600);
+    }
+  }
+  window.saintStartSessionClose = saintStartSessionClose;
+
+  // ── Etiquetas de error que Engine YA calcula por su cuenta cruzando
+  //    el EA contra el plan (overtrading, revenge trading, tamaño tras
+  //    pérdida) — SAINT no las vuelve a preguntar aquí porque sería
+  //    redundante con lo que acaba de comunicar en el hallazgo de
+  //    cierre. Solo se preguntan las etiquetas subjetivas que Engine
+  //    no puede inferir del historial de operaciones.
+  var SAINT_ERROR_TAGS_REDUNDANT = ['sobreoperar', 'venganza', 'size'];
+
+  function saintAskEmoAfter(){
+    var body = document.getElementById('saint-body');
+    var pills = body ? Array.prototype.slice.call(document.querySelectorAll('#coach-emo-after .emo-pill')) : [];
+    if (!body || !pills.length) { saintFinishSessionClose(); return; }
+
+    var colorVar = {green:'var(--green)', amber:'var(--amber)', red:'var(--red)', purple:'var(--purple)'};
+    var card = document.createElement('div');
+    card.className = 'saint-card saint-from-saint';
+    card.innerHTML =
+      '<div class="saint-card-tag">Después de operar</div>' +
+      '<div class="saint-card-text">' + saintPick('emo_after_question') + '</div>' +
+      '<div class="saint-quick-row" id="saint-emo-after-options" style="flex-wrap:wrap;"></div>' +
+      '<div class="saint-quick-row" style="margin-top:8px;">' +
+        '<div class="saint-quick-btn" id="saint-emo-after-continue" style="opacity:0.5;">Continuar →</div>' +
+      '</div>';
+    body.appendChild(card);
+
+    var optsWrap = card.querySelector('#saint-emo-after-options');
+    var contBtn = card.querySelector('#saint-emo-after-continue');
+    pills.forEach(function(pill){
+      var emojiSpan = pill.querySelector('.emo-emoji');
+      var label = pill.textContent.replace(emojiSpan ? emojiSpan.textContent : '', '').trim();
+      var btn = document.createElement('div');
+      btn.className = 'saint-quick-btn';
+      btn.textContent = (emojiSpan ? emojiSpan.textContent + ' ' : '') + label;
+      btn.addEventListener('click', function(){
+        coachToggleEmo(pill, 'after'); // misma función y mismo dato que usa el Coach original
+        var isActive = pill.className !== 'emo-pill';
+        btn.classList.toggle('selected', isActive);
+        var c = colorVar[pill.dataset.color] || '';
+        btn.style.borderColor = isActive ? c : '';
+        btn.style.color = isActive ? c : '';
+        var any = !!(coachEntry.emoAfter && coachEntry.emoAfter.length);
+        if (contBtn) contBtn.style.opacity = any ? '1' : '0.5';
+      });
+      optsWrap.appendChild(btn);
+    });
+
+    contBtn.addEventListener('click', function(){
+      if (!coachEntry.emoAfter || !coachEntry.emoAfter.length) return;
+      card.remove();
+      setTimeout(saintAskErrorTags, 350);
+    });
+
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function saintAskErrorTags(){
+    var body = document.getElementById('saint-body');
+    var allTags = body ? Array.prototype.slice.call(document.querySelectorAll('#coach-error-tags .error-tag')) : [];
+    var tags = allTags.filter(function(t){ return SAINT_ERROR_TAGS_REDUNDANT.indexOf(t.dataset.err) === -1; });
+    if (!body || !tags.length) { saintFinishSessionClose(); return; }
+
+    var card = document.createElement('div');
+    card.className = 'saint-card saint-from-saint';
+    card.innerHTML =
+      '<div class="saint-card-tag">Autoobservación</div>' +
+      '<div class="saint-card-text">' + saintPick('error_tags_question') + '</div>' +
+      '<div class="saint-quick-row" id="saint-error-options" style="flex-wrap:wrap;"></div>' +
+      '<div class="saint-quick-row" style="margin-top:8px;">' +
+        '<div class="saint-quick-btn" id="saint-error-continue">Listo</div>' +
+      '</div>';
+    body.appendChild(card);
+
+    var optsWrap = card.querySelector('#saint-error-options');
+    tags.forEach(function(tag){
+      var btn = document.createElement('div');
+      btn.className = 'saint-quick-btn';
+      btn.textContent = tag.textContent.trim();
+      btn.addEventListener('click', function(){
+        coachToggleError(tag); // misma función y mismo dato que usa el Coach original
+        var isActive = tag.classList.contains('active');
+        btn.classList.toggle('selected', isActive);
+        btn.style.borderColor = isActive ? 'var(--red)' : '';
+        btn.style.color = isActive ? 'var(--red)' : '';
+      });
+      optsWrap.appendChild(btn);
+    });
+
+    card.querySelector('#saint-error-continue').addEventListener('click', function(){
+      card.remove();
+      saintFinishSessionClose();
+    });
+
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function saintFinishSessionClose(){
+    if (typeof coachSaveEntry === 'function') coachSaveEntry(); // mismo guardado exacto que el botón "💾 Guardar día"
+    var thanksMsg = saintPick('session_close_thanks');
+    var streakLine = _saintStreakLine();
+    if (streakLine) thanksMsg += '<br>' + streakLine;
+    SAINT.say(thanksMsg, {tag:'Listo'});
+    setTimeout(function(){ SAINT.close(); }, 2600);
+  }
+
+  // ── Banco de enfoques de la intención del día. Mismas 6 categorías
+  //    que dio el cliente como banco cerrado de opciones.
+  var SAINT_FOCUS_LABELS = {
+    paciencia:     'Paciencia',
+    riesgo:        'Gestión del riesgo',
+    disciplina:    'Disciplina',
+    confianza:     'Confianza',
+    concentracion: 'Concentración',
+    sistema:       'Seguir el sistema'
+  };
+
+  // ── Deriva el enfoque recomendado a partir de saintBuildProfile(), sin
+  //    calcular nada que el perfil no exponga ya. Prioriza el patrón
+  //    reciente (3 sesiones); si no hay patrón reciente claro, cae a las
+  //    señales agregadas de 30 días; si no hay historial, arranca en la
+  //    base (disciplina).
+  function _saintDeriveFocus(profile){
+    if (!profile) return 'disciplina';
+    if (profile.recentPatternRevenge) return 'riesgo';
+    if (profile.recentPatternOverconfidence) return 'sistema';
+    if (profile.recentPatternClean) return 'concentracion';
+    if (!profile.hasHistory) return 'disciplina';
+    if (profile.revengeDays30 > 0) return 'riesgo';
+    if (profile.escalationDays30 > 0) return 'confianza';
+    if (profile.riskViolDays30 > profile.opsViolDays30) return 'riesgo';
+    if (profile.opsViolDays30 > 0) return 'paciencia';
+    return 'disciplina';
+  }
+
+  // ── Guarda la intención del día elegida — historial invisible con
+  //    fecha en SAINT.state.dailyIntent, vía el mismo saveState() de
+  //    siempre (cloud-first, sin excepción). No se muestra al trader
+  //    como módulo aparte: solo retroalimenta el perfil con el tiempo.
+  function saintSaveDailyIntent(session, recommended, chosen, source){
+    try {
+      if (!Array.isArray(SAINT.state.dailyIntent)) SAINT.state.dailyIntent = [];
+      SAINT.state.dailyIntent.push({
+        date: _saintTodayStr(),
+        sessionId: (session && session.id) || null,
+        recommended: recommended,
+        chosen: chosen,
+        source: source
+      });
+      // Historial acotado: suficiente para evolución semanal/mensual sin
+      // crecer sin límite.
+      if (SAINT.state.dailyIntent.length > 120) {
+        SAINT.state.dailyIntent = SAINT.state.dailyIntent.slice(-120);
+      }
+      saveState(SAINT.state);
+    } catch(e){}
+    setTimeout(saintAskEmoState, 400);
+  }
+
+  function saintShowIntentOptions(session, recommended){
+    var order = [recommended].concat(Object.keys(SAINT_FOCUS_LABELS).filter(function(k){ return k !== recommended; }));
+    SAINT.say(saintPick('intent_options_intro'), {
+      tag: 'Elige tu enfoque',
+      quickReplies: order.map(function(k){
+        return {
+          label: SAINT_FOCUS_LABELS[k] + (k === recommended ? ' · recomendado' : ''),
+          onClick: function(){ saintSaveDailyIntent(session, recommended, k, 'changed'); }
+        };
+      })
+    });
+  }
+
+  // ── Única pregunta de intención del día. Un solo camino de aceptar el
+  //    enfoque recomendado, otro de cambiarlo — nunca un formulario.
+  function saintAskDailyIntent(session){
+    var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : {hasHistory:false};
+    var focus = _saintDeriveFocus(profile);
+    var label = SAINT_FOCUS_LABELS[focus] || SAINT_FOCUS_LABELS.disciplina;
+    SAINT.say(saintPick('intent_question', {focus: label}), {
+      tag: 'Intención del día',
+      quickReplies: [
+        { label: 'Aceptar: ' + label, onClick: function(){ saintSaveDailyIntent(session, focus, focus, 'accepted'); } },
+        { label: 'Cambiar objetivo',  onClick: function(){ saintShowIntentOptions(session, focus); } }
+      ]
+    });
+  }
 
   function saintStartRoutinePrep(session, prepMin){
     _saintPrep.active = true;
     SAINT.clear();
     SAINT.open();
     SAINT.renderHeader();
-    SAINT.say(saintPick('routine_prep_trigger', {session: session.name, minutes: prepMin}), {tag:'Preparación · ' + session.name});
-    setTimeout(saintAskEmoState, 500);
+    // Apertura contextual: cita el perfil ANTES del saludo de siempre,
+    // en la misma tarjeta — nunca como una etiqueta fija de identidad,
+    // siempre como algo de la racha reciente. Si no hay ningún patrón
+    // claro (hay historial, pero mixto), se omite y queda el saludo
+    // de siempre tal cual estaba.
+    var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : {hasHistory:false};
+    var contextKey = null;
+    if (profile.recentPatternRevenge) contextKey = 'prep_context_revenge';
+    else if (profile.recentPatternOverconfidence) contextKey = 'prep_context_overconfidence';
+    else if (profile.recentPatternClean) contextKey = 'prep_context_clean';
+    else if (!profile.hasHistory) contextKey = 'prep_context_new';
+    var triggerMsg = saintPick('routine_prep_trigger', {session: session.name, minutes: prepMin});
+    var msg = contextKey ? (saintPick(contextKey) + '<br>' + triggerMsg) : triggerMsg;
+    SAINT.say(msg, {tag:'Preparación · ' + session.name});
+    setTimeout(function(){ saintAskDailyIntent(session); }, 500);
   }
 
   // ── Primer contacto: SAINT pregunta cómo llamar al trader. Se
