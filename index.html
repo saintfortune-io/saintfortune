@@ -17424,7 +17424,7 @@ async function sbStartAutoSync(licKey) {
     <div class="saint-avatar" id="saint-avatar-mark">◆</div>
     <div class="saint-head-info">
       <div class="saint-head-name" id="saint-head-name">SAINT</div>
-      <div class="saint-head-role">Presente cuando importa</div>
+      <div class="saint-head-role">Entrenador de Alto Rendimiento</div>
     </div>
     <div class="saint-head-actions">
       <button class="saint-head-btn" onclick="saintOpenConfig()" title="Configurar">⚙</button>
@@ -17432,7 +17432,7 @@ async function sbStartAutoSync(licKey) {
     </div>
   </div>
   <div class="saint-body" id="saint-body"></div>
-  <div class="saint-foot">SAINT observa en silencio. Solo habla cuando aporta.</div>
+  <div class="saint-foot" id="saint-foot">Monitorizando tu ejecución.</div>
 </div>
 
 <!-- Configuración: solo estructura, sin lógica activa todavía -->
@@ -17699,6 +17699,32 @@ async function sbStartAutoSync(licKey) {
       var avatarEl = document.getElementById('saint-avatar-mark');
       if (nameEl) nameEl.textContent = SAINT.state.name || 'SAINT';
       if (avatarEl) avatarEl.textContent = SAINT.state.gender === 'mujer' ? '✦' : '◆';
+      SAINT.renderFootStatus();
+    },
+
+    // ── Footer funcional: en vez de una frase fija que no dice nada
+    //    ("observa en silencio"), refleja el estado real del trader,
+    //    reutilizando getAllAccountAlerts() (misma función que ya usa
+    //    el banner de "Alertas activas" del dashboard) — nunca calcula
+    //    una alerta nueva ni duplica la lógica de Engine/Guardian.
+    renderFootStatus: function(){
+      var el = document.getElementById('saint-foot');
+      if (!el) return;
+      try {
+        var alerts = (typeof getAllAccountAlerts === 'function') ? getAllAccountAlerts() : [];
+        var critical = alerts.filter(function(a){ return a.level === 'danger'; }).length;
+        if (critical > 0) {
+          el.textContent = critical === 1
+            ? 'Detecté 1 alerta crítica. Estoy sobre ella.'
+            : 'Detecté ' + critical + ' alertas críticas. Estoy sobre ellas.';
+        } else if (alerts.length > 0) {
+          el.textContent = 'Sesión bajo vigilancia — hay puntos a cuidar hoy.';
+        } else {
+          el.textContent = 'Sesión estable. Monitorizando tu ejecución.';
+        }
+      } catch(e){
+        el.textContent = 'Monitorizando tu ejecución.';
+      }
     },
 
     // ── Conversación en tarjetas pequeñas (no chat abierto) ──
@@ -17835,9 +17861,9 @@ async function sbStartAutoSync(licKey) {
     // naturaleza — plantea el propósito del sistema y pasa directo a
     // conocer al trader (segunda mitad del flujo: saintAskTraderName).
     greeting_first: {
-      directo:   'Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>No se trata de una estrategia nueva — se trata de ejecutar la tuya con máxima disciplina y enfoque.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.',
-      cercano:   'Bienvenido a Treyuder.<br>Hoy empieza la construcción de tu sistema operativo como Treyuder Elite.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya, con disciplina y enfoque, cuando aparezca la presión.<br>Vamos a construir tu imperio, juntos.<br>Antes de avanzar, vamos a conocerte.',
-      analitico: 'Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con máxima disciplina y enfoque, medible sesión a sesión.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.'
+      directo:   'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>No se trata de una estrategia nueva — se trata de ejecutar la tuya con máxima disciplina y enfoque.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.',
+      cercano:   'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy empieza la construcción de tu sistema operativo como Treyuder Elite.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya, con disciplina y enfoque, cuando aparezca la presión.<br>Vamos a construir tu imperio, juntos.<br>Antes de avanzar, vamos a conocerte.',
+      analitico: 'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con máxima disciplina y enfoque, medible sesión a sesión.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.'
     },
     // Se dice justo después de que el trader confirma (o no) su nombre.
     // Cierra el primer contacto y da paso a los quick replies.
