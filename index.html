@@ -17702,28 +17702,24 @@ async function sbStartAutoSync(licKey) {
       SAINT.renderFootStatus();
     },
 
-    // ── Footer funcional: en vez de una frase fija que no dice nada
-    //    ("observa en silencio"), refleja el estado real del trader,
-    //    reutilizando getAllAccountAlerts() (misma función que ya usa
-    //    el banner de "Alertas activas" del dashboard) — nunca calcula
-    //    una alerta nueva ni duplica la lógica de Engine/Guardian.
+    // ── Footer funcional: refleja lo que SAINT realmente puede aportar
+    //    — el enfoque de entrenamiento activo (memoria evolutiva) — no
+    //    las alertas de P&L/DD, que son dominio de Engine, ya se ven en
+    //    el banner de "Alertas activas" del dashboard, y sobre las que
+    //    SAINT no puede actuar (la pérdida ya ocurrió; repetirla aquí
+    //    no aporta nada y además implica una acción que SAINT no
+    //    ejecuta). Reutiliza _saintActiveGoalLabel(), ya existente —
+    //    no calcula ni pregunta nada nuevo.
     renderFootStatus: function(){
       var el = document.getElementById('saint-foot');
       if (!el) return;
       try {
-        var alerts = (typeof getAllAccountAlerts === 'function') ? getAllAccountAlerts() : [];
-        var critical = alerts.filter(function(a){ return a.level === 'danger'; }).length;
-        if (critical > 0) {
-          el.textContent = critical === 1
-            ? 'Detecté 1 alerta crítica. Estoy sobre ella.'
-            : 'Detecté ' + critical + ' alertas críticas. Estoy sobre ellas.';
-        } else if (alerts.length > 0) {
-          el.textContent = 'Sesión bajo vigilancia — hay puntos a cuidar hoy.';
-        } else {
-          el.textContent = 'Sesión estable. Monitorizando tu ejecución.';
-        }
+        var goalLabel = (typeof _saintActiveGoalLabel === 'function') ? _saintActiveGoalLabel() : null;
+        el.textContent = goalLabel
+          ? 'Hoy sostenemos: ' + goalLabel.toLowerCase() + '.'
+          : 'Aquí, listo para tu próxima sesión.';
       } catch(e){
-        el.textContent = 'Monitorizando tu ejecución.';
+        el.textContent = 'Aquí, listo para tu próxima sesión.';
       }
     },
 
