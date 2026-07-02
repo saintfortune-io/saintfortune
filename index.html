@@ -9634,7 +9634,8 @@ function buildBackupPayload(){
     tp_max_streak_start_sale:   _lsGet('tp_max_streak_start_sale') || '',
     tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || '',
     sf_saint_v1:                JSON.parse(_lsGet('sf_saint_v1') || 'null'),
-    sf_saint_memory_v1:         JSON.parse(_lsGet('sf_saint_memory_v1') || 'null')
+    sf_saint_memory_v1:         JSON.parse(_lsGet('sf_saint_memory_v1') || 'null'),
+    sf_intelligence_v1:         JSON.parse(_lsGet('sf_intelligence_v1') || 'null')
   };
 }
 
@@ -9696,6 +9697,9 @@ function applyBackupPayload(d){
       // Keys stored as "{acc}_{YYYY-MM}"
       Object.entries(mo).forEach(([k, val]) => _lsSet('fp_missed_ops_' + k, val));
     } catch(e) {}
+  }
+  if(d.sf_intelligence_v1        !== undefined && d.sf_intelligence_v1 !== null) {
+    _lsSet('sf_intelligence_v1', JSON.stringify(d.sf_intelligence_v1));
   }
 }
 
@@ -17079,6 +17083,555 @@ function _ie3Cap(str) {
 // ── FIN INTELLIGENCE ENGINE ETAPA 4 · Saint Fortune™ ─────────────────────────
 
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// SAINT FORTUNE™ · INTELLIGENCE — Comparador Plan vs Ejecución Real
+// ─────────────────────────────────────────────────────────────────────────────
+// Nuevo rol de Intelligence: deja de interpretar únicamente resultados y pasa
+// a comparar constantemente PLAN declarado vs EJECUCIÓN REAL importada por el
+// EA. No duplica ningún cálculo de Engine — reutiliza window._cdAnalyze(acc),
+// que ya agrupa las operaciones del día y ya calcula opsViol (overtrading)
+// para hoy. Este módulo solo le agrega una máquina de estados y la evalúa en
+// tiempo real, cada vez que llega una operación nueva del EA (no al cierre).
+//
+// FASE A: overtrading (máximo de operaciones por día).
+// FASE B (en curso, reutilizando el mismo esqueleto, una regla por entrega):
+//   - riesgo máximo diario ..... entregado
+//   - sesión fuera de plan ..... entregado (usa todayDetail.outOfSession)
+//   - aumento de lotaje ........ entregado (usa todayDetail.escalation,
+//                                 patrón sí/no como riesgo, no conteo)
+//   - revenge trading .......... entregado (usa todayDetail.revenge,
+//                                 mismo patrón sí/no)
+// Huella histórica (solo lectura, sin storage nuevo): getIntelligenceHistory
+// resume semana/mes a partir de dayDetails. Pendiente: que SAINT hable
+// específico de cada evento (hoy dispara mensaje genérico) — requiere
+// autorización explícita para agregar lógica a SAINT.
+// Drawdown, horario, operaciones simultáneas, tiempo mínimo entre entradas,
+// número de pérdidas y profit objetivo NO están calculados todavía por
+// _cdAnalyze — requieren confirmar con Oliva si se extiende Engine o se
+// calculan aparte dentro de este módulo, antes de tocar nada.
+//
+// NO modifica SAINT, Engine, Guardian ni el backend. NO crea tabla nueva en
+// Supabase: usa el mismo client_data + buildBackupPayload/applyBackupPayload
+// + sbPush con debounce que ya sincroniza sf_saint_memory_v1, solo que con
+// la clave sf_intelligence_v1.
+// ═══════════════════════════════════════════════════════════════════════════════
+(function() {
+
+  var STORAGE_KEY = 'sf_intelligence_v1';
+
+  // ── Persistencia (mismo patrón _lsGet/_lsSet que el resto de la app) ───────
+  function _intelLoad() {
+    try { return JSON.parse(_lsGet(STORAGE_KEY) || '{}') || {}; }
+    catch(e) { return {}; }
+  }
+
+  function _intelSave(state) {
+    try { _lsSet(STORAGE_KEY, JSON.stringify(state)); }
+    catch(e) {}
+  }
+
+  function _intelTodayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  // ── Solo cuentas live/funded — mismo criterio que ya usa SAINT
+  //    (_saintLiveAccountKeys) para no mezclar práctica de backtesting con
+  //    cumplimiento real del sistema. No se toca esa función privada de
+  //    SAINT: se replica el mismo filtro con las dos funciones públicas que
+  //    ya expone la app (getAllAccountKeys / saintIsBacktestAccount).
+  function _intelIsEvaluableAccount(acc) {
+    if (typeof window.saintIsBacktestAccount === 'function' && window.saintIsBacktestAccount(acc)) {
+      return false;
+    }
+    return true;
+  }
+
+  // ── Evalúa el estado de UNA desviación (overtrading) para una cuenta ───────
+  // Máquina de estados: OBSERVADA → CONFIRMADA → CORREGIDA
+  //   OBSERVADA  = primera operación del día que excede el máximo del plan.
+  //   CONFIRMADA = la desviación persiste: entra otra operación el mismo día
+  //                por encima del máximo.
+  //   CORREGIDA  = llega un día NUEVO con operativa y ese día respeta el plan.
+  // Devuelve la desviación (con flag transitioned) o null si no hay cambio.
+  function _intelEvaluateOvertrading(today, todayDetail, prev) {
+    var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
+      && prev.date !== today;
+
+    // Llegó un día nuevo con operativa: si ese día respeta el plan, la
+    // desviación anterior queda corregida.
+    if (isCorrectionCandidate && todayDetail && !todayDetail.opsViol) {
+      return {
+        rule: 'ops', state: 'CORREGIDA', date: today,
+        count: todayDetail.effectiveOps, max: prev.max,
+        prevDate: prev.date, transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (!todayDetail || !todayDetail.opsViol) return null;
+
+    // Primera vez que se detecta la violación en el día de hoy.
+    if (!prev || prev.date !== today) {
+      return {
+        rule: 'ops', state: 'OBSERVADA', date: today,
+        count: todayDetail.effectiveOps, max: null,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Ya había una violación registrada hoy: pasa a CONFIRMADA si entró
+    // otra operación de más desde que se marcó OBSERVADA.
+    if (prev.state === 'OBSERVADA' && todayDetail.effectiveOps > prev.count) {
+      return {
+        rule: 'ops', state: 'CONFIRMADA', date: today,
+        count: todayDetail.effectiveOps, max: prev.max,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Sigue igual (misma cuenta de operaciones ya vista) — no hay transición,
+    // pero se refresca el contador para no perder la última lectura real.
+    return {
+      rule: 'ops', state: prev.state, date: today,
+      count: todayDetail.effectiveOps, max: prev.max,
+      transitioned: false, updatedAt: Date.now()
+    };
+  }
+
+  // ── Evalúa el estado de UNA desviación (riesgo máximo diario) ──────────────
+  // Máquina de estados: OBSERVADA → CONFIRMADA → CORREGIDA
+  //   OBSERVADA  = el % de pérdida del día supera el máximo del plan. Se
+  //                registra en el momento exacto en que se cruza el número,
+  //                sin esperar ninguna otra condición.
+  //   CONFIRMADA = sigue entrando operación nueva el mismo día mientras el
+  //                % acumulado sigue por encima del límite.
+  //   CORREGIDA  = llega un día NUEVO con operativa y ese día respeta el
+  //                límite de riesgo.
+  function _intelEvaluateRisk(today, todayDetail, prev) {
+    var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
+      && prev.date !== today;
+
+    if (isCorrectionCandidate && todayDetail && !todayDetail.riskViol) {
+      return {
+        rule: 'risk', state: 'CORREGIDA', date: today,
+        riskUsed: todayDetail.riskUsed, max: prev.max,
+        prevDate: prev.date, transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (!todayDetail || !todayDetail.riskViol) return null;
+
+    // Primera vez que se cruza el % del día: queda registrado de inmediato.
+    if (!prev || prev.date !== today) {
+      return {
+        rule: 'risk', state: 'OBSERVADA', date: today,
+        riskUsed: todayDetail.riskUsed, max: null,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Ya estaba OBSERVADA hoy: si entra otra operación y el % sigue por
+    // encima del límite, la desviación se confirma.
+    if (prev.state === 'OBSERVADA') {
+      return {
+        rule: 'risk', state: 'CONFIRMADA', date: today,
+        riskUsed: todayDetail.riskUsed, max: prev.max,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Ya estaba CONFIRMADA: se refresca el % sin volver a emitir evento.
+    return {
+      rule: 'risk', state: prev.state, date: today,
+      riskUsed: todayDetail.riskUsed, max: prev.max,
+      transitioned: false, updatedAt: Date.now()
+    };
+  }
+
+  // ── Evalúa el estado de UNA desviación (sesión fuera de plan) ──────────────
+  // Máquina de estados: OBSERVADA → CONFIRMADA → CORREGIDA (mismo patrón que
+  // overtrading/riesgo). Reutiliza todayDetail.outOfSession, ya calculado por
+  // _cdAnalyze comparando cada operación contra plan.sessions — no se duplica
+  // ni un cálculo nuevo.
+  //   OBSERVADA  = primera operación del día fuera de la sesión declarada.
+  //                Se registra en el momento exacto, sin esperar el cierre.
+  //   CONFIRMADA = entra otra operación ese mismo día también fuera de la
+  //                sesión declarada.
+  //   CORREGIDA  = llega un día NUEVO con operativa y todas las operaciones
+  //                de ese día caen dentro de la sesión declarada. No arma
+  //                histórico día por día — solo el estado actual, igual que
+  //                ops/riesgo. El histórico queda para una fase posterior.
+  function _intelEvaluateSession(today, todayDetail, prev) {
+    var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
+      && prev.date !== today;
+
+    if (isCorrectionCandidate && todayDetail && !todayDetail.outOfSession) {
+      return {
+        rule: 'session', state: 'CORREGIDA', date: today,
+        count: 0, sessions: prev.sessions,
+        prevDate: prev.date, transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (!todayDetail || !todayDetail.outOfSession) return null;
+
+    // Primera vez que se detecta la violación en el día de hoy.
+    if (!prev || prev.date !== today) {
+      return {
+        rule: 'session', state: 'OBSERVADA', date: today,
+        count: todayDetail.outOfSession, sessions: null,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Ya había una violación registrada hoy: pasa a CONFIRMADA si entró
+    // otra operación fuera de sesión desde que se marcó OBSERVADA.
+    if (prev.state === 'OBSERVADA' && todayDetail.outOfSession > prev.count) {
+      return {
+        rule: 'session', state: 'CONFIRMADA', date: today,
+        count: todayDetail.outOfSession, sessions: prev.sessions,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Sigue igual — no hay transición, pero se refresca el contador.
+    return {
+      rule: 'session', state: prev.state, date: today,
+      count: todayDetail.outOfSession, sessions: prev.sessions,
+      transitioned: false, updatedAt: Date.now()
+    };
+  }
+
+  // ── Evalúa el estado de UNA desviación (aumento de lotaje tras pérdida) ────
+  // Máquina de estados: OBSERVADA → CONFIRMADA → CORREGIDA. Mismo patrón que
+  // riesgo (no ops/sesión): el motor no da un conteo que sube, da un sí/no
+  // por día (dayDetail.escalation: array de lots si se detectó el patrón, o
+  // null/false si no). No se duplica cálculo — se reutiliza tal cual.
+  //   OBSERVADA  = el día marca el patrón por primera vez, en el momento
+  //                exacto en que se detecta, sin esperar el cierre.
+  //   CONFIRMADA = entra otra operación ese mismo día y el patrón sigue
+  //                presente (igual que riesgo: no exige que empeore, solo
+  //                que siga estando ahí).
+  //   CORREGIDA  = llega un día NUEVO con operativa y ese día no muestra
+  //                el patrón.
+  function _intelEvaluateEscalation(today, todayDetail, prev) {
+    var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
+      && prev.date !== today;
+
+    if (isCorrectionCandidate && todayDetail && !todayDetail.escalation) {
+      return {
+        rule: 'escalation', state: 'CORREGIDA', date: today,
+        prevDate: prev.date, transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (!todayDetail || !todayDetail.escalation) return null;
+
+    if (!prev || prev.date !== today) {
+      return {
+        rule: 'escalation', state: 'OBSERVADA', date: today,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (prev.state === 'OBSERVADA') {
+      return {
+        rule: 'escalation', state: 'CONFIRMADA', date: today,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    return {
+      rule: 'escalation', state: prev.state, date: today,
+      transitioned: false, updatedAt: Date.now()
+    };
+  }
+
+  // ── Evalúa el estado de UNA desviación (revenge trading) ───────────────────
+  // Mismo patrón sí/no que riesgo y escalación. Reutiliza dayDetail.revenge
+  // (booleano ya calculado por _cdAnalyze: 2+ pérdidas seguidas con entrada
+  // rápida de tamaño igual o mayor, o 3+ stops seguidos en el día).
+  function _intelEvaluateRevenge(today, todayDetail, prev) {
+    var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
+      && prev.date !== today;
+
+    if (isCorrectionCandidate && todayDetail && !todayDetail.revenge) {
+      return {
+        rule: 'revenge', state: 'CORREGIDA', date: today,
+        prevDate: prev.date, transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (!todayDetail || !todayDetail.revenge) return null;
+
+    if (!prev || prev.date !== today) {
+      return {
+        rule: 'revenge', state: 'OBSERVADA', date: today,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    if (prev.state === 'OBSERVADA') {
+      return {
+        rule: 'revenge', state: 'CONFIRMADA', date: today,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    return {
+      rule: 'revenge', state: prev.state, date: today,
+      transitioned: false, updatedAt: Date.now()
+    };
+  }
+
+  // ── Punto de entrada: recalcula el cumplimiento del plan para UNA cuenta.
+  //    Se dispara cada vez que llega una operación nueva del EA — nunca
+  //    espera al cierre de sesión ni al resumen diario.
+
+  // ── Prioridad de coach: qué desviación pesa más si varias están activas
+  //    el mismo día. No es orden técnico, es criterio de riesgo:
+  //      1) riesgo excedido ...... amenaza la cuenta ahora mismo
+  //      2) revenge trading ...... la puerta al peor daño emocional/cuenta
+  //      3) escalada de lotaje ... riesgo compuesto sobre lo anterior
+  //      4) overtrading .......... disciplina, cada entrada ya la pesa el riesgo
+  //      5) fuera de sesión ...... consistencia, no peligro inmediato
+  //    Dentro de una misma regla, CONFIRMADA pesa más que OBSERVADA — pero
+  //    esto NUNCA debe pisar la prioridad entre reglas distintas: riesgo
+  //    OBSERVADA (recién detectado) sigue siendo más urgente que sesión
+  //    CONFIRMADA (repetida), porque el riesgo amenaza la cuenta ahora
+  //    mismo y la sesión no. Por eso el peso de la regla es el criterio
+  //    principal, y el estado solo desempata dentro de la MISMA regla
+  //    (en la práctica no puede haber dos entradas activas de una misma
+  //    regla el mismo día, así que el desempate es solo defensivo).
+  var SAINT_INTEL_RULE_PRIORITY = { risk: 5, revenge: 4, escalation: 3, ops: 2, session: 1 };
+  var SAINT_INTEL_STATE_WEIGHT  = { CONFIRMADA: 2, OBSERVADA: 1, CORREGIDA: 0 };
+
+  // ── Huella COMPLETA de hoy para una cuenta (no solo lo que acaba de
+  //    cambiar en este ciclo): permite que SAINT hable con el contexto
+  //    entero del día sin importar qué regla disparó la reevaluación.
+  //    "Activo" = fechado hoy y en OBSERVADA o CONFIRMADA. Ordenado de
+  //    más a menos urgente.
+  function _intelActiveToday(accState, today) {
+    var rules = ['risk', 'revenge', 'escalation', 'ops', 'session'];
+    var active = [];
+    rules.forEach(function(rule) {
+      var d = accState[rule];
+      if (d && d.date === today && (d.state === 'OBSERVADA' || d.state === 'CONFIRMADA')) active.push(d);
+    });
+    active.sort(function(a, b) {
+      var scoreA = SAINT_INTEL_RULE_PRIORITY[a.rule] * 10 + SAINT_INTEL_STATE_WEIGHT[a.state];
+      var scoreB = SAINT_INTEL_RULE_PRIORITY[b.rule] * 10 + SAINT_INTEL_STATE_WEIGHT[b.state];
+      return scoreB - scoreA;
+    });
+    return active;
+  }
+
+  // ── Mismo criterio para el caso positivo: reglas corregidas hoy.
+  function _intelCorrectedToday(accState, today) {
+    var rules = ['risk', 'revenge', 'escalation', 'ops', 'session'];
+    var corrected = [];
+    rules.forEach(function(rule) {
+      var d = accState[rule];
+      if (d && d.date === today && d.state === 'CORREGIDA') corrected.push(d);
+    });
+    corrected.sort(function(a, b) { return SAINT_INTEL_RULE_PRIORITY[b.rule] - SAINT_INTEL_RULE_PRIORITY[a.rule]; });
+    return corrected;
+  }
+
+  // ── Emisión hacia SAINT: UNA sola vez por ciclo, con el contexto
+  //    completo del día — nunca una tarjeta por regla (eso pisaba avisos
+  //    anteriores y, peor, leía como una lista de infracciones en vez de
+  //    una guía). Si hay algo negativo activo, SAINT se enfoca 100% en
+  //    eso — nunca mezcla "corregiste X" con "pero rompiste Y" en el
+  //    mismo mensaje, confunde en vez de contener. Solo si no hay nada
+  //    negativo activo hoy, reconoce lo que se corrigió. Sigue usando
+  //    SAINT.trigger, sin cambiar su comportamiento para el resto de los
+  //    casos (session_start, guardian, session_end, pattern, default).
+  function _intelEmitContext(acc, accState, today) {
+    if (!window.SAINT || typeof window.SAINT.trigger !== 'function') return;
+    var active = _intelActiveToday(accState, today);
+    if (active.length) {
+      window.SAINT.trigger('risk', { source: 'intelligence', account: acc, items: active });
+      return;
+    }
+    var corrected = _intelCorrectedToday(accState, today);
+    if (corrected.length) {
+      window.SAINT.trigger('risk', { source: 'intelligence', account: acc, items: corrected });
+    }
+  }
+
+  function _intelEvaluate(acc) {
+    try {
+      if (!acc || !_intelIsEvaluableAccount(acc)) return;
+      if (typeof window.getTradingPlan !== 'function' || typeof window._cdAnalyze !== 'function') return;
+
+      var plan = window.getTradingPlan(acc);
+      if (!plan) return; // sin plan declarado no hay contra qué comparar
+
+      var r = window._cdAnalyze(acc); // mismo analizador de Engine, sin duplicar cálculo
+      if (!r || r.noData) return;
+
+      var today = _intelTodayStr();
+      var todayDetail = null;
+      (r.dayDetails || []).forEach(function(d) { if (d.date === today) todayDetail = d; });
+
+      var state = _intelLoad();
+      var accState = state[acc] || {};
+      var changed = false;
+
+      var nextOps = _intelEvaluateOvertrading(today, todayDetail, accState.ops);
+      if (nextOps) {
+        nextOps.max = plan.maxOpsPerDay || (accState.ops && accState.ops.max) || null;
+        accState.ops = nextOps;
+        changed = true;
+      }
+
+      var nextRisk = _intelEvaluateRisk(today, todayDetail, accState.risk);
+      if (nextRisk) {
+        nextRisk.max = plan.maxDailyRisk || (accState.risk && accState.risk.max) || null;
+        accState.risk = nextRisk;
+        changed = true;
+      }
+
+      var nextSession = _intelEvaluateSession(today, todayDetail, accState.session);
+      if (nextSession) {
+        nextSession.sessions = plan.sessions || (accState.session && accState.session.sessions) || null;
+        accState.session = nextSession;
+        changed = true;
+      }
+
+      var nextEscalation = _intelEvaluateEscalation(today, todayDetail, accState.escalation);
+      if (nextEscalation) {
+        accState.escalation = nextEscalation;
+        changed = true;
+      }
+
+      var nextRevenge = _intelEvaluateRevenge(today, todayDetail, accState.revenge);
+      if (nextRevenge) {
+        accState.revenge = nextRevenge;
+        changed = true;
+      }
+
+      if (changed) {
+        state[acc] = accState;
+        _intelSave(state);
+        // Solo se habla si algo transicionó de verdad este ciclo — pero el
+        // CONTENIDO de lo que se dice usa la huella completa de hoy, no
+        // solo lo que acaba de cambiar. Así, si ya estabas fuera de sesión
+        // y ahora además te pasaste de riesgo, SAINT te dice las dos cosas
+        // juntas, con la más urgente primero — no dos avisos separados.
+        var anyTransitioned = (nextOps && nextOps.transitioned) || (nextRisk && nextRisk.transitioned) ||
+          (nextSession && nextSession.transitioned) || (nextEscalation && nextEscalation.transitioned) ||
+          (nextRevenge && nextRevenge.transitioned);
+        if (anyTransitioned) _intelEmitContext(acc, accState, today);
+      }
+    } catch(e) { console.warn('SF Intelligence: error evaluando', acc, e); }
+  }
+
+  // ── Wrap-don't-modify sobre los dos puntos reales de entrada de datos del
+  //    EA. No se toca ni una línea de importarMT5Ahora / importarNT8Ahora:
+  //    se conserva el original, se mide si agregó operaciones nuevas a esa
+  //    cuenta comparando el conteo de entries antes/después, y solo entonces
+  //    se dispara la evaluación continua.
+  function _intelWrapImporter(fnName) {
+    var original = window[fnName];
+    if (typeof original !== 'function') return;
+    window[fnName] = function(acc) {
+      var before = (typeof entries !== 'undefined')
+        ? entries.filter(function(e) { return e.account === acc; }).length : 0;
+      var result = original.apply(this, arguments);
+      function afterImport() {
+        var after = (typeof entries !== 'undefined')
+          ? entries.filter(function(e) { return e.account === acc; }).length : 0;
+        if (after > before) _intelEvaluate(acc);
+      }
+      if (result && typeof result.then === 'function') result.then(afterImport);
+      else afterImport();
+      return result;
+    };
+  }
+
+  _intelWrapImporter('importarMT5Ahora');
+  _intelWrapImporter('importarNT8Ahora');
+
+  // ── API pública de solo lectura, por si otra parte de la app necesita
+  //    mostrar el estado sin duplicar la máquina de estados.
+  window.getIntelligenceState = function(acc) {
+    var state = _intelLoad();
+    return acc ? (state[acc] || null) : state;
+  };
+
+  // ── Huella histórica (Parte 1: solo datos, sin narrativa) ───────────────────
+  // No crea storage nuevo ni sincroniza nada nuevo a la nube: dayDetails ya
+  // trae, día por día, TODO el historial de la cuenta (calculado por
+  // _cdAnalyze, el mismo analizador que ya usa Engine). Esta función solo
+  // resume esos días en ventanas (semana/mes) para que SAINT, en una fase
+  // futura, pueda referirse a "esta semana" o "este mes" sin tener que volver
+  // a calcular nada. NO decide qué le dice a la persona — eso queda para
+  // cuando se autorice tocar SAINT.
+  function _intelWindowStr(daysAgo) {
+    var d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function _intelTally(dayDetails, fromStr, toStrExclusive) {
+    var days = dayDetails.filter(function(d) {
+      return d.date >= fromStr && (!toStrExclusive || d.date < toStrExclusive);
+    });
+    return {
+      totalDays:      days.length,
+      cleanDays:      days.filter(function(d){ return !d.opsViol && !d.riskViol && !d.outOfSession; }).length,
+      opsViolDays:    days.filter(function(d){ return d.opsViol; }).length,
+      riskViolDays:   days.filter(function(d){ return d.riskViol; }).length,
+      sessionViolDays:days.filter(function(d){ return d.outOfSession; }).length
+    };
+  }
+
+  function _intelTrend(curCount, prevCount) {
+    if (curCount < prevCount) return 'mejorando';
+    if (curCount > prevCount) return 'empeorando';
+    return 'igual';
+  }
+
+  function _intelSummarizeWindow(dayDetails, windowDays) {
+    var todayStr    = _intelWindowStr(0);
+    var cutoffStr   = _intelWindowStr(windowDays);
+    var prevCutoffStr = _intelWindowStr(windowDays * 2);
+
+    var current  = _intelTally(dayDetails, cutoffStr, null);
+    // el rango actual es inclusive de hoy; se filtra aparte para no pasarse
+    current.totalDays = dayDetails.filter(function(d){ return d.date >= cutoffStr && d.date <= todayStr; }).length;
+    var previous = _intelTally(dayDetails, prevCutoffStr, cutoffStr);
+
+    return {
+      windowDays: windowDays,
+      current:  current,
+      previous: previous,
+      trend: {
+        ops:     _intelTrend(current.opsViolDays,     previous.opsViolDays),
+        risk:    _intelTrend(current.riskViolDays,    previous.riskViolDays),
+        session: _intelTrend(current.sessionViolDays, previous.sessionViolDays)
+      }
+    };
+  }
+
+  // getIntelligenceHistory(acc) → { week: {...}, month: {...} } o null si no
+  // hay plan/datos. Lectura pura, se puede llamar en cualquier momento sin
+  // efectos secundarios (no guarda nada, no dispara eventos hacia SAINT).
+  window.getIntelligenceHistory = function(acc) {
+    if (typeof window._cdAnalyze !== 'function') return null;
+    var r = window._cdAnalyze(acc);
+    if (!r || r.noData || !r.dayDetails || !r.dayDetails.length) return null;
+    return {
+      week:  _intelSummarizeWindow(r.dayDetails, 7),
+      month: _intelSummarizeWindow(r.dayDetails, 30)
+    };
+  };
+
+})();
+// ── FIN INTELLIGENCE · Comparador Plan vs Ejecución Real · Saint Fortune™ ────
+
+
 // ── Marca de autoría (no eliminar) ──
 console.log('%cSaint Fortune', 'color:#999;font-size:10px;');
 console.log('%cPID-SF-' + (Date.now().toString(36).toUpperCase()), 'color:#444;font-size:9px;');
@@ -17789,7 +18342,12 @@ async function sbStartAutoSync(licKey) {
           SAINT.say('Tu sistema define el plan de hoy.<br>Confirma que sigue siendo el mismo antes de operar.', {tag:'Antes de sesión'});
           break;
         case 'risk':
-          SAINT.say('Esto se está saliendo de tu sistema.<br>Detente antes de seguir.', {tag:'Riesgo detectado'});
+          var _intelMsg = (ctx && ctx.source === 'intelligence') ? saintIntelMessage(ctx) : null;
+          if (_intelMsg) {
+            SAINT.say(_intelMsg.text, {tag: _intelMsg.tag, tone: _intelMsg.tone});
+          } else {
+            SAINT.say('Esto se está saliendo de tu sistema.<br>Detente antes de seguir.', {tag:'Riesgo detectado'});
+          }
           break;
         case 'guardian':
           SAINT.say('Guardian ha intervenido.<br>Vamos a revisar qué ocurrió, sin juicio.', {tag:'Guardian'});
@@ -18228,6 +18786,256 @@ async function sbStartAutoSync(licKey) {
     }
     return txt;
   }
+
+  // ══════════════════════════════════════════════════════════════
+  // VOZ DE SAINT PARA INTELLIGENCE — mensajes específicos por regla y
+  // por estado (en vez del genérico "Esto se está saliendo de tu
+  // sistema"). 100% aditivo: no reemplaza SAINT_PHRASES, saintPick,
+  // SAINT_BLOCKS ni saintPickBlock — es un diccionario y una función
+  // nuevos que solo se leen desde el switch de SAINT.trigger('risk'),
+  // y únicamente cuando el evento viene de Intelligence (ctx.source
+  // === 'intelligence' y ctx.rule). Si algún día otro módulo dispara
+  // SAINT.trigger('risk', {}) sin ese contexto, sigue cayendo en el
+  // mensaje genérico de siempre — nada de lo existente cambia.
+  //
+  // Criterio de tono (SAINT como coach de élite, nunca como juez):
+  //  - Nunca perfila a la persona (nada de "estás haciendo overtrading
+  //    porque sos ansioso"): describe la desviación del PLAN, no del
+  //    carácter.
+  //  - El primer aviso (equivalente interno a "recién se detectó") es
+  //    corto, informativo, sin dramatismo — una señal a tiempo.
+  //  - Si la desviación persiste (equivalente interno a "se repitió"),
+  //    el tono sube de firmeza según la personalidad configurada, pero
+  //    el foco siempre es volver al sistema — nunca el resultado de la
+  //    operación ("ganaste o perdiste" no aparece en ningún mensaje).
+  //  - Las palabras internas de la máquina de estados (OBSERVADA /
+  //    CONFIRMADA / CORREGIDA) NUNCA se muestran a la usuaria — ni acá
+  //    ni en ningún otro lado: son solo el gatillo de cuándo hablar.
+  var SAINT_INTEL_MESSAGES = {
+    ops: {
+      OBSERVADA: {
+        directo:   'Ya pasaste el número de operaciones que fijaste para hoy ({count}/{max}).<br>Cierra la plataforma acá — lo siguiente ya sería fuera de tu sistema.',
+        cercano:   '{name}, hoy ya llegaste a las operaciones que tu plan permitía ({count}/{max}).<br>No hace falta forzar una más — saber cuándo parar también es parte del plan.',
+        analitico: 'Operaciones del día: {count}. Límite del plan: {max}.<br>El umbral ya se cruzó — cerrar aquí es la decisión que sostiene el sistema.'
+      },
+      CONFIRMADA: {
+        directo:   'Volviste a entrar por encima del límite ({count}/{max}).<br>No importa cómo salga esta operación — lo que importa ahora es volver al sistema.',
+        cercano:   '{name}, esto ya pasó de una vez — van {count} operaciones cuando el plan decía {max}.<br>No se trata de ganar o perder esta entrada: se trata de volver al plan, juntos.',
+        analitico: 'Segunda operación por encima del límite detectada ({count}/{max}).<br>El patrón se confirma, independiente del resultado — prioridad: retomar el sistema.'
+      },
+      CORREGIDA: {
+        directo:   'Hoy respetaste el número de operaciones que definiste, sin excederlo.{streakLine}<br>Eso es lo que sostiene una cuenta lista para cobrar — no la suerte de un día.',
+        cercano:   '{name}, hoy te mantuviste dentro de las operaciones que planeaste.{streakLine}<br>Así se construye una cuenta que se puede cobrar, un día a la vez.',
+        analitico: 'Día registrado dentro del límite de operaciones definido en el plan.{streakLine}<br>Ejecución consistente con el estándar que exige un cobro.'
+      }
+    },
+    risk: {
+      OBSERVADA: {
+        directo:   'Tu riesgo de hoy ya superó el máximo que definiste ({riskUsed} de {max}).<br>Detente acá — no hace falta arriesgar más para comprobar nada.',
+        cercano:   '{name}, el riesgo de hoy ya pasó el límite que pusiste ({riskUsed} de {max}).<br>Está bien parar ahora — cuidar la cuenta también es operar bien.',
+        analitico: 'Riesgo acumulado: {riskUsed}. Máximo del plan: {max}.<br>El límite ya se superó — se recomienda no agregar exposición nueva hoy.'
+      },
+      CONFIRMADA: {
+        directo:   'Sigues operando con el riesgo por encima del límite ({riskUsed} de {max}).<br>Esto no es sobre la próxima entrada — es sobre proteger la cuenta ahora.',
+        cercano:   '{name}, el riesgo sigue por arriba de lo definido ({riskUsed} de {max}) y entró otra operación.<br>Paremos acá juntos — la cuenta pesa más que esta entrada.',
+        analitico: 'El riesgo permanece por encima del límite tras una nueva operación ({riskUsed} de {max}).<br>Patrón confirmado — acción recomendada: cerrar exposición nueva por hoy.'
+      },
+      CORREGIDA: {
+        directo:   'Hoy el riesgo se mantuvo dentro del límite que definiste.{streakLine}<br>Eso es lo que hace un profesional: protege la cuenta antes de buscar más.',
+        cercano:   '{name}, hoy el riesgo estuvo donde tenía que estar.{streakLine}<br>Cada día así te acerca más a poder cobrar esta cuenta.',
+        analitico: 'Riesgo del día dentro del máximo definido en el plan.{streakLine}<br>Cumplimiento consistente con el criterio de cobro.'
+      }
+    },
+    session: {
+      OBSERVADA: {
+        directo:   'Esta operación entró fuera del horario que definiste en tu plan.<br>Vuelve a tu ventana — ahí es donde tu sistema realmente rinde.',
+        cercano:   '{name}, esta entrada fue fuera de la sesión que vos mismo elegiste.<br>No pasa nada — solo volvamos al horario en la próxima.',
+        analitico: 'Operación registrada fuera de la ventana horaria definida en el plan.<br>Desviación puntual — se recomienda retomar el horario planificado.'
+      },
+      CONFIRMADA: {
+        directo:   'Van {count} operaciones fuera de tu horario hoy.<br>El plan también es el horario — respétalo, no solo el análisis.',
+        cercano:   '{name}, ya es la segunda vez hoy que operás fuera de tu sesión.<br>Vale la pena preguntarte qué te está sacando del horario — y volver ahí.',
+        analitico: 'Segunda operación fuera de la ventana horaria en el mismo día ({count} en total).<br>Patrón confirmado — el horario declarado se trata como regla, no como sugerencia.'
+      },
+      CORREGIDA: {
+        directo:   'Hoy operaste dentro del horario que definiste.{streakLine}<br>Eso es disciplina de profesional, no casualidad.',
+        cercano:   '{name}, hoy te mantuviste en tu ventana de horario.{streakLine}<br>Así es como se protege una cuenta que se quiere cobrar.',
+        analitico: 'Operativa del día dentro de la ventana horaria definida en el plan.{streakLine}<br>Cumplimiento del horario declarado.'
+      }
+    },
+    escalation: {
+      OBSERVADA: {
+        directo:   'Subiste el lotaje justo después de una pérdida.<br>Eso no estaba en tu plan — vuelve al tamaño que definiste.',
+        cercano:   '{name}, después de la última pérdida el lotaje subió.<br>Es normal querer recuperarlo rápido — pero el plan pide el mismo tamaño de siempre.',
+        analitico: 'Se detectó incremento de lotaje inmediatamente después de una pérdida.<br>Desviación respecto al tamaño de posición definido en el plan.'
+      },
+      CONFIRMADA: {
+        directo:   'El lotaje sigue por encima de lo normal después de perder.<br>No se trata de recuperar rápido — se trata de operar con el tamaño que ya funciona.',
+        cercano:   '{name}, esto se repitió — el lotaje sigue elevado después de la pérdida.<br>Bajémoslo al tamaño de siempre, no hace falta compensar de una sola vez.',
+        analitico: 'El patrón de incremento de lotaje post-pérdida persiste en una segunda operación.<br>Prioridad: normalizar el tamaño de posición al valor definido en el plan.'
+      },
+      CORREGIDA: {
+        directo:   'Hoy el lotaje se mantuvo estable, incluso después de una pérdida.{streakLine}<br>Eso es lo que hace un profesional: mismo tamaño, gane o pierda.',
+        cercano:   '{name}, hoy no subiste el lotaje después de perder.{streakLine}<br>Eso protege la cuenta más que cualquier operación de recuperación.',
+        analitico: 'Tamaño de posición estable tras una pérdida registrada hoy.{streakLine}<br>Sin desviación respecto al plan.'
+      }
+    },
+    revenge: {
+      OBSERVADA: {
+        directo:   'Esto tiene forma de revancha contra el mercado, no de tu sistema.<br>Para acá — la próxima entrada espera a que vuelvas al plan.',
+        cercano:   '{name}, después de esas pérdidas seguidas, esta entrada se siente más de urgencia que de plan.<br>Tomate un minuto antes de la siguiente.',
+        analitico: 'Patrón compatible con revenge trading: pérdidas consecutivas con entrada inmediata.<br>Se recomienda una pausa antes de la próxima operación.'
+      },
+      CONFIRMADA: {
+        directo:   'Sigue el mismo patrón — entrar rápido después de perder.<br>Cierra la plataforma. Hoy el objetivo es proteger la cuenta, no la revancha.',
+        cercano:   '{name}, esto ya se repitió dos veces — perder y volver a entrar de inmediato.<br>Paremos acá hoy. Mañana el sistema sigue intacto.',
+        analitico: 'Patrón de revenge trading confirmado tras una segunda repetición.<br>Recomendación: detener la operativa del día — el sistema se retoma en la próxima sesión.'
+      },
+      CORREGIDA: {
+        directo:   'Hoy, después de perder, no forzaste una entrada de revancha.{streakLine}<br>Eso es lo que protege una cuenta a largo plazo.',
+        cercano:   '{name}, hoy supiste parar después de perder, sin ir a buscarlo de vuelta.{streakLine}<br>Eso es lo que te acerca a cobrar esta cuenta.',
+        analitico: 'Sin patrón de revenge trading tras pérdidas registradas hoy.{streakLine}<br>Comportamiento consistente con el plan.'
+      }
+    }
+  };
+
+  // ── Mismo criterio que SAINT_EXIGENCIA_SUFFIX, pero acá el matiz no
+  //    varía por "momento" sino por estado de la desviación: un aviso
+  //    recién detectado (interno: OBSERVADA) pide un cierre distinto
+  //    que uno que ya se repitió (interno: CONFIRMADA). Se aplica igual
+  //    para las 5 reglas a propósito, para no multiplicar 5×2×3 textos
+  //    innecesariamente — el matiz de exigencia es sobre CÓMO se cierra
+  //    el mensaje, no sobre QUÉ desviación es.
+  var SAINT_INTEL_EXIGENCIA_SUFFIX = {
+    OBSERVADA: {
+      suave:      ' Un aviso a tiempo, nada más.',
+      equilibrado: '',
+      exigente:   ' Que no se repita en la próxima.'
+    },
+    CONFIRMADA: {
+      suave:      ' Mañana se retoma desde cero, sin arrastrar esto.',
+      equilibrado: '',
+      exigente:   ' Esto se corta ahora, sin negociarlo.'
+    },
+    CORREGIDA: {
+      suave:      ' Disfruta este resultado — te lo ganaste.',
+      equilibrado: '',
+      exigente:   ' Ahora sostenlo también mañana.'
+    }
+  };
+
+  // ── Tag visible (nunca las palabras internas de la máquina de
+  //    estados) y tono de color de la tarjeta por estado. 'verde' ya
+  //    existe como tono soportado por SAINT.say — no se agrega nada
+  //    nuevo al renderizado, solo se usa el que ya estaba disponible.
+  var SAINT_INTEL_TAGS = {
+    ops: 'Ritmo de operativa',
+    risk: 'Riesgo del día',
+    session: 'Fuera de horario',
+    escalation: 'Tamaño de posición',
+    revenge: 'Después de la pérdida'
+  };
+  var SAINT_INTEL_TONE = { OBSERVADA: 'amarillo', CONFIRMADA: 'rojo', CORREGIDA: 'verde' };
+
+  function _intelFmtPct(n){
+    if (n === null || n === undefined || isNaN(n)) return '—';
+    return Number(n).toFixed(1) + '%';
+  }
+
+  // ── Línea de racha con dato REAL (no una frase motivacional vacía):
+  //    reutiliza saintComputeEngineStreak (Engine, ya calculado en otra
+  //    parte de SAINT — no se duplica ningún cálculo acá) para decir
+  //    cuántos días consecutivos el trader viene respetando el plan.
+  //    Solo aporta si hay algo concreto que mostrar (2+ días); si no,
+  //    no fuerza una línea vacía de relleno.
+  function _intelStreakLine(){
+    try {
+      var s = (typeof saintComputeEngineStreak === 'function') ? saintComputeEngineStreak() : null;
+      if (!s || !s.current || s.current < 2) return '';
+      return ' Llevas ' + s.current + ' días seguidos dentro del plan.';
+    } catch(e){ return ''; }
+  }
+
+  // ── Cláusulas cortas de contexto — se usan cuando hay MÁS de una cosa
+  //    activa el mismo día. No repiten la desviación como si fuera un
+  //    ítem de checklist: se suman a la frase principal como una segunda
+  //    idea, con la misma voz de coach. Neutras entre personalidades a
+  //    propósito: la personalidad ya se expresó en la frase principal —
+  //    sumar variantes por cada combinación posible (5 reglas × 5 reglas
+  //    × 3 personalidades) dispararía la matriz sin aportar matiz real.
+  var SAINT_INTEL_CONTEXT_CLAUSES = {
+    ops:        ' Además, ya sobrepasaste el número de operaciones de hoy.',
+    risk:       ' Además, tu riesgo del día ya está gastado.',
+    session:    ' Además, esto fue fuera de tu sesión declarada.',
+    escalation: ' Además, el lotaje subió después de la última pérdida.',
+    revenge:    ' Además, esto tiene forma de revancha, no de plan.'
+  };
+  var SAINT_INTEL_CONTEXT_CLAUSES_OK = {
+    ops:        ' También te mantuviste dentro de tus operaciones.',
+    risk:       ' También cuidaste el riesgo del día.',
+    session:    ' También operaste dentro de tu sesión.',
+    escalation: ' También sostuviste el mismo tamaño tras perder.',
+    revenge:    ' También supiste parar sin buscar revancha.'
+  };
+
+  // ── Arma la frase completa (voz + personalidad + exigencia) para UN
+  //    ítem. Es el mismo texto de siempre — solo se separó del armado
+  //    del mensaje final para poder usarlo como base y sumarle contexto.
+  function _saintIntelSingle(item){
+    var ruleSet = SAINT_INTEL_MESSAGES[item.rule];
+    var stateSet = ruleSet && ruleSet[item.state];
+    if (!stateSet) return null;
+    var p = SAINT.state.personalidad || 'directo';
+    var ex = SAINT.state.exigencia || 'equilibrado';
+    var txt = stateSet[p] || stateSet.directo || '';
+    if (!txt) return null;
+    var name = (SAINT.state.traderName || '').trim();
+    var bot = SAINT.state.name || 'SAINT';
+    txt = txt.replace(/\{name\}/g, name || 'trader').replace(/\{bot\}/g, bot);
+    txt = txt.replace(/\{count\}/g, (item.count === null || item.count === undefined) ? '—' : item.count);
+    txt = txt.replace(/\{max\}/g, (item.rule === 'risk') ? _intelFmtPct(item.max) : ((item.max === null || item.max === undefined) ? '—' : item.max));
+    txt = txt.replace(/\{riskUsed\}/g, _intelFmtPct(item.riskUsed));
+    txt = txt.replace(/\{streakLine\}/g, (item.state === 'CORREGIDA') ? _intelStreakLine() : '');
+    return { text: txt, exSuffix: (SAINT_INTEL_EXIGENCIA_SUFFIX[item.state] || {})[ex] || '' };
+  }
+
+  // ── Arma { text, tag, tone } para el turno de habla de Intelligence.
+  //    ctx.items ya viene ordenado de más a menos urgente (ver
+  //    _intelActiveToday / _intelCorrectedToday, criterio de prioridad
+  //    de coach: riesgo > revenge > escalada > overtrading > sesión). El
+  //    primer ítem arma la frase completa; los demás se suman como
+  //    cláusulas cortas de contexto — SAINT nunca lee una lista de
+  //    infracciones, arma una sola idea con el panorama completo del
+  //    día. Devuelve null si no hay mensaje específico (fallback seguro
+  //    al genérico existente, nunca una tarjeta vacía).
+  function saintIntelMessage(ctx){
+    if (!ctx || !ctx.items || !ctx.items.length) return null;
+    var primary = ctx.items[0];
+    var built = _saintIntelSingle(primary);
+    if (!built) return null;
+    var txt = built.text;
+    var isPositive = (primary.state === 'CORREGIDA');
+    var clauseMap = isPositive ? SAINT_INTEL_CONTEXT_CLAUSES_OK : SAINT_INTEL_CONTEXT_CLAUSES;
+    // Máximo UNA idea extra (la segunda más urgente), no una por cada
+    // desviación activa. El objetivo es contener y enfocar — con 3 o más
+    // cosas a la vez, sumarlas todas vuelve a sonar a lista de
+    // infracciones, que es justo lo que esto evita. Si hay más de dos
+    // cosas activas, las demás quedan en la huella (sf_intelligence_v1)
+    // y en el historial, pero no se leen en voz alta todas juntas.
+    if (ctx.items.length > 1) {
+      var extra = clauseMap[ctx.items[1].rule];
+      if (extra) txt += extra;
+    }
+    // El sufijo de exigencia cierra el mensaje completo (con el contexto
+    // ya sumado), no solo la primera idea.
+    txt += built.exSuffix;
+    return {
+      text: txt,
+      tag: SAINT_INTEL_TAGS[primary.rule] || 'Riesgo detectado',
+      tone: SAINT_INTEL_TONE[primary.state] || 'amarillo'
+    };
+  }
+  window.saintIntelMessage = saintIntelMessage;
 
   // ══════════════════════════════════════════════════════════════
   // MOTOR CONVERSACIONAL POR BLOQUES DE INTENCIÓN ("VOZ DE SAINT" /
@@ -19642,6 +20450,11 @@ async function sbStartAutoSync(licKey) {
       //    60s hasta que efectivamente se muestre — nunca se pierde
       //    ese día. closeKey está scoped por todayStr, así que solo
       //    y automáticamente deja de aplicar cuando cambia el día.
+      //    Se guardan TODAS las claves ya disparadas (no solo la
+      //    última) — con un único valor escalar, cerrar una segunda
+      //    sesión (ej. NY) pisaba el registro de la primera (Londres)
+      //    y el ciclo de 60s volvía a dispararla en bucle.
+      if (!r.closedSessionKeys) r.closedSessionKeys = {};
       for (var j = 0; j < r.sessions.length; j++){
         var sc = r.sessions[j];
         if (!sc.end || !sc.days || sc.days.indexOf(todayKey) === -1) continue;
@@ -19649,9 +20462,9 @@ async function sbStartAutoSync(licKey) {
         if (endParts.length < 2) continue;
         var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(endParts[0], 10), parseInt(endParts[1], 10));
         var closeKey = todayStr + ':close:' + (sc.id || j);
-        if (r.lastCloseTrigger === closeKey) continue;
+        if (r.closedSessionKeys[closeKey]) continue;
         if (now >= endDate){
-          r.lastCloseTrigger = closeKey;
+          r.closedSessionKeys[closeKey] = true;
           saveState(SAINT.state);
           saintStartSessionClose(sc);
           break;
