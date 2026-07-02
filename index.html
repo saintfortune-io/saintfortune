@@ -17681,6 +17681,15 @@ async function sbStartAutoSync(licKey) {
       orb.classList.remove('saint-open');
       panel.classList.add('hidden');
       SAINT.isOpen = false;
+      // Al cerrar, revisa de inmediato si quedó pendiente una
+      // preparación o un cierre de sesión — antes había que esperar
+      // hasta el próximo ciclo de 60s del setInterval. La propia
+      // saintCheckRoutineTrigger ya se protege contra repetir
+      // (lastTrigger/lastCloseTrigger) y contra reabrirse sola si
+      // no corresponde, así que llamarla acá no duplica nada.
+      setTimeout(function(){
+        try { if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger(); } catch(e){}
+      }, 200);
     },
 
     toggle: function(){
@@ -17950,6 +17959,11 @@ async function sbStartAutoSync(licKey) {
       directo:   'Horario actualizado, {name}.',
       cercano:   'Listo, {name}, quedó actualizado.',
       analitico: 'Sesión actualizada correctamente.'
+    },
+    routine_edit_cancelled: {
+      directo:   'Sin cambios, {name}. Tu sesión sigue igual.',
+      cercano:   'Tranquilo, {name}, no cambié nada.',
+      analitico: 'Edición cancelada. Sesión sin modificaciones.'
     },
     routine_delete_confirm: {
       directo:   '¿Seguro que quieres borrar {session}? No se puede deshacer.',
@@ -19176,6 +19190,34 @@ async function sbStartAutoSync(licKey) {
   }
   window.saintRoutineEditSession = saintRoutineEditSession;
 
+  // ── Cancelar a mitad del asistente de horario/días (inicio, fin o
+  //    días) sin guardar nada. Solo aplica cuando se está editando una
+  //    sesión existente o agregando una nueva a una rutina ya
+  //    configurada — nunca durante el primerísimo asistente de
+  //    onboarding (ahí no se ofrece, para no tocar ese flujo cerrado).
+  //    Vuelve exactamente a donde el trader estaba antes de entrar:
+  //    a las acciones de esa sesión (editar) o al menú de rutina
+  //    (agregar). No deja _saintRoutine.active colgado — por eso
+  //    también destraba el chequeo automático de rutina que queda
+  //    bloqueado mientras el panel está en medio de un asistente.
+  function _saintRoutineShowCancel(){
+    return !!(_saintRoutine && (typeof _saintRoutine.editIndex === 'number' || _saintRoutine.appendMode));
+  }
+
+  function _saintRoutineCancelStep(){
+    var editIdx = _saintRoutine.editIndex;
+    var wasAppend = _saintRoutine.appendMode;
+    _saintRoutine.active = false;
+    _saintRoutine.current = null;
+    SAINT.say(saintPick('routine_edit_cancelled'), {tag:'Cancelado'});
+    setTimeout(function(){
+      if (typeof editIdx === 'number') saintRoutineSessionActions(editIdx);
+      else if (wasAppend) saintRoutineMenu();
+      else SAINT.close();
+    }, 900);
+  }
+  window._saintRoutineCancelStep = _saintRoutineCancelStep;
+
   function saintRoutineConfirmDelete(idx){
     var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
     var s = sessions[idx];
@@ -19400,10 +19442,13 @@ async function sbStartAutoSync(licKey) {
         '<input type="text" inputmode="numeric" id="saint-session-start-input" placeholder="Ej: 8:30 am" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-start-save">Listo</div>' +
-      '</div>';
+      '</div>' +
+      (_saintRoutineShowCancel() ? '<div class="saint-quick-btn" id="saint-session-start-cancel" style="margin-top:6px;opacity:0.55;text-align:center;">Cancelar</div>' : '');
     body.appendChild(card);
     var inp = card.querySelector('#saint-session-start-input');
     var btn = card.querySelector('#saint-session-start-save');
+    var cancelBtn = card.querySelector('#saint-session-start-cancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', function(){ card.remove(); _saintRoutineCancelStep(); });
     function commit(){
       var v = _saintParseTime(inp.value);
       if (!v) { inp.style.borderColor = 'var(--red)'; inp.focus(); return; }
@@ -19430,10 +19475,13 @@ async function sbStartAutoSync(licKey) {
         '<input type="text" inputmode="numeric" id="saint-session-end-input" placeholder="Ej: 11:00 am" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-end-save">Listo</div>' +
-      '</div>';
+      '</div>' +
+      (_saintRoutineShowCancel() ? '<div class="saint-quick-btn" id="saint-session-end-cancel" style="margin-top:6px;opacity:0.55;text-align:center;">Cancelar</div>' : '');
     body.appendChild(card);
     var inp = card.querySelector('#saint-session-end-input');
     var btn = card.querySelector('#saint-session-end-save');
+    var cancelBtn = card.querySelector('#saint-session-end-cancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', function(){ card.remove(); _saintRoutineCancelStep(); });
     function commit(){
       var v = _saintParseTime(inp.value);
       if (!v) { inp.style.borderColor = 'var(--red)'; inp.focus(); return; }
@@ -19463,9 +19511,12 @@ async function sbStartAutoSync(licKey) {
       '<div class="saint-quick-row" id="saint-days-options" style="margin-top:8px;flex-wrap:wrap;">' + chipsHtml + '</div>' +
       '<div class="saint-quick-row" style="margin-top:8px;">' +
         '<div class="saint-quick-btn" id="saint-days-continue" style="opacity:0.5;">Continuar →</div>' +
-      '</div>';
+      '</div>' +
+      (_saintRoutineShowCancel() ? '<div class="saint-quick-btn" id="saint-days-cancel" style="margin-top:6px;opacity:0.55;text-align:center;">Cancelar</div>' : '');
     body.appendChild(card);
     var contBtn = card.querySelector('#saint-days-continue');
+    var cancelBtn = card.querySelector('#saint-days-cancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', function(){ card.remove(); _saintRoutineCancelStep(); });
     var chips = Array.prototype.slice.call(card.querySelectorAll('[data-day]'));
     chips.forEach(function(chip){
       chip.addEventListener('click', function(){
@@ -19585,18 +19636,21 @@ async function sbStartAutoSync(licKey) {
       //    propio trader configuró — nunca antes, aunque ya haya
       //    terminado de operar. No es una señal del EA ni un flag
       //    nuevo: es el mismo horario que ya vive en routine.sessions.
-      //    Ventana de 2h tras el cierre para dar tiempo a que Engine
-      //    termine de procesar los datos del día antes de reportar.
+      //    Sin fecha de vencimiento: si no pudo salir apenas terminó
+      //    la sesión (por ejemplo, el panel estaba abierto en ese
+      //    momento), queda pendiente y se reintenta en cada ciclo de
+      //    60s hasta que efectivamente se muestre — nunca se pierde
+      //    ese día. closeKey está scoped por todayStr, así que solo
+      //    y automáticamente deja de aplicar cuando cambia el día.
       for (var j = 0; j < r.sessions.length; j++){
         var sc = r.sessions[j];
         if (!sc.end || !sc.days || sc.days.indexOf(todayKey) === -1) continue;
         var endParts = sc.end.split(':');
         if (endParts.length < 2) continue;
         var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(endParts[0], 10), parseInt(endParts[1], 10));
-        var closeWindowEnd = new Date(endDate.getTime() + 120 * 60000);
         var closeKey = todayStr + ':close:' + (sc.id || j);
         if (r.lastCloseTrigger === closeKey) continue;
-        if (now >= endDate && now < closeWindowEnd){
+        if (now >= endDate){
           r.lastCloseTrigger = closeKey;
           saveState(SAINT.state);
           saintStartSessionClose(sc);
@@ -20140,6 +20194,16 @@ async function sbStartAutoSync(licKey) {
       // de decidir si hoy falta preparación (evita falsos positivos
       // si el registro de hoy ya existe pero aún no bajó del todo).
       setTimeout(saintAutoStartPrep, 1200);
+      // Mismo margen de espera, y mismo chequeo que corre cada 60s más
+      // abajo, pero ejecutado una vez apenas carga la página — antes
+      // el primer chequeo automático recién ocurría ~60s después de
+      // entrar (el setInterval no dispara hasta que pasa el intervalo
+      // completo la primera vez), así que si la sesión ya había
+      // terminado antes de abrir el dashboard, tocaba esperar casi un
+      // minuto sin necesidad.
+      setTimeout(function(){
+        try { if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger(); } catch(e){}
+      }, 1200);
       // Revisa cada minuto si toca aparecer según la rutina configurada,
       // y si hay una razón espontánea y nueva para hablar entre sesiones.
       setInterval(function(){
