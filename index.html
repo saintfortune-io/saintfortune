@@ -1512,11 +1512,37 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 .saint-card{
   background:var(--bg2); border:1px solid var(--border2); border-radius:13px;
   padding:10px 12px; max-width:88%; animation:saintFadeUp 0.25s ease;
+  box-shadow:0 2px 10px rgba(0,0,0,0.18);
+  transition:opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
 }
 .saint-card.saint-from-saint{ align-self:flex-start; border-top-left-radius:4px; }
 .saint-card.saint-from-user{ align-self:flex-end; border-top-right-radius:4px; background:var(--gold-dim); border-color:rgba(212,175,55,0.3); }
 .saint-card-text{ font-size:12.5px; line-height:1.5; color:var(--text); }
-.saint-card-tag{ font-size:8.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.09em; color:var(--gold-dark); margin-bottom:4px; }
+.saint-card-tag{
+  display:inline-block; font-size:8.5px; font-weight:800; text-transform:uppercase;
+  letter-spacing:0.09em; color:var(--gold-dark); margin-bottom:6px;
+  padding:2px 7px; border-radius:20px; background:rgba(212,175,55,0.1);
+}
+/* ── Tono de color (semáforo/estado) — barra de acento a la izquierda +
+      tag coloreado, para que el estado se lea de un vistazo y no solo
+      en el texto. No reemplaza el emoji del texto, lo refuerza. ── */
+.saint-card.saint-tone-verde{ border-left:3px solid var(--green); }
+.saint-card.saint-tone-verde .saint-card-tag{ color:var(--green); background:var(--green-glow); }
+.saint-card.saint-tone-amarillo{ border-left:3px solid var(--amber); }
+.saint-card.saint-tone-amarillo .saint-card-tag{ color:var(--amber); background:var(--amber-dim); }
+.saint-card.saint-tone-rojo{ border-left:3px solid var(--red); }
+.saint-card.saint-tone-rojo .saint-card-tag{ color:var(--red); background:var(--red-dim); }
+/* ── Tarjetas ya "leídas": en cuanto llega un mensaje nuevo, las
+      anteriores se atenúan solas (opacidad + escala) en vez de quedar
+      todas apiladas con el mismo peso visual — así el panel respira y
+      no se siente todo pegado y plano. Nada se borra ni se pierde,
+      solo se retrocede visualmente. ── */
+.saint-card.saint-from-saint.saint-card-settled{
+  opacity:0.5; transform:scale(0.98); filter:saturate(0.75);
+}
+.saint-card.saint-from-saint.saint-card-settled:hover{
+  opacity:0.9; transform:scale(1); filter:saturate(1);
+}
 
 .saint-quick-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; }
 .saint-quick-btn{
@@ -2816,8 +2842,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     </div></div>
       </div>
 
-      <!-- MINI CALENDAR — días con entradas guardadas -->
-      <div class="faqs-card" style="padding:0.85rem;margin-top:8px;">
+      <!-- MINI CALENDAR — días con entradas guardadas.
+           Oculto visualmente: con SAINT manejando la preparación y el
+           cierre por conversación, no hace falta navegar manualmente a
+           un día para revisarlo. El "Historial · última semana" de
+           arriba cubre la revisión rápida reciente. DOM y funciones
+           (coachCalNav, coachLoadDate) intactos, sin cambios. -->
+      <div class="faqs-card" style="padding:0.85rem;margin-top:8px;display:none;">
         <div class="faqs-card-label" style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
           <span>📅 Días registrados</span>
         </div>
@@ -2921,8 +2952,18 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         </div>
       </div>
 
-      <!-- ── RACHA: DÍAS SIN TRADES FUERA DE PLAN ── -->
-      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;">
+      <!-- ── RACHA: DÍAS SIN TRADES FUERA DE PLAN ──
+           Oculto visualmente: SAINT ya comunica la racha por voz
+           (_saintStreakLine, tras preparación y cierre de sesión),
+           usando primero la racha automática de Engine
+           (saintComputeEngineStreak, cruzando todas las cuentas — sin
+           preguntar nada) y solo cayendo a este registro manual como
+           respaldo si Engine aún no tiene datos suficientes. El botón
+           "Registrar Trade Fuera de Plan" ya no hace falta como
+           entrada principal del trader. DOM, tp-streak-display,
+           tp-max-streak-val y la lógica de cálculo quedan intactos —
+           SAINT sigue pudiendo leerlos como respaldo silencioso. -->
+      <div class="faqs-card" style="padding:0.85rem;margin-top:10px;display:none;">
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
           <div style="width:8px;height:8px;border-radius:50%;background:#ff6b35;box-shadow:0 0 5px #ff6b35;flex-shrink:0;"></div>
           <span style="font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;">🔥 Días sin trades fuera de plan</span>
@@ -4626,6 +4667,13 @@ let accounts   = JSON.parse(_lsGet('fp_accounts_v4_sale') || 'null') || JSON.par
 // ── Lectura pura (sin mutar nada) para que SAINT, en un <script> aparte,
 //    pueda enumerar las cuentas existentes sin duplicar estado propio.
 window.getAllAccountKeys = function(){ return Object.keys(accounts || {}); };
+// ── Mismo criterio que ya usa el resto de la app para excluir
+//    backtesting (ver getCFDAccounts/getFuturesAccounts, filtro
+//    !accounts[a]?.backtesting): SAINT necesita esta misma señal para
+//    no dejar que cuentas de backtesting influyan en el perfil
+//    psicológico del trader. No se expone el objeto accounts completo,
+//    solo esta lectura puntual.
+window.saintIsBacktestAccount = function(acc){ return !!(accounts[acc] && accounts[acc].backtesting); };
 let groups     = JSON.parse(_lsGet('fp_groups_v4_sale')   || 'null') || JSON.parse(JSON.stringify(DEFAULT_GROUPS));
 let certs      = JSON.parse(_lsGet('fp_certs_v4_sale')    || '[]');
 // firmStats: {firmName: {extraPassed:0, extraLost:0, extraNotes:''}} — manual overrides
@@ -9585,7 +9633,8 @@ function buildBackupPayload(){
     tp_max_streak_sale:         _lsGet('tp_max_streak_sale') || '0',
     tp_max_streak_start_sale:   _lsGet('tp_max_streak_start_sale') || '',
     tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || '',
-    sf_saint_v1:                JSON.parse(_lsGet('sf_saint_v1') || 'null')
+    sf_saint_v1:                JSON.parse(_lsGet('sf_saint_v1') || 'null'),
+    sf_saint_memory_v1:         JSON.parse(_lsGet('sf_saint_memory_v1') || 'null')
   };
 }
 
@@ -9626,6 +9675,17 @@ function applyBackupPayload(d){
       try {
         SAINT.state = Object.assign({}, SAINT.state, d.sf_saint_v1);
         if (typeof SAINT.renderHeader === 'function') SAINT.renderHeader();
+      } catch(e) {}
+    }
+  }
+  if(d.sf_saint_memory_v1         !== undefined && d.sf_saint_memory_v1 !== null) {
+    _lsSet('sf_saint_memory_v1', JSON.stringify(d.sf_saint_memory_v1));
+    if (window.SAINT_MEMORY) {
+      try {
+        window.SAINT_MEMORY = Object.assign({}, SAINT_MEMORY, d.sf_saint_memory_v1);
+        if (d.sf_saint_memory_v1.traits) {
+          SAINT_MEMORY.traits = Object.assign({habits:[], strengths:[], trainingAreas:[]}, d.sf_saint_memory_v1.traits);
+        }
       } catch(e) {}
     }
   }
@@ -17465,7 +17525,11 @@ async function sbStartAutoSync(licKey) {
     // SAINT que retroalimenta saintBuildProfile() con el tiempo, sin
     // pedirle al trader ningún campo o etiqueta adicional.
     // [{date:'YYYY-MM-DD', sessionId, recommended, chosen, source:'accepted'|'changed'}]
-    dailyIntent: []
+    dailyIntent: [],
+    // Última fecha ('YYYY-MM-DD') en la que SAINT habló espontáneamente
+    // (fuera del ritual de preparación/cierre). Tope de una intervención
+    // espontánea por día — el silencio es parte de la experiencia.
+    lastSpontaneous: ''
   };
 
   function loadState(){
@@ -17476,23 +17540,123 @@ async function sbStartAutoSync(licKey) {
   }
 
   // Guarda local (namespaced por licencia, igual que el resto del sistema)
-  // y sube a la nube de inmediato — sin esperar al ciclo de 30s.
+  // y sube a la nube casi de inmediato (60ms, antes 400ms) — sin esperar
+  // al ciclo de 30s del sync general. Push propio de SAINT, aislado de
+  // sbPush() general: mismo endpoint y mismo payload completo
+  // (buildBackupPayload) que ya sube todo el sistema — no un fragmento
+  // liviano solo de SAINT, porque el endpoint reemplaza el bloque de datos
+  // completo en la nube (no hace merge parcial), y subir solo el pedazo de
+  // SAINT arriesgaría pisar el resto de la información ya guardada.
+  // Usa fetch con keepalive:true como red de seguridad extra para el caso
+  // límite de cerrar/cambiar de pestaña justo después de guardar; esto no
+  // reemplaza el push periódico general, solo agrega el propio de SAINT.
   var _saintPushTimer = null;
+  function _saintCloudPush(){
+    try {
+      var licRaw = localStorage.getItem('fp_lic_v1_sale');
+      if (!licRaw) return;
+      var licData = JSON.parse(licRaw);
+      if (!licData || !licData.key) return;
+      if (typeof SB_URL === 'undefined' || typeof buildBackupPayload !== 'function') return;
+      var payload = buildBackupPayload();
+      fetch(SB_URL + '/rest/v1/client_data', {
+        method: 'POST',
+        keepalive: true,
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'resolution=merge-duplicates'
+        },
+        body: JSON.stringify({
+          license_key: licData.key,
+          data: payload,
+          updated_at: new Date().toISOString()
+        })
+      }).catch(function(e){ console.warn('SAINT Cloud: error al subir datos', e); });
+    } catch(e){ console.warn('SAINT Cloud: error al preparar el push', e); }
+  }
+
   function saveState(s){
     try {
       if (typeof _lsSet === 'function') _lsSet(STORAGE_KEY, JSON.stringify(s));
       else localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     } catch(e){}
     clearTimeout(_saintPushTimer);
-    _saintPushTimer = setTimeout(function(){
-      try {
-        var licRaw = localStorage.getItem('fp_lic_v1_sale');
-        if (!licRaw) return;
-        var licData = JSON.parse(licRaw);
-        if (licData && licData.key && typeof sbPush === 'function') sbPush(licData.key);
-      } catch(e){}
-    }, 400);
+    _saintPushTimer = setTimeout(_saintCloudPush, 60);
   }
+
+  // ══════════════════════════════════════════════════════════════
+  // MEMORIA EVOLUTIVA — estructura separada de SAINT.state (sf_saint_v1).
+  // Vive en su propia clave (sf_saint_memory_v1), con su propio load/save,
+  // pero reutiliza el mismo _saintCloudPush (sube buildBackupPayload
+  // completo — el endpoint reemplaza el bloque entero, así que no hace
+  // falta un push parcial distinto). Se decidió separada de SAINT.state
+  // porque es un tipo de dato distinto: no es configuración ni historial
+  // de intención diaria, es memoria acumulativa de largo plazo que NUNCA
+  // se reinicia y no depende de la config (nombre/personalidad/rutina).
+  //
+  // 100% automático: SAINT nunca pregunta nada nuevo para llenar esto.
+  // Todo se deriva de datos que SAINT ya lee (saintBuildProfile,
+  // dailyIntent, hallazgos de cierre, racha) — nunca duplica cálculo de
+  // Engine, solo lo memoriza en el tiempo.
+  //
+  // No convierte a SAINT en chatbot: esta memoria no habilita texto
+  // libre ni conversación abierta. Solo alimenta contenido (nombre de
+  // objetivo activo, etc.) a las frases ya existentes de saintPick(),
+  // para que la respuesta ante una emoción negativa, por ejemplo, sea
+  // más humana en vez de saltar directo al checklist.
+  // ══════════════════════════════════════════════════════════════
+  var MEMORY_STORAGE_KEY = 'sf_saint_memory_v1';
+
+  var defaultMemory = {
+    // Objetivos activos (multi-sesión, no solo el del día). Se
+    // alimentan de la misma elección que ya hace saintAskDailyIntent —
+    // no se pregunta nada adicional, solo se registra la evolución de
+    // esa elección en el tiempo.
+    // [{id, focus, startDate, lastReinforced, streak, status:'active'|'achieved'}]
+    goals: [],
+    // Compromisos adquiridos: cada vez que el trader acepta o elige un
+    // enfoque para el día, eso ya es un compromiso — se homologa como
+    // tipo de memoria propio, sin pedir nada nuevo.
+    // [{id, date, focus, source:'accepted'|'changed'}]
+    commitments: [],
+    // Momentos importantes: se registran solos cuando SAINT comunica
+    // algo con peso real (hallazgo fuerte al cierre, récord de racha) —
+    // nunca a partir de texto libre del trader (SAINT no tiene eso).
+    // [{date, type, tag, text}]
+    keyMoments: [],
+    // Hábitos / fortalezas / áreas a entrenar: se derivan comparando
+    // saintBuildProfile() de hoy contra el último snapshot guardado,
+    // nunca de un cálculo nuevo paralelo a Engine.
+    // {habits:[{label,firstSeen,lastSeen,streak}], strengths:[...], trainingAreas:[...]}
+    traits: { habits: [], strengths: [], trainingAreas: [] },
+    // Último snapshot del perfil, para poder comparar evolución.
+    lastSnapshot: null // {date, disciplina30, consistencia30}
+  };
+
+  function loadMemory(){
+    try {
+      var raw = (typeof _lsGet === 'function') ? _lsGet(MEMORY_STORAGE_KEY) : localStorage.getItem(MEMORY_STORAGE_KEY);
+      if (!raw) return JSON.parse(JSON.stringify(defaultMemory));
+      var parsed = JSON.parse(raw);
+      var out = Object.assign({}, defaultMemory, parsed);
+      out.traits = Object.assign({habits:[], strengths:[], trainingAreas:[]}, parsed.traits || {});
+      return out;
+    } catch(e){ return JSON.parse(JSON.stringify(defaultMemory)); }
+  }
+
+  var _saintMemoryPushTimer = null;
+  function saveMemory(m){
+    try {
+      if (typeof _lsSet === 'function') _lsSet(MEMORY_STORAGE_KEY, JSON.stringify(m));
+      else localStorage.setItem(MEMORY_STORAGE_KEY, JSON.stringify(m));
+    } catch(e){}
+    clearTimeout(_saintMemoryPushTimer);
+    _saintMemoryPushTimer = setTimeout(_saintCloudPush, 60);
+  }
+
+  window.SAINT_MEMORY = loadMemory();
 
   window.SAINT = {
     state: loadState(),
@@ -17542,8 +17706,18 @@ async function sbStartAutoSync(licKey) {
       opts = opts || {};
       var body = document.getElementById('saint-body');
       if (!body) return;
+      // Las tarjetas anteriores de SAINT pasan a estado "settled"
+      // (atenuadas) apenas llega una nueva — nada se borra, pero el
+      // panel deja de sentirse como un bloque plano donde todo pesa
+      // igual. Al pasar el mouse recuperan opacidad completa.
+      body.querySelectorAll('.saint-card.saint-from-saint').forEach(function(c){
+        c.classList.add('saint-card-settled');
+      });
       var card = document.createElement('div');
       card.className = 'saint-card saint-from-saint';
+      if (opts.tone === 'verde' || opts.tone === 'amarillo' || opts.tone === 'rojo') {
+        card.className += ' saint-tone-' + opts.tone;
+      }
       var html = '';
       if (opts.tag) html += '<div class="saint-card-tag">' + opts.tag + '</div>';
       html += '<div class="saint-card-text">' + text + '</div>';
@@ -17693,7 +17867,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Verificación de los 6 puntos de proceso — tu checklist previo a la sesión.'
     },
     finish: {
-      directo:   'Tu preparación ha terminado.<br>Confía en tu sistema, como un piloto confía en su ingeniero.',
+      directo:   'Tu preparación ha terminado.<br>Confía en tu sistema — es lo que te sostiene hoy.',
       cercano:   'Estás listo, {name}.<br>Confía en el proceso — nos vemos al cerrar la sesión.',
       analitico: 'Preparación completa. Checklist al 100%.<br>Análisis disponible al cierre de sesión.'
     },
@@ -17716,6 +17890,54 @@ async function sbStartAutoSync(licKey) {
       directo:   '{name}, faltan {minutes} minutos para tu sesión de {session}.<br>Vamos a prepararnos.',
       cercano:   '{name}, tu sesión de {session} empieza en {minutes} minutos.<br>Vamos a prepararnos con calma.',
       analitico: 'Faltan {minutes} minutos para tu sesión de {session}, {name}.<br>Inicio del proceso de preparación.'
+    },
+    // ── Ya existe una rutina guardada: en vez de reconstruirla desde
+    //    cero (y perder lo que no se vuelva a seleccionar), se pregunta
+    //    directo qué se quiere hacer.
+    routine_menu_intro: {
+      directo:   'Tu rutina ya está guardada.<br>¿Qué quieres hacer?',
+      cercano:   '{name}, tu rutina ya está guardada.<br>¿Qué te gustaría ajustar?',
+      analitico: 'Rutina ya configurada.<br>Selecciona la acción a realizar.'
+    },
+    routine_add_session_intro: {
+      directo:   'Vamos a sumar una sesión nueva. Tus sesiones actuales quedan igual.',
+      cercano:   '{name}, sumemos una sesión nueva — las que ya tienes no se tocan.',
+      analitico: 'Se agrega una sesión nueva. Las sesiones existentes permanecen sin cambios.'
+    },
+    routine_edit_list_intro: {
+      directo:   'Elige la sesión que quieres editar o borrar.',
+      cercano:   '{name}, ¿cuál sesión quieres revisar?',
+      analitico: 'Selecciona la sesión a modificar.'
+    },
+    routine_session_actions: {
+      directo:   '{session}. ¿Qué quieres hacer con esta sesión?',
+      cercano:   'Tu sesión de {session}. ¿Qué te gustaría hacer?',
+      analitico: 'Sesión: {session}. Selecciona la acción.'
+    },
+    routine_edit_session_intro: {
+      directo:   'Vamos a actualizar el horario de {session}.',
+      cercano:   '{name}, actualicemos el horario de {session}.',
+      analitico: 'Actualización de horario para la sesión: {session}.'
+    },
+    routine_session_added: {
+      directo:   'Sesión agregada, {name}.<br>El resto de tu rutina sigue igual.',
+      cercano:   'Listo, {name}.<br>Sumé la sesión sin tocar el resto de tu rutina.',
+      analitico: 'Sesión añadida.<br>Resto de la configuración sin cambios.'
+    },
+    routine_session_updated: {
+      directo:   'Horario actualizado, {name}.',
+      cercano:   'Listo, {name}, quedó actualizado.',
+      analitico: 'Sesión actualizada correctamente.'
+    },
+    routine_delete_confirm: {
+      directo:   '¿Seguro que quieres borrar {session}? No se puede deshacer.',
+      cercano:   '{name}, ¿confirmas que quieres borrar {session}?',
+      analitico: 'Confirmar eliminación de la sesión: {session}.'
+    },
+    routine_session_deleted: {
+      directo:   '{session} fue eliminada de tu rutina.',
+      cercano:   'Listo, {name}, {session} ya no está en tu rutina.',
+      analitico: 'Sesión {session} eliminada.'
     },
     style_confirm: {
       directo:   'Directo y al grano.<br>Así vamos a trabajar.',
@@ -17797,6 +18019,23 @@ async function sbStartAutoSync(licKey) {
       cercano:   '¿Cómo te quedaste después de esta sesión?',
       analitico: '¿Qué estado predominó al cierre de la sesión?'
     },
+    // ── Respuesta empática automática cuando el trader marca una
+    //    emoción negativa post-sesión (memoria evolutiva: cita el
+    //    objetivo activo real, nunca un genérico). Primero valida lo
+    //    que siente, después conecta con el propósito — nunca salta
+    //    directo al checklist ni minimiza lo que reportó.
+    emo_after_empathy: {
+      directo:   'Te escucho. Aun así, tu enfoque en {goal} es lo que sostiene tu sistema — no lo sueltes por un día difícil.',
+      cercano:   'Entiendo que hoy pesó. Aun con eso, recuerda tu enfoque en {goal} — eso te protege más que ganar hoy.',
+      analitico: 'Estado emocional negativo registrado. Tu enfoque activo sigue siendo {goal}: sostenerlo reduce el impacto de sesiones como esta.'
+    },
+    // Mismo caso, pero sin objetivo activo todavía en memoria (trader
+    // nuevo o sin historial de intención de día) — nunca inventa uno.
+    emo_after_empathy_generic: {
+      directo:   'Te escucho. Un día difícil no borra tu sistema — mañana vuelves a él.',
+      cercano:   'Entiendo que hoy pesó. Eso no borra el trabajo que vienes haciendo — mañana seguimos.',
+      analitico: 'Estado emocional negativo registrado. No afecta la validez de tu sistema — continúa en la próxima sesión.'
+    },
     // Solo se muestran las etiquetas que Engine no puede inferir por sí
     // solo (ver SAINT_ERROR_TAGS_REDUNDANT) — nunca se repite lo que el
     // hallazgo de cierre ya comunicó.
@@ -17866,19 +18105,19 @@ async function sbStartAutoSync(licKey) {
     //    dato, mismo cálculo (saintDeriveSemaforo) — solo que ahora se
     //    comunica antes de seguir al checklist.
     semaforo_verde: {
-      directo:   'Semáforo en verde. Operativa normal — vamos con el checklist.',
-      cercano:   'Estás en verde, {name}. Buen punto de partida — seguimos con el checklist.',
-      analitico: 'Semáforo: verde. Condición óptima para operar. Continuamos con el checklist.'
+      directo:   '🟢 Semáforo en verde. Operativa normal — vamos con el checklist.',
+      cercano:   '🟢 Estás en verde, {name}. Buen punto de partida — seguimos con el checklist.',
+      analitico: '🟢 Semáforo: verde. Condición óptima para operar. Continuamos con el checklist.'
     },
     semaforo_amarillo: {
-      directo:   'Semáforo en amarillo. Precaución — opera con cuidado hoy.',
-      cercano:   'Hoy estás en amarillo, {name}. Nada grave, solo ve con más cuidado.',
-      analitico: 'Semáforo: amarillo. Condición de precaución. Ajusta tu criterio de entrada hoy.'
+      directo:   '🟡 Semáforo en amarillo. Precaución — opera con cuidado hoy.',
+      cercano:   '🟡 Hoy estás en amarillo, {name}. Nada grave, solo ve con más cuidado.',
+      analitico: '🟡 Semáforo: amarillo. Condición de precaución. Ajusta tu criterio de entrada hoy.'
     },
     semaforo_rojo: {
-      directo:   'Semáforo en rojo. Hoy no operes — tu propio sistema lo marca.',
-      cercano:   '{name}, hoy estás en rojo. Mejor no operar — cuídate primero.',
-      analitico: 'Semáforo: rojo. Riesgo psicológico elevado. Recomendación: no operar hoy.'
+      directo:   '🔴 Semáforo en rojo. Hoy no operes — tu propio sistema lo marca.',
+      cercano:   '🔴 {name}, hoy estás en rojo. Mejor no operar — cuídate primero.',
+      analitico: '🔴 Semáforo: rojo. Riesgo psicológico elevado. Recomendación: no operar hoy.'
     },
     // ── Racha "días sin trades fuera de plan", en tono de juego —
     //    refuerzo breve, nunca un módulo aparte.
@@ -17891,6 +18130,26 @@ async function sbStartAutoSync(licKey) {
       directo:   '🏆 Es tu mejor racha hasta ahora: {days} días. Sostenla.',
       cercano:   '🏆 ¡Nuevo récord personal! {days} días seguidos. Vas muy bien.',
       analitico: '🏆 Nuevo máximo histórico: {days} días consecutivos.'
+    },
+    // ── Intervención espontánea, fuera del ritual de preparación o
+    //    cierre — SAINT como organismo, no como chat. Un objetivo activo
+    //    acaba de sostenerse 10 sesiones seguidas. Tono de coach de
+    //    élite: reconoce el logro sin efusividad, y lo traduce de
+    //    inmediato en sistema, no en identidad ("eres disciplinado").
+    spontaneous_goal_achieved: {
+      directo:   '{name}, {goal} ya lleva 10 sesiones sostenido.<br>Dejó de ser un esfuerzo puntual — ya es parte de tu sistema.',
+      cercano:   '{name}, quería decírtelo aparte: llevas 10 sesiones sosteniendo {goal}.<br>Eso ya es tuyo, no un golpe de suerte.',
+      analitico: 'Objetivo consolidado: {goal} sostenido durante 10 sesiones consecutivas.<br>Pasa de intención a patrón estructural.'
+    },
+    // ── Alerta espontánea de patrón reciente, dicha ENTRE sesiones (no
+    //    en el mismo momento que ya la comunica prep_context_*, para no
+    //    repetir). Nunca predice el resultado ni etiqueta al trader —
+    //    nombra el comportamiento concreto y devuelve el foco al plan,
+    //    como lo haría un coach de élite antes de la siguiente entrada.
+    spontaneous_pattern_alert: {
+      directo:   '{name}, tus últimas sesiones muestran algo puntual: {pattern}.<br>No es un veredicto — es información. Vuelve al plan antes de tu próxima entrada.',
+      cercano:   '{name}, vengo notando algo en tus últimas sesiones: {pattern}.<br>Te lo digo con cariño, no como reproche — antes de tu próxima entrada, vuelve al plan.',
+      analitico: 'Señal detectada en las últimas sesiones: {pattern}.<br>Recomendación: revisar el plan antes de la próxima entrada.'
     }
   };
 
@@ -17934,6 +18193,153 @@ async function sbStartAutoSync(licKey) {
     return txt;
   }
 
+  // ══════════════════════════════════════════════════════════════
+  // MOTOR CONVERSACIONAL POR BLOQUES DE INTENCIÓN ("VOZ DE SAINT" /
+  // NUEVA PREMISA). Capa 100% aditiva: no reemplaza SAINT_PHRASES ni
+  // saintPick — ambos siguen intactos y se siguen usando exactamente
+  // igual en todos los flujos actuales (onboarding, checklist, rutina,
+  // etc). Este motor solo se activa como una SEGUNDA intervención,
+  // opcional y acotada, para los momentos donde de verdad hay algo que
+  // merece más que una frase suelta: mejora sostenida o recaída.
+  //
+  // No es un LLM libre ni una plantilla rígida de una sola frase por
+  // evento: es una secuencia corta de "bloques" con propósito
+  // psicológico (observar, reconocer, reforzar, desafiar, recordar,
+  // preparar, proteger, celebrar, reenfocar, validar, cerrar). Lo que
+  // cambia entre dos traders no es el vocabulario — es qué secuencia de
+  // bloques se arma y con qué datos de contexto (siempre datos que
+  // Engine/memoria ya calculan, nunca un dato nuevo inventado aquí).
+  // ══════════════════════════════════════════════════════════════
+  var SAINT_BLOCKS = {
+    observar: {
+      directo:   'Vengo observando tu operativa reciente.',
+      cercano:   '{name}, estuve prestando atención a tus últimas sesiones.',
+      analitico: 'Análisis del comportamiento reciente completado.'
+    },
+    reconocer: {
+      directo:   'El enfoque en {focus} se sostiene sesión tras sesión.',
+      cercano:   'Lo que más se nota es que {focus} ya no es un esfuerzo puntual — se repite.',
+      analitico: 'Patrón identificado: sostenimiento consistente de {focus} en las últimas sesiones.'
+    },
+    reforzar: {
+      directo:   'Eso ya es parte de tu sistema, no un golpe de suerte.',
+      cercano:   'Eso es tuyo, {name}. Se construyó sesión a sesión.',
+      analitico: 'El comportamiento pasa de intención puntual a patrón estructural.'
+    },
+    desafiar: {
+      directo:   'Ahora el trabajo es sostenerlo también en la sesión más difícil de la semana.',
+      cercano:   '{name}, el siguiente paso es sostener esto incluso cuando el día se ponga cuesta arriba.',
+      analitico: 'Siguiente umbral: mantener el mismo estándar bajo condiciones de mayor presión.'
+    },
+    recordar: {
+      directo:   'Recuerda de dónde partiste con esto.',
+      cercano:   '{name}, vale la pena recordar el punto de partida — se nota el camino recorrido.',
+      analitico: 'Referencia histórica: comparar contra el punto de partida registrado en memoria.'
+    },
+    preparar: {
+      directo:   'Antes de tu próxima entrada, vuelve al plan.',
+      cercano:   '{name}, antes de la próxima entrada, respira y vuelve al plan.',
+      analitico: 'Acción recomendada: revisar el plan antes de la próxima entrada.'
+    },
+    proteger: {
+      directo:   'Hoy el objetivo es proteger {focus}, no forzar el resultado.',
+      cercano:   'Hoy cuidamos {focus} por encima de cualquier resultado puntual.',
+      analitico: 'Prioridad operativa de hoy: proteger {focus} por sobre el resultado.'
+    },
+    celebrar: {
+      directo:   'Vale la pena marcarlo.',
+      cercano:   'Quería decírtelo aparte, {name} — se lo merece.',
+      analitico: 'Hito registrado en memoria de largo plazo.'
+    },
+    reenfocar: {
+      directo:   'Esto no es un veredicto sobre ti — es información para corregir hoy.',
+      cercano:   '{name}, te lo digo sin juicio: es solo una señal para ajustar hoy.',
+      analitico: 'La señal detectada no constituye un diagnóstico — es un dato accionable para hoy.'
+    },
+    validar: {
+      directo:   'Es una sesión difícil. No la minimizamos.',
+      cercano:   'Entiendo que esta racha pesa, {name}. Tiene sentido que sea así.',
+      analitico: 'Se reconoce la dificultad de la racha reciente antes de continuar.'
+    },
+    cerrar: {
+      directo:   'Seguimos desde aquí.',
+      cercano:   'Nos vemos en la próxima sesión, {name}.',
+      analitico: 'Fin del análisis. Continuidad asegurada en la próxima sesión.'
+    }
+  };
+
+  // ── Mismo criterio que SAINT_EXIGENCIA_SUFFIX, pero solo para los
+  //    bloques donde el nivel de exigencia realmente cambia el matiz
+  //    (desafiar/proteger). No se aplica a todos los bloques a propósito:
+  //    "observar", "validar" o "cerrar", por ejemplo, no deben variar en
+  //    dureza — son de constatación, no de exigencia.
+  var SAINT_BLOCK_EXIGENCIA_SUFFIX = {
+    desafiar: {
+      suave:     ' Un paso a la vez, sin exigirte de más.',
+      equilibrado: '',
+      exigente:  ' Sin excusas: si se pudo una vez, se puede siempre.'
+    },
+    proteger: {
+      suave:     ' Y si hoy no sale perfecto, no pasa nada.',
+      equilibrado: '',
+      exigente:  ' No hay sesión que valga la excepción.'
+    }
+  };
+
+  // ── Igual que saintPick pero leyendo de un diccionario de bloques en
+  //    vez de SAINT_PHRASES. Se duplica la lógica mínima de reemplazo
+  //    (nombre/bot/extra) a propósito, en vez de modificar saintPick,
+  //    para no tocar una función que ya usan todos los flujos actuales.
+  function saintPickBlock(key, extra){
+    var p = SAINT.state.personalidad || 'directo';
+    var ex = SAINT.state.exigencia || 'equilibrado';
+    var set = SAINT_BLOCKS[key] || {};
+    var txt = set[p] || set.directo || '';
+    if (!txt) return '';
+    var exSet = SAINT_BLOCK_EXIGENCIA_SUFFIX[key];
+    if (exSet) txt += (exSet[ex] || '');
+    var name = (SAINT.state.traderName || '').trim();
+    var bot = SAINT.state.name || 'SAINT';
+    txt = txt.replace(/\{name\}/g, name || 'trader').replace(/\{bot\}/g, bot);
+    if (extra) {
+      Object.keys(extra).forEach(function(k){
+        txt = txt.replace(new RegExp('\\{' + k + '\\}', 'g'), extra[k]);
+      });
+    }
+    return txt;
+  }
+
+  // ── Arma una conversación completa uniendo varios bloques en orden.
+  //    La secuencia (qué bloques y en qué orden) es lo que define la
+  //    "estructura psicológica" del momento — no el texto en sí, que ya
+  //    varía por personalidad. Bloques sin texto para la key/extra dada
+  //    se omiten en vez de dejar una línea vacía.
+  function saintComposeBlocks(sequence, extra){
+    return (sequence || [])
+      .map(function(key){ return saintPickBlock(key, extra); })
+      .filter(function(t){ return !!t; })
+      .join('<br>');
+  }
+
+  // ── Decide si el momento actual merece una intervención de varios
+  //    bloques ('mejora' | 'recaida') o si no hay nada que amerite salir
+  //    del flujo normal de una sola frase ('neutral'). Nunca calcula una
+  //    señal nueva: reutiliza exactamente lo que ya exponen
+  //    saintBuildProfile() y SAINT_MEMORY (memoria evolutiva), el mismo
+  //    dato que ya usa prep_context_* y la racha.
+  function saintDetectMoment(profile){
+    try {
+      var goals = (window.SAINT_MEMORY && SAINT_MEMORY.goals) || [];
+      var active = goals.filter(function(g){ return g.status === 'active'; })
+        .sort(function(a,b){ return (b.streak||0) - (a.streak||0); })[0];
+      if (active && (active.streak || 0) >= 10) return 'mejora';
+      if (profile && (profile.recentPatternRevenge || profile.recentPatternOverconfidence)) return 'recaida';
+      return 'neutral';
+    } catch(e){ return 'neutral'; }
+  }
+  window.saintDetectMoment = saintDetectMoment;
+  window.saintComposeBlocks = saintComposeBlocks;
+
   // ── Punto de enganche (sin motor nuevo): lee insights que el Coach
   //    Emocional ya calcula (coachRenderInsights) para que en próximas
   //    fases SAINT los pueda parafrasear en su propia voz. No se
@@ -17954,9 +18360,22 @@ async function sbStartAutoSync(licKey) {
   //    cuenta como limpio). Lee _cdAnalyze por cuenta, el mismo
   //    analizador de siempre; no inventa ningún cálculo de Engine, solo
   //    agrega en el tiempo lo que Engine ya marca día a día.
+  // ── Mismo criterio que ya usa el resto de la app (getCFDAccounts/
+  //    getFuturesAccounts, comentario "Solo cuentas live/funded/instant"):
+  //    las cuentas de backtesting NUNCA deben influir en el perfil
+  //    psicológico ni en los hallazgos que SAINT comunica — no son
+  //    operativa real del trader. Punto único de filtrado para las 3
+  //    funciones de SAINT que agregan por cuenta, así no queda ninguna
+  //    sin cubrir si se agrega una cuarta en el futuro.
+  function _saintLiveAccountKeys(){
+    var all = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+    if (typeof window.saintIsBacktestAccount !== 'function') return all;
+    return all.filter(function(acc){ return !window.saintIsBacktestAccount(acc); });
+  }
+
   function saintComputeEngineStreak(){
     try {
-      var accKeys = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+      var accKeys = _saintLiveAccountKeys();
       if (!accKeys.length) return null;
       var byDate = {}; // 'YYYY-MM-DD' -> limpio en TODAS las cuentas con datos ese día
       accKeys.forEach(function(acc){
@@ -18011,7 +18430,12 @@ async function sbStartAutoSync(licKey) {
   function _saintStreakLine(){
     var s = saintReadStreak();
     if (!s || s.current <= 0) return '';
-    if (s.current >= s.best && s.best > 1) return saintPick('streak_record', {days: s.current});
+    if (s.current >= s.best && s.best > 1) {
+      // Memoria evolutiva: un récord de racha es un momento importante
+      // que se memoriza solo, sin pedirle nada al trader.
+      if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('streak_record', 'Racha', s.current + ' días sin salirte del plan');
+      return saintPick('streak_record', {days: s.current});
+    }
     return saintPick('streak_mention', {days: s.current});
   }
 
@@ -18036,7 +18460,7 @@ async function sbStartAutoSync(licKey) {
       }
 
       var todayStr = _saintTodayStr();
-      var accKeys  = window.getAllAccountKeys();
+      var accKeys  = _saintLiveAccountKeys();
       var opsViolN = 0, riskViolN = 0, revengeN = 0, escN = 0, sessionMismatchN = 0;
       var evaluated = 0, maxOpsSeen = 0, maxOpsPlan = 0;
 
@@ -18184,8 +18608,11 @@ async function sbStartAutoSync(licKey) {
       var topErrorEntry = Object.keys(errCounts).sort(function(a,b){ return errCounts[b]-errCounts[a]; })[0];
 
       // ── Engine (EA cruzado con el plan), agregado en TODAS las cuentas
-      //    — mismo principio de unión que en el cierre de sesión.
-      var accKeys = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+      //    LIVE/FUNDED/EVAL — mismo principio de unión que en el cierre
+      //    de sesión, pero excluyendo backtesting: el peso emocional y
+      //    de disciplina de una cuenta real no es comparable al de una
+      //    práctica, y mezclarlas distorsionaría el perfil psicológico.
+      var accKeys = _saintLiveAccountKeys();
       var opsViolDays = 0, riskViolDays = 0, revengeDays = 0, escDays = 0, cleanDays = 0, totalEvalDays = 0;
       var recentPatternRevenge = false, recentPatternClean = false, recentPatternOverconfidence = false;
 
@@ -18243,6 +18670,167 @@ async function sbStartAutoSync(licKey) {
   function _saintTodayStr(){
     try { return (typeof localDateStr === 'function') ? localDateStr() : new Date().toISOString().slice(0,10); }
     catch(e){ return new Date().toISOString().slice(0,10); }
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // MEMORIA EVOLUTIVA — funciones de escritura. Todas 100% automáticas:
+  // no agregan ninguna pregunta nueva al trader, solo memorizan lo que
+  // ya pasa en flujos existentes (dailyIntent, cierre de sesión, racha,
+  // perfil). Cada una guarda con saveMemory() (push propio de 60ms).
+  // ══════════════════════════════════════════════════════════════
+
+  function _saintUid(){
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  // ── Objetivos activos: se alimentan de la MISMA elección que ya hace
+  //    saintAskDailyIntent (recommended/chosen) — no se pregunta nada
+  //    nuevo. Si el foco elegido hoy ya existe como objetivo activo, se
+  //    refuerza (streak++); si no, se crea. Un objetivo pasa a 'achieved'
+  //    al sostenerse 10 veces — no se borra, queda como logro en la
+  //    memoria. No hay límite artificial de objetivos activos simultáneos
+  //    porque el trader puede alternar focos legítimamente entre sesiones.
+  function saintMemoryReinforceGoal(focus){
+    try {
+      var today = _saintTodayStr();
+      var goals = SAINT_MEMORY.goals || (SAINT_MEMORY.goals = []);
+      var g = goals.find(function(x){ return x.focus === focus && x.status === 'active'; });
+      if (g) {
+        if (g.lastReinforced !== today) { g.streak = (g.streak||0) + 1; g.lastReinforced = today; }
+        if (g.streak >= 10 && g.status !== 'achieved') { g.status = 'achieved'; g.achievedDate = today; g.notified = false; }
+      } else {
+        goals.push({ id:_saintUid(), focus:focus, startDate:today, lastReinforced:today, streak:1, status:'active' });
+      }
+      // Historial acotado: conserva los últimos 20 (activos + logrados).
+      if (goals.length > 20) SAINT_MEMORY.goals = goals.slice(-20);
+      saveMemory(SAINT_MEMORY);
+    } catch(e){}
+  }
+  window.saintMemoryReinforceGoal = saintMemoryReinforceGoal;
+
+  // ── Compromisos: cada elección de enfoque (aceptado o cambiado) ya ES
+  //    un compromiso del trader consigo mismo — se homologa como tipo de
+  //    memoria propio, sin pedir confirmación adicional (decisión
+  //    explícita del cliente: 100% automático).
+  function saintMemoryLogCommitment(focus, source){
+    try {
+      var commitments = SAINT_MEMORY.commitments || (SAINT_MEMORY.commitments = []);
+      commitments.push({ id:_saintUid(), date:_saintTodayStr(), focus:focus, source:source });
+      if (commitments.length > 60) SAINT_MEMORY.commitments = commitments.slice(-60);
+      saveMemory(SAINT_MEMORY);
+    } catch(e){}
+  }
+  window.saintMemoryLogCommitment = saintMemoryLogCommitment;
+
+  // ── Momentos importantes: se registran solos cuando SAINT ya dijo
+  //    algo con peso real (hallazgo fuerte al cierre, récord de racha).
+  //    Nunca a partir de texto libre del trader — SAINT no tiene eso.
+  //    'text' se guarda corto (recorte defensivo) para no acumular
+  //    payload de más.
+  function saintMemoryLogMoment(type, tag, text){
+    try {
+      var moments = SAINT_MEMORY.keyMoments || (SAINT_MEMORY.keyMoments = []);
+      moments.push({ date:_saintTodayStr(), type:type, tag:tag||'', text:(text||'').slice(0,180) });
+      if (moments.length > 40) SAINT_MEMORY.keyMoments = moments.slice(-40);
+      saveMemory(SAINT_MEMORY);
+    } catch(e){}
+  }
+  window.saintMemoryLogMoment = saintMemoryLogMoment;
+
+  // ── Snapshot de rasgos (hábitos / fortalezas / áreas a entrenar):
+  //    compara saintBuildProfile() de hoy contra el último snapshot
+  //    guardado — nunca un cálculo nuevo paralelo a Engine, solo
+  //    memoriza la evolución de lo que Engine y Coach ya exponen. Se
+  //    ejecuta como máximo una vez por día (guardado en lastSnapshot.date).
+  function _saintUpsertTrait(list, label){
+    var today = _saintTodayStr();
+    var t = list.find(function(x){ return x.label === label; });
+    if (t) { t.lastSeen = today; t.streak = (t.streak||0) + 1; }
+    else { list.push({ label:label, firstSeen:today, lastSeen:today, streak:1 }); }
+    if (list.length > 15) list.splice(0, list.length - 15);
+  }
+
+  function saintMemorySnapshot(){
+    try {
+      var today = _saintTodayStr();
+      if (SAINT_MEMORY.lastSnapshot && SAINT_MEMORY.lastSnapshot.date === today) return; // ya corrió hoy
+      var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+      if (!profile || !profile.hasHistory) return;
+
+      var prev = SAINT_MEMORY.lastSnapshot;
+      var traits = SAINT_MEMORY.traits || (SAINT_MEMORY.traits = {habits:[], strengths:[], trainingAreas:[]});
+
+      // Hábito: racha reciente limpia (mismo dato que ya usa
+      // _saintDeriveFocus) sostenida hoy también.
+      if (profile.recentPatternClean) {
+        _saintUpsertTrait(traits.habits, 'Consistencia dentro del plan');
+      }
+      // Fortaleza: mejora sostenida de consistencia30 vs. el snapshot
+      // anterior (umbral de 15 puntos para evitar ruido de día a día).
+      if (prev && typeof prev.consistencia30 === 'number' && typeof profile.consistencia30 === 'number'
+          && (profile.consistencia30 - prev.consistencia30) >= 15) {
+        _saintUpsertTrait(traits.strengths, 'Mejora sostenida de consistencia');
+      }
+      // Áreas a entrenar: mismos patrones que ya usa _saintDeriveFocus
+      // para el enfoque del día, pero memorizados en el tiempo.
+      if (profile.recentPatternRevenge) _saintUpsertTrait(traits.trainingAreas, 'Gestión del riesgo tras pérdida');
+      if (profile.recentPatternOverconfidence) _saintUpsertTrait(traits.trainingAreas, 'Sostener el plan tras ganar');
+
+      SAINT_MEMORY.lastSnapshot = { date: today, disciplina30: profile.disciplina30, consistencia30: profile.consistencia30 };
+      saveMemory(SAINT_MEMORY);
+
+      // Backtesting: no entra a disciplina/consistencia/patrones (eso
+      // sigue siendo solo live/funded/eval — el peso emocional de una
+      // cuenta real no es comparable al de una práctica). Pero tampoco
+      // se ignora del todo: queda un registro liviano y separado en
+      // keyMoments, tipo 'backtest_practice', que nunca se lee dentro
+      // del perfil psicológico ni de saintPick('intent_question', ...).
+      // Es memoria de "practiqué esto", no una estadística.
+      if (typeof _saintCheckBacktestPractice === 'function') _saintCheckBacktestPractice();
+    } catch(e){}
+  }
+  window.saintMemorySnapshot = saintMemorySnapshot;
+
+  // ── Práctica en backtesting: misma señal liviana (racha limpia de 3
+  //    sesiones) que ya usa _saintDeriveFocus para live/funded, pero
+  //    aplicada solo a cuentas marcadas backtesting y guardada en un
+  //    tipo de memoria aparte — nunca contamina disciplina30/
+  //    consistencia30/recentPattern*. Corre como máximo una vez por día
+  //    (ya viene guardado por saintMemorySnapshot, que la llama).
+  function _saintCheckBacktestPractice(){
+    try {
+      var all = (typeof window.getAllAccountKeys === 'function') ? window.getAllAccountKeys() : [];
+      if (typeof window.saintIsBacktestAccount !== 'function') return;
+      var btKeys = all.filter(function(acc){ return window.saintIsBacktestAccount(acc); });
+      if (!btKeys.length) return;
+      var today = _saintTodayStr();
+      // Evita duplicar el mismo aviso si ya se registró hoy.
+      var already = (SAINT_MEMORY.keyMoments || []).some(function(m){ return m.type === 'backtest_practice' && m.date === today; });
+      if (already) return;
+
+      btKeys.forEach(function(acc){
+        var r = (typeof window._cdAnalyze === 'function') ? window._cdAnalyze(acc) : null;
+        if (!r || r.noData) return;
+        var lastN = (r.dayDetails || []).slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; }).slice(0,3);
+        if (lastN.length === 3 && lastN.every(function(d){ return d.clean; })) {
+          if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('backtest_practice', acc, 'Racha limpia sostenida en práctica de backtesting');
+        }
+      });
+    } catch(e){}
+  }
+
+  // ── Lee (nunca calcula de nuevo) el objetivo activo más reforzado,
+  //    para que las respuestas de SAINT puedan citarlo por su nombre en
+  //    vez de una frase genérica. Devuelve null si todavía no hay
+  //    historial — SAINT nunca inventa un objetivo que no exista.
+  function _saintActiveGoalLabel(){
+    try {
+      var goals = (SAINT_MEMORY.goals || []).filter(function(g){ return g.status === 'active'; });
+      if (!goals.length) return null;
+      goals.sort(function(a,b){ return (b.streak||0) - (a.streak||0); });
+      var focus = goals[0].focus;
+      return (typeof SAINT_FOCUS_LABELS !== 'undefined' && SAINT_FOCUS_LABELS[focus]) || null;
+    } catch(e){ return null; }
   }
 
   // Se llama tras initCoachPage(). Solo arranca si hoy aún no tiene
@@ -18409,7 +18997,7 @@ async function sbStartAutoSync(licKey) {
     if (semKey) finishMsg += '<br>' + saintPick(semKey);
     var streakLine = _saintStreakLine();
     if (streakLine) finishMsg += '<br>' + streakLine;
-    SAINT.say(finishMsg, {tag:'Listo'});
+    SAINT.say(finishMsg, {tag:'Listo', tone: semColor});
     _saintPrep.active = false;
     // Si el Coach Emocional ya tiene un hallazgo calculado, SAINT lo
     // parafrasea en su propia voz — solo lectura, no se duplica la
@@ -18470,7 +19058,15 @@ async function sbStartAutoSync(licKey) {
 
   function saintStartRoutineSetup(){
     SAINT.closeConfig();
-    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null, pendingNames:null };
+    // Ya hay una rutina guardada con al menos una sesión: no se
+    // reconstruye desde cero (eso borraría lo no vuelto a seleccionar).
+    // Se pregunta directo qué se quiere hacer (ver saintRoutineMenu).
+    var r = SAINT.state.routine;
+    if (r && r.configured && r.sessions && r.sessions.length){
+      saintRoutineMenu();
+      return;
+    }
+    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null, pendingNames:null, appendMode:false };
     SAINT.clear();
     SAINT.open();
     SAINT.renderHeader();
@@ -18478,6 +19074,113 @@ async function sbStartAutoSync(licKey) {
     setTimeout(saintAskSessions, 550);
   }
   window.saintStartRoutineSetup = saintStartRoutineSetup;
+
+  // ── Rutina ya configurada: menú directo (agregar sesión / editar o
+  //    borrar una existente), en vez de repetir el asistente completo.
+  function saintRoutineMenu(){
+    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null, pendingNames:null, appendMode:false };
+    SAINT.clear();
+    SAINT.open();
+    SAINT.renderHeader();
+    SAINT.say(saintPick('routine_menu_intro'), {
+      tag:'Mi rutina',
+      quickReplies:[
+        { label:'Agregar sesión', onClick:function(){ saintRoutineAddSession(); } },
+        { label:'Editar o borrar una sesión', onClick:function(){ saintRoutineEditList(); } }
+      ]
+    });
+  }
+  window.saintRoutineMenu = saintRoutineMenu;
+
+  // ── Agregar una sesión nueva sin tocar las existentes. Reutiliza el
+  //    mismo asistente de sesiones (saintAskSessions → nombre → horario
+  //    → días), en modo "appendMode" para que el guardado final sume en
+  //    vez de sobreescribir (ver saintFinishRoutineSetup).
+  function saintRoutineAddSession(){
+    _saintRoutine = { active:true, numSessions:0, flexible:false, idx:0, sessions:[], current:null, pendingNames:null, appendMode:true };
+    SAINT.say(saintPick('routine_add_session_intro'), {tag:'Agregar sesión'});
+    setTimeout(saintAskSessions, 500);
+  }
+  window.saintRoutineAddSession = saintRoutineAddSession;
+
+  // ── Lista de sesiones existentes para editar u borrar. Cada sesión
+  //    lleva a saintRoutineSessionActions con las dos acciones posibles.
+  function saintRoutineEditList(){
+    SAINT.clear();
+    SAINT.open();
+    SAINT.renderHeader();
+    var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
+    if (!sessions.length){ saintRoutineMenu(); return; }
+    SAINT.say(saintPick('routine_edit_list_intro'), {
+      tag:'Editar rutina',
+      quickReplies: sessions.map(function(s, idx){
+        return { label: s.name + ' (' + s.start + '–' + s.end + ')', onClick:function(){ saintRoutineSessionActions(idx); } };
+      })
+    });
+  }
+  window.saintRoutineEditList = saintRoutineEditList;
+
+  function saintRoutineSessionActions(idx){
+    var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
+    var s = sessions[idx];
+    if (!s){ saintRoutineMenu(); return; }
+    SAINT.say(saintPick('routine_session_actions', {session:s.name}), {
+      tag:'Sesión · ' + s.name,
+      quickReplies:[
+        { label:'Editar horario/días', onClick:function(){ saintRoutineEditSession(idx); } },
+        { label:'Borrar esta sesión',  onClick:function(){ saintRoutineConfirmDelete(idx); } },
+        { label:'← Volver',            onClick:function(){ saintRoutineEditList(); } }
+      ]
+    });
+  }
+  window.saintRoutineSessionActions = saintRoutineSessionActions;
+
+  // ── Edita una sesión existente EN SU LUGAR: reutiliza exactamente el
+  //    mismo sub-flujo de horario/días que usa la sesión nueva
+  //    (saintAskSessionStart → saintAskSessionEnd → saintAskSessionDays),
+  //    marcando editIndex para que el guardado reemplace esa posición
+  //    en vez de agregar una sesión nueva (ver saintAskSessionDays).
+  function saintRoutineEditSession(idx){
+    var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
+    var s = sessions[idx];
+    if (!s){ saintRoutineMenu(); return; }
+    _saintRoutine = {
+      active:true, numSessions:1, flexible:false, idx:0,
+      sessions:[], current:{ id:s.id, name:s.name, start:'', end:'', days:[] },
+      pendingNames:null, appendMode:false, editIndex:idx
+    };
+    SAINT.say(saintPick('routine_edit_session_intro', {session:s.name}), {tag:'Editar · ' + s.name});
+    setTimeout(saintAskSessionStart, 400);
+  }
+  window.saintRoutineEditSession = saintRoutineEditSession;
+
+  function saintRoutineConfirmDelete(idx){
+    var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
+    var s = sessions[idx];
+    if (!s){ saintRoutineMenu(); return; }
+    SAINT.say(saintPick('routine_delete_confirm', {session:s.name}), {
+      tag:'Confirmar borrado',
+      quickReplies:[
+        { label:'Sí, borrar', onClick:function(){ saintRoutineDeleteSession(idx); } },
+        { label:'Cancelar',   onClick:function(){ saintRoutineSessionActions(idx); } }
+      ]
+    });
+  }
+  window.saintRoutineConfirmDelete = saintRoutineConfirmDelete;
+
+  function saintRoutineDeleteSession(idx){
+    var sessions = (SAINT.state.routine && SAINT.state.routine.sessions) || [];
+    var removed = sessions.splice(idx, 1)[0];
+    SAINT.state.routine.sessions = sessions;
+    // Si no queda ninguna sesión, la rutina vuelve a estar sin
+    // configurar (mismo criterio que saintCheckRoutineTrigger usa para
+    // decidir si hay algo que disparar).
+    if (!sessions.length) SAINT.state.routine.configured = false;
+    saveState(SAINT.state);
+    SAINT.say(saintPick('routine_session_deleted', {session: removed ? removed.name : ''}), {tag:'Eliminada'});
+    setTimeout(function(){ SAINT.close(); }, 2200);
+  }
+  window.saintRoutineDeleteSession = saintRoutineDeleteSession;
 
   // ── Pregunta única: qué sesiones opera el trader (selección múltiple).
   //    Sustituye al viejo par "¿cuántas sesiones?" + "nombre de cada
@@ -18490,6 +19193,10 @@ async function sbStartAutoSync(licKey) {
     var card = document.createElement('div');
     card.className = 'saint-card saint-from-saint';
     var OPTS = ['Londres', 'Nueva York', 'Asia'];
+    if (_saintRoutine.appendMode){
+      var existingNames = ((SAINT.state.routine && SAINT.state.routine.sessions) || []).map(function(s){ return s.name; });
+      OPTS = OPTS.filter(function(n){ return existingNames.indexOf(n) === -1; });
+    }
     var chipsHtml = '';
     OPTS.forEach(function(name){
       chipsHtml += '<div class="saint-quick-btn" data-sess="' + name + '">' + name + '</div>';
@@ -18599,7 +19306,14 @@ async function sbStartAutoSync(licKey) {
 
   function saintAskSessionName(){
     var i = _saintRoutine.idx;
-    if (i >= _saintRoutine.numSessions){ setTimeout(saintAskPrepMinutes, 400); return; }
+    if (i >= _saintRoutine.numSessions){
+      // Modo "agregar sesión": los minutos de preparación ya están
+      // guardados de antes, no se vuelven a preguntar — solo se suma
+      // la sesión nueva (ver saintFinishRoutineSetup).
+      if (_saintRoutine.appendMode) { setTimeout(function(){ saintFinishRoutineSetup(); }, 400); }
+      else { setTimeout(saintAskPrepMinutes, 400); }
+      return;
+    }
     _saintRoutine.current = { id: 's' + Date.now() + '_' + i, name:'', start:'', end:'', days:[] };
     if (_saintRoutine.pendingNames && _saintRoutine.pendingNames[i] !== undefined){
       // El nombre ya se eligió en saintAskSessions (selección múltiple) —
@@ -18747,6 +19461,18 @@ async function sbStartAutoSync(licKey) {
     contBtn.addEventListener('click', function(){
       if (!_saintRoutine.current.days.length) return;
       card.remove();
+      // Edición de una sesión existente: reemplaza en su lugar dentro
+      // de SAINT.state.routine.sessions, no pasa por el flujo normal de
+      // "sesión siguiente" ni por saintFinishRoutineSetup.
+      if (typeof _saintRoutine.editIndex === 'number'){
+        SAINT.state.routine.sessions[_saintRoutine.editIndex] = _saintRoutine.current;
+        saveState(SAINT.state);
+        _saintRoutine.current = null;
+        _saintRoutine.active = false;
+        SAINT.say(saintPick('routine_session_updated'), {tag:'Actualizado'});
+        setTimeout(function(){ SAINT.close(); }, 2200);
+        return;
+      }
       _saintRoutine.sessions.push(_saintRoutine.current);
       _saintRoutine.current = null;
       _saintRoutine.idx++;
@@ -18775,12 +19501,23 @@ async function sbStartAutoSync(licKey) {
   // llegue el horario real (saintCheckRoutineTrigger, más abajo).
   function saintFinishRoutineSetup(minutes){
     SAINT.state.routine = SAINT.state.routine || {};
-    SAINT.state.routine.sessions = _saintRoutine.sessions;
-    SAINT.state.routine.prepMinutes = minutes;
+    // Modo "agregar sesión": suma a las sesiones existentes en vez de
+    // sobreescribirlas. Modo normal (primera configuración): reemplaza,
+    // como siempre.
+    if (_saintRoutine.appendMode){
+      SAINT.state.routine.sessions = (SAINT.state.routine.sessions || []).concat(_saintRoutine.sessions);
+    } else {
+      SAINT.state.routine.sessions = _saintRoutine.sessions;
+    }
+    // Los minutos de preparación son un ajuste único de la rutina (no
+    // por sesión). Si no se preguntaron esta vez (modo agregar), se
+    // conserva el valor ya guardado.
+    if (typeof minutes === 'number') SAINT.state.routine.prepMinutes = minutes;
     SAINT.state.routine.configured = true;
     saveState(SAINT.state);
     _saintRoutine.active = false;
-    SAINT.say(saintPick('routine_finish'), {tag:'Rutina guardada'});
+    var isAdd = _saintRoutine.appendMode;
+    SAINT.say(saintPick(isAdd ? 'routine_session_added' : 'routine_finish'), {tag: isAdd ? 'Sesión agregada' : 'Rutina guardada'});
     setTimeout(function(){ SAINT.close(); }, 3000);
   }
 
@@ -18848,6 +19585,81 @@ async function sbStartAutoSync(licKey) {
   }
   window.saintCheckRoutineTrigger = saintCheckRoutineTrigger;
 
+  // ══════════════════════════════════════════════════════════════
+  // ORGANISMO VIVO — intervención espontánea, sin horario.
+  // Corre en el mismo ciclo de 60s que saintCheckRoutineTrigger, pero
+  // nunca sustituye el ritual de preparación/cierre: solo cubre el
+  // espacio ENTRE sesiones operativas, y únicamente cuando existe una
+  // razón objetiva y NUEVA para hablar — nunca por rutina, nunca sin
+  // motivo. Dos casos, los mismos dos tipos de evento que ya pide la
+  // fase: mejora consolidada (objetivo logrado) y recaída reciente
+  // (patrón detectado). Ninguno recalcula nada que Engine/memoria no
+  // calculen ya — solo decide CUÁNDO y SI vale la pena decirlo.
+  // Tope de una intervención espontánea por día (SAINT.state.
+  // lastSpontaneous): el silencio también es parte de la experiencia.
+  // ══════════════════════════════════════════════════════════════
+  function saintCheckSpontaneous(){
+    try {
+      if (!SAINT.state.onboarded) return; // no interrumpe antes del primer contacto
+      if (_saintPrep.active || _saintRoutine.active || SAINT.isOpen) return;
+      var todayStr = _saintTodayStr();
+      if (SAINT.state.lastSpontaneous === todayStr) return;
+
+      // ── Caso 1: objetivo activo que ACABA de sostenerse 10 sesiones
+      //    hoy y todavía no fue comunicado (notified:false, puesto por
+      //    saintMemoryReinforceGoal en el momento del logro).
+      var goals = SAINT_MEMORY.goals || [];
+      var achieved = goals.find(function(g){ return g.status === 'achieved' && g.achievedDate === todayStr && g.notified === false; });
+      if (achieved) {
+        achieved.notified = true;
+        saveMemory(SAINT_MEMORY);
+        SAINT.state.lastSpontaneous = todayStr;
+        saveState(SAINT.state);
+        var goalLabel = (SAINT_FOCUS_LABELS && SAINT_FOCUS_LABELS[achieved.focus]) || achieved.focus;
+        if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('goal_achieved', achieved.focus, goalLabel + ' sostenido 10 sesiones');
+        _saintSayThenClose(saintPick('spontaneous_goal_achieved', {goal: goalLabel.toLowerCase()}), 'verde', 'Logro consolidado');
+        return;
+      }
+
+      // ── Caso 2: patrón de recaída reciente (mismas señales que ya
+      //    calcula saintBuildProfile), pero solo si SAINT todavía no
+      //    habló hoy — si ya hubo preparación hoy, ese mismo patrón ya
+      //    se comunicó ahí (prep_context_revenge/overconfidence) y no
+      //    se repite entre sesiones.
+      var r = SAINT.state.routine;
+      var alreadySpokeToday = !!(r && r.lastTrigger && r.lastTrigger.indexOf(todayStr + ':') === 0);
+      if (alreadySpokeToday) return;
+
+      var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+      if (!profile || !profile.hasHistory) return;
+      var patternKey = profile.recentPatternRevenge ? 'revenge' : (profile.recentPatternOverconfidence ? 'overconfidence' : null);
+      if (!patternKey) return;
+      if (SAINT_MEMORY.lastPatternAlert && SAINT_MEMORY.lastPatternAlert.date === todayStr && SAINT_MEMORY.lastPatternAlert.pattern === patternKey) return;
+
+      SAINT_MEMORY.lastPatternAlert = { date: todayStr, pattern: patternKey };
+      saveMemory(SAINT_MEMORY);
+      SAINT.state.lastSpontaneous = todayStr;
+      saveState(SAINT.state);
+      var patternLabel = SAINT_PATTERN_LABELS[patternKey] || '';
+      if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('pattern_alert', patternKey, patternLabel);
+      _saintSayThenClose(saintPick('spontaneous_pattern_alert', {pattern: patternLabel}), 'amarillo', 'Entre sesiones');
+    } catch(e){}
+  }
+  window.saintCheckSpontaneous = saintCheckSpontaneous;
+
+  // ── Tarjeta corta y elegante: aparece, dice UNA cosa, desaparece.
+  //    Nunca queda abierta esperando respuesta — no es una pregunta,
+  //    es una observación del organismo. Mismo patrón de apertura que
+  //    el resto de SAINT (clear → open → renderHeader → say).
+  function _saintSayThenClose(text, tone, tag){
+    SAINT.clear();
+    SAINT.open();
+    SAINT.renderHeader();
+    SAINT.say(text, {tag: tag, tone: tone});
+    SAINT.attention(true);
+    setTimeout(function(){ SAINT.close(); }, 5200);
+  }
+
   // ── Cierre de sesión: lee (sin recalcular nada) lo que Engine ya
   //    tiene disponible y lo comunica en la voz de SAINT. Igual que
   //    con la preparación, no interrumpe si el trader ya tiene el
@@ -18905,6 +19717,10 @@ async function sbStartAutoSync(licKey) {
       var profileW = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
       var noteW = _saintCloseHistoryNote(false, profileW);
       if (noteW) msg += '<br>' + noteW;
+      // Memoria evolutiva: una desviación real al cierre es un momento
+      // importante — se memoriza solo, con el mismo hallazgo que ya
+      // comunicó Engine, sin duplicar ningún cálculo.
+      if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('finding', session.name, findingText);
     }
     SAINT.say(msg, {tag:'Cierre · ' + session.name});
     SAINT.attention(true);
@@ -18947,6 +19763,15 @@ async function sbStartAutoSync(licKey) {
 
     var optsWrap = card.querySelector('#saint-emo-after-options');
     var contBtn = card.querySelector('#saint-emo-after-continue');
+    // Memoria evolutiva + personalidad: si el trader marca una emoción
+    // negativa (mismo dato ya existente, data-color="red" en el pill —
+    // no se agrega ningún campo ni texto libre nuevo), SAINT responde
+    // UNA vez con una línea empática que cita su objetivo activo real
+    // (memoria), antes de seguir al resto del flujo. Nunca abre
+    // conversación libre: sigue siendo una tarjeta más, sin input de
+    // texto. Guardia simple para no repetir la empatía si toca varios
+    // pills negativos seguidos.
+    var _empathyShown = false;
     pills.forEach(function(pill){
       var emojiSpan = pill.querySelector('.emo-emoji');
       var label = pill.textContent.replace(emojiSpan ? emojiSpan.textContent : '', '').trim();
@@ -18962,6 +19787,14 @@ async function sbStartAutoSync(licKey) {
         btn.style.color = isActive ? c : '';
         var any = !!(coachEntry.emoAfter && coachEntry.emoAfter.length);
         if (contBtn) contBtn.style.opacity = any ? '1' : '0.5';
+        if (isActive && pill.dataset.color === 'red' && !_empathyShown) {
+          _empathyShown = true;
+          var goalLabel = (typeof _saintActiveGoalLabel === 'function') ? _saintActiveGoalLabel() : null;
+          var empathyMsg = goalLabel
+            ? saintPick('emo_after_empathy', {goal: goalLabel.toLowerCase()})
+            : saintPick('emo_after_empathy_generic');
+          setTimeout(function(){ SAINT.say(empathyMsg, {tag:'Te escucho'}); body.scrollTop = body.scrollHeight; }, 250);
+        }
       });
       optsWrap.appendChild(btn);
     });
@@ -19021,7 +19854,36 @@ async function sbStartAutoSync(licKey) {
     var streakLine = _saintStreakLine();
     if (streakLine) thanksMsg += '<br>' + streakLine;
     SAINT.say(thanksMsg, {tag:'Listo'});
-    setTimeout(function(){ SAINT.close(); }, 2600);
+
+    // ── Motor conversacional por bloques (aditivo): solo entra en
+    //    escena cuando el momento es realmente relevante (mejora
+    //    sostenida ≥10 sesiones, o recaída con patrón detectado por
+    //    Engine) y respeta el tope de una intervención espontánea por
+    //    día (SAINT.state.lastSpontaneous). En cualquier otro caso el
+    //    cierre se comporta exactamente igual que antes.
+    var _closeDelay = 2600;
+    try {
+      var _profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+      var _moment = (typeof saintDetectMoment === 'function') ? saintDetectMoment(_profile) : 'neutral';
+      var _today = (typeof _saintTodayStr === 'function') ? _saintTodayStr() : '';
+      if (_moment !== 'neutral' && SAINT.state.lastSpontaneous !== _today) {
+        var _seq = (_moment === 'mejora')
+          ? ['observar', 'reconocer', 'reforzar', 'desafiar', 'cerrar']
+          : ['observar', 'validar', 'reenfocar', 'preparar', 'cerrar'];
+        var _goalLabel = (typeof _saintActiveGoalLabel === 'function') ? _saintActiveGoalLabel() : null;
+        var _narrative = saintComposeBlocks(_seq, { focus: (_goalLabel || 'tu sistema').toLowerCase() });
+        if (_narrative) {
+          setTimeout(function(){
+            SAINT.say(_narrative, {tag: _moment === 'mejora' ? 'Progreso sostenido' : 'Reenfoque'});
+          }, 2800);
+          SAINT.state.lastSpontaneous = _today;
+          saveState(SAINT.state);
+          _closeDelay = 6600; // deja tiempo a leer la segunda intervención antes de cerrar el panel
+        }
+      }
+    } catch(e){}
+
+    setTimeout(function(){ SAINT.close(); }, _closeDelay);
   }
 
   // ── Banco de enfoques de la intención del día. Mismas 6 categorías
@@ -19033,6 +19895,16 @@ async function sbStartAutoSync(licKey) {
     confianza:     'Confianza',
     concentracion: 'Concentración',
     sistema:       'Seguir el sistema'
+  };
+
+  // ── Etiquetas cortas para la alerta espontánea de patrón (organismo
+  //    vivo). Mismas dos señales que ya calcula saintBuildProfile
+  //    (recentPatternRevenge / recentPatternOverconfidence) — no se
+  //    inventa ninguna detección nueva, solo se les da una frase breve
+  //    y humana para decirlas fuera del contexto de preparación.
+  var SAINT_PATTERN_LABELS = {
+    revenge:         'recuperar la pérdida de inmediato, apenas ocurre',
+    overconfidence:  'subir el riesgo justo después de ganar'
   };
 
   // ── Deriva el enfoque recomendado a partir de saintBuildProfile(), sin
@@ -19073,6 +19945,11 @@ async function sbStartAutoSync(licKey) {
         SAINT.state.dailyIntent = SAINT.state.dailyIntent.slice(-120);
       }
       saveState(SAINT.state);
+      // Memoria evolutiva: la elección de enfoque de hoy YA es un
+      // compromiso y YA refuerza (o inicia) un objetivo activo — se
+      // memoriza con el mismo dato, sin preguntar nada adicional.
+      if (typeof saintMemoryReinforceGoal === 'function') saintMemoryReinforceGoal(chosen);
+      if (typeof saintMemoryLogCommitment === 'function') saintMemoryLogCommitment(chosen, source);
     } catch(e){}
     setTimeout(saintAskEmoState, 400);
   }
@@ -19116,6 +19993,10 @@ async function sbStartAutoSync(licKey) {
     // claro (hay historial, pero mixto), se omite y queda el saludo
     // de siempre tal cual estaba.
     var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : {hasHistory:false};
+    // Memoria evolutiva: snapshot de rasgos (hábitos/fortalezas/áreas a
+    // entrenar), como máximo una vez por día — reutiliza el mismo
+    // profile que se acaba de leer, no calcula nada de nuevo.
+    if (typeof saintMemorySnapshot === 'function') saintMemorySnapshot();
     var contextKey = null;
     if (profile.recentPatternRevenge) contextKey = 'prep_context_revenge';
     else if (profile.recentPatternOverconfidence) contextKey = 'prep_context_overconfidence';
@@ -19123,6 +20004,27 @@ async function sbStartAutoSync(licKey) {
     else if (!profile.hasHistory) contextKey = 'prep_context_new';
     var triggerMsg = saintPick('routine_prep_trigger', {session: session.name, minutes: prepMin});
     var msg = contextKey ? (saintPick(contextKey) + '<br>' + triggerMsg) : triggerMsg;
+
+    // ── Motor de bloques (aditivo): solo para 'mejora' sostenida, y solo
+    //    si no se usó ya la intervención espontánea del día (mismo tope
+    //    compartido con el cierre de sesión — nunca dos intervenciones
+    //    extra el mismo día). El caso 'recaida' NO se duplica aquí: ya
+    //    lo cubren prep_context_revenge/overconfidence con su propio
+    //    matiz, así que añadir otro bloque encima saturaría el mensaje.
+    try {
+      var _moment = (typeof saintDetectMoment === 'function') ? saintDetectMoment(profile) : 'neutral';
+      var _today = (typeof _saintTodayStr === 'function') ? _saintTodayStr() : '';
+      if (_moment === 'mejora' && SAINT.state.lastSpontaneous !== _today) {
+        var _goalLabel = (typeof _saintActiveGoalLabel === 'function') ? _saintActiveGoalLabel() : null;
+        var _reinforce = saintComposeBlocks(['reconocer', 'proteger'], { focus: (_goalLabel || 'tu sistema').toLowerCase() });
+        if (_reinforce) {
+          msg += '<br>' + _reinforce;
+          SAINT.state.lastSpontaneous = _today;
+          saveState(SAINT.state);
+        }
+      }
+    } catch(e){}
+
     SAINT.say(msg, {tag:'Preparación · ' + session.name});
     setTimeout(function(){ saintAskDailyIntent(session); }, 500);
   }
@@ -19216,8 +20118,12 @@ async function sbStartAutoSync(licKey) {
       // de decidir si hoy falta preparación (evita falsos positivos
       // si el registro de hoy ya existe pero aún no bajó del todo).
       setTimeout(saintAutoStartPrep, 1200);
-      // Revisa cada minuto si toca aparecer según la rutina configurada.
-      setInterval(function(){ if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger(); }, 60000);
+      // Revisa cada minuto si toca aparecer según la rutina configurada,
+      // y si hay una razón espontánea y nueva para hablar entre sesiones.
+      setInterval(function(){
+        if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger();
+        if (typeof saintCheckSpontaneous === 'function') saintCheckSpontaneous();
+      }, 60000);
     }, 1500);
   });
 
