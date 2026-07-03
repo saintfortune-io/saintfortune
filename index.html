@@ -1674,6 +1674,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/FondeoProLogger.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(201,168,76);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,60,10);background:rgba(201,168,76,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(201,168,76,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(201,168,76,0.08)&#39;">
           <span style="font-size:14px">⬇</span> Descargar EA MT5 (FondeoProLogger.ex5)
         </a>
+        <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/Guardian.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(220,100,90);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,30,25);background:rgba(220,100,90,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(220,100,90,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(220,100,90,0.08)&#39;">
+          <span style="font-size:14px">🛡</span> Descargar EA MT5 (Guardian.ex5)
+        </a>
         <a href="https://github.com/saintfortune-io/saintfortune/raw/main/SaintFortuneSync.zip" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(74,158,255);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(10,40,80);background:rgba(74,158,255,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(74,158,255,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(74,158,255,0.08)&#39;">
           <span style="font-size:14px">⬇</span> Descargar Logger NT8 (SaintFortuneSync.zip)
         </a>
@@ -4657,6 +4660,36 @@ const DEFAULT_GROUPS = {
   };
   // Prefijo público (para backup/restore)
   window._lsPrefix = _licPrefix;
+})();
+
+// ══════════════════════════════════════════════════════════════════
+// 🔄 PUSH RÁPIDO GENERALIZADO (Opción A, sync casi en tiempo real)
+// _lsSet es el punto único por el que pasan casi todas las escrituras
+// de datos del dashboard (80 lugares distintos). En vez de agregar un
+// push a cada uno, se envuelve acá una sola vez: sigue guardando local
+// primero (instantáneo, sin esperar red — eso no cambia), y además
+// agenda una subida a Supabase con el mismo debounce corto que ya usa
+// SAINT (60ms), en vez de depender del ciclo general de 30s. Reutiliza
+// sbPush()/buildBackupPayload() ya existentes — no duplica lógica de
+// subida. No reemplaza el ciclo de 30s ni el push en beforeunload/
+// visibilitychange de sbStartAutoSync: esos siguen como red de
+// seguridad adicional, sin tocarse.
+// ══════════════════════════════════════════════════════════════════
+(function() {
+  var _origLsSet = window._lsSet;
+  var _globalPushTimer = null;
+  window._lsSet = function(k, v) {
+    _origLsSet(k, v);
+    clearTimeout(_globalPushTimer);
+    _globalPushTimer = setTimeout(function() {
+      try {
+        var licRaw = localStorage.getItem('fp_lic_v1_sale');
+        if (!licRaw) return;
+        var licData = JSON.parse(licRaw);
+        if (licData && licData.key && typeof sbPush === 'function') sbPush(licData.key);
+      } catch(e) {}
+    }, 60);
+  };
 })();
 
 // ═══════════════════════════════════════════
@@ -9674,7 +9707,35 @@ function applyBackupPayload(d){
     _lsSet('sf_saint_v1', JSON.stringify(d.sf_saint_v1));
     if (window.SAINT) {
       try {
+        // Antes de reemplazar SAINT.state (Object.assign es shallow: si
+        // d.sf_saint_v1 trae "routine", pisa ese objeto COMPLETO), se
+        // guardan los 3 campos de routine que registran cierres/disparos
+        // ya ocurridos LOCALMENTE. Si el payload remoto trae una versión
+        // de routine más vieja (pull que llegó antes de que el push local
+        // terminara — ver visibilitychange en sbStartAutoSync), un
+        // reemplazo completo pisaría un cierre real recién marcado y
+        // SAINT repetiría el mismo mensaje de cierre. Fix Fase 1, Punto 2
+        // — alcance: solo estos 3 campos; el resto de SAINT.state sigue
+        // exactamente igual que antes (shallow merge, sin cambios).
+        var _localRoutine = (SAINT.state && SAINT.state.routine) || {};
+        var _localClosedKeys = _localRoutine.closedSessionKeys || {};
+        var _localLastTrigger = _localRoutine.lastTrigger;
+        var _localLastSessionCloseAt = _localRoutine.lastSessionCloseAt || 0;
+
         SAINT.state = Object.assign({}, SAINT.state, d.sf_saint_v1);
+
+        if (SAINT.state.routine) {
+          var _r = SAINT.state.routine;
+          // Unión de claves: una sesión cerrada localmente sigue cerrada
+          // aunque el remoto todavía no la tenga registrada, y viceversa.
+          _r.closedSessionKeys = Object.assign({}, _localClosedKeys, _r.closedSessionKeys || {});
+          // Se conserva el cierre más reciente entre local y remoto.
+          _r.lastSessionCloseAt = Math.max(_localLastSessionCloseAt, _r.lastSessionCloseAt || 0);
+          // Si el local tiene un disparo de preparación más nuevo que el
+          // remoto no trae, se conserva el local.
+          if (_localLastTrigger && !_r.lastTrigger) _r.lastTrigger = _localLastTrigger;
+        }
+
         if (typeof SAINT.renderHeader === 'function') SAINT.renderHeader();
       } catch(e) {}
     }
@@ -15348,10 +15409,10 @@ function _ieGatherData() {
 
   // Días protegidos
   var protectedDays = allDates.filter(function(d){
-    return allCoach[d].semaforo==='rojo' && !(tradesByDate[d]&&tradesByDate[d].length);
+    return allCoach[d].sem==='rojo' && !(tradesByDate[d]&&tradesByDate[d].length);
   }).length;
 
-  var greenDays = allDates.filter(function(d){ return allCoach[d].semaforo==='verde'; }).length;
+  var greenDays = allDates.filter(function(d){ return allCoach[d].sem==='verde'; }).length;
   var greenRate = allDates.length ? Math.round((greenDays/allDates.length)*100) : 0;
 
   // Winrate reciente
@@ -15586,7 +15647,7 @@ function _ieRender() {
     +'</div>';
 
   // ── HTML final ────────────────────────────────────────────────────────────
-  var ieOpen = _lsGet('ie_card_open') !== '0';
+  var ieOpen = _lsGet('ie_card_open') === '1';
   var ieBodyStyle = ieOpen ? '' : 'display:none;';
   var ieArrow = ieOpen ? '\u25B2' : '\u25B6';
   var html = '<div class="ie-card">'
@@ -15764,6 +15825,9 @@ window.saveTradingPlan = function(acc) {
   var riskPerOpEl = document.getElementById('tp-risk-per-op');
   var maxRiskDayEl= document.getElementById('tp-max-risk-day');
   var splitRiskEl = document.getElementById('tp-split-risk');
+  var minHoldOnEl   = document.getElementById('tp-min-hold-on');
+  var minHoldSecEl  = document.getElementById('tp-min-hold-seconds');
+  var guardianModeEl= document.getElementById('tp-guardian-mode');
   var notesEl     = document.getElementById('tp-notes');
   var chartLinkEl = document.getElementById('tp-chart-link');
   var chartImgEl  = document.getElementById('tp-chart-img-data');
@@ -15776,6 +15840,9 @@ window.saveTradingPlan = function(acc) {
     riskPerOp:       parseFloat(riskPerOpEl ? riskPerOpEl.value : 1) || 1,
     maxDailyRisk:    parseFloat(maxRiskDayEl ? maxRiskDayEl.value : 2) || 2,
     splitRisk:       splitRiskEl ? splitRiskEl.checked : false,
+    respectMinHoldTime: minHoldOnEl ? minHoldOnEl.checked : false,
+    minHoldSeconds:     parseInt(minHoldSecEl ? minHoldSecEl.value : 130) || 130,
+    guardianMode:       guardianModeEl ? guardianModeEl.value : 'Observador',
     notes:           notesEl ? notesEl.value.trim() : '',
     chartLink:       chartLinkEl ? chartLinkEl.value.trim() : (prevPlan.chartLink || ''),
     chartImage:      chartImage,
@@ -15961,12 +16028,27 @@ window.renderTradingPlanTab = function(acc) {
     + '<div class="tp-field"><label class="tp-field-label">Riesgo máx día (%)</label>'
     + '<input class="tp-field-input" type="number" id="tp-max-risk-day" min="0.1" max="20" step="0.1" value="' + (plan ? plan.maxDailyRisk : 2) + '" placeholder="2"></div>'
 
+    + '<div class="tp-field"><label class="tp-field-label">Tiempo mínimo (seg)</label>'
+    + '<input class="tp-field-input" type="number" id="tp-min-hold-seconds" min="0" max="600" step="10" value="' + (plan && plan.minHoldSeconds ? plan.minHoldSeconds : 130) + '" placeholder="130"></div>'
+
+    + '<div class="tp-field"><label class="tp-field-label">Modo Guardian</label>'
+    + '<select class="tp-field-input" id="tp-guardian-mode">'
+    + '<option value="Observador"' + (!plan || plan.guardianMode!=='Guardián' ? ' selected' : '') + '>Observador (solo avisa)</option>'
+    + '<option value="Guardián"' + (plan && plan.guardianMode==='Guardián' ? ' selected' : '') + '>Guardián (avisa y actúa)</option>'
+    + '</select></div>'
+
     + '</div>'
 
     + '<div class="tp-toggle-row">'
     + '<div><div class="tp-toggle-label">División de riesgo en múltiples entradas</div>'
     + '<div class="tp-toggle-sub">Activado: varias entradas en la misma dirección no cuentan como overtrading</div></div>'
     + '<label class="tp-toggle"><input type="checkbox" id="tp-split-risk" ' + (plan && plan.splitRisk ? 'checked' : '') + '><span class="tp-toggle-slider"></span></label>'
+    + '</div>'
+
+    + '<div class="tp-toggle-row">'
+    + '<div><div class="tp-toggle-label">Duración mínima por operación (tick-scalping)</div>'
+    + '<div class="tp-toggle-sub">Activado: Guardian nunca deja cerrar antes del mínimo, ni para proteger riesgo. El mínimo real nunca baja de 2:10 (130 seg), aunque pongas menos arriba.</div></div>'
+    + '<label class="tp-toggle"><input type="checkbox" id="tp-min-hold-on" ' + (plan && plan.respectMinHoldTime ? 'checked' : '') + '><span class="tp-toggle-slider"></span></label>'
     + '</div>'
 
     + '<div class="tp-field" style="margin-bottom:12px;"><label class="tp-field-label">Notas del plan (opcional)</label>'
@@ -20407,18 +20489,74 @@ async function sbStartAutoSync(licKey) {
   // escena cuando corresponde, y arranca EL MISMO ritual ya construido
   // (estado emocional → checklist → confirmación) que sustituye
   // progresivamente al Coach Emocional clásico.
+
+  // Margen de seguridad tras un cierre de sesión real: durante esta
+  // ventana, la rama de "primer contacto" (coachSelectedDate vacío) no
+  // puede reabrir SAINT con el flujo de preparación encima del mensaje
+  // de cierre recién mostrado (fix Fase 1, punto 1). Ajustable.
+  var SAINT_POST_CLOSE_GUARD_MS = 10 * 60 * 1000; // 10 minutos
+
   function saintCheckRoutineTrigger(){
     try {
       var r = SAINT.state.routine;
       if (!r || !r.configured || !r.sessions || !r.sessions.length) return;
       if (_saintPrep.active || _saintRoutine.active || SAINT.isOpen) return;
-      if (!coachSelectedDate && typeof initCoachPage === 'function' && document.getElementById('coach-date-picker')) {
-        initCoachPage();
-        return;
-      }
+
       var now = new Date();
       var todayKey = SAINT_DAY_KEYS[(now.getDay() + 6) % 7];
       var todayStr = _saintTodayStr();
+
+      // ── Cierre de sesión: se evalúa PRIMERO, antes de cualquier rama de
+      //    "primer contacto" (coachSelectedDate vacío) o de preparación de
+      //    la próxima sesión. Antes, si ambas condiciones coincidían en el
+      //    mismo tick, la rama de primer contacto podía salir (return)
+      //    antes de llegar a este bloque, dejando el cierre real pendiente
+      //    para un tick posterior — y de paso abriendo el flujo de
+      //    preparación (initCoachPage → saintMaybeStartCoachPrep) encima.
+      //    Dispara DESPUÉS de la hora de fin que el propio trader
+      //    configuró — nunca antes, aunque ya haya terminado de operar.
+      //    No es una señal del EA ni un flag nuevo: es el mismo horario
+      //    que ya vive en routine.sessions. Sin fecha de vencimiento: si
+      //    no pudo salir apenas terminó la sesión (por ejemplo, el panel
+      //    estaba abierto en ese momento), queda pendiente y se reintenta
+      //    en cada ciclo de 60s hasta que efectivamente se muestre —
+      //    nunca se pierde ese día. closeKey está scoped por todayStr,
+      //    así que solo y automáticamente deja de aplicar cuando cambia
+      //    el día. Se guardan TODAS las claves ya disparadas (no solo la
+      //    última) — con un único valor escalar, cerrar una segunda
+      //    sesión (ej. NY) pisaba el registro de la primera (Londres) y
+      //    el ciclo de 60s volvía a dispararla en bucle.
+      if (!r.closedSessionKeys) r.closedSessionKeys = {};
+      for (var j = 0; j < r.sessions.length; j++){
+        var sc = r.sessions[j];
+        if (!sc.end || !sc.days || sc.days.indexOf(todayKey) === -1) continue;
+        var endParts = sc.end.split(':');
+        if (endParts.length < 2) continue;
+        var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(endParts[0], 10), parseInt(endParts[1], 10));
+        var closeKey = todayStr + ':close:' + (sc.id || j);
+        if (r.closedSessionKeys[closeKey]) continue;
+        if (now >= endDate){
+          r.closedSessionKeys[closeKey] = true;
+          // Mismo tipo de guardia que closedSessionKeys/lastTrigger: marca
+          // cuándo fue el último cierre real, para que la rama de "primer
+          // contacto" de abajo no pueda reabrir SAINT encima de un cierre
+          // recién mostrado (ver SAINT_POST_CLOSE_GUARD_MS más abajo).
+          r.lastSessionCloseAt = now.getTime();
+          saveState(SAINT.state);
+          saintStartSessionClose(sc);
+          return; // no seguir evaluando nada más de este tick
+        }
+      }
+
+      if (!coachSelectedDate && typeof initCoachPage === 'function' && document.getElementById('coach-date-picker')) {
+        // Si un cierre de sesión real acaba de pasar hace poco, no dejar
+        // que este "primer contacto" reabra el panel encima — se
+        // reintenta solo, sin acción extra, en un tick posterior una vez
+        // pasado el margen de seguridad.
+        if (r.lastSessionCloseAt && (now.getTime() - r.lastSessionCloseAt) < SAINT_POST_CLOSE_GUARD_MS) return;
+        initCoachPage();
+        return;
+      }
       var prepMin = r.prepMinutes || 30;
       for (var i = 0; i < r.sessions.length; i++){
         var s = r.sessions[i];
@@ -20436,37 +20574,6 @@ async function sbStartAutoSync(licKey) {
           r.lastTrigger = triggerKey;
           saveState(SAINT.state);
           if (!alreadyDone) saintStartRoutinePrep(s, prepMin);
-          break;
-        }
-      }
-
-      // ── Cierre de sesión: dispara DESPUÉS de la hora de fin que el
-      //    propio trader configuró — nunca antes, aunque ya haya
-      //    terminado de operar. No es una señal del EA ni un flag
-      //    nuevo: es el mismo horario que ya vive en routine.sessions.
-      //    Sin fecha de vencimiento: si no pudo salir apenas terminó
-      //    la sesión (por ejemplo, el panel estaba abierto en ese
-      //    momento), queda pendiente y se reintenta en cada ciclo de
-      //    60s hasta que efectivamente se muestre — nunca se pierde
-      //    ese día. closeKey está scoped por todayStr, así que solo
-      //    y automáticamente deja de aplicar cuando cambia el día.
-      //    Se guardan TODAS las claves ya disparadas (no solo la
-      //    última) — con un único valor escalar, cerrar una segunda
-      //    sesión (ej. NY) pisaba el registro de la primera (Londres)
-      //    y el ciclo de 60s volvía a dispararla en bucle.
-      if (!r.closedSessionKeys) r.closedSessionKeys = {};
-      for (var j = 0; j < r.sessions.length; j++){
-        var sc = r.sessions[j];
-        if (!sc.end || !sc.days || sc.days.indexOf(todayKey) === -1) continue;
-        var endParts = sc.end.split(':');
-        if (endParts.length < 2) continue;
-        var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(endParts[0], 10), parseInt(endParts[1], 10));
-        var closeKey = todayStr + ':close:' + (sc.id || j);
-        if (r.closedSessionKeys[closeKey]) continue;
-        if (now >= endDate){
-          r.closedSessionKeys[closeKey] = true;
-          saveState(SAINT.state);
-          saintStartSessionClose(sc);
           break;
         }
       }
@@ -20621,6 +20728,13 @@ async function sbStartAutoSync(licKey) {
     //    patrón que ya se usó con la preparación (saintAskEmoState).
     if (tradedToday) {
       setTimeout(function(){ saintAskEmoAfter(); }, 2600);
+    } else {
+      // Sin operativa hoy no hay nada más que preguntar — se cierra solo,
+      // igual que en cualquier otro cierre del flujo (mismo delay que ya
+      // usa la rama de arriba). Antes no se programaba ningún cierre acá
+      // y el panel podía quedar abierto indefinidamente. Fix Fase 1,
+      // Punto 3.
+      setTimeout(function(){ SAINT.close(); }, 2600);
     }
   }
   window.saintStartSessionClose = saintStartSessionClose;
@@ -21085,6 +21199,8 @@ async function sbStartAutoSync(licKey) {
     };
   }
 })();
+
+
 </script>
 
 </body></html>
