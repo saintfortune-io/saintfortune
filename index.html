@@ -4766,6 +4766,12 @@ function showPage(page) {
   });
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
+  // El contenedor #sf-main tiene su propio scroll interno y no se reseteaba
+  // al cambiar de página — por eso la página nueva aparecía "scrolleada"
+  // a la misma altura que la anterior, mostrando un hueco vacío arriba.
+  const _mainScroll = document.getElementById('sf-main');
+  if (_mainScroll) _mainScroll.scrollTop = 0;
+
   if(page === 'overview') {
     document.getElementById('page-overview').classList.remove('hidden');
     currentAccount = null;
