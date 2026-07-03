@@ -11,20 +11,20 @@
   --border:#252530; --border2:#32323f;
   --text:#f0f0f8; --muted:#55556a; --muted2:#888899;
   --blue:#4a9eff; --blue-dim:#0d1e3a; --blue-glow:rgba(74,158,255,0.12);
-  --purple:#a07aff; --purple-dim:#1a103a; --purple-glow:rgba(160,122,255,0.12);
+  --purple:#b7943f; --purple-dim:#1a103a; --purple-glow:rgba(160,122,255,0.12);
   --green:#27d97a; --green-dim:#081f12; --green-glow:rgba(39,217,122,0.12);
   --red:#ff4f4f; --red-dim:#200a0a;
   --amber:#ffae30; --amber-dim:#2a1800;
-  --cyan:#00d4ff; --cyan-dim:#001a22;
-  --pink:#ff6eb4; --pink-dim:#2a0a1a;
-  --lime:#a8ff3e; --lime-dim:#1a2600;
+  --cyan:#8fabc9; --cyan-dim:#001a22;
+  --pink:#c9a468; --pink-dim:#2a0a1a;
+  --lime:#27d97a; --lime-dim:#1a2600;
   --radius:14px; --radius-sm:9px; --radius-xs:6px;
   --sidebar:240px;
   /* Group neon colors */
   --grp-a:#4a9eff; --grp-a-dim:#0a1a35; --grp-a-neon:0 0 16px rgba(74,158,255,0.5);
-  --grp-b:#a07aff; --grp-b-dim:#160f30; --grp-b-neon:0 0 16px rgba(160,122,255,0.5);
+  --grp-b:#b7943f; --grp-b-dim:#111b28; --grp-b-neon:0 0 16px rgba(160,122,255,0.5);
   --grp-c:#27d97a; --grp-c-dim:#071a0f; --grp-c-neon:0 0 16px rgba(39,217,122,0.5);
-  --grp-d:#ff6eb4; --grp-d-dim:#250814; --grp-d-neon:0 0 16px rgba(255,110,180,0.5);
+  --grp-d:#c9a468; --grp-d-dim:#250814; --grp-d-neon:0 0 16px rgba(255,110,180,0.5);
   --grp-e:#ffae30; --grp-e-dim:#221500; --grp-e-neon:0 0 16px rgba(255,174,48,0.5);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -606,7 +606,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .type-futures-eval{background:var(--purple-dim);color:var(--purple);border:1px solid #3a1a70;}
 .type-futures-live{background:var(--green-dim);color:var(--green);border:1px solid #0f3a22;}
 .type-cfd-eval-f1{background:#2a1a00;color:#ffae30;border:1px solid #4a3000;}
-.type-cfd-eval-f2{background:#1a1060;color:#a07aff;border:1px solid #3a2090;}
+.type-cfd-eval-f2{background:#1a1060;color:#b7943f;border:1px solid #3a2090;}
 .type-cfd-funded{background:#0a1a30;color:#4a9eff;border:1px solid #1a3a60;}
 .type-cfd-instant{background:var(--cyan-dim);color:var(--cyan);border:1px solid #003a50;}
 
@@ -962,7 +962,7 @@ table.data-table tr:hover td{background:var(--bg2);}
 
 /* Hero header */
 .faqs-hero{position:relative;border-radius:18px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;overflow:hidden;
-  background:linear-gradient(135deg,#101428,#1a1230 55%,#0f1a26);border:1px solid var(--border2);}
+  background:linear-gradient(135deg,#101428,#1c150a 55%,#0f1a26);border:1px solid var(--border2);}
 .faqs-hero-glow{position:absolute;inset:0;opacity:0.5;pointer-events:none;
   background:radial-gradient(circle at 12% 20%,rgba(0,212,255,0.16),transparent 45%),
              radial-gradient(circle at 88% 80%,rgba(160,122,255,0.18),transparent 50%);}
@@ -1102,7 +1102,7 @@ table.data-table tr:hover td{background:var(--bg2);}
 
 /* Quotes layout */
 .faqs-quotes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.faqs-quote-card{background:linear-gradient(135deg,#101428,#1a1230 60%,#0f1a26);border:1px solid var(--border2);
+.faqs-quote-card{background:linear-gradient(135deg,#101428,#1c150a 60%,#0f1a26);border:1px solid var(--border2);
   border-radius:var(--radius);padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;min-height:220px;margin-bottom:12px;position:relative;overflow:hidden;}
 .faqs-quote-glow{position:absolute;inset:0;opacity:0.5;pointer-events:none;
@@ -1130,7 +1130,7 @@ table.data-table tr:hover td{background:var(--bg2);}
   padding:2.5rem 2rem;max-width:420px;width:92%;text-align:center;
   box-shadow:0 0 80px rgba(212,175,55,0.08);
 }
-#lic-logo{font-size:30px;font-weight:800;background:linear-gradient(135deg,#4a9eff,#a07aff);
+#lic-logo{font-size:30px;font-weight:800;background:linear-gradient(135deg,#4a9eff,#b7943f);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2px;}
 #lic-version{font-size:10px;color:#d4af37;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;}
 #lic-trademark{font-size:9px;color:#a8862f;letter-spacing:0.08em;margin-bottom:1.6rem;text-transform:uppercase;}
@@ -1313,6 +1313,21 @@ table.data-table tr:hover td{background:var(--bg2);}
   --text:#f3efe4; --muted:#73705f; --muted2:#a39d86;
   --gold:#d4af37; --gold-bright:#f3d77e; --gold-dark:#9c7d22;
   --gold-dim:#241d0c; --gold-glow:rgba(212,175,55,0.16);
+
+  /* — Paleta de acentos unificada (sustituye el arcoíris neón original por
+       variaciones tenues de la familia dorado/bronce + un único azul de
+       información + verde/rojo reservados a P&L) — */
+  --blue:#8fabc9; --blue-dim:#111b28; --blue-glow:rgba(143,171,201,0.10);
+  --purple:#b7943f; --purple-dim:#241d0c; --purple-glow:rgba(212,175,55,0.10);
+  --cyan:#8fabc9; --cyan-dim:#111b28;
+  --pink:#c9a468; --pink-dim:#241a0c;
+  --lime:#27d97a; --lime-dim:#081f12;
+  --amber:#dba53a; --amber-dim:#2a1c08;
+  --grp-a:#d4af37; --grp-a-dim:#241d0c; --grp-a-neon:0 0 10px rgba(212,175,55,0.28);
+  --grp-b:#8fabc9; --grp-b-dim:#111b28; --grp-b-neon:0 0 10px rgba(143,171,201,0.24);
+  --grp-c:#27d97a; --grp-c-dim:#071a0f; --grp-c-neon:0 0 10px rgba(39,217,122,0.24);
+  --grp-d:#9c7d4e; --grp-d-dim:#20180c; --grp-d-neon:0 0 10px rgba(156,125,78,0.26);
+  --grp-e:#a39d86; --grp-e-dim:#1c1c20; --grp-e-neon:0 0 10px rgba(163,157,134,0.22);
 }
 body{background:
   radial-gradient(circle at 50% 0%, rgba(212,175,55,0.05), transparent 55%),
@@ -1648,13 +1663,13 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
   <div class="nav-section">
     <div class="nav-label">🟣 Futuros · NinjaTrader</div>
-    <div id="futures-nav-items"><div class="nav-item" data-acc-id="FUTUROS TRADE 1"><div class="dot" style="background:#4a9eff"></div> FUTUROS TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="FUTUROS TRADE 2"><div class="dot" style="background:#a07aff"></div> FUTUROS TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="NINJA SIMULATED"><div class="dot" style="background:#4a9eff"></div> NINJA SIMULATED <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="FUTUROS ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> FUTUROS ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
+    <div id="futures-nav-items"><div class="nav-item" data-acc-id="FUTUROS TRADE 1"><div class="dot" style="background:#4a9eff"></div> FUTUROS TRADE 1 <span class="nav-badge badge-eval" style="">EVAL</span></div><div class="nav-item" data-acc-id="FUTUROS TRADE 2"><div class="dot" style="background:#b7943f"></div> FUTUROS TRADE 2 <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="NINJA SIMULATED"><div class="dot" style="background:#4a9eff"></div> NINJA SIMULATED <span class="nav-badge badge-live" style="">LIVE</span></div><div class="nav-item" data-acc-id="FUTUROS ACELERATOR +++"><div class="dot" style="background:#27d97a"></div> FUTUROS ACELERATOR +++ <span class="nav-badge badge-live" style="">LIVE</span><span style="font-size:8px;color:var(--amber);margin-left:2px">🧪</span></div></div>
     <div id="extra-futures-nav"></div>
     <div class="nav-action" onclick="openAddAccountModal(&#39;futures&#39;)" style="color:var(--purple);font-size:11.5px;">+ Agregar cuenta Futuros</div>
   </div>
 
   <div class="nav-divider"></div>
-  <div class="nav-item" onclick="showPage(&#39;coach&#39;)" style="color:#a07aff"><div class="dot dot-purple"></div> 🧠 Coach Emocional</div>
+  <div class="nav-item" onclick="showPage(&#39;coach&#39;)" style="color:#b7943f"><div class="dot dot-purple"></div> 🧠 Coach Emocional</div>
   <div class="nav-item" onclick="showPage(&#39;faqs&#39;)" style="color:var(--cyan)"><div class="dot dot-cyan"></div> 📚 Firmas · Diario</div>
   <div class="nav-item" onclick="showPage(&#39;trader&#39;)" style="color:var(--purple)"><div class="dot dot-purple"></div> Control del Trader</div>
   <div class="sidebar-footer" style="padding-top:0.75rem;">
@@ -1846,7 +1861,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <div class="acc-badges">
           <span class="acc-platform tag-ninja">NinjaTrader</span>
           <span class="acc-platform type-futures-live">✅ LIVE</span>
-          <span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:#160f30;color:#a07aff">🟣 GB</span>
+          <span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:#111b28;color:#b7943f">🟣 GB</span>
           
           <button class="btn btn-danger btn-xs" onclick="deleteAccount(&#39;FUTUROS TRADE 2&#39;,event)" title="Eliminar cuenta" style="margin-left:4px;padding:2px 7px;font-size:10px">🗑</button>
         </div>
@@ -2377,7 +2392,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   <!-- Group ABCDE tabs -->
   <div class="tab-bar" id="groups-tab-bar" style="margin-bottom:1rem"><button class="tab-btn">📊 Todos Futuros</button><button class="tab-btn">📊 Todos CFDs</button><button class="tab-btn active">🔵 Grp A</button><button class="tab-btn">🟣 Grp B</button><button class="tab-btn">🟢 Grp C</button><button class="tab-btn">🩷 Grp D</button><button class="tab-btn">🟡 Grp E</button></div>
   <div id="groups-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#d4af37;box-shadow:0 0 10px rgba(212,175,55,0.3)"></div>
     <div class="group-panel-header">
       <div class="group-panel-title">
         <span class="group-panel-letter" style="color:#4a9eff">🔵 A</span>
@@ -2427,7 +2442,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
       </div>
     </div>
   </div><div class="group-panel" style="background:#0a1a3522;border:1px solid #4a9eff33;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4a9eff;box-shadow:0 0 16px rgba(74,158,255,0.5)"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#d4af37;box-shadow:0 0 10px rgba(212,175,55,0.3)"></div>
     <div class="group-panel-header">
       <div class="group-panel-title">
         <span class="group-panel-letter" style="color:#4a9eff">🔵 A</span>
@@ -3452,7 +3467,7 @@ Cuentas a cobrar este mes: ..."></textarea>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.1rem;">
       <div style="font-size:28px;line-height:1;">🏆</div>
       <div>
-        <div style="font-size:16px;font-weight:800;letter-spacing:-0.02em;background:linear-gradient(135deg,#ffae30,#ff6eb4,#a07aff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">RETO DE CONSISTENCIA</div>
+        <div style="font-size:16px;font-weight:800;letter-spacing:-0.02em;background:linear-gradient(135deg,#ffae30,#c9a468,#b7943f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">RETO DE CONSISTENCIA</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">De $1.000 a $10.000 — 0 días fuera del plan</div>
       </div>
       <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
@@ -3471,8 +3486,8 @@ Cuentas a cobrar este mes: ..."></textarea>
     </div>
 
     <!-- Card principal del reto -->
-    <div id="reto-card" style="background:linear-gradient(135deg,#0d0d1a 0%,#1a0d2e 50%,#0d1a12 100%);border:1px solid #2a2040;border-radius:18px;padding:2rem;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(160,122,255,0.08);">
-      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ffae30,#ff6eb4,#a07aff,#27d97a);border-radius:18px 18px 0 0;"></div>
+    <div id="reto-card" style="background:linear-gradient(135deg,#0d0d1a 0%,#1c150a 50%,#0d1a12 100%);border:1px solid #201808;border-radius:18px;padding:2rem;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(160,122,255,0.08);">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ffae30,#c9a468,#b7943f,#27d97a);border-radius:18px 18px 0 0;"></div>
       <!-- orb deco -->
       <div style="position:absolute;bottom:-80px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(160,122,255,0.07) 0%,transparent 70%);pointer-events:none;"></div>
       <div style="position:absolute;top:-60px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,174,48,0.05) 0%,transparent 70%);pointer-events:none;"></div>
@@ -3663,9 +3678,9 @@ Cuentas a cobrar este mes: ..."></textarea>
 
     <!-- 🏆 LOGRO: Modal de celebración (oculto por defecto) -->
     <div id="reto-logro-modal" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.92); z-index: 10000; align-items: center; justify-content: center; flex-direction: column;">
-      <div style="position:relative;background:linear-gradient(135deg,#0d0d1a,#1a0d2e,#0a1a10);border:2px solid #caa533;border-radius:24px;padding:3rem 2.5rem;max-width:480px;width:90%;text-align:center;box-shadow:0 0 80px rgba(202,165,51,0.4),0 0 160px rgba(202,165,51,0.15);">
+      <div style="position:relative;background:linear-gradient(135deg,#0d0d1a,#1c150a,#0a1a10);border:2px solid #caa533;border-radius:24px;padding:3rem 2.5rem;max-width:480px;width:90%;text-align:center;box-shadow:0 0 80px rgba(202,165,51,0.4),0 0 160px rgba(202,165,51,0.15);">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#caa533,#ffe28a,#ffae30,#caa533);border-radius:24px 24px 0 0;"></div>
-        <div id="reto-logro-confetti" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:24px;"><div style="position:absolute;left:48.24141214267601%;top:-10px;width:4.767502031596649px;height:4.767502031596649px;background:#caa533;border-radius:50%;animation:retoFall 3.030047160012635s 1.2769202353686255s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:26.85533287793439%;top:-10px;width:9.679555775765788px;height:9.679555775765788px;background:#caa533;border-radius:50%;animation:retoFall 3.67341912528539s 0.6741022925035913s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:36.29527713373686%;top:-10px;width:4.861717950679449px;height:4.861717950679449px;background:#caa533;border-radius:2px;animation:retoFall 4.064705294502775s 0.45226330051569374s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:58.396751941278936%;top:-10px;width:4.834711150147343px;height:4.834711150147343px;background:#ff6eb4;border-radius:50%;animation:retoFall 3.341422554703873s 0.0354121053329588s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:45.048560787088036%;top:-10px;width:7.036373360497334px;height:7.036373360497334px;background:#ff6eb4;border-radius:2px;animation:retoFall 3.1977878331845213s 0.28029378788563597s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:91.10455193432662%;top:-10px;width:4.228058942927421px;height:4.228058942927421px;background:#4a9eff;border-radius:2px;animation:retoFall 3.368352791156518s 1.8964362811967765s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:29.55793880440556%;top:-10px;width:4.985405377982838px;height:4.985405377982838px;background:#27d97a;border-radius:2px;animation:retoFall 3.5583183877037694s 1.6806088614632257s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:33.665512441307875%;top:-10px;width:4.024262742262902px;height:4.024262742262902px;background:#ffe28a;border-radius:50%;animation:retoFall 2.571274171538179s 1.6111337117873707s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:65.3486965236478%;top:-10px;width:4.202143843129338px;height:4.202143843129338px;background:#ff6eb4;border-radius:2px;animation:retoFall 3.8561648736333423s 1.1431426012978871s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:18.805241358673086%;top:-10px;width:6.689304443192773px;height:6.689304443192773px;background:#4a9eff;border-radius:50%;animation:retoFall 3.7302962175668704s 0.791793940496792s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:80.67956437443686%;top:-10px;width:6.5663049212499995px;height:6.5663049212499995px;background:#ffe28a;border-radius:2px;animation:retoFall 3.7106676224030846s 0.6669433364185984s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:4.290881410989322%;top:-10px;width:6.527484996133112px;height:6.527484996133112px;background:#27d97a;border-radius:50%;animation:retoFall 2.974866658473603s 0.3107372926362457s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:31.99002798568188%;top:-10px;width:9.33363189604571px;height:9.33363189604571px;background:#ffe28a;border-radius:50%;animation:retoFall 2.7022674287720148s 0.6704151538026746s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:20.518120057035194%;top:-10px;width:8.974171276899323px;height:8.974171276899323px;background:#a07aff;border-radius:2px;animation:retoFall 2.9018283865735777s 0.11871075371348794s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:24.55637381103486%;top:-10px;width:5.943012810198136px;height:5.943012810198136px;background:#a07aff;border-radius:2px;animation:retoFall 2.6768150351174302s 0.6811645675375182s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:26.57653583799684%;top:-10px;width:5.345331089518417px;height:5.345331089518417px;background:#a07aff;border-radius:50%;animation:retoFall 3.4179765069676544s 0.3944227855537772s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:48.42143921906889%;top:-10px;width:6.298192006020355px;height:6.298192006020355px;background:#a07aff;border-radius:2px;animation:retoFall 3.313805004245104s 0.9202817632972549s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:13.946544160014307%;top:-10px;width:8.200606896123666px;height:8.200606896123666px;background:#27d97a;border-radius:2px;animation:retoFall 2.51350753517131s 1.2178409477769536s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:54.17077832444777%;top:-10px;width:8.479497943328742px;height:8.479497943328742px;background:#4a9eff;border-radius:50%;animation:retoFall 2.959285245990242s 1.6544058997994049s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:50.51834075095966%;top:-10px;width:7.31960900107333px;height:7.31960900107333px;background:#27d97a;border-radius:50%;animation:retoFall 4.4429782310455295s 0.5623709211715562s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:4.639587536670408%;top:-10px;width:5.178657316286673px;height:5.178657316286673px;background:#caa533;border-radius:2px;animation:retoFall 2.9856813599248877s 0.8743052275522303s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:94.82785019104944%;top:-10px;width:6.220712157692887px;height:6.220712157692887px;background:#caa533;border-radius:50%;animation:retoFall 3.3338045113263237s 0.9408504312955444s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:31.519153002139188%;top:-10px;width:4.860179771728961px;height:4.860179771728961px;background:#ff6eb4;border-radius:2px;animation:retoFall 4.106518092119799s 1.7170692007531108s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:54.08523933383189%;top:-10px;width:5.820404492986238px;height:5.820404492986238px;background:#a07aff;border-radius:50%;animation:retoFall 3.079877403753815s 0.4324640989191282s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:44.28432205108644%;top:-10px;width:7.239996537292896px;height:7.239996537292896px;background:#4a9eff;border-radius:2px;animation:retoFall 4.355211444721682s 0.17594335025669783s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:61.748449637968946%;top:-10px;width:7.952876650570561px;height:7.952876650570561px;background:#4a9eff;border-radius:50%;animation:retoFall 3.4831519373245703s 1.9228418346070189s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:49.571970293512116%;top:-10px;width:6.530468552695762px;height:6.530468552695762px;background:#a07aff;border-radius:2px;animation:retoFall 3.7651592913898817s 1.8283673978126596s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:80.44234396545875%;top:-10px;width:5.085905804729991px;height:5.085905804729991px;background:#ffe28a;border-radius:50%;animation:retoFall 3.990368272922696s 0.19139950926693028s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:99.54550333514226%;top:-10px;width:5.937961962879181px;height:5.937961962879181px;background:#caa533;border-radius:50%;animation:retoFall 2.7652749471300693s 0.18318800229187882s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:52.78609676881793%;top:-10px;width:6.472028383347859px;height:6.472028383347859px;background:#27d97a;border-radius:2px;animation:retoFall 3.6830780521232884s 1.755366573945298s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:25.14609925340674%;top:-10px;width:6.784304273266969px;height:6.784304273266969px;background:#4a9eff;border-radius:50%;animation:retoFall 2.6397429558258247s 1.515061385830158s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:39.89729765067288%;top:-10px;width:7.722538122930897px;height:7.722538122930897px;background:#caa533;border-radius:2px;animation:retoFall 2.561405647456634s 0.7076990155806029s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:36.832084953065745%;top:-10px;width:4.057375114591023px;height:4.057375114591023px;background:#a07aff;border-radius:50%;animation:retoFall 3.0127335488411875s 1.996777450788023s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:83.7518606728824%;top:-10px;width:8.568216643032303px;height:8.568216643032303px;background:#caa533;border-radius:2px;animation:retoFall 3.3500820100670596s 1.7754249741726522s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:7.95075552815705%;top:-10px;width:8.4608448868258px;height:8.4608448868258px;background:#ff6eb4;border-radius:50%;animation:retoFall 4.4095036633076745s 1.3624594391223654s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:98.8234155008837%;top:-10px;width:9.05357329520993px;height:9.05357329520993px;background:#4a9eff;border-radius:2px;animation:retoFall 2.6281082149408315s 1.5755485069486508s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:78.80287965334907%;top:-10px;width:7.161259690289546px;height:7.161259690289546px;background:#4a9eff;border-radius:2px;animation:retoFall 2.646337715144404s 0.9788141627832878s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:27.764044788249432%;top:-10px;width:5.96748232386307px;height:5.96748232386307px;background:#4a9eff;border-radius:50%;animation:retoFall 4.4354237453995715s 1.3683809857942542s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:7.183248012686128%;top:-10px;width:4.493964338859539px;height:4.493964338859539px;background:#ff6eb4;border-radius:50%;animation:retoFall 2.8192399328024584s 1.1172463311082395s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:68.57514202536454%;top:-10px;width:7.6799982882001645px;height:7.6799982882001645px;background:#27d97a;border-radius:50%;animation:retoFall 3.789940763433533s 0.0048002610871213935s linear infinite;opacity:0.8;"></div></div>
+        <div id="reto-logro-confetti" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:24px;"><div style="position:absolute;left:48.24141214267601%;top:-10px;width:4.767502031596649px;height:4.767502031596649px;background:#caa533;border-radius:50%;animation:retoFall 3.030047160012635s 1.2769202353686255s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:26.85533287793439%;top:-10px;width:9.679555775765788px;height:9.679555775765788px;background:#caa533;border-radius:50%;animation:retoFall 3.67341912528539s 0.6741022925035913s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:36.29527713373686%;top:-10px;width:4.861717950679449px;height:4.861717950679449px;background:#caa533;border-radius:2px;animation:retoFall 4.064705294502775s 0.45226330051569374s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:58.396751941278936%;top:-10px;width:4.834711150147343px;height:4.834711150147343px;background:#c9a468;border-radius:50%;animation:retoFall 3.341422554703873s 0.0354121053329588s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:45.048560787088036%;top:-10px;width:7.036373360497334px;height:7.036373360497334px;background:#c9a468;border-radius:2px;animation:retoFall 3.1977878331845213s 0.28029378788563597s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:91.10455193432662%;top:-10px;width:4.228058942927421px;height:4.228058942927421px;background:#4a9eff;border-radius:2px;animation:retoFall 3.368352791156518s 1.8964362811967765s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:29.55793880440556%;top:-10px;width:4.985405377982838px;height:4.985405377982838px;background:#27d97a;border-radius:2px;animation:retoFall 3.5583183877037694s 1.6806088614632257s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:33.665512441307875%;top:-10px;width:4.024262742262902px;height:4.024262742262902px;background:#ffe28a;border-radius:50%;animation:retoFall 2.571274171538179s 1.6111337117873707s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:65.3486965236478%;top:-10px;width:4.202143843129338px;height:4.202143843129338px;background:#c9a468;border-radius:2px;animation:retoFall 3.8561648736333423s 1.1431426012978871s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:18.805241358673086%;top:-10px;width:6.689304443192773px;height:6.689304443192773px;background:#4a9eff;border-radius:50%;animation:retoFall 3.7302962175668704s 0.791793940496792s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:80.67956437443686%;top:-10px;width:6.5663049212499995px;height:6.5663049212499995px;background:#ffe28a;border-radius:2px;animation:retoFall 3.7106676224030846s 0.6669433364185984s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:4.290881410989322%;top:-10px;width:6.527484996133112px;height:6.527484996133112px;background:#27d97a;border-radius:50%;animation:retoFall 2.974866658473603s 0.3107372926362457s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:31.99002798568188%;top:-10px;width:9.33363189604571px;height:9.33363189604571px;background:#ffe28a;border-radius:50%;animation:retoFall 2.7022674287720148s 0.6704151538026746s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:20.518120057035194%;top:-10px;width:8.974171276899323px;height:8.974171276899323px;background:#b7943f;border-radius:2px;animation:retoFall 2.9018283865735777s 0.11871075371348794s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:24.55637381103486%;top:-10px;width:5.943012810198136px;height:5.943012810198136px;background:#b7943f;border-radius:2px;animation:retoFall 2.6768150351174302s 0.6811645675375182s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:26.57653583799684%;top:-10px;width:5.345331089518417px;height:5.345331089518417px;background:#b7943f;border-radius:50%;animation:retoFall 3.4179765069676544s 0.3944227855537772s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:48.42143921906889%;top:-10px;width:6.298192006020355px;height:6.298192006020355px;background:#b7943f;border-radius:2px;animation:retoFall 3.313805004245104s 0.9202817632972549s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:13.946544160014307%;top:-10px;width:8.200606896123666px;height:8.200606896123666px;background:#27d97a;border-radius:2px;animation:retoFall 2.51350753517131s 1.2178409477769536s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:54.17077832444777%;top:-10px;width:8.479497943328742px;height:8.479497943328742px;background:#4a9eff;border-radius:50%;animation:retoFall 2.959285245990242s 1.6544058997994049s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:50.51834075095966%;top:-10px;width:7.31960900107333px;height:7.31960900107333px;background:#27d97a;border-radius:50%;animation:retoFall 4.4429782310455295s 0.5623709211715562s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:4.639587536670408%;top:-10px;width:5.178657316286673px;height:5.178657316286673px;background:#caa533;border-radius:2px;animation:retoFall 2.9856813599248877s 0.8743052275522303s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:94.82785019104944%;top:-10px;width:6.220712157692887px;height:6.220712157692887px;background:#caa533;border-radius:50%;animation:retoFall 3.3338045113263237s 0.9408504312955444s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:31.519153002139188%;top:-10px;width:4.860179771728961px;height:4.860179771728961px;background:#c9a468;border-radius:2px;animation:retoFall 4.106518092119799s 1.7170692007531108s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:54.08523933383189%;top:-10px;width:5.820404492986238px;height:5.820404492986238px;background:#b7943f;border-radius:50%;animation:retoFall 3.079877403753815s 0.4324640989191282s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:44.28432205108644%;top:-10px;width:7.239996537292896px;height:7.239996537292896px;background:#4a9eff;border-radius:2px;animation:retoFall 4.355211444721682s 0.17594335025669783s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:61.748449637968946%;top:-10px;width:7.952876650570561px;height:7.952876650570561px;background:#4a9eff;border-radius:50%;animation:retoFall 3.4831519373245703s 1.9228418346070189s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:49.571970293512116%;top:-10px;width:6.530468552695762px;height:6.530468552695762px;background:#b7943f;border-radius:2px;animation:retoFall 3.7651592913898817s 1.8283673978126596s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:80.44234396545875%;top:-10px;width:5.085905804729991px;height:5.085905804729991px;background:#ffe28a;border-radius:50%;animation:retoFall 3.990368272922696s 0.19139950926693028s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:99.54550333514226%;top:-10px;width:5.937961962879181px;height:5.937961962879181px;background:#caa533;border-radius:50%;animation:retoFall 2.7652749471300693s 0.18318800229187882s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:52.78609676881793%;top:-10px;width:6.472028383347859px;height:6.472028383347859px;background:#27d97a;border-radius:2px;animation:retoFall 3.6830780521232884s 1.755366573945298s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:25.14609925340674%;top:-10px;width:6.784304273266969px;height:6.784304273266969px;background:#4a9eff;border-radius:50%;animation:retoFall 2.6397429558258247s 1.515061385830158s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:39.89729765067288%;top:-10px;width:7.722538122930897px;height:7.722538122930897px;background:#caa533;border-radius:2px;animation:retoFall 2.561405647456634s 0.7076990155806029s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:36.832084953065745%;top:-10px;width:4.057375114591023px;height:4.057375114591023px;background:#b7943f;border-radius:50%;animation:retoFall 3.0127335488411875s 1.996777450788023s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:83.7518606728824%;top:-10px;width:8.568216643032303px;height:8.568216643032303px;background:#caa533;border-radius:2px;animation:retoFall 3.3500820100670596s 1.7754249741726522s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:7.95075552815705%;top:-10px;width:8.4608448868258px;height:8.4608448868258px;background:#c9a468;border-radius:50%;animation:retoFall 4.4095036633076745s 1.3624594391223654s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:98.8234155008837%;top:-10px;width:9.05357329520993px;height:9.05357329520993px;background:#4a9eff;border-radius:2px;animation:retoFall 2.6281082149408315s 1.5755485069486508s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:78.80287965334907%;top:-10px;width:7.161259690289546px;height:7.161259690289546px;background:#4a9eff;border-radius:2px;animation:retoFall 2.646337715144404s 0.9788141627832878s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:27.764044788249432%;top:-10px;width:5.96748232386307px;height:5.96748232386307px;background:#4a9eff;border-radius:50%;animation:retoFall 4.4354237453995715s 1.3683809857942542s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:7.183248012686128%;top:-10px;width:4.493964338859539px;height:4.493964338859539px;background:#c9a468;border-radius:50%;animation:retoFall 2.8192399328024584s 1.1172463311082395s linear infinite;opacity:0.8;"></div><div style="position:absolute;left:68.57514202536454%;top:-10px;width:7.6799982882001645px;height:7.6799982882001645px;background:#27d97a;border-radius:50%;animation:retoFall 3.789940763433533s 0.0048002610871213935s linear infinite;opacity:0.8;"></div></div>
 
         <div style="font-size:70px;line-height:1;margin-bottom:0.75rem;filter:drop-shadow(0 0 24px rgba(202,165,51,0.8));">🏆</div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:#caa533;margin-bottom:8px;">LOGRO DESBLOQUEADO</div>
@@ -3711,7 +3726,11 @@ Cuentas a cobrar este mes: ..."></textarea>
   <div id="goals-block-top" style="display: none;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
       <span style="font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.1em">🎯 Mis Metas</span>
-      <button class="btn btn-ghost btn-xs" onclick="toggleGoalsPosition()" title="Mover metas abajo">⬇ Mover abajo</button>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
+        <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
+        <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
+      </div>
     </div>
     <div id="goals-grid-top" class="faqs-goals-grid"></div>
   </div>
@@ -3754,7 +3773,7 @@ Cuentas a cobrar este mes: ..."></textarea>
                  <div class="faqs-goal-marker-label" style="left:25%">$5K</div><div class="faqs-goal-step" style="left:25%;"></div><div class="faqs-goal-marker" style="left:50%"></div>
                  <div class="faqs-goal-marker-label" style="left:50%">$10K</div><div class="faqs-goal-step" style="left:50%;"></div><div class="faqs-goal-marker" style="left:75%"></div>
                  <div class="faqs-goal-marker-label" style="left:75%">$15K</div><div class="faqs-goal-step" style="left:75%;"></div><div class="faqs-goal-marker" style="left:100%"></div>
-                 <div class="faqs-goal-marker-label" style="left:100%">$20K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%">🚶</div></div>
+                 <div class="faqs-goal-marker-label" style="left:100%">$20K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%"></div></div>
       <div class="faqs-goal-foot" id="goal-sprint-foot">Llevas retirados $0 · Faltan $5000 para los $5000</div>
       <div class="faqs-goal-milestones" id="goal-sprint-milestones"><div class="goal-milestone-item ">
         <span class="gm-icon">🔒</span>
@@ -3787,7 +3806,7 @@ Cuentas a cobrar este mes: ..."></textarea>
                  <div class="faqs-goal-marker-label" style="left:12.5%">$30K</div><div class="faqs-goal-step" style="left:12.5%;"></div><div class="faqs-goal-marker" style="left:37.5%"></div>
                  <div class="faqs-goal-marker-label" style="left:37.5%">$50K</div><div class="faqs-goal-step" style="left:37.5%;"></div><div class="faqs-goal-marker" style="left:62.5%"></div>
                  <div class="faqs-goal-marker-label" style="left:62.5%">$70K</div><div class="faqs-goal-step" style="left:62.5%;"></div><div class="faqs-goal-marker" style="left:100%"></div>
-                 <div class="faqs-goal-marker-label" style="left:100%">$100K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%">🚶</div></div>
+                 <div class="faqs-goal-marker-label" style="left:100%">$100K</div><div class="faqs-goal-step" style="left:100%;"></div><div class="faqs-goal-emoji" style="left:0%"></div></div>
       <div class="faqs-goal-foot" id="goal-100k-foot">Llevas retirados $0 · Faltan $20.000 para los $20.000</div>
       <div class="faqs-goal-milestones" id="goal-100k-milestones"><div class="goal-milestone-item ">
         <span class="gm-icon">🔒</span>
@@ -3813,7 +3832,7 @@ Cuentas a cobrar este mes: ..."></textarea>
     </div>
     <!-- ── METAS AVANZADAS: tarjeta timeline única ── -->
     <div id="goals-advanced-cards" style="grid-column: 1 / -1; display: none;">
-      <div class="faqs-goal-card" style="background:linear-gradient(135deg,#0d0d1a,#12101f);border:1px solid #2a2040;padding:1.5rem 1.75rem;">
+      <div class="faqs-goal-card" style="background:linear-gradient(135deg,#0d0d1a,#12101f);border:1px solid #201808;padding:1.5rem 1.75rem;">
         <!-- Cabecera -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;flex-wrap:wrap;gap:8px">
           <div style="display:flex;align-items:center;gap:10px">
@@ -3850,7 +3869,7 @@ Cuentas a cobrar este mes: ..."></textarea>
               <div id="adv-dot-240000" style="position: absolute; left: 100%; top: 50%; transform: translate(-50%, -50%); width: 13px; height: 13px; border-radius: 50%; background: var(--bg3); border-color: var(--border2); border-top-style: ; border-top-width: ; border-right-style: ; border-right-width: ; border-bottom-style: ; border-bottom-width: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; transition: 0.4s; box-shadow: none;"></div>
             </div>
             <!-- Muñequito -->
-            <div id="adv-walker" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;font-size:20px;line-height:1;transition:left 0.8s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 1px 4px rgba(0,0,0,0.6));">🚶</div>
+            <div id="adv-walker" style="position:absolute;top:50%;transform:translate(-50%,-50%);left:0%;font-size:20px;line-height:1;transition:left 0.8s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 1px 4px rgba(0,0,0,0.6));"></div>
           </div>
         </div>
 
@@ -3887,7 +3906,11 @@ Cuentas a cobrar este mes: ..."></textarea>
       </div>
     </div>
     <div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:-4px">
-      <button class="btn btn-ghost btn-xs" onclick="toggleGoalsPosition()" title="Mover metas al inicio">⬆ Mover arriba</button>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
+        <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
+        <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
+      </div>
       <button class="btn btn-ghost btn-sm" onclick="openGoalMilestonesModal()">✏ Editar metas por nivel</button>
     </div>
   </div>
@@ -4493,6 +4516,17 @@ Cuentas a cobrar este mes: ..."></textarea>
 </div>
 
 <!-- ───────── GOAL MILESTONES EDIT MODAL ───────── -->
+<div class="modal-backdrop" id="genderOnboardModal">
+  <div class="modal" style="width:380px;text-align:center" onclick="event.stopPropagation()">
+    <div class="modal-title" style="justify-content:center">👤 Personaliza tu progreso</div>
+    <div class="modal-sub">Elige el muñeco que verás en tus barras de metas. Puedes cambiarlo cuando quieras.</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:1.3rem;">
+      <button onclick="setGoalGender('male');closeModal('genderOnboardModal')" style="flex:1;padding:14px 10px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border2)'">🚹<br>Hombre</button>
+      <button onclick="setGoalGender('female');closeModal('genderOnboardModal')" style="flex:1;padding:14px 10px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border2)'">🚺<br>Mujer</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="goalMilestonesModal" onclick="closeModal(&#39;goalMilestonesModal&#39;,event)">
   <div class="modal" style="width:460px" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal(&#39;goalMilestonesModal&#39;)">✕</button>
@@ -4584,11 +4618,11 @@ const MONTH_STARTS = [1,1,1,1,1,1,1,1,1,1,1,1];
 
 const GROUP_LETTERS = ['A','B','C','D','E'];
 const GROUP_COLORS = {
-  A: {color:'#4a9eff', dim:'#0a1a35', neon:'0 0 16px rgba(74,158,255,0.5)', emoji:'🔵'},
-  B: {color:'#a07aff', dim:'#160f30', neon:'0 0 16px rgba(160,122,255,0.5)', emoji:'🟣'},
-  C: {color:'#27d97a', dim:'#071a0f', neon:'0 0 16px rgba(39,217,122,0.5)', emoji:'🟢'},
-  D: {color:'#ff6eb4', dim:'#250814', neon:'0 0 16px rgba(255,110,180,0.5)', emoji:'🩷'},
-  E: {color:'#ffae30', dim:'#221500', neon:'0 0 16px rgba(255,174,48,0.5)',  emoji:'🟡'},
+  A: {color:'#d4af37', dim:'#241d0c', neon:'0 0 10px rgba(212,175,55,0.28)', emoji:'🟡'},
+  B: {color:'#8fabc9', dim:'#111b28', neon:'0 0 10px rgba(143,171,201,0.24)', emoji:'🔵'},
+  C: {color:'#27d97a', dim:'#071a0f', neon:'0 0 10px rgba(39,217,122,0.24)', emoji:'🟢'},
+  D: {color:'#9c7d4e', dim:'#20180c', neon:'0 0 10px rgba(156,125,78,0.26)', emoji:'🟤'},
+  E: {color:'#a39d86', dim:'#1c1c20', neon:'0 0 10px rgba(163,157,134,0.22)',  emoji:'⚪'},
 };
 
 // Account modes
@@ -4605,7 +4639,7 @@ const DEFAULT_GROUPS = {
      micros:4, slTicks:150, tpTicks:150, session:'ny', pair:'NQ', capital:50000,
      accounts:[],
      description:'4 micros · SL 150t · TP 150t · RR 1:1 · NQ · NY'},
-    {id:'grp-B', letter:'B', name:'Grupo B', firm:'Lucid', color:'#a07aff',
+    {id:'grp-B', letter:'B', name:'Grupo B', firm:'Lucid', color:'#b7943f',
      micros:3, slTicks:150, tpTicks:200, session:'ny', pair:'NQ', capital:50000,
      accounts:[],
      description:'3 micros · SL 150t · TP 200t · RR 1:1.3 · NQ · NY'},
@@ -4619,7 +4653,7 @@ const DEFAULT_GROUPS = {
      criterion:'pair', pair:'EURUSD', lots:0.1, session:'london',
      accounts:[],
      description:'EURUSD · Sesión Londres · 0.1 lotes'},
-    {id:'grp-cfd-B', letter:'B', name:'Grupo B CFD', color:'#a07aff',
+    {id:'grp-cfd-B', letter:'B', name:'Grupo B CFD', color:'#b7943f',
      criterion:'session', pair:'XAUUSD', lots:0.05, session:'ny',
      accounts:[],
      description:'XAUUSD · Sesión NY · 0.05 lotes'},
@@ -4938,7 +4972,7 @@ function buildSidebarDynamic() {
     const subtypeLabel = cfg.subtype === 'live' ? 'LIVE' : 'EVAL';
     const badgeClass = subtypeLabel === 'LIVE' ? 'badge-live' : 'badge-eval';
     const grp = cfg.group || 'A';
-    const grpColor = GROUP_COLORS[grp]?.color || '#a07aff';
+    const grpColor = GROUP_COLORS[grp]?.color || '#b7943f';
     const isBlown = isAccountBlown(acc);
     const div = document.createElement('div');
     div.className = 'nav-item';
@@ -5062,6 +5096,22 @@ function renderStats() {
         var a = document.getElementById('cc-arrow');
         if (b) b.style.display = 'flex';
         if (a) a.textContent = '▲';
+      }
+    } catch(e) {}
+  });
+})();
+
+// ── Preguntar hombre/mujer la primera vez (por licencia/navegador) ──
+// No se asume un género por defecto: cada usuario elige el suyo la
+// primera vez que abre la app, y esa elección queda guardada.
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      if (!_lsGet('fp_goal_gender_sale')) {
+        setTimeout(function() {
+          const m = document.getElementById('genderOnboardModal');
+          if (m) m.classList.add('open');
+        }, 700);
       }
     } catch(e) {}
   });
@@ -10010,7 +10060,7 @@ const FAQ_FIRMS = [
   {
     id: 'propxp',
     name: 'Prop XP',
-    color: '#a07aff',
+    color: '#b7943f',
     logo: '🟣',
     tipo: 'CFD · Instant',
     web: 'https://propxp.com',
@@ -10070,7 +10120,7 @@ const FAQ_FIRMS = [
   {
     id: 'fundingpips',
     name: 'Funding Pips',
-    color: '#00d4ff',
+    color: '#8fabc9',
     logo: '🔷',
     tipo: 'CFD · 2 Fases Estándar',
     web: 'https://fundingpips.com',
@@ -10090,7 +10140,7 @@ const FAQ_FIRMS = [
   {
     id: 'apex',
     name: 'Apex · Futuros $50K',
-    color: '#ff6eb4',
+    color: '#c9a468',
     logo: '🩷',
     tipo: 'Futuros · $50K · EOD · Sin activation fee',
     web: 'https://apextraderfunding.com',
@@ -10202,6 +10252,38 @@ function getTotalWithdrawn() {
   return certs.reduce((s,c) => s + (c.amount || 0), 0);
 }
 
+// ─── Muñeco de progreso (hombre/mujer) — pictograma de frente, sin problemas
+// de orientación (a diferencia del emoji 🚶 que en algunas fuentes/SO se
+// dibuja "al revés" respecto al sentido de la barra) ───
+function getGoalGender() { return _lsGet('fp_goal_gender_sale') || 'female'; }
+function setGoalGender(g) {
+  _lsSet('fp_goal_gender_sale', g);
+  if (typeof save === 'function') save();
+  updateGoalGenderButtons();
+  renderGoals();
+  toast(g === 'female' ? '🚺 Muñeco actualizado a mujer' : '🚹 Muñeco actualizado a hombre');
+}
+function updateGoalGenderButtons() {
+  const g = getGoalGender();
+  document.querySelectorAll('.goal-gender-btn').forEach(btn => {
+    const active = btn.dataset.gender === g;
+    btn.style.background    = active ? 'rgba(39,217,122,0.15)' : 'transparent';
+    btn.style.borderColor   = active ? 'var(--green)' : 'var(--border2)';
+    btn.style.color         = active ? 'var(--green)' : 'var(--muted2)';
+    btn.style.fontWeight    = active ? '800' : '600';
+  });
+}
+function goalWalkerSVG(size) {
+  const gender = getGoalGender();
+  const emoji  = gender === 'male' ? '🚶\u200d♂️' : '🚶\u200d♀️';
+  const fs = size ? `font-size:${size}px;` : '';
+  // El emoji de caminar mira hacia la izquierda en varias fuentes (Windows
+  // incluida), lo que se veía "al revés" respecto al avance de la barra
+  // (que va de izquierda a derecha). Se voltea con CSS para que siempre
+  // camine hacia la meta, sin depender de la fuente del sistema.
+  return `<span style="display:inline-block;line-height:1;${fs}transform:scaleX(-1);">${emoji}</span>`;
+}
+
 function fmtCompactUSD(n) {
   if(n >= 1000) return '$' + (n/1000).toLocaleString('es-ES',{maximumFractionDigits:0}) + 'K';
   return fmtUSD(n);
@@ -10227,7 +10309,7 @@ function renderGoalTrack(trackId, amountId, footId, milestonesId, thresholds, to
       }
       html += `<div class="faqs-goal-step" style="left:${mpct}%;${reached?'border-color:var(--green);background:var(--green)':''}"></div>`;
     });
-    html += `<div class="faqs-goal-emoji" style="left:${pct}%">🚶</div>`;
+    html += `<div class="faqs-goal-emoji" style="left:${pct}%">${goalWalkerSVG(21)}</div>`;
     trackEl.innerHTML = html;
   }
 
@@ -10262,6 +10344,7 @@ function renderGoals() {
   renderGoalTrack('goal-100k-track','goal-100k-amount','goal-100k-foot','goal-100k-milestones',[20000,30000,50000,70000,100000], total);
   renderAdvancedGoals();
   applyGoalsPosition();
+  updateGoalGenderButtons();
 }
 
 // ═══════════════════════════════════════════
@@ -10295,7 +10378,7 @@ function renderAdvancedGoals() {
 
   // Muñequito
   const walker = document.getElementById('adv-walker');
-  if (walker) walker.style.left = overallPct + '%';
+  if (walker) { walker.style.left = overallPct + '%'; walker.innerHTML = goalWalkerSVG(18); }
 
   // Label principal
   const lbl = document.getElementById('adv-timeline-label');
@@ -11603,7 +11686,7 @@ window.ddUpdate = function() {
     if (banner) { banner.style.display = 'block'; }
     if (ring)   { ring.style.filter = 'drop-shadow(0 0 6px rgba(39,217,122,0.5))'; }
   } else {
-    if (card)   { card.style.background = 'linear-gradient(135deg,#0d1e3a 0%,#1a0d2e 100%)'; card.style.borderColor = '#2a2a45'; card.style.boxShadow = '0 0 30px rgba(160,122,255,0.06)'; }
+    if (card)   { card.style.background = 'linear-gradient(135deg,#0d1e3a 0%,#1c150a 100%)'; card.style.borderColor = '#2a2a45'; card.style.boxShadow = '0 0 30px rgba(160,122,255,0.06)'; }
     if (accent) { accent.style.background = 'linear-gradient(90deg,var(--purple),var(--amber))'; }
     if (banner) { banner.style.display = 'none'; }
     if (ring)   { ring.style.filter = 'none'; }
@@ -11756,8 +11839,8 @@ const RETO_INICIO = 1000;
 
 const RETO_HITOS = [
   { val: 2000,  emoji: '🌱', label: '$2K',   color: '#4a9eff' },
-  { val: 3500,  emoji: '⚡', label: '$3.5K', color: '#a07aff' },
-  { val: 5000,  emoji: '🔥', label: '$5K',   color: '#ff6eb4' },
+  { val: 3500,  emoji: '⚡', label: '$3.5K', color: '#b7943f' },
+  { val: 5000,  emoji: '🔥', label: '$5K',   color: '#c9a468' },
   { val: 7500,  emoji: '💎', label: '$7.5K', color: '#ffae30' },
   { val: 10000, emoji: '👑', label: '$10K',  color: '#caa533' },
 ];
@@ -11797,29 +11880,33 @@ function retoUpdate() {
     falta.style.color = diff === 0 ? '#caa533' : 'var(--green)';
   }
 
-  const hitosEl = document.getElementById('reto-hitos');
-  if (hitosEl) {
-    hitosEl.innerHTML = RETO_HITOS.map(h => {
-      const done = balance >= h.val;
-      return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:10px;background:${done ? 'rgba(39,217,122,0.08)' : 'rgba(255,255,255,0.02)'};border:1px solid ${done ? 'rgba(39,217,122,0.35)' : 'var(--border)'};transition:all 0.3s;">
-        <div style="font-size:${h.val===10000?'26px':'22px'};line-height:1;filter:${done ? 'drop-shadow(0 0 8px ' + h.color + ')' : 'grayscale(1) opacity(0.4)'};">${h.emoji}</div>
-        <div style="font-size:9.5px;font-weight:700;color:${done ? h.color : 'var(--muted)'};letter-spacing:0.04em;">${h.label}</div>
-        ${done ? '<div style="font-size:8px;color:var(--green);font-weight:700;">✓ LOG</div>' : '<div style="font-size:8px;color:var(--muted);">pendiente</div>'}
-      </div>`;
-    }).join('');
-  }
+  try {
+    const hitosEl = document.getElementById('reto-hitos');
+    if (hitosEl) {
+      hitosEl.innerHTML = RETO_HITOS.map(h => {
+        const done = balance >= h.val;
+        return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:10px;background:${done ? 'rgba(39,217,122,0.08)' : 'rgba(255,255,255,0.02)'};border:1px solid ${done ? 'rgba(39,217,122,0.35)' : 'var(--border)'};transition:all 0.3s;">
+          <div style="font-size:${h.val===10000?'26px':'22px'};line-height:1;filter:${done ? 'drop-shadow(0 0 8px ' + h.color + ')' : 'grayscale(1) opacity(0.4)'};">${h.emoji}</div>
+          <div style="font-size:9.5px;font-weight:700;color:${done ? h.color : 'var(--muted)'};letter-spacing:0.04em;">${h.label}</div>
+          ${done ? '<div style="font-size:8px;color:var(--green);font-weight:700;">✓ LOG</div>' : '<div style="font-size:8px;color:var(--muted);">pendiente</div>'}
+        </div>`;
+      }).join('');
+    }
+  } catch(e) { console.error('reto hitos render error:', e); }
 
   // Días fuera del reto — contador propio
-  const retoDiasEl = document.getElementById('reto-dias-fuera');
-  if (retoDiasEl) {
-    const diasFuera = retoDiasFueraCount();
-    retoDiasEl.textContent = diasFuera;
-    retoDiasEl.style.color = diasFuera === 0 ? 'var(--green)' : 'var(--red)';
-  }
+  try {
+    const retoDiasEl = document.getElementById('reto-dias-fuera');
+    if (retoDiasEl) {
+      const diasFuera = retoDiasFueraCount();
+      retoDiasEl.textContent = diasFuera;
+      retoDiasEl.style.color = diasFuera === 0 ? 'var(--green)' : 'var(--red)';
+    }
 
-  // Racha limpia del reto — días consecutivos sin entrada fuera de plan
-  const retoStreakEl = document.getElementById('reto-streak-display');
-  if (retoStreakEl) retoStreakEl.textContent = retoDiasFueraStreak();
+    // Racha limpia del reto — días consecutivos sin entrada fuera de plan
+    const retoStreakEl = document.getElementById('reto-streak-display');
+    if (retoStreakEl) retoStreakEl.textContent = retoDiasFueraStreak();
+  } catch(e) { console.error('reto dias-fuera/streak render error:', e); }
 
   if (balance >= RETO_META && !data.logroShown) {
     data.logroShown = true;
@@ -11838,7 +11925,7 @@ function retoMostrarLogro() {
 
   const confetti = document.getElementById('reto-logro-confetti');
   if (confetti) {
-    const colors = ['#caa533','#ffe28a','#ff6eb4','#a07aff','#27d97a','#4a9eff'];
+    const colors = ['#caa533','#ffe28a','#c9a468','#b7943f','#27d97a','#4a9eff'];
     let html = '';
     for (let i = 0; i < 40; i++) {
       const x     = Math.random() * 100;
@@ -11879,8 +11966,8 @@ function retoInit() {
   const dp = document.getElementById('reto-pnl-date');
   if (dp) dp.value = localDateStr();
   retoUpdate();
-  retoPnlRender();
-  retoLinkedAccountInit();
+  try { retoPnlRender(); } catch(e) { console.error('retoPnlRender error:', e); }
+  try { retoLinkedAccountInit(); } catch(e) { console.error('retoLinkedAccountInit error:', e); }
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -11975,8 +12062,8 @@ window.retoImportFromAccount = function() {
   if (balInput) balInput.value = newBal.toFixed(2);
 
   retoPnlPage = 0;
-  retoPnlRender();
   retoUpdate();
+  try { retoPnlRender(); } catch(e) { console.error('retoPnlRender error:', e); }
   retoLinkedAccountRefreshUI();
 
   let msg = '✓ ' + added + ' día(s) importado(s) desde ' + accName;
@@ -12020,8 +12107,8 @@ window.retoPnlAdd = function() {
   valEl.focus();
 
   retoPnlPage = 0;
-  retoPnlRender();
   retoUpdate();
+  try { retoPnlRender(); } catch(e) { console.error('retoPnlRender error:', e); }
   toast('✅ P&L registrado · Balance actualizado');
 };
 
@@ -12033,8 +12120,8 @@ window.retoPnlDelete = function(id) {
   const newBal = Math.max(0, RETO_INICIO + total);
   const balInput = document.getElementById('reto-balance');
   if (balInput) balInput.value = newBal.toFixed(2);
-  retoPnlRender();
   retoUpdate();
+  try { retoPnlRender(); } catch(e) { console.error('retoPnlRender error:', e); }
   toast('Entrada eliminada ✓');
 };
 
@@ -12751,7 +12838,7 @@ function licMostrarBarra(diasRestantes, diasTotal) {
   bar.style.display = 'block';
   const pct = Math.max(0, Math.min(100, (diasRestantes / diasTotal) * 100));
   fill.style.width  = pct + '%';
-  fill.style.background = pct > 50 ? 'linear-gradient(90deg,#4a9eff,#a07aff)'
+  fill.style.background = pct > 50 ? 'linear-gradient(90deg,#4a9eff,#b7943f)'
                         : pct > 25 ? '#ffae30' : '#ff4f4f';
   txt.textContent = diasRestantes > 0 ? `${diasRestantes} de ${diasTotal} días restantes` : 'Licencia expirada';
 }
