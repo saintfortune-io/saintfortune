@@ -18278,6 +18278,7 @@ async function sbStartAutoSync(licKey) {
         <option value="directo" selected>Directo</option>
         <option value="cercano">Cercano</option>
         <option value="analitico">Analítico</option>
+        <option value="elite">Elite — coach implacable</option>
       </select>
     </div>
 
@@ -19062,7 +19063,8 @@ async function sbStartAutoSync(licKey) {
       OBSERVADA: {
         directo:   'Ya pasaste el número de operaciones que fijaste para hoy ({count}/{max}).<br>Cierra la plataforma acá — lo siguiente ya sería fuera de tu sistema.',
         cercano:   '{name}, hoy ya llegaste a las operaciones que tu plan permitía ({count}/{max}).<br>No hace falta forzar una más — saber cuándo parar también es parte del plan.',
-        analitico: 'Operaciones del día: {count}. Límite del plan: {max}.<br>El umbral ya se cruzó — cerrar aquí es la decisión que sostiene el sistema.'
+        analitico: 'Operaciones del día: {count}. Límite del plan: {max}.<br>El umbral ya se cruzó — cerrar aquí es la decisión que sostiene el sistema.',
+        elite:     'Ya rompiste tu propio límite ({count}/{max}).<br>Un trader de tu nivel no necesita una operación más para demostrar nada. Cierra.'
       },
       CONFIRMADA: {
         directo:   'Volviste a entrar por encima del límite ({count}/{max}).<br>No importa cómo salga esta operación — lo que importa ahora es volver al sistema.',
@@ -21380,6 +21382,7 @@ async function sbStartAutoSync(licKey) {
         { label: 'Directo — al grano',    onClick: function(){ saintSetStyle('directo'); } },
         { label: 'Cercano — con calma',   onClick: function(){ saintSetStyle('cercano'); } },
         { label: 'Analítico — con datos', onClick: function(){ saintSetStyle('analitico'); } },
+        { label: 'Elite — implacable',    onClick: function(){ saintSetStyle('elite'); } },
         { label: 'Decidir después',       onClick: function(){ saintSkipStyle(); } }
       ]
     });
