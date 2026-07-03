@@ -18610,6 +18610,29 @@ async function sbStartAutoSync(licKey) {
       }
       SAINT.attention(true);
       SAINT.open();
+
+      // Autocierre para 'risk' y 'guardian': estas dos tarjetas se abren
+      // en cualquier momento del día (no en un flujo guiado por el
+      // trader) y, a diferencia de las intervenciones espontáneas
+      // (_saintSayThenClose, que ya se autocierran), se quedaban
+      // abiertas hasta que el trader las cerrara manualmente con la X.
+      // Mientras estaban abiertas, SAINT.isOpen quedaba en true y
+      // bloqueaba por completo saintCheckRoutineTrigger (cierre de
+      // sesión, "cómo te sentiste", preparación de la próxima sesión),
+      // porque esa función corta apenas ve SAINT.isOpen === true. Con
+      // esto, la tarjeta sigue teniendo el tiempo de lectura que
+      // necesita, pero deja de poder trabar el resto del organismo por
+      // horas si el trader no la cierra a mano.
+      if (type === 'risk' || type === 'guardian') {
+        var _autoCloseAt = Date.now();
+        setTimeout(function(){
+          // Solo cierra si sigue siendo la misma tarjeta: si el trader
+          // ya la cerró (SAINT.isOpen === false) o si SAINT ya pasó a
+          // mostrar otra cosa después de este momento, no toca nada.
+          if (SAINT.isOpen && SAINT.state.lastOpenedAt === _autoCloseAt) SAINT.close();
+        }, 20000);
+        SAINT.state.lastOpenedAt = _autoCloseAt;
+      }
     },
 
     // ── Configuración (solo estructura, sin lógica activa aún) ──
