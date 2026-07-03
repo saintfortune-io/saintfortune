@@ -16240,6 +16240,11 @@ window.getAllTradingPlans = function() {
     var maxOps   = plan.maxOpsPerDay  || 1;
     var maxRisk  = plan.maxDailyRisk  || 2;
     var splitRisk = plan.splitRisk    || false;
+    // Riesgo asumido por operación (%), declarado en el plan. No tenemos SL
+    // real por trade desde el EA, así que este es el proxy: cada entrada real
+    // (sin agrupar por dirección — cada una arriesga algo específico) consume
+    // este % del riesgo diario, gane o pierda.
+    var riskPerOp = plan.riskPerOp    || 0;
     var balance  = (typeof accounts !== 'undefined' && accounts[acc])
                    ? (accounts[acc].balance || 0) : 0;
 
@@ -16270,7 +16275,21 @@ window.getAllTradingPlans = function() {
       }
 
       var dayLoss  = dayTrades.reduce(function(s,t){ return s + Math.min(parseFloat(t.pnl)||0, 0); }, 0);
-      var riskUsed = balance > 0 ? (Math.abs(dayLoss) / balance * 100) : null;
+      var realizedRiskUsed = balance > 0 ? (Math.abs(dayLoss) / balance * 100) : null;
+
+      // Riesgo por EXPOSICIÓN: cuánto se puso en juego al abrir, no cuánto se
+      // terminó perdiendo. Usa el conteo REAL de entradas (opsCount, no
+      // effectiveOps) porque cada entrada arriesga algo específico, ganó o
+      // no — agruparlas por dirección es válido para overtrading, no para
+      // cuánto capital estuvo expuesto.
+      var exposureRiskUsed = riskPerOp > 0 ? (opsCount * riskPerOp) : null;
+
+      // El riesgo "usado" del día es el mayor entre lo expuesto y lo
+      // realmente perdido, para nunca subestimar: si perdiste más de lo
+      // declarado por operación, eso también cuenta.
+      var riskUsed = (exposureRiskUsed !== null)
+        ? Math.max(exposureRiskUsed, realizedRiskUsed || 0)
+        : realizedRiskUsed;
 
       var opsViol  = effectiveOps > maxOps;
       var riskViol = riskUsed !== null && riskUsed > maxRisk;
@@ -16329,11 +16348,13 @@ window.getAllTradingPlans = function() {
 
       dayDetails.push({ date:date, ops:opsCount, effectiveOps:effectiveOps,
         opsViol:opsViol, riskViol:riskViol, riskUsed:riskUsed,
+        exposureRiskUsed:exposureRiskUsed, realizedRiskUsed:realizedRiskUsed,
         dayLoss:dayLoss, escalation:escalation, revenge:revenge,
         outOfSession:outOfSession, clean:isClean });
 
       if (opsViol)      violations.push({ type:'ops',     date:date, ops:opsCount, effOps:effectiveOps, max:maxOps, split:splitRisk });
-      if (riskViol)     violations.push({ type:'risk',    date:date, riskUsed:riskUsed, maxRisk:maxRisk, loss:dayLoss });
+      if (riskViol)     violations.push({ type:'risk',    date:date, riskUsed:riskUsed, maxRisk:maxRisk, loss:dayLoss,
+        byExposure: (exposureRiskUsed !== null && exposureRiskUsed >= (realizedRiskUsed||0)) });
       if (revenge)      violations.push({ type:'revenge', date:date, stops: dayTrades.filter(function(t){return (parseFloat(t.pnl)||0)<0;}).length });
       if (outOfSession) violations.push({ type:'session', date:date, count:outOfSession, declared:plan.sessions });
     });
@@ -17967,6 +17988,45 @@ async function sbPull(licKey) {
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
 
+// ── Puente Guardian(MT5) → SAINT ───────────────────────────────────
+// Guardian.ex5 ya escribe cada violación real en guardian_events (Supabase)
+// vía SendGuardianEventToSupabase() — best-effort, no bloquea su protección
+// local. Hasta ahora nadie en la web leía esa tabla, así que SAINT nunca se
+// enteraba de que Guardian había intervenido en MT5, aunque el trader ya
+// hubiera recibido la alerta nativa del terminal. Esto cierra ese hueco:
+// lee eventos nuevos (severity != info, para no molestar con "sync" o
+// "bloqueo liberado") y se los pasa a SAINT.trigger('guardian', ctx).
+const GUARDIAN_EVENTS_SEEN_KEY = 'sf_guardian_events_last_seen';
+
+async function sbPullGuardianEvents(licKey) {
+  if (!licKey || typeof SB_URL === 'undefined') return;
+  try {
+    const since = (typeof _lsGet === 'function' && _lsGet(GUARDIAN_EVENTS_SEEN_KEY)) || '1970-01-01T00:00:00.000Z';
+    const url = SB_URL + '/rest/v1/guardian_events'
+      + '?license_key=eq.' + encodeURIComponent(licKey)
+      + '&created_at=gt.' + encodeURIComponent(since)
+      + '&severity=neq.info'
+      + '&order=created_at.asc'
+      + '&limit=20'
+      + '&select=account,event_type,severity,message,position_closed,created_at';
+    const res = await fetch(url, { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } });
+    if (!res.ok) return;
+    const rows = await res.json();
+    if (!rows || !rows.length) return;
+
+    rows.forEach(function(ev) {
+      if (window.SAINT && typeof window.SAINT.trigger === 'function') {
+        window.SAINT.trigger('guardian', {
+          message: ev.message, account: ev.account, severity: ev.severity,
+          eventType: ev.event_type, positionClosed: ev.position_closed
+        });
+      }
+    });
+
+    if (typeof _lsSet === 'function') _lsSet(GUARDIAN_EVENTS_SEEN_KEY, rows[rows.length - 1].created_at);
+  } catch(e) { console.warn('SF Cloud: error al leer guardian_events', e); }
+}
+
 // ── Arranque: al iniciar sesión, sincroniza nube → local → UI ────
 function sfApplyCloudData() {
   try {
@@ -18000,12 +18060,16 @@ async function sbStartAutoSync(licKey) {
     }, 300);
   }
 
-  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos
+  // 1b. Revisar si Guardian dejó eventos pendientes de mostrar en SAINT
+  sbPullGuardianEvents(licKey);
+
+  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos Y revisar Guardian
   setInterval(async () => {
     await sbPush(licKey);
     // Después del push, hacer pull para detectar cambios de otra sesión
     const remotePulled = await sbPull(licKey);
     if (remotePulled) sfApplyCloudData();
+    sbPullGuardianEvents(licKey);
   }, 30000);
 
   // 3. Guardar al cerrar/cambiar pestaña
@@ -18432,7 +18496,12 @@ async function sbStartAutoSync(licKey) {
           }
           break;
         case 'guardian':
-          SAINT.say('Guardian ha intervenido.<br>Vamos a revisar qué ocurrió, sin juicio.', {tag:'Guardian'});
+          var _gMsg = (typeof window.saintGuardianMessage === 'function') ? window.saintGuardianMessage(ctx) : null;
+          if (_gMsg) {
+            SAINT.say(_gMsg.text, {tag: _gMsg.tag, tone: _gMsg.tone});
+          } else {
+            SAINT.say('Guardian tuvo que intervenir en tu cuenta.<br>Vamos a revisar qué ocurrió, sin juicio.', {tag:'Guardian'});
+          }
           break;
         case 'session_end':
           SAINT.say('Sesión cerrada.<br>¿Ejecutaste tu plan o la presión ganó hoy?', {tag:'Fin de sesión'});
@@ -19118,6 +19187,77 @@ async function sbStartAutoSync(licKey) {
     };
   }
   window.saintIntelMessage = saintIntelMessage;
+
+  // ── Puente de VOZ Guardian(MT5) → SAINT ──────────────────────────
+  // Guardian manda strings técnicos fijos (mismo formato que compone su
+  // .mq5: "Máximo de operaciones diarias superado (%d/%d)", "Riesgo de la
+  // operación (%.2f%%) supera ... (%.2f%%)", etc). En vez de leerle esa
+  // frase técnica al trader (para eso ya está el terminal de MT5), esto
+  // clasifica el mensaje a la MISMA taxonomía de reglas que usa
+  // Intelligence (ops/risk/session/revenge) y arma la frase con
+  // _saintIntelSingle — la voz de coach ya existente, con personalidad,
+  // exigencia y compromiso con el plan. Si el mensaje no matchea ninguna
+  // regla conocida (ej. tick-scalping, bloqueo de sesión), cae a un
+  // genérico que sigue respetando personalidad — nunca al texto crudo.
+  function _guardianClassifyRule(msg) {
+    var m = (msg || '').toLowerCase();
+    if (m.indexOf('operaciones diarias') >= 0 || m.indexOf('simultáneas') >= 0 ||
+        m.indexOf('tiempo mínimo entre operaciones') >= 0 || m.indexOf('cooldown tras ganancia') >= 0) return 'ops';
+    if (m.indexOf('riesgo') >= 0 || m.indexOf('pérdida flotante') >= 0 || m.indexOf('lotaje') >= 0) return 'risk';
+    if (m.indexOf('horario') >= 0) return 'session';
+    if (m.indexOf('cooldown tras pérdida') >= 0) return 'revenge';
+    return null;
+  }
+
+  // Best-effort: extrae los números que ya vienen en el string formateado
+  // por el EA, para poder rellenar {count}/{max}/{riskUsed} igual que
+  // Intelligence. Si el formato cambia y no matchea, _saintIntelSingle
+  // simplemente muestra '—' — nunca rompe el mensaje.
+  function _guardianExtractNumbers(rule, msg) {
+    var out = { count: null, max: null, riskUsed: null };
+    if (rule === 'ops') {
+      var m1 = (msg || '').match(/\((\d+)\s*\/\s*(\d+)\)/);
+      if (m1) { out.count = parseInt(m1[1], 10); out.max = parseInt(m1[2], 10); }
+    } else if (rule === 'risk') {
+      var pcts = (msg || '').match(/(\d+(?:[.,]\d+)?)\s*%/g);
+      if (pcts && pcts.length >= 2) {
+        out.riskUsed = parseFloat(pcts[0].replace(',', '.'));
+        out.max      = parseFloat(pcts[pcts.length - 1].replace(',', '.'));
+      } else if (pcts && pcts.length === 1) {
+        out.riskUsed = parseFloat(pcts[0].replace(',', '.'));
+      }
+    }
+    return out;
+  }
+
+  function saintGuardianMessage(ctx) {
+    if (!ctx || !ctx.message) return null;
+    var rule = _guardianClassifyRule(ctx.message);
+    // Guardian ya actuó (cerró posición o el evento vino con severidad
+    // crítica) = misma escalera que Intelligence: CONFIRMADA pesa más
+    // que un primer aviso (OBSERVADA).
+    var tier = (ctx.positionClosed || ctx.severity === 'critical') ? 'CONFIRMADA' : 'OBSERVADA';
+
+    if (rule && SAINT_INTEL_MESSAGES[rule] && SAINT_INTEL_MESSAGES[rule][tier]) {
+      var nums = _guardianExtractNumbers(rule, ctx.message);
+      var built = _saintIntelSingle({ rule: rule, state: tier, count: nums.count, max: nums.max, riskUsed: nums.riskUsed });
+      if (built) {
+        return { text: built.text + built.exSuffix, tag: SAINT_INTEL_TAGS[rule], tone: SAINT_INTEL_TONE[tier] };
+      }
+    }
+
+    // Sin mapeo claro a una regla conocida: mensaje genérico, pero con la
+    // misma voz (personalidad configurada), nunca el texto técnico crudo.
+    var p = SAINT.state.personalidad || 'directo';
+    var name = (SAINT.state.traderName || '').trim();
+    var GENERIC = {
+      directo:   'Guardian tuvo que intervenir en tu cuenta.<br>No importa esta operación — lo que importa es volver a tu plan ahora.',
+      cercano:   (name ? name + ', g' : 'G') + 'uardian tuvo que intervenir en tu cuenta.<br>No pasa nada — solo volvamos juntos al plan.',
+      analitico: 'Guardian ejecutó una intervención de protección sobre la cuenta.<br>Acción recomendada: retomar el plan declarado.'
+    };
+    return { text: GENERIC[p] || GENERIC.directo, tag: 'Guardian', tone: tier === 'CONFIRMADA' ? 'rojo' : 'amarillo' };
+  }
+  window.saintGuardianMessage = saintGuardianMessage;
 
   // ══════════════════════════════════════════════════════════════
   // MOTOR CONVERSACIONAL POR BLOQUES DE INTENCIÓN ("VOZ DE SAINT" /
