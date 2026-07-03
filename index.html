@@ -2521,7 +2521,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
     
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fuel-wrap">
-        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ 100%)</div>
+        <div class="fuel-title">⛽ Consistencia (mejor día ≤ 100%)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>100%</span><span style="margin-top:auto">0%</span></div>
           <div class="fuel-gauge-outer">
@@ -2532,9 +2532,9 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
           </div>
           <div class="fuel-info">
             <div class="fuel-pct" style="color:var(--green)">52.9%</div>
-            <div class="fuel-sub">del total es tu mejor trade</div>
+            <div class="fuel-sub">del total es tu mejor día</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">$54,6</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mejor día:</span><span class="fuel-item-val green">$54,6</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">$26,1</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">100%</span></div>
               <div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">$98,04</span></div>
@@ -5399,18 +5399,21 @@ function renderCFDFuel(acc, t, cfg, el) {
 
   const wins = activeEntries.filter(x=>x.result==='win');
   const totalPnl = activeEntries.reduce((s,x)=>s+x.pnl,0);
-  const bestPnl  = wins.length ? Math.max(...wins.map(x=>x.pnl)) : 0;
   const winsPnl  = wins.reduce((s,x)=>s+x.pnl,0);
-  const ratio    = winsPnl > 0 ? bestPnl / winsPnl : 0;
+
+  // Profitable days – grouped by date (used for BOTH the consistency ratio and the profitable-days card)
+  const byDate = {};
+  activeEntries.forEach(x=>{if(!byDate[x.date])byDate[x.date]=0;byDate[x.date]+=x.pnl;});
+  const profitableDayValues = Object.values(byDate).filter(v=>v>0);
+  const bestPnl  = profitableDayValues.length ? Math.max(...profitableDayValues) : 0; // mejor DÍA, no mejor trade
+  const profitableDaysPnl = profitableDayValues.reduce((s,v)=>s+v,0);
+  const ratio    = profitableDaysPnl > 0 ? bestPnl / profitableDaysPnl : 0;
   const hasConsistencyRule = cfg.maxBestTradeRatio !== null && cfg.maxBestTradeRatio !== undefined;
   const maxRatio = hasConsistencyRule ? cfg.maxBestTradeRatio : 1;
   const consOk   = hasConsistencyRule ? ratio <= maxRatio : true;
   const gaugePct = hasConsistencyRule ? Math.min(100, ratio / maxRatio * 100) : 0;
   const gaugeColor = gaugePct >= 90 ? 'var(--red)' : gaugePct >= 70 ? 'var(--amber)' : 'var(--green)';
 
-  // Profitable days – use activeEntries only
-  const byDate = {};
-  activeEntries.forEach(x=>{if(!byDate[x.date])byDate[x.date]=0;byDate[x.date]+=x.pnl;});
   const minDailyPnl = (cfg.balance||100000)*(cfg.minDailyProfit||0.5)/100;
   const profDays = Object.values(byDate).filter(v=>v>=minDailyPnl).length;
   const minDays  = cfg.minProfitDays || 5;
@@ -5471,7 +5474,7 @@ function renderCFDFuel(acc, t, cfg, el) {
     ${evalProgress}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fuel-wrap">
-        <div class="fuel-title">⛽ Consistencia (mejor trade ≤ ${(maxRatio*100).toFixed(0)}%)</div>
+        <div class="fuel-title">⛽ Consistencia (mejor día ≤ ${(maxRatio*100).toFixed(0)}%)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>100%</span><span style="margin-top:auto">0%</span></div>
           <div class="fuel-gauge-outer">
@@ -5482,10 +5485,10 @@ function renderCFDFuel(acc, t, cfg, el) {
           </div>
           <div class="fuel-info">
             <div class="fuel-pct" style="color:${gaugeColor}">${(ratio*100).toFixed(1)}%</div>
-            <div class="fuel-sub">del total es tu mejor trade</div>
+            <div class="fuel-sub">del total es tu mejor día</div>
             <div class="fuel-items">
-              <div class="fuel-item"><span class="fuel-item-label">Mejor trade:</span><span class="fuel-item-val green">${fmtUSD(bestPnl)}</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Total wins:</span><span class="fuel-item-val">${fmtUSD(totalPnl)}</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mejor día:</span><span class="fuel-item-val green">${fmtUSD(bestPnl)}</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Total días ganadores:</span><span class="fuel-item-val">${fmtUSD(profitableDaysPnl)}</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">${(maxRatio*100).toFixed(0)}%</span></div>
               ${!isEval?`<div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">${fmtUSD(payout)}</span></div>`:''}
             </div>
@@ -5879,7 +5882,7 @@ function renderParamsContent(acc, cfg) {
         <div class="form-group"><label class="form-label">📅 Días rentables mín</label>
           <input class="form-input" type="number" id="p-mindays" value="${cfg.minProfitDays||5}" step="1">
         </div>
-        <div class="form-group"><label class="form-label">% Consistencia (mejor trade)</label>
+        <div class="form-group"><label class="form-label">% Consistencia (mejor día)</label>
           <input class="form-input" type="number" id="p-consistency" value="${((cfg.maxBestTradeRatio||0.20)*100).toFixed(0)}" step="1" placeholder="20">
         </div>
       </div>
@@ -17277,6 +17280,7 @@ function _ie3Cap(str) {
       return {
         rule: 'ops', state: 'OBSERVADA', date: today,
         count: todayDetail.effectiveOps, max: null,
+        repeatCount: 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17287,15 +17291,34 @@ function _ie3Cap(str) {
       return {
         rule: 'ops', state: 'CONFIRMADA', date: today,
         count: todayDetail.effectiveOps, max: prev.max,
+        repeatCount: 2, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
 
-    // Sigue igual (misma cuenta de operaciones ya vista) — no hay transición,
-    // pero se refresca el contador para no perder la última lectura real.
+    // ── Ya estaba CONFIRMADA: antes esto se apagaba para el resto del día
+    //    (SAINT dejaba de hablar aunque siguieran entrando operaciones
+    //    fuera del plan). Ahora, si entró una operación nueva desde el
+    //    último aviso (mismo criterio que arriba: todayDetail.ops, el
+    //    conteo bruto del día, creció respecto al snapshot guardado),
+    //    se vuelve a transicionar -mismo estado CONFIRMADA, pero con
+    //    repeatCount incrementado- para que SAINT siga presente.
+    if (prev.state === 'CONFIRMADA' && todayDetail.ops > (prev.opsSnapshot || 0)) {
+      return {
+        rule: 'ops', state: 'CONFIRMADA', date: today,
+        count: todayDetail.effectiveOps, max: prev.max,
+        repeatCount: (prev.repeatCount || 2) + 1, opsSnapshot: todayDetail.ops,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Sigue igual (ninguna operación nueva desde el último aviso) — no hay
+    // transición, pero se refresca el contador para no perder la última
+    // lectura real.
     return {
       rule: 'ops', state: prev.state, date: today,
       count: todayDetail.effectiveOps, max: prev.max,
+      repeatCount: prev.repeatCount, opsSnapshot: prev.opsSnapshot,
       transitioned: false, updatedAt: Date.now()
     };
   }
@@ -17328,6 +17351,7 @@ function _ie3Cap(str) {
       return {
         rule: 'risk', state: 'OBSERVADA', date: today,
         riskUsed: todayDetail.riskUsed, max: null,
+        repeatCount: 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17338,14 +17362,30 @@ function _ie3Cap(str) {
       return {
         rule: 'risk', state: 'CONFIRMADA', date: today,
         riskUsed: todayDetail.riskUsed, max: prev.max,
+        repeatCount: 2, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
 
-    // Ya estaba CONFIRMADA: se refresca el % sin volver a emitir evento.
+    // ── Ya estaba CONFIRMADA: antes se apagaba acá para el resto del día.
+    //    Ahora, si entró una operación nueva (todayDetail.ops creció desde
+    //    el último aviso), se vuelve a transicionar con repeatCount
+    //    incrementado -mismo criterio que en overtrading-.
+    if (prev.state === 'CONFIRMADA' && todayDetail.ops > (prev.opsSnapshot || 0)) {
+      return {
+        rule: 'risk', state: 'CONFIRMADA', date: today,
+        riskUsed: todayDetail.riskUsed, max: prev.max,
+        repeatCount: (prev.repeatCount || 2) + 1, opsSnapshot: todayDetail.ops,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // Ya estaba CONFIRMADA y no entró operación nueva: se refresca el %
+    // sin volver a emitir evento.
     return {
       rule: 'risk', state: prev.state, date: today,
       riskUsed: todayDetail.riskUsed, max: prev.max,
+      repeatCount: prev.repeatCount, opsSnapshot: prev.opsSnapshot,
       transitioned: false, updatedAt: Date.now()
     };
   }
@@ -17382,6 +17422,7 @@ function _ie3Cap(str) {
       return {
         rule: 'session', state: 'OBSERVADA', date: today,
         count: todayDetail.outOfSession, sessions: null,
+        repeatCount: 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17392,6 +17433,19 @@ function _ie3Cap(str) {
       return {
         rule: 'session', state: 'CONFIRMADA', date: today,
         count: todayDetail.outOfSession, sessions: prev.sessions,
+        repeatCount: 2, opsSnapshot: todayDetail.ops,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // ── Ya estaba CONFIRMADA: antes se apagaba acá para el resto del día.
+    //    Mismo criterio que overtrading/riesgo: si entró una operación
+    //    nueva, se vuelve a transicionar con repeatCount incrementado.
+    if (prev.state === 'CONFIRMADA' && todayDetail.ops > (prev.opsSnapshot || 0)) {
+      return {
+        rule: 'session', state: 'CONFIRMADA', date: today,
+        count: todayDetail.outOfSession, sessions: prev.sessions,
+        repeatCount: (prev.repeatCount || 2) + 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17400,6 +17454,7 @@ function _ie3Cap(str) {
     return {
       rule: 'session', state: prev.state, date: today,
       count: todayDetail.outOfSession, sessions: prev.sessions,
+      repeatCount: prev.repeatCount, opsSnapshot: prev.opsSnapshot,
       transitioned: false, updatedAt: Date.now()
     };
   }
@@ -17432,6 +17487,7 @@ function _ie3Cap(str) {
     if (!prev || prev.date !== today) {
       return {
         rule: 'escalation', state: 'OBSERVADA', date: today,
+        repeatCount: 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17439,21 +17495,47 @@ function _ie3Cap(str) {
     if (prev.state === 'OBSERVADA') {
       return {
         rule: 'escalation', state: 'CONFIRMADA', date: today,
+        repeatCount: 2, opsSnapshot: todayDetail.ops,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // ── Ya estaba CONFIRMADA: mismo criterio que las demás reglas — si
+    //    entró una operación nueva, vuelve a transicionar con repeatCount
+    //    incrementado, en vez de apagarse para el resto del día.
+    if (prev.state === 'CONFIRMADA' && todayDetail.ops > (prev.opsSnapshot || 0)) {
+      return {
+        rule: 'escalation', state: 'CONFIRMADA', date: today,
+        repeatCount: (prev.repeatCount || 2) + 1, opsSnapshot: todayDetail.ops,
         transitioned: true, updatedAt: Date.now()
       };
     }
 
     return {
       rule: 'escalation', state: prev.state, date: today,
+      repeatCount: prev.repeatCount, opsSnapshot: prev.opsSnapshot,
       transitioned: false, updatedAt: Date.now()
     };
+  }
+
+  // ── Espejo con datos reales: costo histórico de tus propios episodios de
+  //    revenge trading (excluyendo el día de hoy, que es el que se está
+  //    evaluando). dayLoss ya viene calculado por _cdAnalyze como la suma
+  //    de las operaciones perdedoras de ese día — no se recalcula nada acá,
+  //    solo se agrega sobre días ya marcados revenge:true.
+  function _intelComputeRevengeHistory(dayDetails, today) {
+    if (!dayDetails || !dayDetails.length) return null;
+    var past = dayDetails.filter(function(d) { return d.revenge && d.date !== today; });
+    if (!past.length) return null;
+    var totalLoss = past.reduce(function(s, d) { return s + (d.dayLoss || 0); }, 0);
+    return { count: past.length, avgLoss: totalLoss / past.length };
   }
 
   // ── Evalúa el estado de UNA desviación (revenge trading) ───────────────────
   // Mismo patrón sí/no que riesgo y escalación. Reutiliza dayDetail.revenge
   // (booleano ya calculado por _cdAnalyze: 2+ pérdidas seguidas con entrada
   // rápida de tamaño igual o mayor, o 3+ stops seguidos en el día).
-  function _intelEvaluateRevenge(today, todayDetail, prev) {
+  function _intelEvaluateRevenge(today, todayDetail, prev, history) {
     var isCorrectionCandidate = prev && (prev.state === 'OBSERVADA' || prev.state === 'CONFIRMADA')
       && prev.date !== today;
 
@@ -17469,6 +17551,7 @@ function _ie3Cap(str) {
     if (!prev || prev.date !== today) {
       return {
         rule: 'revenge', state: 'OBSERVADA', date: today,
+        repeatCount: 1, opsSnapshot: todayDetail.ops, historyStat: history,
         transitioned: true, updatedAt: Date.now()
       };
     }
@@ -17476,12 +17559,23 @@ function _ie3Cap(str) {
     if (prev.state === 'OBSERVADA') {
       return {
         rule: 'revenge', state: 'CONFIRMADA', date: today,
+        repeatCount: 2, opsSnapshot: todayDetail.ops, historyStat: history,
+        transitioned: true, updatedAt: Date.now()
+      };
+    }
+
+    // ── Ya estaba CONFIRMADA: mismo criterio que las demás reglas.
+    if (prev.state === 'CONFIRMADA' && todayDetail.ops > (prev.opsSnapshot || 0)) {
+      return {
+        rule: 'revenge', state: 'CONFIRMADA', date: today,
+        repeatCount: (prev.repeatCount || 2) + 1, opsSnapshot: todayDetail.ops, historyStat: history,
         transitioned: true, updatedAt: Date.now()
       };
     }
 
     return {
       rule: 'revenge', state: prev.state, date: today,
+      repeatCount: prev.repeatCount, opsSnapshot: prev.opsSnapshot, historyStat: history,
       transitioned: false, updatedAt: Date.now()
     };
   }
@@ -17608,7 +17702,8 @@ function _ie3Cap(str) {
         changed = true;
       }
 
-      var nextRevenge = _intelEvaluateRevenge(today, todayDetail, accState.revenge);
+      var revengeHistory = _intelComputeRevengeHistory(r.dayDetails, today);
+      var nextRevenge = _intelEvaluateRevenge(today, todayDetail, accState.revenge, revengeHistory);
       if (nextRevenge) {
         accState.revenge = nextRevenge;
         changed = true;
@@ -18850,9 +18945,9 @@ async function sbStartAutoSync(licKey) {
     //    dato, mismo cálculo (saintDeriveSemaforo) — solo que ahora se
     //    comunica antes de seguir al checklist.
     semaforo_verde: {
-      directo:   '🟢 Semáforo en verde. Operativa normal — vamos con el checklist.',
-      cercano:   '🟢 Estás en verde, {name}. Buen punto de partida — seguimos con el checklist.',
-      analitico: '🟢 Semáforo: verde. Condición óptima para operar. Continuamos con el checklist.'
+      directo:   '🟢 Semáforo en verde. Operativa normal — estás listo.',
+      cercano:   '🟢 Estás en verde, {name}. Buen punto de partida — vamos con todo.',
+      analitico: '🟢 Semáforo: verde. Condición óptima para operar.'
     },
     semaforo_amarillo: {
       directo:   '🟡 Semáforo en amarillo. Precaución — opera con cuidado hoy.',
@@ -19033,14 +19128,14 @@ async function sbStartAutoSync(licKey) {
     },
     revenge: {
       OBSERVADA: {
-        directo:   'Esto tiene forma de revancha contra el mercado, no de tu sistema.<br>Para acá — la próxima entrada espera a que vuelvas al plan.',
-        cercano:   '{name}, después de esas pérdidas seguidas, esta entrada se siente más de urgencia que de plan.<br>Tomate un minuto antes de la siguiente.',
-        analitico: 'Patrón compatible con revenge trading: pérdidas consecutivas con entrada inmediata.<br>Se recomienda una pausa antes de la próxima operación.'
+        directo:   'Esto tiene forma de revancha contra el mercado, no de tu sistema.<br>Para acá — la próxima entrada espera a que vuelvas al plan.{mirrorLine}',
+        cercano:   '{name}, después de esas pérdidas seguidas, esta entrada se siente más de urgencia que de plan.<br>Tomate un minuto antes de la siguiente.{mirrorLine}',
+        analitico: 'Patrón compatible con revenge trading: pérdidas consecutivas con entrada inmediata.<br>Se recomienda una pausa antes de la próxima operación.{mirrorLine}'
       },
       CONFIRMADA: {
-        directo:   'Sigue el mismo patrón — entrar rápido después de perder.<br>Cierra la plataforma. Hoy el objetivo es proteger la cuenta, no la revancha.',
-        cercano:   '{name}, esto ya se repitió dos veces — perder y volver a entrar de inmediato.<br>Paremos acá hoy. Mañana el sistema sigue intacto.',
-        analitico: 'Patrón de revenge trading confirmado tras una segunda repetición.<br>Recomendación: detener la operativa del día — el sistema se retoma en la próxima sesión.'
+        directo:   'Sigue el mismo patrón — entrar rápido después de perder.<br>Cierra la plataforma. Hoy el objetivo es proteger la cuenta, no la revancha.{mirrorLine}',
+        cercano:   '{name}, esto ya se repitió dos veces — perder y volver a entrar de inmediato.<br>Paremos acá hoy. Mañana el sistema sigue intacto.{mirrorLine}',
+        analitico: 'Patrón de revenge trading confirmado tras una segunda repetición.<br>Recomendación: detener la operativa del día — el sistema se retoma en la próxima sesión.{mirrorLine}'
       },
       CORREGIDA: {
         directo:   'Hoy, después de perder, no forzaste una entrada de revancha.{streakLine}<br>Eso es lo que protege una cuenta a largo plazo.',
@@ -19107,6 +19202,20 @@ async function sbStartAutoSync(licKey) {
     } catch(e){ return ''; }
   }
 
+  // ── Espejo: mismo criterio que _intelStreakLine, pero en negativo y con
+  //    tu propio historial de revenge trading como prueba, no una frase
+  //    motivacional. Solo se agrega si hay al menos 1 episodio anterior
+  //    real que mostrar — si no hay historial, no fuerza una línea vacía.
+  function _intelMirrorLine(item){
+    try {
+      var h = item && item.historyStat;
+      if (!h || !h.count) return '';
+      var avg = (typeof fmtUSD === 'function') ? fmtUSD(Math.abs(h.avgLoss)) : ('$' + Math.abs(h.avgLoss).toFixed(0));
+      if (h.count === 1) return ' La última vez que esto pasó, terminaste perdiendo ' + avg + ' ese día.';
+      return ' Las últimas ' + h.count + ' veces que esto pasó, terminaste perdiendo en promedio ' + avg + ' por día.';
+    } catch(e){ return ''; }
+  }
+
   // ── Cláusulas cortas de contexto — se usan cuando hay MÁS de una cosa
   //    activa el mismo día. No repiten la desviación como si fuera un
   //    ítem de checklist: se suman a la frase principal como una segunda
@@ -19129,17 +19238,37 @@ async function sbStartAutoSync(licKey) {
     revenge:    ' También supiste parar sin buscar revancha.'
   };
 
+  // ── A partir de la 3ª vez que se repite la misma desviación en el día
+  //    (repeatCount >= 3), en vez de repetir el texto fijo de CONFIRMADA
+  //    -que es lo que el trader reportó como "el mismo mensaje"- se
+  //    compone con SAINT_BLOCKS (mismos bloques que ya usa el resto de
+  //    SAINT) para que cada repetición vuelva a sonar a coach y no a
+  //    copy-paste. Genérico entre las 5 reglas a propósito, mismo criterio
+  //    que SAINT_INTEL_CONTEXT_CLAUSES: el tag de la tarjeta (SAINT_INTEL_TAGS)
+  //    ya deja claro de qué regla se trata, no hace falta repetirlo acá.
+  function _saintIntelPersistText(item){
+    var intro = 'Van ' + item.repeatCount + ' veces hoy que esto se repite.';
+    if (item.rule === 'revenge') intro += _intelMirrorLine(item);
+    var body = (typeof saintComposeBlocks === 'function') ? saintComposeBlocks(['validar', 'reenfocar', 'preparar']) : '';
+    return body ? (intro + '<br>' + body) : intro;
+  }
+
   // ── Arma la frase completa (voz + personalidad + exigencia) para UN
   //    ítem. Es el mismo texto de siempre — solo se separó del armado
   //    del mensaje final para poder usarlo como base y sumarle contexto.
   function _saintIntelSingle(item){
-    var ruleSet = SAINT_INTEL_MESSAGES[item.rule];
-    var stateSet = ruleSet && ruleSet[item.state];
-    if (!stateSet) return null;
     var p = SAINT.state.personalidad || 'directo';
     var ex = SAINT.state.exigencia || 'equilibrado';
-    var txt = stateSet[p] || stateSet.directo || '';
-    if (!txt) return null;
+    var txt;
+    if (item.state === 'CONFIRMADA' && (item.repeatCount || 0) >= 3) {
+      txt = _saintIntelPersistText(item);
+    } else {
+      var ruleSet = SAINT_INTEL_MESSAGES[item.rule];
+      var stateSet = ruleSet && ruleSet[item.state];
+      if (!stateSet) return null;
+      txt = stateSet[p] || stateSet.directo || '';
+      if (!txt) return null;
+    }
     var name = (SAINT.state.traderName || '').trim();
     var bot = SAINT.state.name || 'SAINT';
     txt = txt.replace(/\{name\}/g, name || 'trader').replace(/\{bot\}/g, bot);
@@ -19147,6 +19276,7 @@ async function sbStartAutoSync(licKey) {
     txt = txt.replace(/\{max\}/g, (item.rule === 'risk') ? _intelFmtPct(item.max) : ((item.max === null || item.max === undefined) ? '—' : item.max));
     txt = txt.replace(/\{riskUsed\}/g, _intelFmtPct(item.riskUsed));
     txt = txt.replace(/\{streakLine\}/g, (item.state === 'CORREGIDA') ? _intelStreakLine() : '');
+    txt = txt.replace(/\{mirrorLine\}/g, (item.rule === 'revenge') ? _intelMirrorLine(item) : '');
     return { text: txt, exSuffix: (SAINT_INTEL_EXIGENCIA_SUFFIX[item.state] || {})[ex] || '' };
   }
 
@@ -20014,7 +20144,29 @@ async function sbStartAutoSync(licKey) {
   }
 
   function saintIntroChecklist(){
-    SAINT.say(saintPick('checklist_intro'), {tag:'Preparación'});
+    // ── Humanizar el arranque del checklist (aditivo, misma
+    //    infraestructura de siempre): si el trader llegó marcando algo
+    //    en amarillo/rojo, SAINT lo reconoce antes de seguir (bloque
+    //    'validar') en vez de saltar directo a la lista de preguntas.
+    //    En días verdes no se agrega nada extra a propósito — no todo
+    //    día necesita el mismo peso.
+    var parts = [];
+    var emoColor = (typeof _saintEmoColor === 'function') ? _saintEmoColor() : null;
+    if (emoColor === 'rojo' || emoColor === 'amarillo') {
+      var ackBlock = saintPickBlock('validar');
+      if (ackBlock) parts.push(ackBlock);
+    }
+    parts.push(saintPick('checklist_intro'));
+    // ── Contexto de por qué importa el checklist HOY puntualmente: usa
+    //    el mismo foco derivado que ya calcula _saintDeriveFocus() para
+    //    la intención del día (routine prep) — no se inventa un cálculo
+    //    nuevo, solo se reutiliza acá también.
+    var profile = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+    var focus = (typeof _saintDeriveFocus === 'function') ? _saintDeriveFocus(profile) : 'disciplina';
+    var focusLabel = (SAINT_FOCUS_LABELS && SAINT_FOCUS_LABELS[focus]) || 'disciplina';
+    var focusBlock = saintPickBlock('proteger', {focus: focusLabel.toLowerCase()});
+    if (focusBlock) parts.push(focusBlock);
+    SAINT.say(parts.join('<br>'), {tag:'Preparación'});
     var boxes = Array.prototype.slice.call(document.querySelectorAll('#coach-prep-checks input[type=checkbox]'));
     _saintPrep.checklistKeys = boxes.map(function(b){ return b.dataset.prep; });
     _saintPrep.checklistIdx = 0;
@@ -20061,6 +20213,14 @@ async function sbStartAutoSync(licKey) {
     var semKey = semColor === 'rojo' ? 'semaforo_rojo' : semColor === 'amarillo' ? 'semaforo_amarillo' : semColor === 'verde' ? 'semaforo_verde' : null;
     var finishMsg = saintPick('finish');
     if (semKey) finishMsg += '<br>' + saintPick(semKey);
+    // ── Cierre con propósito (aditivo, mismos bloques de siempre): si
+    //    completó el checklist sin ningún "No", se refuerza que ya es
+    //    parte de su sistema; si hubo al menos un "No", se reenfoca sin
+    //    juicio -nunca el resultado de la sesión, solo el checklist de
+    //    hoy-. Reemplaza el salto directo y seco al semáforo/racha.
+    var noCount = _saintPrep.checklistNoCount || 0;
+    var closingBlock = (noCount === 0) ? saintPickBlock('reforzar') : saintPickBlock('reenfocar');
+    if (closingBlock) finishMsg += '<br>' + closingBlock;
     var streakLine = _saintStreakLine();
     if (streakLine) finishMsg += '<br>' + streakLine;
     SAINT.say(finishMsg, {tag:'Listo', tone: semColor});
