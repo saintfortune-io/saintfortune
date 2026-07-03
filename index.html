@@ -5407,18 +5407,37 @@ function renderCFDFuel(acc, t, cfg, el) {
   const profitableDayValues = Object.values(byDate).filter(v=>v>0);
   const bestPnl  = profitableDayValues.length ? Math.max(...profitableDayValues) : 0; // mejor DÍA, no mejor trade
   const profitableDaysPnl = profitableDayValues.reduce((s,v)=>s+v,0);
-  const ratio    = profitableDaysPnl > 0 ? bestPnl / profitableDaysPnl : 0;
+
+  // CONDICIÓN 1 — Consistencia: el mejor día no puede representar más de X% del
+  // P&L NETO total (no de la suma de solo los días ganadores, porque eso ignora
+  // las pérdidas y falsea el ratio a favor del trader).
+  const ratio    = totalPnl > 0 ? bestPnl / totalPnl : 0;
   const hasConsistencyRule = cfg.maxBestTradeRatio !== null && cfg.maxBestTradeRatio !== undefined;
   const maxRatio = hasConsistencyRule ? cfg.maxBestTradeRatio : 1;
   const consOk   = hasConsistencyRule ? ratio <= maxRatio : true;
   const gaugePct = hasConsistencyRule ? Math.min(100, ratio / maxRatio * 100) : 0;
   const gaugeColor = gaugePct >= 90 ? 'var(--red)' : gaugePct >= 70 ? 'var(--amber)' : 'var(--green)';
 
-  const minDailyPnl = (cfg.balance||100000)*(cfg.minDailyProfit||0.5)/100;
-  const profDays = Object.values(byDate).filter(v=>v>=minDailyPnl).length;
+  // CONDICIÓN 2 — Días rentables mínimos: cada día cuenta solo si su P&L es ≥ X%
+  // del SALDO DEL DÍA ANTERIOR (saldo acumulado real, día a día), no un monto fijo
+  // calculado una sola vez sobre el balance inicial de la cuenta.
+  const minDailyPct = (cfg.minDailyProfit !== null && cfg.minDailyProfit !== undefined) ? cfg.minDailyProfit : 0.5;
+  const sortedDates = Object.keys(byDate).sort();
+  let runningBalance = cfg.balance || 100000;
+  let profDays = 0;
+  let todayMinDailyPnl = runningBalance * minDailyPct / 100;
+  sortedDates.forEach(d=>{
+    const dayPnl = byDate[d];
+    const threshold = runningBalance * minDailyPct / 100;
+    todayMinDailyPnl = threshold; // umbral vigente (se muestra en la UI = el del día más reciente)
+    if(dayPnl >= threshold) profDays++;
+    runningBalance += dayPnl; // el saldo avanza para que el siguiente día compare contra el saldo real
+  });
+  const minDailyPnl = todayMinDailyPnl;
   const minDays  = cfg.minProfitDays || 5;
   const daysOk   = profDays >= minDays;
   const payout   = winsPnl * ((cfg.payoutPct||95)/100);
+  // Cobro habilitado exige AMBAS condiciones — ninguna reemplaza a la otra.
   const cobroOk  = consOk && daysOk;
 
   // For EVAL subtypes, don't show cobro
@@ -5488,7 +5507,7 @@ function renderCFDFuel(acc, t, cfg, el) {
             <div class="fuel-sub">del total es tu mejor día</div>
             <div class="fuel-items">
               <div class="fuel-item"><span class="fuel-item-label">Mejor día:</span><span class="fuel-item-val green">${fmtUSD(bestPnl)}</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Total días ganadores:</span><span class="fuel-item-val">${fmtUSD(profitableDaysPnl)}</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Total neto (P&amp;L):</span><span class="fuel-item-val">${fmtUSD(totalPnl)}</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Límite máx:</span><span class="fuel-item-val amber">${(maxRatio*100).toFixed(0)}%</span></div>
               ${!isEval?`<div class="fuel-item"><span class="fuel-item-label">A retirar:</span><span class="fuel-item-val blue">${fmtUSD(payout)}</span></div>`:''}
             </div>
@@ -5497,7 +5516,7 @@ function renderCFDFuel(acc, t, cfg, el) {
         </div>
       </div>
       <div class="fuel-wrap">
-        <div class="fuel-title">📅 Días rentables (mín ${minDays} con ≥$${minDailyPnl.toFixed(0)}/día)</div>
+        <div class="fuel-title">📅 Días rentables (mín ${minDays} con ≥${minDailyPct}% del saldo del día anterior)</div>
         <div class="fuel-bar-wrap">
           <div class="fuel-labels"><span>${minDays}</span><span style="margin-top:auto">0</span></div>
           <div class="fuel-gauge-outer">
@@ -5508,7 +5527,7 @@ function renderCFDFuel(acc, t, cfg, el) {
             <div class="fuel-sub">de ${minDays} días requeridos</div>
             <div class="fuel-items">
               <div class="fuel-item"><span class="fuel-item-label">Progreso:</span><span class="fuel-item-val">${profDays} / ${minDays}</span></div>
-              <div class="fuel-item"><span class="fuel-item-label">Mín/día:</span><span class="fuel-item-val green">${fmtUSD(minDailyPnl)}</span></div>
+              <div class="fuel-item"><span class="fuel-item-label">Mín/día (vigente):</span><span class="fuel-item-val green">${fmtUSD(minDailyPnl)}</span></div>
               <div class="fuel-item"><span class="fuel-item-label">Max DD:</span><span class="fuel-item-val red">-${cfg.maxDD||6}%</span></div>
               <div class="fuel-item"><span class="fuel-item-label">SL máx/día:</span><span class="fuel-item-val amber">-${cfg.dailySL||1}%</span></div>
             </div>
@@ -18694,59 +18713,59 @@ async function sbStartAutoSync(licKey) {
     // naturaleza — plantea el propósito del sistema y pasa directo a
     // conocer al trader (segunda mitad del flujo: saintAskTraderName).
     greeting_first: {
-      directo:   'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>No se trata de una estrategia nueva — se trata de ejecutar la tuya con máxima disciplina y enfoque.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.',
+      directo:   'SAINT · Comandante de Rendimiento.<br>Aquí se entrena el criterio, se protege la disciplina, se forja la consistencia — sin excusas.<br><br>Bienvenido a Treyuder.<br>Hoy se abre el frente: la construcción de tu sistema operativo como Treyuder Elite empieza ahora, no mañana.<br>No necesitas una estrategia nueva — necesitas ejecutar la tuya con disciplina de acero y fuego por dentro.<br>Vamos a construir tu imperio, ladrillo a ladrillo, sesión a sesión.<br>Antes de dar la orden de marcha, vamos a conocerte.',
       cercano:   'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy empieza la construcción de tu sistema operativo como Treyuder Elite.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya, con disciplina y enfoque, cuando aparezca la presión.<br>Vamos a construir tu imperio, juntos.<br>Antes de avanzar, vamos a conocerte.',
       analitico: 'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con máxima disciplina y enfoque, medible sesión a sesión.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.'
     },
     // Se dice justo después de que el trader confirma (o no) su nombre.
     // Cierra el primer contacto y da paso a los quick replies.
     onboarded_confirm: {
-      directo:   'Bien, {name}.<br>Desde ahora, cada sesión que abras aquí fortalece tu sistema.',
+      directo:   'Recibido, {name}.<br>A partir de ahora cada sesión que abras es un ladrillo más en tu sistema — nadie construye un imperio de un solo golpe.',
       cercano:   'Bien, {name}.<br>Vamos a construir esto juntos, sesión a sesión.',
       analitico: 'Registrado, {name}.<br>Cada sesión queda documentada dentro de tu sistema.'
     },
     prep_start: {
-      directo:   '{name}, tu sesión comienza en breve.<br>Vamos a prepararnos, como antes de una carrera.',
+      directo:   '{name}, tu sesión arranca en breve.<br>Formación ya — nos preparamos como antes de la batalla, con la cabeza encendida y el plan grabado.',
       cercano:   '{name}, antes de tu sesión, vamos a prepararnos juntos, con la calma de un buen calentamiento.',
       analitico: '{name}, antes de operar, revisamos estado y checklist.<br>Todo protocolo de alto rendimiento empieza así.'
     },
     emo_question: {
-      directo:   '¿Cómo llegas hoy?',
+      directo:   '¿Con qué estado te presentas hoy?',
       cercano:   '{name}, ¿cómo llegas hoy?',
       analitico: '¿Cuál describe mejor tu estado actual?'
     },
     emo_confirm: {
-      directo:   'Registrado.',
+      directo:   'Registrado. En marcha.',
       cercano:   'Gracias por contármelo.',
       analitico: 'Dato registrado.'
     },
     checklist_intro: {
-      directo:   'Antes de arrancar, confirmamos que todo esté en orden — como revisar el auto antes de salir a pista.',
+      directo:   'Antes de arrancar, inspección completa — como revisar cada equipo antes de salir a operación. Todo en orden, o no salimos.',
       cercano:   'Ahora revisamos juntos, con calma, que todo esté listo para empezar.',
       analitico: 'Verificación de los 6 puntos de proceso — tu checklist previo a la sesión.'
     },
     finish: {
-      directo:   'Tu preparación ha terminado.<br>Confía en tu sistema — es lo que te sostiene hoy.',
+      directo:   'Preparación completa.<br>Confía en tu sistema como confías en tu entrenamiento — es lo único que te sostiene cuando el mercado aprieta.',
       cercano:   'Estás listo, {name}.<br>Confía en el proceso — nos vemos al cerrar la sesión.',
       analitico: 'Preparación completa. Checklist al 100%.<br>Análisis disponible al cierre de sesión.'
     },
     insight_reflect: {
-      directo:   'Tu sistema también muestra esto: {insight}',
+      directo:   'Tu sistema también reporta esto, y se escucha: {insight}',
       cercano:   '{name}, tu sistema viene mostrando esto: {insight}',
       analitico: 'Dato adicional de tu perfil: {insight}'
     },
     routine_intro: {
-      directo:   'Vamos a construir tu rutina.<br>Esto no toca tu estrategia, tu riesgo ni tus cuentas.<br>Solo organiza cuándo te acompaño cada día.',
+      directo:   'Vamos a construir tu rutina.<br>Esto no toca tu estrategia, tu riesgo ni tus cuentas — es la logística, no la misión.<br>Solo define cuándo estoy en formación contigo cada día.',
       cercano:   'Vamos a construir tu rutina juntos.<br>Esto no cambia tu estrategia ni tu forma de operar.<br>Solo define cuándo aparezco para prepararte.',
       analitico: 'Vamos a definir tu rutina operativa.<br>No afecta estrategia, riesgo ni cuentas.<br>Solo estructura cuándo se activa tu preparación.'
     },
     routine_finish: {
-      directo:   'Rutina guardada, {name}.<br>Ya sé cuándo acompañarte.<br>Nos vemos antes de tu próxima sesión.',
+      directo:   'Rutina guardada, {name}.<br>Ya sé cuándo presentarme.<br>Nos vemos antes de tu próxima sesión — puntual, sin excusas.',
       cercano:   'Listo, {name}.<br>Tu rutina quedó guardada.<br>Nos vemos antes de tu próxima sesión.',
       analitico: 'Rutina registrada, {name}.<br>Horarios sincronizados.<br>Verificación automática antes de cada sesión.'
     },
     routine_prep_trigger: {
-      directo:   '{name}, faltan {minutes} minutos para tu sesión de {session}.<br>Vamos a prepararnos.',
+      directo:   '{name}, faltan {minutes} minutos para {session}.<br>Cuenta regresiva activada — vamos a prepararnos con toda la intensidad que esto merece.',
       cercano:   '{name}, tu sesión de {session} empieza en {minutes} minutos.<br>Vamos a prepararnos con calma.',
       analitico: 'Faltan {minutes} minutos para tu sesión de {session}, {name}.<br>Inicio del proceso de preparación.'
     },
@@ -18754,62 +18773,62 @@ async function sbStartAutoSync(licKey) {
     //    cero (y perder lo que no se vuelva a seleccionar), se pregunta
     //    directo qué se quiere hacer.
     routine_menu_intro: {
-      directo:   'Tu rutina ya está guardada.<br>¿Qué quieres hacer?',
+      directo:   'Tu rutina ya está guardada y operativa. ¿Cuál es la orden?',
       cercano:   '{name}, tu rutina ya está guardada.<br>¿Qué te gustaría ajustar?',
       analitico: 'Rutina ya configurada.<br>Selecciona la acción a realizar.'
     },
     routine_add_session_intro: {
-      directo:   'Vamos a sumar una sesión nueva. Tus sesiones actuales quedan igual.',
+      directo:   'Sumamos una sesión nueva al frente. Las que ya tienes quedan intactas.',
       cercano:   '{name}, sumemos una sesión nueva — las que ya tienes no se tocan.',
       analitico: 'Se agrega una sesión nueva. Las sesiones existentes permanecen sin cambios.'
     },
     routine_edit_list_intro: {
-      directo:   'Elige la sesión que quieres editar o borrar.',
+      directo:   'Elige la sesión: se edita o se da de baja.',
       cercano:   '{name}, ¿cuál sesión quieres revisar?',
       analitico: 'Selecciona la sesión a modificar.'
     },
     routine_session_actions: {
-      directo:   '{session}. ¿Qué quieres hacer con esta sesión?',
+      directo:   '{session}. ¿Cuál es la orden para esta sesión?',
       cercano:   'Tu sesión de {session}. ¿Qué te gustaría hacer?',
       analitico: 'Sesión: {session}. Selecciona la acción.'
     },
     routine_edit_session_intro: {
-      directo:   'Vamos a actualizar el horario de {session}.',
+      directo:   'Actualizamos el horario de {session}. Nuevo objetivo, mismo compromiso.',
       cercano:   '{name}, actualicemos el horario de {session}.',
       analitico: 'Actualización de horario para la sesión: {session}.'
     },
     routine_session_added: {
-      directo:   'Sesión agregada, {name}.<br>El resto de tu rutina sigue igual.',
+      directo:   'Sesión agregada, {name}.<br>El resto del frente sigue exactamente igual.',
       cercano:   'Listo, {name}.<br>Sumé la sesión sin tocar el resto de tu rutina.',
       analitico: 'Sesión añadida.<br>Resto de la configuración sin cambios.'
     },
     routine_session_updated: {
-      directo:   'Horario actualizado, {name}.',
+      directo:   'Horario actualizado, {name}. Firme.',
       cercano:   'Listo, {name}, quedó actualizado.',
       analitico: 'Sesión actualizada correctamente.'
     },
     routine_edit_cancelled: {
-      directo:   'Sin cambios, {name}. Tu sesión sigue igual.',
+      directo:   'Sin cambios, {name}. La sesión se mantiene tal cual — a veces la mejor orden es no tocar nada.',
       cercano:   'Tranquilo, {name}, no cambié nada.',
       analitico: 'Edición cancelada. Sesión sin modificaciones.'
     },
     routine_delete_confirm: {
-      directo:   '¿Seguro que quieres borrar {session}? No se puede deshacer.',
+      directo:   '¿Confirmas la baja de {session}? No hay marcha atrás una vez dada la orden.',
       cercano:   '{name}, ¿confirmas que quieres borrar {session}?',
       analitico: 'Confirmar eliminación de la sesión: {session}.'
     },
     routine_session_deleted: {
-      directo:   '{session} fue eliminada de tu rutina.',
+      directo:   '{session} fue dada de baja de tu rutina.',
       cercano:   'Listo, {name}, {session} ya no está en tu rutina.',
       analitico: 'Sesión {session} eliminada.'
     },
     style_confirm: {
-      directo:   'Directo y al grano.<br>Así vamos a trabajar.',
+      directo:   'Directo y al grano.<br>Sin rodeos, sin excusas — así se construye un imperio.',
       cercano:   'Con calma y cercanía.<br>Así vamos a trabajar.',
       analitico: 'Con datos y precisión.<br>Así vamos a trabajar.'
     },
     style_skip: {
-      directo:   'Puedes definirlo cuando quieras desde el icono de configuración.',
+      directo:   'Lo defines cuando quieras desde configuración. Cuando estés listo, no antes.',
       cercano:   'Sin prisa — puedes definirlo cuando quieras desde el icono de configuración.',
       analitico: 'Pendiente de definir. Disponible desde el icono de configuración.'
     },
@@ -18819,37 +18838,37 @@ async function sbStartAutoSync(licKey) {
     // que la base del sistema nunca se relaja, ni siquiera en el
     // nivel más suave.
     exigencia_confirm: {
-      directo:   'Nivel de exigencia registrado.',
+      directo:   'Nivel de exigencia registrado. Ahora a sostenerlo.',
       cercano:   'Gracias por decirme cómo prefieres que te acompañe.',
       analitico: 'Parámetro de exigencia configurado.'
     },
     exigencia_skip: {
-      directo:   'Queda en equilibrado por ahora. Puedes cambiarlo cuando quieras desde el icono de configuración.',
+      directo:   'Queda en equilibrado por ahora. Lo ajustas cuando el momento lo pida, desde configuración.',
       cercano:   'Sin prisa — te acompaño en equilibrado por ahora. Cambia cuando quieras desde el icono de configuración.',
       analitico: 'Nivel equilibrado por defecto. Ajustable desde el icono de configuración.'
     },
     routine_skip: {
-      directo:   'Sin problema.<br>Puedes configurar tu rutina cuando quieras desde el icono de configuración.',
+      directo:   'Sin problema.<br>Configuras tu rutina cuando decidas dar el paso, desde el icono de configuración.',
       cercano:   'Sin problema, {name}.<br>Configura tu rutina cuando te sientas listo, desde el icono de configuración.',
       analitico: 'Registrado.<br>Rutina pendiente — disponible desde el icono de configuración.'
     },
     routine_session_confirm: {
-      directo:   'Sesión de {session}. Registrada en tu calendario de entrenamiento.',
+      directo:   'Sesión de {session}. Marcada en tu calendario de entrenamiento — cita con vos mismo.',
       cercano:   'Perfecto, {session} queda anotada.',
       analitico: 'Sesión {session} registrada como bloque operativo.'
     },
     routine_start_confirm: {
-      directo:   'Salida a las {time}.',
+      directo:   'Hora de salida: {time}. En punto.',
       cercano:   'Empiezas a las {time}, anotado.',
       analitico: 'Hora de inicio: {time}. Parámetro guardado.'
     },
     routine_end_confirm: {
-      directo:   'Cierre estimado a las {time}.',
+      directo:   'Cierre estimado: {time}. Objetivo claro desde el inicio.',
       cercano:   'Sueles cerrar cerca de las {time}, anotado.',
       analitico: 'Hora de cierre estimada: {time}.'
     },
     routine_days_confirm: {
-      directo:   'Días confirmados. Ese es tu calendario de entrenamiento.',
+      directo:   'Días confirmados. Ese es tu calendario de entrenamiento — se respeta como una orden.',
       cercano:   'Días confirmados, gracias.',
       analitico: 'Calendario semanal registrado.'
     },
@@ -18858,7 +18877,7 @@ async function sbStartAutoSync(licKey) {
     // {finding} es el primer hallazgo relevante, leído tal cual del
     // DOM por saintReadEngineFindings() y solo parafraseado aquí.
     session_close_findings: {
-      directo:   '{name}, tu sesión de {session} cerró.<br>Punto de mejora: {finding}',
+      directo:   '{name}, {session} cerró.<br>Punto de mejora, sin filtro: {finding}',
       cercano:   '{name}, terminaste tu sesión de {session}.<br>Esto es lo que tu sistema vio hoy: {finding}',
       analitico: 'Sesión de {session} cerrada.<br>Hallazgo del análisis: {finding}'
     },
@@ -18866,12 +18885,12 @@ async function sbStartAutoSync(licKey) {
     // reducir el cierre a solo lo que falló. Se añade después de
     // session_close_findings cuando hay algo que reforzar.
     session_close_strength: {
-      directo:   'A favor: {strength}. Llévalo a la próxima sesión.',
+      directo:   'A tu favor: {strength}. Eso se lleva a la próxima batalla — no se negocia.',
       cercano:   'Y algo que sí funcionó: {strength}. Sigue así.',
       analitico: 'Aspecto sostenido: {strength}.'
     },
     session_close_clean: {
-      directo:   '{name}, tu sesión de {session} cerró dentro de tu plan.<br>Sin desviaciones que reportar.',
+      directo:   '{name}, {session} cerró dentro del plan.<br>Cero desviaciones que reportar — así se opera con convicción.',
       cercano:   '{name}, cerraste tu sesión de {session} y todo se mantuvo dentro de tu plan.',
       analitico: 'Sesión de {session} cerrada.<br>Sin violaciones detectadas respecto al plan configurado.'
     },
@@ -18879,7 +18898,7 @@ async function sbStartAutoSync(licKey) {
     // operar?" del Coach Emocional. Se pregunta solo si SAINT confirmó
     // que hubo operativa hoy (ver saintStartSessionClose).
     emo_after_question: {
-      directo:   '¿Cómo te sentiste operando hoy?',
+      directo:   '¿Con qué estado saliste de la sesión de hoy?',
       cercano:   '¿Cómo te quedaste después de esta sesión?',
       analitico: '¿Qué estado predominó al cierre de la sesión?'
     },
@@ -18889,14 +18908,14 @@ async function sbStartAutoSync(licKey) {
     //    que siente, después conecta con el propósito — nunca salta
     //    directo al checklist ni minimiza lo que reportó.
     emo_after_empathy: {
-      directo:   'Te escucho. Aun así, tu enfoque en {goal} es lo que sostiene tu sistema — no lo sueltes por un día difícil.',
+      directo:   'Te escucho. Aun así, tu enfoque en {goal} es lo que sostiene el sistema — no se suelta por un día difícil.',
       cercano:   'Entiendo que hoy pesó. Aun con eso, recuerda tu enfoque en {goal} — eso te protege más que ganar hoy.',
       analitico: 'Estado emocional negativo registrado. Tu enfoque activo sigue siendo {goal}: sostenerlo reduce el impacto de sesiones como esta.'
     },
     // Mismo caso, pero sin objetivo activo todavía en memoria (trader
     // nuevo o sin historial de intención de día) — nunca inventa uno.
     emo_after_empathy_generic: {
-      directo:   'Te escucho. Un día difícil no borra tu sistema — mañana vuelves a él.',
+      directo:   'Te escucho. Un día difícil no borra el sistema — mañana te presentas de nuevo, con la misma disciplina.',
       cercano:   'Entiendo que hoy pesó. Eso no borra el trabajo que vienes haciendo — mañana seguimos.',
       analitico: 'Estado emocional negativo registrado. No afecta la validez de tu sistema — continúa en la próxima sesión.'
     },
@@ -18904,12 +18923,12 @@ async function sbStartAutoSync(licKey) {
     // solo (ver SAINT_ERROR_TAGS_REDUNDANT) — nunca se repite lo que el
     // hallazgo de cierre ya comunicó.
     error_tags_question: {
-      directo:   '¿Alguna de estas se te coló hoy? Marca las que apliquen, o sigue si ninguna.',
+      directo:   '¿Alguna de estas se coló hoy? Marca lo que aplique, sin excusas, o avanza si ninguna aplica.',
       cercano:   '¿Notaste algo de esto en ti hoy? Marca lo que sientas que aplicó.',
       analitico: '¿Cuáles de estos patrones estuvieron presentes hoy?'
     },
     session_close_thanks: {
-      directo:   'Registrado. Nos vemos en la próxima sesión.',
+      directo:   'Registrado. Nos vemos en la próxima sesión — con la misma intensidad.',
       cercano:   'Quedó guardado, gracias por contarme cómo te fue.',
       analitico: 'Registro cerrado. Disponible para el próximo análisis.'
     },
@@ -18919,34 +18938,34 @@ async function sbStartAutoSync(licKey) {
     //    identidad fija: siempre encuadra el patrón como algo de esta
     //    racha reciente, a trabajar hoy.
     prep_context_revenge: {
-      directo:   'Tus últimas sesiones muestran el mismo patrón: recuperar la pérdida de inmediato. Hoy trabajamos en romper ese impulso.',
+      directo:   'Tus últimas sesiones muestran el mismo patrón: recuperar la pérdida de inmediato. Hoy es el día de romper ese impulso — con disciplina, no con fuerza de voluntad de un solo día.',
       cercano:   '{name}, vengo notando que después de una pérdida buscas recuperarla enseguida. Hoy vamos a frenar ese impulso, con calma.',
       analitico: 'Patrón detectado en las últimas sesiones: recuperación inmediata tras pérdida. Objetivo de hoy: interrumpir ese ciclo.'
     },
     prep_context_overconfidence: {
-      directo:   'Después de tu última racha ganadora, el riesgo se disparó. Hoy sostenemos el mismo plan, gane o pierda.',
+      directo:   'Después de tu última racha ganadora, el riesgo se disparó. Hoy se sostiene el mismo plan, gane o pierda — la disciplina no negocia con el ego.',
       cercano:   '{name}, noté que tras ganar sueles relajar el plan. Hoy sostenemos la misma disciplina, pase lo que pase.',
       analitico: 'Señal detectada: relajación del plan tras resultado positivo previo. Objetivo: mismo criterio, sin importar el resultado anterior.'
     },
     prep_context_clean: {
-      directo:   'Tus últimas sesiones estuvieron dentro del plan. No hace falta más esfuerzo — solo sostenerlo.',
+      directo:   'Tus últimas sesiones estuvieron dentro del plan. No hace falta más esfuerzo — hace falta sostenerlo, día tras día, sin bajar la guardia.',
       cercano:   '{name}, vienes sosteniendo tu plan las últimas sesiones. Hoy se trata de seguir así.',
       analitico: 'Últimas sesiones dentro del plan declarado. Objetivo: mantener el mismo estándar.'
     },
     prep_context_new: {
-      directo:   'Todavía te estoy conociendo. Con cada sesión voy a entender mejor cómo trabajas.',
+      directo:   'Todavía te estoy conociendo. Cada sesión suma información — así se construye un sistema que realmente te representa.',
       cercano:   '{name}, todavía te estoy conociendo. Con cada sesión te voy a entender mejor.',
       analitico: 'Historial insuficiente todavía. El perfil se construye con cada sesión registrada.'
     },
     // ── Intención del día: UNA sola pregunta, con el enfoque recomendado
     //    por el perfil ya elegido de antemano.
     intent_question: {
-      directo:   'Enfócate hoy en: {focus}. ¿Vamos con eso o prefieres cambiar el objetivo?',
+      directo:   'El objetivo de hoy: {focus}. ¿Vamos con toda la artillería a eso, o cambiamos el foco?',
       cercano:   'Pensé que hoy podríamos poner el foco en: {focus}. ¿Te parece, o prefieres otro enfoque?',
       analitico: 'Enfoque sugerido para hoy: {focus}. ¿Confirmas o seleccionas otro?'
     },
     intent_options_intro: {
-      directo:   'Elige tu enfoque para hoy.',
+      directo:   'Elige tu objetivo de hoy. Uno solo, con toda la intensidad.',
       cercano:   'Elige con calma en qué quieres poner tu atención hoy.',
       analitico: 'Selecciona el enfoque operativo de la sesión.'
     },
@@ -18956,12 +18975,12 @@ async function sbStartAutoSync(licKey) {
     //    saintReadEngineFindings(); esto solo agrega la comparación
     //    contra la propia evolución del trader, que Engine no calcula.
     session_close_vs_history_up: {
-      directo:   'Esto está por encima de tu {consistencia}% de consistencia reciente. Sostenlo.',
+      directo:   'Esto está por encima de tu {consistencia}% de consistencia reciente. Sostenlo — así se gana terreno de verdad.',
       cercano:   'Vas mejor que tu promedio reciente de {consistencia}%. Se nota el trabajo.',
       analitico: 'Consistencia reciente: {consistencia}%. Esta sesión mejora ese promedio.'
     },
     session_close_vs_history_down: {
-      directo:   'Esto se aleja de tu {consistencia}% de consistencia reciente. Vuelve al plan mañana.',
+      directo:   'Esto se aleja de tu {consistencia}% de consistencia reciente. Mañana se vuelve al plan — sin drama, sin excusas.',
       cercano:   'Hoy quedó por debajo de tu {consistencia}% habitual. Mañana retomamos.',
       analitico: 'Consistencia reciente: {consistencia}%. Esta sesión se desvía de ese promedio.'
     },
@@ -18969,29 +18988,29 @@ async function sbStartAutoSync(licKey) {
     //    dato, mismo cálculo (saintDeriveSemaforo) — solo que ahora se
     //    comunica antes de seguir al checklist.
     semaforo_verde: {
-      directo:   '🟢 Semáforo en verde. Operativa normal — estás listo.',
+      directo:   '🟢 Semáforo en verde. Operativa normal — estás listo para entrar al campo.',
       cercano:   '🟢 Estás en verde, {name}. Buen punto de partida — vamos con todo.',
       analitico: '🟢 Semáforo: verde. Condición óptima para operar.'
     },
     semaforo_amarillo: {
-      directo:   '🟡 Semáforo en amarillo. Precaución — opera con cuidado hoy.',
+      directo:   '🟡 Semáforo en amarillo. Precaución máxima — hoy se opera con el radar encendido.',
       cercano:   '🟡 Hoy estás en amarillo, {name}. Nada grave, solo ve con más cuidado.',
       analitico: '🟡 Semáforo: amarillo. Condición de precaución. Ajusta tu criterio de entrada hoy.'
     },
     semaforo_rojo: {
-      directo:   '🔴 Semáforo en rojo. Hoy no operes — tu propio sistema lo marca.',
+      directo:   '🔴 Semáforo en rojo. Hoy no se opera — orden directa de tu propio sistema, sin apelación.',
       cercano:   '🔴 {name}, hoy estás en rojo. Mejor no operar — cuídate primero.',
       analitico: '🔴 Semáforo: rojo. Riesgo psicológico elevado. Recomendación: no operar hoy.'
     },
     // ── Racha "días sin trades fuera de plan", en tono de juego —
     //    refuerzo breve, nunca un módulo aparte.
     streak_mention: {
-      directo:   '🔥 Llevas {days} días dentro de tu plan. Sigue así.',
+      directo:   '🔥 Llevas {days} días en línea con tu plan. No aflojes ahora.',
       cercano:   '🔥 Vas {days} días seguidos respetando tu plan. Se nota el esfuerzo.',
       analitico: '🔥 Racha activa: {days} días consecutivos dentro del plan.'
     },
     streak_record: {
-      directo:   '🏆 Es tu mejor racha hasta ahora: {days} días. Sostenla.',
+      directo:   '🏆 Tu mejor racha hasta ahora: {days} días. Se defiende como se gana — con disciplina.',
       cercano:   '🏆 ¡Nuevo récord personal! {days} días seguidos. Vas muy bien.',
       analitico: '🏆 Nuevo máximo histórico: {days} días consecutivos.'
     },
@@ -19001,7 +19020,7 @@ async function sbStartAutoSync(licKey) {
     //    élite: reconoce el logro sin efusividad, y lo traduce de
     //    inmediato en sistema, no en identidad ("eres disciplinado").
     spontaneous_goal_achieved: {
-      directo:   '{name}, {goal} ya lleva 10 sesiones sostenido.<br>Dejó de ser un esfuerzo puntual — ya es parte de tu sistema.',
+      directo:   '{name}, {goal} ya lleva 10 sesiones sostenido.<br>Dejó de ser un esfuerzo puntual — ya es parte de quién eres operando.',
       cercano:   '{name}, quería decírtelo aparte: llevas 10 sesiones sosteniendo {goal}.<br>Eso ya es tuyo, no un golpe de suerte.',
       analitico: 'Objetivo consolidado: {goal} sostenido durante 10 sesiones consecutivas.<br>Pasa de intención a patrón estructural.'
     },
@@ -19011,7 +19030,7 @@ async function sbStartAutoSync(licKey) {
     //    nombra el comportamiento concreto y devuelve el foco al plan,
     //    como lo haría un coach de élite antes de la siguiente entrada.
     spontaneous_pattern_alert: {
-      directo:   '{name}, tus últimas sesiones muestran algo puntual: {pattern}.<br>No es un veredicto — es información. Vuelve al plan antes de tu próxima entrada.',
+      directo:   '{name}, tus últimas sesiones muestran algo puntual: {pattern}.<br>No es un veredicto — es información de campo. Vuelve al plan antes de tu próxima entrada.',
       cercano:   '{name}, vengo notando algo en tus últimas sesiones: {pattern}.<br>Te lo digo con cariño, no como reproche — antes de tu próxima entrada, vuelve al plan.',
       analitico: 'Señal detectada en las últimas sesiones: {pattern}.<br>Recomendación: revisar el plan antes de la próxima entrada.'
     }
@@ -19084,86 +19103,86 @@ async function sbStartAutoSync(licKey) {
   var SAINT_INTEL_MESSAGES = {
     ops: {
       OBSERVADA: {
-        directo:   'Ya pasaste el número de operaciones que fijaste para hoy ({count}/{max}).<br>Cierra la plataforma acá — lo siguiente ya sería fuera de tu sistema.',
+        directo:   'Ya superaste el número de operaciones que fijaste para hoy ({count}/{max}).<br>Cierra la plataforma ahora — orden firme. Lo que sigue ya no es tu sistema, es impulso.',
         cercano:   '{name}, hoy ya llegaste a las operaciones que tu plan permitía ({count}/{max}).<br>No hace falta forzar una más — saber cuándo parar también es parte del plan.',
         analitico: 'Operaciones del día: {count}. Límite del plan: {max}.<br>El umbral ya se cruzó — cerrar aquí es la decisión que sostiene el sistema.',
         elite:     'Ya rompiste tu propio límite ({count}/{max}).<br>Un trader de tu nivel no necesita una operación más para demostrar nada. Cierra.'
       },
       CONFIRMADA: {
-        directo:   'Volviste a entrar por encima del límite ({count}/{max}).<br>No importa cómo salga esta operación — lo que importa ahora es volver al sistema.',
+        directo:   'Volviste a entrar por encima del límite ({count}/{max}).<br>No importa cómo salga esta operación — lo que importa es replegarte al sistema, ya.',
         cercano:   '{name}, esto ya pasó de una vez — van {count} operaciones cuando el plan decía {max}.<br>No se trata de ganar o perder esta entrada: se trata de volver al plan, juntos.',
         analitico: 'Segunda operación por encima del límite detectada ({count}/{max}).<br>El patrón se confirma, independiente del resultado — prioridad: retomar el sistema.'
       },
       CORREGIDA: {
-        directo:   'Hoy respetaste el número de operaciones que definiste, sin excederlo.{streakLine}<br>Eso es lo que sostiene una cuenta lista para cobrar — no la suerte de un día.',
+        directo:   'Hoy respetaste el número de operaciones que definiste, sin excederlo.{streakLine}<br>Eso es lo que construye una cuenta lista para cobrar — disciplina, no suerte de un día.',
         cercano:   '{name}, hoy te mantuviste dentro de las operaciones que planeaste.{streakLine}<br>Así se construye una cuenta que se puede cobrar, un día a la vez.',
         analitico: 'Día registrado dentro del límite de operaciones definido en el plan.{streakLine}<br>Ejecución consistente con el estándar que exige un cobro.'
       }
     },
     risk: {
       OBSERVADA: {
-        directo:   'Tu riesgo de hoy ya superó el máximo que definiste ({riskUsed} de {max}).<br>Detente acá — no hace falta arriesgar más para comprobar nada.',
+        directo:   'Tu riesgo de hoy ya superó el máximo que definiste ({riskUsed} de {max}).<br>Alto total — no hace falta arriesgar más para demostrar nada, ya está demostrado.',
         cercano:   '{name}, el riesgo de hoy ya pasó el límite que pusiste ({riskUsed} de {max}).<br>Está bien parar ahora — cuidar la cuenta también es operar bien.',
         analitico: 'Riesgo acumulado: {riskUsed}. Máximo del plan: {max}.<br>El límite ya se superó — se recomienda no agregar exposición nueva hoy.'
       },
       CONFIRMADA: {
-        directo:   'Sigues operando con el riesgo por encima del límite ({riskUsed} de {max}).<br>Esto no es sobre la próxima entrada — es sobre proteger la cuenta ahora.',
+        directo:   'Sigues operando con el riesgo por encima del límite ({riskUsed} de {max}).<br>Esto no es sobre la próxima entrada — es sobre proteger la cuenta, ahora mismo.',
         cercano:   '{name}, el riesgo sigue por arriba de lo definido ({riskUsed} de {max}) y entró otra operación.<br>Paremos acá juntos — la cuenta pesa más que esta entrada.',
         analitico: 'El riesgo permanece por encima del límite tras una nueva operación ({riskUsed} de {max}).<br>Patrón confirmado — acción recomendada: cerrar exposición nueva por hoy.'
       },
       CORREGIDA: {
-        directo:   'Hoy el riesgo se mantuvo dentro del límite que definiste.{streakLine}<br>Eso es lo que hace un profesional: protege la cuenta antes de buscar más.',
+        directo:   'Hoy el riesgo se mantuvo dentro del límite que definiste.{streakLine}<br>Eso es lo que separa a un profesional: protege la cuenta antes de buscar más.',
         cercano:   '{name}, hoy el riesgo estuvo donde tenía que estar.{streakLine}<br>Cada día así te acerca más a poder cobrar esta cuenta.',
         analitico: 'Riesgo del día dentro del máximo definido en el plan.{streakLine}<br>Cumplimiento consistente con el criterio de cobro.'
       }
     },
     session: {
       OBSERVADA: {
-        directo:   'Esta operación entró fuera del horario que definiste en tu plan.<br>Vuelve a tu ventana — ahí es donde tu sistema realmente rinde.',
+        directo:   'Esta operación entró fuera del horario que definiste en tu plan.<br>Vuelve a tu ventana — ahí es donde tu sistema realmente rinde, no fuera de ella.',
         cercano:   '{name}, esta entrada fue fuera de la sesión que vos mismo elegiste.<br>No pasa nada — solo volvamos al horario en la próxima.',
         analitico: 'Operación registrada fuera de la ventana horaria definida en el plan.<br>Desviación puntual — se recomienda retomar el horario planificado.'
       },
       CONFIRMADA: {
-        directo:   'Van {count} operaciones fuera de tu horario hoy.<br>El plan también es el horario — respétalo, no solo el análisis.',
+        directo:   'Van {count} operaciones fuera de tu horario hoy.<br>El plan también es el horario — se respeta igual que el análisis, sin excepciones.',
         cercano:   '{name}, ya es la segunda vez hoy que operás fuera de tu sesión.<br>Vale la pena preguntarte qué te está sacando del horario — y volver ahí.',
         analitico: 'Segunda operación fuera de la ventana horaria en el mismo día ({count} en total).<br>Patrón confirmado — el horario declarado se trata como regla, no como sugerencia.'
       },
       CORREGIDA: {
-        directo:   'Hoy operaste dentro del horario que definiste.{streakLine}<br>Eso es disciplina de profesional, no casualidad.',
+        directo:   'Hoy operaste dentro del horario que definiste.{streakLine}<br>Eso es disciplina de profesional — no casualidad, no suerte.',
         cercano:   '{name}, hoy te mantuviste en tu ventana de horario.{streakLine}<br>Así es como se protege una cuenta que se quiere cobrar.',
         analitico: 'Operativa del día dentro de la ventana horaria definida en el plan.{streakLine}<br>Cumplimiento del horario declarado.'
       }
     },
     escalation: {
       OBSERVADA: {
-        directo:   'Subiste el lotaje justo después de una pérdida.<br>Eso no estaba en tu plan — vuelve al tamaño que definiste.',
+        directo:   'Subiste el lotaje justo después de una pérdida.<br>Eso no estaba en el plan — vuelve al tamaño que definiste, sin negociar con el impulso.',
         cercano:   '{name}, después de la última pérdida el lotaje subió.<br>Es normal querer recuperarlo rápido — pero el plan pide el mismo tamaño de siempre.',
         analitico: 'Se detectó incremento de lotaje inmediatamente después de una pérdida.<br>Desviación respecto al tamaño de posición definido en el plan.'
       },
       CONFIRMADA: {
-        directo:   'El lotaje sigue por encima de lo normal después de perder.<br>No se trata de recuperar rápido — se trata de operar con el tamaño que ya funciona.',
+        directo:   'El lotaje sigue por encima de lo normal después de perder.<br>No se trata de recuperar rápido — se trata de operar con el tamaño que ya demostró funcionar.',
         cercano:   '{name}, esto se repitió — el lotaje sigue elevado después de la pérdida.<br>Bajémoslo al tamaño de siempre, no hace falta compensar de una sola vez.',
         analitico: 'El patrón de incremento de lotaje post-pérdida persiste en una segunda operación.<br>Prioridad: normalizar el tamaño de posición al valor definido en el plan.'
       },
       CORREGIDA: {
-        directo:   'Hoy el lotaje se mantuvo estable, incluso después de una pérdida.{streakLine}<br>Eso es lo que hace un profesional: mismo tamaño, gane o pierda.',
+        directo:   'Hoy el lotaje se mantuvo estable, incluso después de una pérdida.{streakLine}<br>Eso es lo que hace un profesional: mismo tamaño, gane o pierda, sin excepción.',
         cercano:   '{name}, hoy no subiste el lotaje después de perder.{streakLine}<br>Eso protege la cuenta más que cualquier operación de recuperación.',
         analitico: 'Tamaño de posición estable tras una pérdida registrada hoy.{streakLine}<br>Sin desviación respecto al plan.'
       }
     },
     revenge: {
       OBSERVADA: {
-        directo:   'Esto tiene forma de revancha contra el mercado, no de tu sistema.<br>Para acá — la próxima entrada espera a que vuelvas al plan.{mirrorLine}',
+        directo:   'Esto tiene forma de revancha contra el mercado, no de tu sistema.<br>Alto ahí — la próxima entrada espera a que vuelvas al plan, no al ego.{mirrorLine}',
         cercano:   '{name}, después de esas pérdidas seguidas, esta entrada se siente más de urgencia que de plan.<br>Tomate un minuto antes de la siguiente.{mirrorLine}',
         analitico: 'Patrón compatible con revenge trading: pérdidas consecutivas con entrada inmediata.<br>Se recomienda una pausa antes de la próxima operación.{mirrorLine}'
       },
       CONFIRMADA: {
-        directo:   'Sigue el mismo patrón — entrar rápido después de perder.<br>Cierra la plataforma. Hoy el objetivo es proteger la cuenta, no la revancha.{mirrorLine}',
+        directo:   'Sigue el mismo patrón — entrar rápido después de perder.<br>Cierra la plataforma, ahora. Hoy el objetivo es proteger la cuenta, no cobrarte revancha.{mirrorLine}',
         cercano:   '{name}, esto ya se repitió dos veces — perder y volver a entrar de inmediato.<br>Paremos acá hoy. Mañana el sistema sigue intacto.{mirrorLine}',
         analitico: 'Patrón de revenge trading confirmado tras una segunda repetición.<br>Recomendación: detener la operativa del día — el sistema se retoma en la próxima sesión.{mirrorLine}'
       },
       CORREGIDA: {
-        directo:   'Hoy, después de perder, no forzaste una entrada de revancha.{streakLine}<br>Eso es lo que protege una cuenta a largo plazo.',
+        directo:   'Hoy, después de perder, no forzaste una entrada de revancha.{streakLine}<br>Eso es lo que protege una cuenta a largo plazo — control, no impulso.',
         cercano:   '{name}, hoy supiste parar después de perder, sin ir a buscarlo de vuelta.{streakLine}<br>Eso es lo que te acerca a cobrar esta cuenta.',
         analitico: 'Sin patrón de revenge trading tras pérdidas registradas hoy.{streakLine}<br>Comportamiento consistente con el plan.'
       }
@@ -19406,7 +19425,7 @@ async function sbStartAutoSync(licKey) {
     var p = SAINT.state.personalidad || 'directo';
     var name = (SAINT.state.traderName || '').trim();
     var GENERIC = {
-      directo:   'Guardian tuvo que intervenir en tu cuenta.<br>No importa esta operación — lo que importa es volver a tu plan ahora.',
+      directo:   'Guardian tuvo que intervenir en tu cuenta.<br>Esta operación ya no importa — lo que importa es replegarte al plan, ahora.',
       cercano:   (name ? name + ', g' : 'G') + 'uardian tuvo que intervenir en tu cuenta.<br>No pasa nada — solo volvamos juntos al plan.',
       analitico: 'Guardian ejecutó una intervención de protección sobre la cuenta.<br>Acción recomendada: retomar el plan declarado.'
     };
@@ -19433,57 +19452,57 @@ async function sbStartAutoSync(licKey) {
   // ══════════════════════════════════════════════════════════════
   var SAINT_BLOCKS = {
     observar: {
-      directo:   'Vengo observando tu operativa reciente.',
+      directo:   'Vengo observando tu operativa reciente, de cerca.',
       cercano:   '{name}, estuve prestando atención a tus últimas sesiones.',
       analitico: 'Análisis del comportamiento reciente completado.'
     },
     reconocer: {
-      directo:   'El enfoque en {focus} se sostiene sesión tras sesión.',
+      directo:   'El enfoque en {focus} se sostiene sesión tras sesión — eso es constancia real, no un golpe de suerte.',
       cercano:   'Lo que más se nota es que {focus} ya no es un esfuerzo puntual — se repite.',
       analitico: 'Patrón identificado: sostenimiento consistente de {focus} en las últimas sesiones.'
     },
     reforzar: {
-      directo:   'Eso ya es parte de tu sistema, no un golpe de suerte.',
+      directo:   'Eso ya es parte de tu sistema — se ganó con repetición, no con suerte.',
       cercano:   'Eso es tuyo, {name}. Se construyó sesión a sesión.',
       analitico: 'El comportamiento pasa de intención puntual a patrón estructural.'
     },
     desafiar: {
-      directo:   'Ahora el trabajo es sostenerlo también en la sesión más difícil de la semana.',
+      directo:   'Ahora el trabajo es sostenerlo también en la sesión más difícil de la semana — ahí es donde se separan los que construyen de los que solo intentan.',
       cercano:   '{name}, el siguiente paso es sostener esto incluso cuando el día se ponga cuesta arriba.',
       analitico: 'Siguiente umbral: mantener el mismo estándar bajo condiciones de mayor presión.'
     },
     recordar: {
-      directo:   'Recuerda de dónde partiste con esto.',
+      directo:   'Recuerda de dónde partiste con esto — el punto de partida también es información.',
       cercano:   '{name}, vale la pena recordar el punto de partida — se nota el camino recorrido.',
       analitico: 'Referencia histórica: comparar contra el punto de partida registrado en memoria.'
     },
     preparar: {
-      directo:   'Antes de tu próxima entrada, vuelve al plan.',
+      directo:   'Antes de tu próxima entrada, vuelve al plan. Sin plan no hay entrada.',
       cercano:   '{name}, antes de la próxima entrada, respira y vuelve al plan.',
       analitico: 'Acción recomendada: revisar el plan antes de la próxima entrada.'
     },
     proteger: {
-      directo:   'Hoy el objetivo es proteger {focus}, no forzar el resultado.',
+      directo:   'Hoy el objetivo es proteger {focus}, no forzar el resultado — la fuerza mal dirigida se paga cara.',
       cercano:   'Hoy cuidamos {focus} por encima de cualquier resultado puntual.',
       analitico: 'Prioridad operativa de hoy: proteger {focus} por sobre el resultado.'
     },
     celebrar: {
-      directo:   'Vale la pena marcarlo.',
+      directo:   'Vale la pena marcarlo. Los detalles construyen el sistema.',
       cercano:   'Quería decírtelo aparte, {name} — se lo merece.',
       analitico: 'Hito registrado en memoria de largo plazo.'
     },
     reenfocar: {
-      directo:   'Esto no es un veredicto sobre ti — es información para corregir hoy.',
+      directo:   'Esto no es un veredicto sobre ti — es información de campo para corregir hoy mismo.',
       cercano:   '{name}, te lo digo sin juicio: es solo una señal para ajustar hoy.',
       analitico: 'La señal detectada no constituye un diagnóstico — es un dato accionable para hoy.'
     },
     validar: {
-      directo:   'Es una sesión difícil. No la minimizamos.',
+      directo:   'Es una sesión difícil. No se minimiza — se enfrenta.',
       cercano:   'Entiendo que esta racha pesa, {name}. Tiene sentido que sea así.',
       analitico: 'Se reconoce la dificultad de la racha reciente antes de continuar.'
     },
     cerrar: {
-      directo:   'Seguimos desde aquí.',
+      directo:   'Seguimos desde aquí. Adelante.',
       cercano:   'Nos vemos en la próxima sesión, {name}.',
       analitico: 'Fin del análisis. Continuidad asegurada en la próxima sesión.'
     }
@@ -19718,32 +19737,32 @@ async function sbStartAutoSync(licKey) {
 
   var SAINT_PREP_QUESTIONS = {
     meditacion: {
-      directo:   '¿Hiciste tu rutina mental? La cabeza se prepara antes que las manos.',
+      directo:   '¿Hiciste tu rutina mental? La cabeza se entrena antes que las manos — sin eso, no hay entrada válida.',
       cercano:   '¿Te diste un momento para centrarte antes de esto?',
       analitico: '¿Rutina mental completada? Es la primera variable que condiciona todas las demás.'
     },
     analisis: {
-      directo:   '¿Analizaste el mercado antes de entrar? Sin eso no hay plan, solo suerte.',
+      directo:   '¿Analizaste el mercado antes de entrar? Sin eso no hay plan — solo apuesta disfrazada de estrategia.',
       cercano:   '¿Ya revisaste cómo está el mercado hoy?',
       analitico: '¿Análisis previo del mercado completado antes de esta sesión?'
     },
     aceptacion: {
-      directo:   '¿Ya aceptaste el resultado de tu última sesión? No se opera la de hoy cargando la anterior.',
+      directo:   '¿Ya aceptaste el resultado de tu última sesión? Hoy no se opera arrastrando la anterior — se entra limpio, o no se entra.',
       cercano:   '¿Hiciste las paces con cómo te fue la última vez?',
       analitico: '¿Resultado anterior procesado y cerrado antes de continuar?'
     },
     plan: {
-      directo:   '¿Revisaste tu plan y tus reglas hoy?',
+      directo:   '¿Revisaste tu plan y tus reglas hoy? Sin repaso, no hay orden de entrada.',
       cercano:   '¿Le diste un vistazo a tu plan antes de empezar?',
       analitico: '¿Plan y reglas verificados como protocolo de esta sesión?'
     },
     setup: {
-      directo:   '¿Vas a esperar tu setup A+? Nada de forzar la entrada.',
+      directo:   '¿Vas a esperar tu setup A+? Nada de forzar la entrada — la paciencia también es disciplina.',
       cercano:   '¿Vas a tener paciencia y esperar tu mejor entrada?',
       analitico: '¿Umbral de setup A+ definido como único criterio de entrada?'
     },
     riesgo: {
-      directo:   '¿Vas a respetar tu riesgo máximo, pase lo que pase?',
+      directo:   '¿Vas a respetar tu riesgo máximo, pase lo que pase? Esa es la promesa que sostiene todo lo demás.',
       cercano:   '¿Vas a cuidar tu riesgo hoy, pase lo que pase?',
       analitico: '¿Riesgo máximo por operación fijado y no negociable?'
     }
