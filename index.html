@@ -1046,14 +1046,16 @@ table.data-table tr:hover td{background:var(--bg2);}
 .faqs-goal-fill{position:absolute;top:0;left:0;height:100%;border-radius:15px;transition:width 0.7s cubic-bezier(.4,0,.2,1);}
 .faqs-goal-marker{position:absolute;top:-5px;width:2px;height:40px;background:var(--border2);transform:translateX(-50%);}
 .faqs-goal-marker-label{position:absolute;top:-19px;font-size:8.5px;color:var(--muted);font-weight:700;white-space:nowrap;transform:translateX(-50%);}
-.faqs-goal-step{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--bg1);border:2px solid var(--green);transform:translate(-50%,-50%);z-index:2;}
+.faqs-goal-step{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--bg1);border:2px solid var(--green);transform:translate(-50%,-50%);z-index:2;transition:box-shadow 0.4s ease,background 0.4s ease;}
+.faqs-goal-step.reached{box-shadow:0 0 10px 2px rgba(39,217,122,0.65),0 0 18px 4px rgba(39,217,122,0.35);}
 .faqs-goal-emoji{position:absolute;top:50%;font-size:21px;line-height:1;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.5));transition:left 0.7s cubic-bezier(.4,0,.2,1);}
 .faqs-goal-foot{font-size:10.5px;color:var(--muted2);line-height:1.5;}
 .faqs-goal-milestones{display:flex;flex-direction:column;gap:5px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);}
 .goal-milestone-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);padding:5px 8px;border-radius:7px;background:var(--bg2);border:1px solid var(--border);transition:all 0.2s;}
-.goal-milestone-item.unlocked{color:var(--text);background:var(--green-dim);border-color:var(--green);}
+.goal-milestone-item.unlocked{color:var(--text);background:var(--green-dim);border-color:var(--green);box-shadow:0 0 12px rgba(39,217,122,0.35),inset 0 0 8px rgba(39,217,122,0.08);}
 .goal-milestone-item .gm-icon{font-size:11px;flex-shrink:0;}
-.goal-milestone-item .gm-emoji{font-size:14px;flex-shrink:0;}
+.goal-milestone-item .gm-emoji{font-size:14px;flex-shrink:0;transition:filter 0.4s ease;}
+.goal-milestone-item.unlocked .gm-emoji{filter:drop-shadow(0 0 6px rgba(39,217,122,0.9));}
 .goal-milestone-item .gm-label{flex:1;font-weight:600;}
 .goal-milestone-item.unlocked .gm-label{color:var(--green);}
 .goal-milestone-item .gm-amount{font-size:10px;font-weight:700;color:var(--muted2);white-space:nowrap;}
@@ -10307,7 +10309,7 @@ function renderGoalTrack(trackId, amountId, footId, milestonesId, thresholds, to
         html += `<div class="faqs-goal-marker" style="left:${mpct}%"></div>
                  <div class="faqs-goal-marker-label" style="left:${mpct}%">${fmtCompactUSD(t)}</div>`;
       }
-      html += `<div class="faqs-goal-step" style="left:${mpct}%;${reached?'border-color:var(--green);background:var(--green)':''}"></div>`;
+      html += `<div class="faqs-goal-step${reached?' reached':''}" style="left:${mpct}%;${reached?'border-color:var(--green);background:var(--green)':''}"></div>`;
     });
     html += `<div class="faqs-goal-emoji" style="left:${pct}%">${goalWalkerSVG(21)}</div>`;
     trackEl.innerHTML = html;
