@@ -3293,574 +3293,6 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
 
 </div><!-- /page-coach -->
 
-</main>
-</div>
-
-<!-- ══════════════ MODALS ══════════════ -->
-
-<!-- ADD / EDIT ENTRY -->
-<div class="modal-backdrop" id="addModal" onclick="closeModal(&#39;addModal&#39;,event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;addModal&#39;)">✕</button>
-    <div class="modal-title" id="modal-title">📝 Nueva entrada</div>
-    <div class="modal-sub" id="modal-sub">Registra el resultado de la sesión</div>
-
-    <div class="form-row-2">
-      <div class="form-group">
-        <label class="form-label">Cuenta</label>
-        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROPXP 50K INSTANT">PROPXP 50K INSTANT</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="BACKTESTING US30/US100">BACKTESTING US30/US100</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="BACKTESTING 100k NISH A+B">BACKTESTING 100k NISH A+B</option></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Fecha</label>
-        <input class="form-input" type="date" id="f-date">
-      </div>
-    </div>
-
-    <div class="form-row-2">
-      <div class="form-group">
-        <label class="form-label">Resultado</label>
-        <select class="form-input" id="f-result">
-          <option value="">Seleccionar...</option>
-          <option value="win">Win ↑</option>
-          <option value="loss">Loss ↓</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">P&amp;L real ($)</label>
-        <input class="form-input" type="number" id="f-pnl" placeholder="Ej: 320 o -180" step="any">
-      </div>
-    </div>
-
-    <div class="form-row-3">
-      <div class="form-group">
-        <label class="form-label">Sesión</label>
-        <select class="form-input" id="f-session">
-          <option value="">—</option>
-          <option value="asia">Asia 🌏</option>
-          <option value="london">Londres 🇬🇧</option>
-          <option value="ny">Nueva York 🗽</option>
-          <option value="overlap">Overlap 🔄</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Par / Instrumento</label>
-        <input class="form-input" type="text" id="f-pair" placeholder="EURUSD, NQ, ES..." list="pair-list">
-        <datalist id="pair-list">
-          <option value="XAUUSD">
-          </option><option value="US30">
-          </option><option value="US100">
-          </option><option value="MYM">
-          </option><option value="MNQ">
-          </option><option value="MGC">
-        </option></datalist>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Lotaje / Micros</label>
-        <input class="form-input" type="number" id="f-lots" placeholder="0.1" step="any">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Fuente</label>
-      <select class="form-input" id="f-source" onchange="updateSourceHint()">
-        <option value="manual">Manual</option>
-        <option value="mt5">Captura MT5</option>
-        <option value="ninja">Captura NinjaTrader</option>
-      </select>
-    </div>
-
-    <div class="form-group" id="upload-group">
-      <label class="form-label" id="upload-label">Captura (opcional)</label>
-      <div class="upload-zone" id="upload-zone">
-        <input type="file" id="f-file" accept="image/*,.pdf" onchange="handleFileSelect()">
-        <div id="upload-placeholder">
-          <div class="upload-icon">⬆</div>
-          <div class="upload-text">Arrastra o haz clic para subir</div>
-          <div class="upload-sub" id="upload-text-sub">Screenshot MT5 · máx 8MB</div>
-        </div>
-        <div id="upload-preview-wrap" class="hidden">
-          <div class="upload-preview">
-            <div class="upload-preview-icon" id="prev-icon">📄</div>
-            <div class="upload-preview-name" id="prev-name"></div>
-            <button class="upload-remove" onclick="clearFile(event)">✕</button>
-          </div>
-          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" alt="preview"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Notas</label>
-      <input class="form-input" type="text" id="f-notes" placeholder="Setup, comentarios, RR...">
-    </div>
-
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;addModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" id="modal-save-btn" onclick="saveEntry()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD ACCOUNT MODAL (v4: full type differentiation) -->
-<div class="modal-backdrop" id="addAccountModal" onclick="closeModal(&#39;addAccountModal&#39;,event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;addAccountModal&#39;)">✕</button>
-    <div class="modal-title" id="acc-modal-title">➕ Agregar cuenta CFD</div>
-    <div class="modal-sub">Configura los parámetros según tipo de cuenta</div>
-
-    <!-- Tipo: Futuros vs CFD -->
-    <div class="form-group">
-      <label class="form-label">Tipo de instrumento</label>
-      <div class="type-selector" id="modal-instrument-selector">
-        <div class="type-pill" onclick="setModalInstrument(&#39;futures&#39;)" id="pill-fut">🔵 Futuros</div>
-        <div class="type-pill active" onclick="setModalInstrument(&#39;cfd&#39;)" id="pill-cfd">🟣 CFDs</div>
-      </div>
-    </div>
-
-    <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
-    <div class="form-group">
-      <label class="form-label">Modo de cuenta</label>
-      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
-    </div>
-
-    <!-- Base fields -->
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="na-name" placeholder="Lucid 4, FTMO 100k..."></div>
-      <div class="form-group"><label class="form-label">Saldo ($)</label><input class="form-input" type="number" id="na-balance" placeholder="50000"></div>
-    </div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" id="na-firm" placeholder="Lucid, FTMO, MFF..."></div>
-      <div class="form-group"><label class="form-label">Plataforma</label>
-        <select class="form-input" id="na-platform">
-          <option value="ninja">NinjaTrader</option>
-          <option value="mt5">MT5</option>
-          <option value="mt4">MT4</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-bottom:0.5rem">
-      <input type="checkbox" id="na-backtest" style="width:15px;height:15px;cursor:pointer">
-      <label for="na-backtest" style="font-size:11px;color:var(--muted2);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.04em">
-        🧪 Cuenta de Backtesting (no cuenta en resumen por firma)
-      </label>
-    </div>
-
-    <!-- FUTURES EVAL fields -->
-    <div id="modal-section-fut-eval" class="form-section" style="">
-      <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
-        <div class="form-group"><label class="form-label">🎯 Objetivo ganancias ($)</label><input class="form-input" type="number" id="na-evaltarget" placeholder="3000" step="any"></div>
-        <div class="form-group"><label class="form-label">📉 Max DD EOD ($)</label><input class="form-input" type="number" id="na-maxddamt" placeholder="2000" step="any"></div>
-      </div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Micros default</label><input class="form-input" type="number" id="na-micros" placeholder="2" step="1"></div>
-        <div class="form-group"><label class="form-label">% Consistencia mejor día <span style="font-size:9px;color:var(--muted)">(del objetivo)</span></label><input class="form-input" type="number" id="na-consistency-pct" placeholder="50" step="1" min="1" max="100" value="50"></div>
-        <div class="form-group"><label class="form-label">Grupo asignado</label>
-          <select class="form-input" id="na-group-fut">
-            <option value="A">Grupo A</option>
-            <option value="B">Grupo B</option>
-            <option value="C">Grupo C</option>
-            <option value="D">Grupo D</option>
-            <option value="E">Grupo E</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-hint" style="background:var(--amber-dim);border:1px solid #3a2000;border-radius:6px;padding:6px 10px;color:var(--amber);font-size:10px">
-        💡 Si ganas más del <strong id="cons-pct-hint">50%</strong> del objetivo en un solo día, el objetivo efectivo sube proporcionalmente. Ej: objetivo $3k, ganas $2k en un día → nuevo objetivo = $4k
-      </div>
-    </div>
-
-    <!-- FUTURES LIVE fields -->
-    <div id="modal-section-fut-live" class="form-section" style="display: none;">
-      <div class="form-section-title">✅ Parámetros Live · Futuros</div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">📉 Max DD EOD ($)</label><input class="form-input" type="number" id="na-live-maxdd" placeholder="2000" step="any"></div>
-        <div class="form-group"><label class="form-label">🎯 Objetivo deseable ($)</label><input class="form-input" type="number" id="na-live-target" placeholder="4000" step="any"></div>
-        <div class="form-group"><label class="form-label">💵 Mínimo diario ($)</label><input class="form-input" type="number" id="na-live-minday" placeholder="150" step="any"></div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-live-mindays" placeholder="5" step="1"></div>
-        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-live-pct" placeholder="90" step="1"></div>
-      </div>
-    </div>
-
-    <!-- CFD EVAL F1/F2 fields -->
-    <div id="modal-section-cfd-eval" class="form-section" style="display: none;">
-      <div class="form-section-title">📋 Parámetros Evaluación CFD</div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-cfd-evalcost" placeholder="299" step="any"></div>
-        <div class="form-group"><label class="form-label">🔢 Fase actual</label>
-          <select class="form-input" id="na-cfd-phase">
-            <option value="1">Fase 1</option>
-            <option value="2">Fase 2</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">🎯 Obj. ganancias % F1</label><input class="form-input" type="number" id="na-cfd-target1" placeholder="10" step="0.1"></div>
-        <div class="form-group"><label class="form-label">🎯 Obj. ganancias % F2</label><input class="form-input" type="number" id="na-cfd-target2" placeholder="5" step="0.1"></div>
-        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-maxdd" placeholder="10" step="0.1"></div>
-      </div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-cfd-dailysl" placeholder="5" step="0.1"></div>
-        <div class="form-group"><label class="form-label">Días rentables mín</label><input class="form-input" type="number" id="na-cfd-mindays" placeholder="5" step="1"></div>
-        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-cfd-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">% Consistencia (mejor día) <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-cfd-consistency" placeholder="Sin límite" step="1" min="1" max="100"></div>
-        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Dejar vacío = sin regla de consistencia (ej: FTMO)</span></div>
-      </div>
-    </div>
-
-    <!-- CFD FUNDED/LIVE fields -->
-    <div id="modal-section-cfd-funded" class="form-section" style="display: none;">
-      <div class="form-section-title">🏆 Parámetros Funded · CFD</div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-f-maxdd" placeholder="10" step="0.1"></div>
-        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-cfd-f-dailysl" placeholder="5" step="0.1"></div>
-        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-cfd-f-pct" placeholder="80" step="1"></div>
-      </div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-cfd-f-mindays" placeholder="5" step="1"></div>
-        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-cfd-f-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
-        <div class="form-group"><label class="form-label">% Consistencia (mejor día) <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-cfd-f-consistency" placeholder="Sin límite" step="1" min="1" max="100"></div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Ciclo de cobro</label>
-          <select class="form-input" id="na-cfd-f-cycle">
-            <option value="biweekly">Quincenal</option>
-            <option value="weekly">Semanal</option>
-            <option value="monthly">Mensual</option>
-          </select>
-        </div>
-        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Consistencia vacía = sin regla (ej: FTMO)</span></div>
-      </div>
-    </div>
-
-    <!-- CFD INSTANT fields -->
-    <div id="modal-section-cfd-instant" class="form-section" style="display: none;">
-      <div class="form-section-title">⚡ Parámetros Instant · CFD</div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-inst-maxdd" placeholder="6" step="0.1"></div>
-        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-inst-dailysl" placeholder="1" step="0.1"></div>
-        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-inst-pct" placeholder="95" step="1"></div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-inst-mindays" placeholder="5" step="1"></div>
-        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-inst-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Regla mejor día % <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-inst-bestratio" placeholder="Sin límite" step="1" min="1" max="100"></div>
-        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Vacío = sin regla de consistencia</span></div>
-      </div>
-    </div>
-
-    <!-- Grupo assignment (futures) -->
-    <div id="modal-group-select" class="form-group" style="">
-      <label class="form-label">Grupo de estrategia</label>
-      <select class="form-input" id="na-group">
-        <option value="A">🔵 Grupo A</option>
-        <option value="B">🟣 Grupo B</option>
-        <option value="C">🟢 Grupo C</option>
-        <option value="D">🩷 Grupo D</option>
-        <option value="E">🟡 Grupo E</option>
-      </select>
-    </div>
-
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;addAccountModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveNewAccount()">✅ Agregar cuenta</button>
-    </div>
-  </div>
-</div>
-
-<!-- GROUP EDIT MODAL -->
-<div class="modal-backdrop" id="groupModal" onclick="closeModal(&#39;groupModal&#39;,event)">
-  <div class="modal" style="width:520px" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;groupModal&#39;)">✕</button>
-    <div class="modal-title" id="grp-modal-title">Editar Grupo C · Futuros</div>
-    <div class="modal-sub" id="grp-modal-sub">🟢 Grupo C</div>
-    <input type="hidden" id="grp-edit-type" value="futures">
-    <input type="hidden" id="grp-edit-id" value="grp-C">
-
-    <div id="grp-futures-fields" style="">
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="grp-name" placeholder="Grupo A"></div>
-        <div class="form-group"><label class="form-label">Empresa / Firma</label><input class="form-input" id="grp-firm" placeholder="Lucid, FTMO..."></div>
-      </div>
-      <div class="form-row-4">
-        <div class="form-group"><label class="form-label">Micros</label><input class="form-input" type="number" id="grp-micros" placeholder="2" step="1"></div>
-        <div class="form-group"><label class="form-label">SL ticks</label><input class="form-input" type="number" id="grp-sl" placeholder="150" step="1"></div>
-        <div class="form-group"><label class="form-label">TP ticks</label><input class="form-input" type="number" id="grp-tp" placeholder="150" step="1"></div>
-        <div class="form-group"><label class="form-label">Sesión</label>
-          <select class="form-input" id="grp-session">
-            <option value="">Todas</option>
-            <option value="ny">Nueva York</option>
-            <option value="london">Londres</option>
-            <option value="overlap">Overlap</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Par favorito</label><input class="form-input" id="grp-pair" placeholder="NQ, ES..."></div>
-        <div class="form-group"><label class="form-label">Capital (Fondeo $)</label><input class="form-input" type="number" id="grp-capital" placeholder="50000" step="any"></div>
-        <div class="form-group"><label class="form-label">Descripción</label><input class="form-input" id="grp-desc" placeholder="Estrategia..."></div>
-      </div>
-    </div>
-
-    <div id="grp-cfd-fields" style="display: none;">
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="grp-cfd-name" placeholder="Grupo A CFD"></div>
-        <div class="form-group"><label class="form-label">Criterio</label>
-          <select class="form-input" id="grp-cfd-criterion">
-            <option value="pair">Por par</option>
-            <option value="lots">Por lotaje</option>
-            <option value="session">Por sesión</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row-2">
-        <div class="form-group"><label class="form-label">Par / Instrumento</label><input class="form-input" id="grp-cfd-pair" placeholder="EURUSD, XAUUSD..."></div>
-        <div class="form-group"><label class="form-label">Lotaje típico</label><input class="form-input" type="number" id="grp-cfd-lots" placeholder="0.1" step="0.01"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Descripción</label><input class="form-input" id="grp-cfd-desc" placeholder="Estrategia CFD..."></div>
-    </div>
-
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;groupModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveGroupModal()">Guardar grupo</button>
-    </div>
-  </div>
-</div>
-
-<!-- ASSIGN ACCOUNTS MODAL -->
-<div class="modal-backdrop" id="assignModal" onclick="closeModal(&#39;assignModal&#39;,event)">
-  <div class="modal" style="width:500px" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;assignModal&#39;)">✕</button>
-    <div class="modal-title" id="assign-modal-title">🔗 Agregar cuentas al grupo</div>
-    <div class="modal-sub">Selecciona las cuentas que pertenecen a este grupo · Una cuenta no puede estar en dos grupos simultáneamente</div>
-    <input type="hidden" id="assign-group-id">
-    <input type="hidden" id="assign-group-type">
-    <div id="assign-accounts-list" class="entry-list" style="max-height:300px;overflow-y:auto;"></div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;assignModal&#39;)">Cerrar</button>
-      <button class="btn btn-primary" onclick="saveAssignment()">Guardar asignación</button>
-    </div>
-  </div>
-</div>
-
-<!-- IMAGE VIEWER MODAL -->
-<div class="modal-backdrop" id="imgModal" onclick="closeModal(&#39;imgModal&#39;,event)">
-  <div class="modal" style="width:700px;max-width:96vw" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;imgModal&#39;)">✕</button>
-    <div class="modal-title" id="img-modal-title">Captura</div>
-    <div style="margin-top:1rem;text-align:center">
-      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
-    </div>
-  </div>
-</div>
-
-<!-- CERT UPLOAD MODAL -->
-<div class="modal-backdrop" id="certModal" onclick="closeModal(&#39;certModal&#39;,event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;certModal&#39;)">✕</button>
-    <div class="modal-title" id="cert-modal-title">Pago · PROP TRADE LONDRES</div>
-    <div class="modal-sub">Sube el comprobante y registra el monto recibido</div>
-    <div class="form-group">
-      <label class="form-label">Imagen del certificado</label>
-      <div class="upload-zone" style="position:relative">
-        <input type="file" id="cert-file" accept="image/*" onchange="handleCertFile()">
-        <div id="cert-upload-ph">
-          <div class="upload-icon">⬆</div>
-          <div class="upload-text">Arrastra o haz clic</div>
-          <div class="upload-sub">Imagen del pago · máx 8MB</div>
-        </div>
-        <div id="cert-preview-wrap" class="hidden">
-          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
-        </div>
-      </div>
-    </div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">Monto recibido ($)</label><input class="form-input" type="number" id="cert-amount" placeholder="1250.00" step="any"></div>
-      <div class="form-group"><label class="form-label">📅 Fecha solicitud / cobro <span style="font-size:9px;color:var(--muted)">(cuando se solicita o recibe, NO la de carga)</span></label><input class="form-input" type="date" id="cert-date"></div>
-    </div>
-    <div class="form-group"><label class="form-label">Notas</label><input class="form-input" id="cert-notes" placeholder="Ciclo, referencia..."></div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;certModal&#39;)">Cancelar</button>
-      <button class="btn btn-green" onclick="saveCert()">💾 Guardar certificado</button>
-    </div>
-  </div>
-</div>
-
-<!-- FIRM EDIT MODAL -->
-<div class="modal-backdrop" id="firmEditModal" onclick="closeModal(&#39;firmEditModal&#39;,event)">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:700px">
-    <button class="modal-close" onclick="closeModal(&#39;firmEditModal&#39;)">✕</button>
-    <div class="modal-title">✏ Editar Resumen por Firma</div>
-    <div class="modal-sub">Ajusta manualmente los totales históricos (incluye cuentas ya eliminadas). Las cuentas de backtesting nunca cuentan en este resumen.</div>
-    <div id="firm-edit-content" style="max-height:400px;overflow-y:auto;margin-top:0.75rem">
-      <div style="background:var(--bg2);border-radius:8px;padding:10px 12px;margin-bottom:8px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="font-size:13px;font-weight:700">SURE LEVERAGE</div>
-          <button class="btn btn-danger btn-xs" onclick="removeFirmManual(&#39;SURE LEVERAGE&#39;)">Quitar firma extra</button>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 2fr;gap:8px;align-items:end">
-          <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">
-              ✅ Extra pasadas<br><span style="color:var(--green)">Auto: 1</span>
-            </div>
-            <input class="firm-edit-input" type="number" id="fe-passed-SURE LEVERAGE" value="0" min="0" placeholder="0">
-          </div>
-          <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">
-              💀 Extra perdidas<br><span style="color:var(--red)">Auto: 0</span>
-            </div>
-            <input class="firm-edit-input" type="number" id="fe-lost-SURE LEVERAGE" value="0" min="0" placeholder="0">
-          </div>
-          <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">⚡ Activas (auto)</div>
-            <div style="font-size:14px;font-weight:700;color:var(--amber);padding:4px 0">0</div>
-          </div>
-          <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Notas</div>
-            <input class="form-input" type="text" id="fe-notes-SURE LEVERAGE" value="" placeholder="Comentarios..." style="padding:4px 8px;font-size:11px">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <button class="btn btn-ghost btn-sm" onclick="addFirmManual()">+ Agregar firma manual</button>
-      <span style="font-size:10px;color:var(--muted);margin-left:auto">Los datos auto-calculados se actualizan automáticamente al agregar/eliminar cuentas</span>
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:0.75rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;firmEditModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveFirmEdits()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- BLOWN UNBLOCK MODAL -->
-<div class="modal-backdrop" id="blownModal" onclick="closeModal(&#39;blownModal&#39;,event)">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
-    <button class="modal-close" onclick="closeModal(&#39;blownModal&#39;)">✕</button>
-    <div class="modal-title">🔴 Cuenta Bloqueada · DD Excedido</div>
-    <div class="modal-sub" id="blown-modal-sub">Cuenta: SURE · SURE LEVERAGE</div>
-    <div id="blown-modal-content" style="margin:0.75rem 0">
-    <div style="background:var(--bg2);border-radius:8px;padding:10px 12px;font-size:12px;margin-bottom:8px">
-      <div style="color:var(--red);font-weight:700;margin-bottom:4px">⛔ Quemada definitivamente</div>
-      <div style="color:var(--muted);font-size:11px">
-        DD diario: -5% · DD total: -10% · Saldo: $25.000
-      </div>
-    </div>
-    <div style="font-size:11px;color:var(--muted2);line-height:1.6">
-      <strong>Desbloquear:</strong> solo si fue un error de entrada de datos (el trade real no excedió el DD).<br>
-      <strong>Confirmar Quemada:</strong> la cuenta queda bloqueada permanentemente. Solo verás el ROI acumulado y podrás eliminarla del dashboard.
-    </div>
-  </div>
-    <div style="background:var(--red-dim);border:1px solid var(--red);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--red);margin-bottom:1rem">
-      ⛔ Esta cuenta está <strong>bloqueada</strong>. No se pueden agregar nuevas entradas hasta que se tome una decisión.
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;blownModal&#39;)">Cerrar</button>
-      <button class="btn btn-amber btn-sm" onclick="unblockAccount()">⚠ Desbloquear (fue error de entrada)</button>
-      <button class="btn btn-danger btn-sm" onclick="markAccountBlownPermanent()">💀 Confirmar Quemada (definitivo)</button>
-    </div>
-  </div>
-</div>
-
-<!-- ───────── RENAME ACCOUNT MODAL ───────── -->
-<div class="modal-backdrop" id="renameAccountModal" onclick="closeModal(&#39;renameAccountModal&#39;,event)">
-  <div class="modal" style="width:420px" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;renameAccountModal&#39;)">✕</button>
-    <div class="modal-title">✏ Renombrar Cuenta</div>
-    <div class="modal-sub" id="rename-modal-sub">Cambia el nombre visible de la cuenta. Todos los registros se actualizarán automáticamente.</div>
-    <div class="form-group" style="margin-top:1rem">
-      <label class="form-label">Nombre actual</label>
-      <div id="rename-current-name" style="font-size:13px;font-weight:600;color:var(--muted2);padding:6px 0">BACKTESTING2 1k</div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nuevo nombre</label>
-      <input class="form-input" type="text" id="rename-new-name" placeholder="Escribe el nuevo nombre..." maxlength="60">
-    </div>
-    <div style="background:var(--amber-dim);border:1px solid #3a2000;border-radius:6px;padding:8px 12px;font-size:10px;color:var(--amber);margin-bottom:1rem">
-      ⚠ Este cambio afecta también los registros de operaciones, certificados y estadísticas de firma vinculados a esta cuenta.
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;renameAccountModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveRenameAccount()">✅ Guardar nombre</button>
-    </div>
-  </div>
-</div>
-
-<!-- ───────── GOAL MILESTONES EDIT MODAL ───────── -->
-<div class="modal-backdrop" id="goalMilestonesModal" onclick="closeModal(&#39;goalMilestonesModal&#39;,event)">
-  <div class="modal" style="width:460px" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(&#39;goalMilestonesModal&#39;)">✕</button>
-    <div class="modal-title">🎯 Metas por nivel</div>
-    <div class="modal-sub">Define qué se desbloquea en cada monto. Se actualiza solo con tus retiros reales.</div>
-    <div id="goal-milestones-edit-list" style="margin-top:1rem;max-height:50vh;overflow-y:auto;padding-right:4px"><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$5K</div>
-      <input class="form-input" type="text" id="gme-emoji-5000" value="💪" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-5000" value="Fondo de emergencia" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$10K</div>
-      <input class="form-input" type="text" id="gme-emoji-10000" value="🔁" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-10000" value="Reinversión en cuentas" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$15K</div>
-      <input class="form-input" type="text" id="gme-emoji-15000" value="🎉" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-15000" value="Distracción / gusto" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$20K</div>
-      <input class="form-input" type="text" id="gme-emoji-20000" value="🏆" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-20000" value="Meta Sprint cumplida" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$30K</div>
-      <input class="form-input" type="text" id="gme-emoji-30000" value="📈" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-30000" value="Inversión a largo plazo" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$50K</div>
-      <input class="form-input" type="text" id="gme-emoji-50000" value="🏠" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-50000" value="Meta patrimonial" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$70K</div>
-      <input class="form-input" type="text" id="gme-emoji-70000" value="✈️" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-70000" value="Libertad financiera parcial" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$100K</div>
-      <input class="form-input" type="text" id="gme-emoji-100000" value="👑" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-100000" value="Meta $100K cumplida" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$150K</div>
-      <input class="form-input" type="text" id="gme-emoji-150000" value="💎" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-150000" value="Constructor de Riqueza" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$170K</div>
-      <input class="form-input" type="text" id="gme-emoji-170000" value="🏦" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-170000" value="Generador de Activos" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$200K</div>
-      <input class="form-input" type="text" id="gme-emoji-200000" value="🌍" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-200000" value="Libertad Financiera" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div><div class="goal-milestone-edit-row">
-      <div class="gme-amount">$240K</div>
-      <input class="form-input" type="text" id="gme-emoji-240000" value="👑" maxlength="4" style="text-align:center;padding:4px">
-      <input class="form-input" type="text" id="gme-label-240000" value="Imperio Personal" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
-    </div></div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:0.75rem">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;goalMilestonesModal&#39;)">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveGoalMilestonesModal()">✅ Guardar metas</button>
-    </div>
-  </div>
-</div>
-
-<!-- ───────── PAGE: FAQs & DIARIO ───────── -->
-
-<!-- ══════════════════════════════════════════════════════════════
-     PAGE: CONTROL DEL TRADER
-══════════════════════════════════════════════════════════════ -->
 <div id="page-trader" class="page hidden" style="max-width:900px;position:relative;">
 <div class="sf-watermark"><span>Saint Fortune</span></div>
 
@@ -4559,6 +3991,574 @@ Cuentas a cobrar este mes: ..."></textarea>
   <!-- ── TAB: QUOTES — contenido movido a Control del Trader ── -->
   <div id="faqinner-quotes" style="display:none"></div>
 </div>
+</main>
+</div>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- ADD / EDIT ENTRY -->
+<div class="modal-backdrop" id="addModal" onclick="closeModal(&#39;addModal&#39;,event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;addModal&#39;)">✕</button>
+    <div class="modal-title" id="modal-title">📝 Nueva entrada</div>
+    <div class="modal-sub" id="modal-sub">Registra el resultado de la sesión</div>
+
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="form-label">Cuenta</label>
+        <select class="form-input" id="f-account" onchange="onAccountChange()"><option value="">Seleccionar...</option><option value="FUTUROS TRADE 1">FUTUROS TRADE 1</option><option value="FUTUROS TRADE 2">FUTUROS TRADE 2</option><option value="NINJA SIMULATED">NINJA SIMULATED</option><option value="PROPXP 50K INSTANT">PROPXP 50K INSTANT</option><option value="RETO CONSISTENCIA 3K">RETO CONSISTENCIA 3K</option><option value="BACKTESTING US30/US100">BACKTESTING US30/US100</option><option value="FUTUROS ACELERATOR +++">FUTUROS ACELERATOR +++</option><option value="BACKTESTING 100k NISH A+B">BACKTESTING 100k NISH A+B</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha</label>
+        <input class="form-input" type="date" id="f-date">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="form-label">Resultado</label>
+        <select class="form-input" id="f-result">
+          <option value="">Seleccionar...</option>
+          <option value="win">Win ↑</option>
+          <option value="loss">Loss ↓</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">P&amp;L real ($)</label>
+        <input class="form-input" type="number" id="f-pnl" placeholder="Ej: 320 o -180" step="any">
+      </div>
+    </div>
+
+    <div class="form-row-3">
+      <div class="form-group">
+        <label class="form-label">Sesión</label>
+        <select class="form-input" id="f-session">
+          <option value="">—</option>
+          <option value="asia">Asia 🌏</option>
+          <option value="london">Londres 🇬🇧</option>
+          <option value="ny">Nueva York 🗽</option>
+          <option value="overlap">Overlap 🔄</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Par / Instrumento</label>
+        <input class="form-input" type="text" id="f-pair" placeholder="EURUSD, NQ, ES..." list="pair-list">
+        <datalist id="pair-list">
+          <option value="XAUUSD">
+          </option><option value="US30">
+          </option><option value="US100">
+          </option><option value="MYM">
+          </option><option value="MNQ">
+          </option><option value="MGC">
+        </option></datalist>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Lotaje / Micros</label>
+        <input class="form-input" type="number" id="f-lots" placeholder="0.1" step="any">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Fuente</label>
+      <select class="form-input" id="f-source" onchange="updateSourceHint()">
+        <option value="manual">Manual</option>
+        <option value="mt5">Captura MT5</option>
+        <option value="ninja">Captura NinjaTrader</option>
+      </select>
+    </div>
+
+    <div class="form-group" id="upload-group">
+      <label class="form-label" id="upload-label">Captura (opcional)</label>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="f-file" accept="image/*,.pdf" onchange="handleFileSelect()">
+        <div id="upload-placeholder">
+          <div class="upload-icon">⬆</div>
+          <div class="upload-text">Arrastra o haz clic para subir</div>
+          <div class="upload-sub" id="upload-text-sub">Screenshot MT5 · máx 8MB</div>
+        </div>
+        <div id="upload-preview-wrap" class="hidden">
+          <div class="upload-preview">
+            <div class="upload-preview-icon" id="prev-icon">📄</div>
+            <div class="upload-preview-name" id="prev-name"></div>
+            <button class="upload-remove" onclick="clearFile(event)">✕</button>
+          </div>
+          <div class="img-preview-box" id="img-preview-box" style="display:none"><img id="img-preview-el" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" alt="preview"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Notas</label>
+      <input class="form-input" type="text" id="f-notes" placeholder="Setup, comentarios, RR...">
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;addModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" id="modal-save-btn" onclick="saveEntry()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD ACCOUNT MODAL (v4: full type differentiation) -->
+<div class="modal-backdrop" id="addAccountModal" onclick="closeModal(&#39;addAccountModal&#39;,event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;addAccountModal&#39;)">✕</button>
+    <div class="modal-title" id="acc-modal-title">➕ Agregar cuenta CFD</div>
+    <div class="modal-sub">Configura los parámetros según tipo de cuenta</div>
+
+    <!-- Tipo: Futuros vs CFD -->
+    <div class="form-group">
+      <label class="form-label">Tipo de instrumento</label>
+      <div class="type-selector" id="modal-instrument-selector">
+        <div class="type-pill" onclick="setModalInstrument(&#39;futures&#39;)" id="pill-fut">🔵 Futuros</div>
+        <div class="type-pill active" onclick="setModalInstrument(&#39;cfd&#39;)" id="pill-cfd">🟣 CFDs</div>
+      </div>
+    </div>
+
+    <!-- Subtipo: EVAL vs LIVE (futuros) / Instant / Eval F1-F2-Funded (CFD) -->
+    <div class="form-group">
+      <label class="form-label">Modo de cuenta</label>
+      <div class="type-selector" id="modal-mode-selector"><div class="type-pill active amber">🎯 Eval</div><div class="type-pill">✅ Live</div></div>
+    </div>
+
+    <!-- Base fields -->
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="na-name" placeholder="Lucid 4, FTMO 100k..."></div>
+      <div class="form-group"><label class="form-label">Saldo ($)</label><input class="form-input" type="number" id="na-balance" placeholder="50000"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" id="na-firm" placeholder="Lucid, FTMO, MFF..."></div>
+      <div class="form-group"><label class="form-label">Plataforma</label>
+        <select class="form-input" id="na-platform">
+          <option value="ninja">NinjaTrader</option>
+          <option value="mt5">MT5</option>
+          <option value="mt4">MT4</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-bottom:0.5rem">
+      <input type="checkbox" id="na-backtest" style="width:15px;height:15px;cursor:pointer">
+      <label for="na-backtest" style="font-size:11px;color:var(--muted2);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.04em">
+        🧪 Cuenta de Backtesting (no cuenta en resumen por firma)
+      </label>
+    </div>
+
+    <!-- FUTURES EVAL fields -->
+    <div id="modal-section-fut-eval" class="form-section" style="">
+      <div class="form-section-title">📋 Parámetros Evaluación · Futuros</div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-evalcost" placeholder="499" step="any"></div>
+        <div class="form-group"><label class="form-label">🎯 Objetivo ganancias ($)</label><input class="form-input" type="number" id="na-evaltarget" placeholder="3000" step="any"></div>
+        <div class="form-group"><label class="form-label">📉 Max DD EOD ($)</label><input class="form-input" type="number" id="na-maxddamt" placeholder="2000" step="any"></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">Micros default</label><input class="form-input" type="number" id="na-micros" placeholder="2" step="1"></div>
+        <div class="form-group"><label class="form-label">% Consistencia mejor día <span style="font-size:9px;color:var(--muted)">(del objetivo)</span></label><input class="form-input" type="number" id="na-consistency-pct" placeholder="50" step="1" min="1" max="100" value="50"></div>
+        <div class="form-group"><label class="form-label">Grupo asignado</label>
+          <select class="form-input" id="na-group-fut">
+            <option value="A">Grupo A</option>
+            <option value="B">Grupo B</option>
+            <option value="C">Grupo C</option>
+            <option value="D">Grupo D</option>
+            <option value="E">Grupo E</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-hint" style="background:var(--amber-dim);border:1px solid #3a2000;border-radius:6px;padding:6px 10px;color:var(--amber);font-size:10px">
+        💡 Si ganas más del <strong id="cons-pct-hint">50%</strong> del objetivo en un solo día, el objetivo efectivo sube proporcionalmente. Ej: objetivo $3k, ganas $2k en un día → nuevo objetivo = $4k
+      </div>
+    </div>
+
+    <!-- FUTURES LIVE fields -->
+    <div id="modal-section-fut-live" class="form-section" style="display: none;">
+      <div class="form-section-title">✅ Parámetros Live · Futuros</div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">📉 Max DD EOD ($)</label><input class="form-input" type="number" id="na-live-maxdd" placeholder="2000" step="any"></div>
+        <div class="form-group"><label class="form-label">🎯 Objetivo deseable ($)</label><input class="form-input" type="number" id="na-live-target" placeholder="4000" step="any"></div>
+        <div class="form-group"><label class="form-label">💵 Mínimo diario ($)</label><input class="form-input" type="number" id="na-live-minday" placeholder="150" step="any"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-live-mindays" placeholder="5" step="1"></div>
+        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-live-pct" placeholder="90" step="1"></div>
+      </div>
+    </div>
+
+    <!-- CFD EVAL F1/F2 fields -->
+    <div id="modal-section-cfd-eval" class="form-section" style="display: none;">
+      <div class="form-section-title">📋 Parámetros Evaluación CFD</div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">💵 Costo Examen ($)</label><input class="form-input" type="number" id="na-cfd-evalcost" placeholder="299" step="any"></div>
+        <div class="form-group"><label class="form-label">🔢 Fase actual</label>
+          <select class="form-input" id="na-cfd-phase">
+            <option value="1">Fase 1</option>
+            <option value="2">Fase 2</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">🎯 Obj. ganancias % F1</label><input class="form-input" type="number" id="na-cfd-target1" placeholder="10" step="0.1"></div>
+        <div class="form-group"><label class="form-label">🎯 Obj. ganancias % F2</label><input class="form-input" type="number" id="na-cfd-target2" placeholder="5" step="0.1"></div>
+        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-maxdd" placeholder="10" step="0.1"></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-cfd-dailysl" placeholder="5" step="0.1"></div>
+        <div class="form-group"><label class="form-label">Días rentables mín</label><input class="form-input" type="number" id="na-cfd-mindays" placeholder="5" step="1"></div>
+        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-cfd-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">% Consistencia (mejor día) <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-cfd-consistency" placeholder="Sin límite" step="1" min="1" max="100"></div>
+        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Dejar vacío = sin regla de consistencia (ej: FTMO)</span></div>
+      </div>
+    </div>
+
+    <!-- CFD FUNDED/LIVE fields -->
+    <div id="modal-section-cfd-funded" class="form-section" style="display: none;">
+      <div class="form-section-title">🏆 Parámetros Funded · CFD</div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-cfd-f-maxdd" placeholder="10" step="0.1"></div>
+        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-cfd-f-dailysl" placeholder="5" step="0.1"></div>
+        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-cfd-f-pct" placeholder="80" step="1"></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-cfd-f-mindays" placeholder="5" step="1"></div>
+        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-cfd-f-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
+        <div class="form-group"><label class="form-label">% Consistencia (mejor día) <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-cfd-f-consistency" placeholder="Sin límite" step="1" min="1" max="100"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Ciclo de cobro</label>
+          <select class="form-input" id="na-cfd-f-cycle">
+            <option value="biweekly">Quincenal</option>
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensual</option>
+          </select>
+        </div>
+        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Consistencia vacía = sin regla (ej: FTMO)</span></div>
+      </div>
+    </div>
+
+    <!-- CFD INSTANT fields -->
+    <div id="modal-section-cfd-instant" class="form-section" style="display: none;">
+      <div class="form-section-title">⚡ Parámetros Instant · CFD</div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">📉 Max DD %</label><input class="form-input" type="number" id="na-inst-maxdd" placeholder="6" step="0.1"></div>
+        <div class="form-group"><label class="form-label">SL diario %</label><input class="form-input" type="number" id="na-inst-dailysl" placeholder="1" step="0.1"></div>
+        <div class="form-group"><label class="form-label">% Split cobro</label><input class="form-input" type="number" id="na-inst-pct" placeholder="95" step="1"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Días mínimos</label><input class="form-input" type="number" id="na-inst-mindays" placeholder="5" step="1"></div>
+        <div class="form-group"><label class="form-label">% Día rentable <span style="font-size:9px;color:var(--muted)">(del saldo)</span></label><input class="form-input" type="number" id="na-inst-dailyprofit" placeholder="0.5" step="0.01" min="0"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Regla mejor día % <span style="font-size:9px;color:var(--muted)">opcional</span></label><input class="form-input" type="number" id="na-inst-bestratio" placeholder="Sin límite" step="1" min="1" max="100"></div>
+        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px"><span style="font-size:10.5px;color:var(--muted)">Vacío = sin regla de consistencia</span></div>
+      </div>
+    </div>
+
+    <!-- Grupo assignment (futures) -->
+    <div id="modal-group-select" class="form-group" style="">
+      <label class="form-label">Grupo de estrategia</label>
+      <select class="form-input" id="na-group">
+        <option value="A">🔵 Grupo A</option>
+        <option value="B">🟣 Grupo B</option>
+        <option value="C">🟢 Grupo C</option>
+        <option value="D">🩷 Grupo D</option>
+        <option value="E">🟡 Grupo E</option>
+      </select>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;addAccountModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveNewAccount()">✅ Agregar cuenta</button>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP EDIT MODAL -->
+<div class="modal-backdrop" id="groupModal" onclick="closeModal(&#39;groupModal&#39;,event)">
+  <div class="modal" style="width:520px" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;groupModal&#39;)">✕</button>
+    <div class="modal-title" id="grp-modal-title">Editar Grupo C · Futuros</div>
+    <div class="modal-sub" id="grp-modal-sub">🟢 Grupo C</div>
+    <input type="hidden" id="grp-edit-type" value="futures">
+    <input type="hidden" id="grp-edit-id" value="grp-C">
+
+    <div id="grp-futures-fields" style="">
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="grp-name" placeholder="Grupo A"></div>
+        <div class="form-group"><label class="form-label">Empresa / Firma</label><input class="form-input" id="grp-firm" placeholder="Lucid, FTMO..."></div>
+      </div>
+      <div class="form-row-4">
+        <div class="form-group"><label class="form-label">Micros</label><input class="form-input" type="number" id="grp-micros" placeholder="2" step="1"></div>
+        <div class="form-group"><label class="form-label">SL ticks</label><input class="form-input" type="number" id="grp-sl" placeholder="150" step="1"></div>
+        <div class="form-group"><label class="form-label">TP ticks</label><input class="form-input" type="number" id="grp-tp" placeholder="150" step="1"></div>
+        <div class="form-group"><label class="form-label">Sesión</label>
+          <select class="form-input" id="grp-session">
+            <option value="">Todas</option>
+            <option value="ny">Nueva York</option>
+            <option value="london">Londres</option>
+            <option value="overlap">Overlap</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">Par favorito</label><input class="form-input" id="grp-pair" placeholder="NQ, ES..."></div>
+        <div class="form-group"><label class="form-label">Capital (Fondeo $)</label><input class="form-input" type="number" id="grp-capital" placeholder="50000" step="any"></div>
+        <div class="form-group"><label class="form-label">Descripción</label><input class="form-input" id="grp-desc" placeholder="Estrategia..."></div>
+      </div>
+    </div>
+
+    <div id="grp-cfd-fields" style="display: none;">
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="grp-cfd-name" placeholder="Grupo A CFD"></div>
+        <div class="form-group"><label class="form-label">Criterio</label>
+          <select class="form-input" id="grp-cfd-criterion">
+            <option value="pair">Por par</option>
+            <option value="lots">Por lotaje</option>
+            <option value="session">Por sesión</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label class="form-label">Par / Instrumento</label><input class="form-input" id="grp-cfd-pair" placeholder="EURUSD, XAUUSD..."></div>
+        <div class="form-group"><label class="form-label">Lotaje típico</label><input class="form-input" type="number" id="grp-cfd-lots" placeholder="0.1" step="0.01"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Descripción</label><input class="form-input" id="grp-cfd-desc" placeholder="Estrategia CFD..."></div>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;groupModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveGroupModal()">Guardar grupo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIGN ACCOUNTS MODAL -->
+<div class="modal-backdrop" id="assignModal" onclick="closeModal(&#39;assignModal&#39;,event)">
+  <div class="modal" style="width:500px" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;assignModal&#39;)">✕</button>
+    <div class="modal-title" id="assign-modal-title">🔗 Agregar cuentas al grupo</div>
+    <div class="modal-sub">Selecciona las cuentas que pertenecen a este grupo · Una cuenta no puede estar en dos grupos simultáneamente</div>
+    <input type="hidden" id="assign-group-id">
+    <input type="hidden" id="assign-group-type">
+    <div id="assign-accounts-list" class="entry-list" style="max-height:300px;overflow-y:auto;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;assignModal&#39;)">Cerrar</button>
+      <button class="btn btn-primary" onclick="saveAssignment()">Guardar asignación</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE VIEWER MODAL -->
+<div class="modal-backdrop" id="imgModal" onclick="closeModal(&#39;imgModal&#39;,event)">
+  <div class="modal" style="width:700px;max-width:96vw" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;imgModal&#39;)">✕</button>
+    <div class="modal-title" id="img-modal-title">Captura</div>
+    <div style="margin-top:1rem;text-align:center">
+      <img id="img-modal-src" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:500px;border-radius:8px;border:1px solid var(--border2)">
+    </div>
+  </div>
+</div>
+
+<!-- CERT UPLOAD MODAL -->
+<div class="modal-backdrop" id="certModal" onclick="closeModal(&#39;certModal&#39;,event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;certModal&#39;)">✕</button>
+    <div class="modal-title" id="cert-modal-title">Pago · PROP TRADE LONDRES</div>
+    <div class="modal-sub">Sube el comprobante y registra el monto recibido</div>
+    <div class="form-group">
+      <label class="form-label">Imagen del certificado</label>
+      <div class="upload-zone" style="position:relative">
+        <input type="file" id="cert-file" accept="image/*" onchange="handleCertFile()">
+        <div id="cert-upload-ph">
+          <div class="upload-icon">⬆</div>
+          <div class="upload-text">Arrastra o haz clic</div>
+          <div class="upload-sub">Imagen del pago · máx 8MB</div>
+        </div>
+        <div id="cert-preview-wrap" class="hidden">
+          <img id="cert-preview-img" src="file:///C:/Users/34634/Downloads/index_files/index%20(4).html" style="max-width:100%;max-height:180px;border-radius:6px;margin-bottom:8px">
+        </div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Monto recibido ($)</label><input class="form-input" type="number" id="cert-amount" placeholder="1250.00" step="any"></div>
+      <div class="form-group"><label class="form-label">📅 Fecha solicitud / cobro <span style="font-size:9px;color:var(--muted)">(cuando se solicita o recibe, NO la de carga)</span></label><input class="form-input" type="date" id="cert-date"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Notas</label><input class="form-input" id="cert-notes" placeholder="Ciclo, referencia..."></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;certModal&#39;)">Cancelar</button>
+      <button class="btn btn-green" onclick="saveCert()">💾 Guardar certificado</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIRM EDIT MODAL -->
+<div class="modal-backdrop" id="firmEditModal" onclick="closeModal(&#39;firmEditModal&#39;,event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:700px">
+    <button class="modal-close" onclick="closeModal(&#39;firmEditModal&#39;)">✕</button>
+    <div class="modal-title">✏ Editar Resumen por Firma</div>
+    <div class="modal-sub">Ajusta manualmente los totales históricos (incluye cuentas ya eliminadas). Las cuentas de backtesting nunca cuentan en este resumen.</div>
+    <div id="firm-edit-content" style="max-height:400px;overflow-y:auto;margin-top:0.75rem">
+      <div style="background:var(--bg2);border-radius:8px;padding:10px 12px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:700">SURE LEVERAGE</div>
+          <button class="btn btn-danger btn-xs" onclick="removeFirmManual(&#39;SURE LEVERAGE&#39;)">Quitar firma extra</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 2fr;gap:8px;align-items:end">
+          <div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">
+              ✅ Extra pasadas<br><span style="color:var(--green)">Auto: 1</span>
+            </div>
+            <input class="firm-edit-input" type="number" id="fe-passed-SURE LEVERAGE" value="0" min="0" placeholder="0">
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">
+              💀 Extra perdidas<br><span style="color:var(--red)">Auto: 0</span>
+            </div>
+            <input class="firm-edit-input" type="number" id="fe-lost-SURE LEVERAGE" value="0" min="0" placeholder="0">
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">⚡ Activas (auto)</div>
+            <div style="font-size:14px;font-weight:700;color:var(--amber);padding:4px 0">0</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Notas</div>
+            <input class="form-input" type="text" id="fe-notes-SURE LEVERAGE" value="" placeholder="Comentarios..." style="padding:4px 8px;font-size:11px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-ghost btn-sm" onclick="addFirmManual()">+ Agregar firma manual</button>
+      <span style="font-size:10px;color:var(--muted);margin-left:auto">Los datos auto-calculados se actualizan automáticamente al agregar/eliminar cuentas</span>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:0.75rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;firmEditModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveFirmEdits()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOWN UNBLOCK MODAL -->
+<div class="modal-backdrop" id="blownModal" onclick="closeModal(&#39;blownModal&#39;,event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal(&#39;blownModal&#39;)">✕</button>
+    <div class="modal-title">🔴 Cuenta Bloqueada · DD Excedido</div>
+    <div class="modal-sub" id="blown-modal-sub">Cuenta: SURE · SURE LEVERAGE</div>
+    <div id="blown-modal-content" style="margin:0.75rem 0">
+    <div style="background:var(--bg2);border-radius:8px;padding:10px 12px;font-size:12px;margin-bottom:8px">
+      <div style="color:var(--red);font-weight:700;margin-bottom:4px">⛔ Quemada definitivamente</div>
+      <div style="color:var(--muted);font-size:11px">
+        DD diario: -5% · DD total: -10% · Saldo: $25.000
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted2);line-height:1.6">
+      <strong>Desbloquear:</strong> solo si fue un error de entrada de datos (el trade real no excedió el DD).<br>
+      <strong>Confirmar Quemada:</strong> la cuenta queda bloqueada permanentemente. Solo verás el ROI acumulado y podrás eliminarla del dashboard.
+    </div>
+  </div>
+    <div style="background:var(--red-dim);border:1px solid var(--red);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--red);margin-bottom:1rem">
+      ⛔ Esta cuenta está <strong>bloqueada</strong>. No se pueden agregar nuevas entradas hasta que se tome una decisión.
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;blownModal&#39;)">Cerrar</button>
+      <button class="btn btn-amber btn-sm" onclick="unblockAccount()">⚠ Desbloquear (fue error de entrada)</button>
+      <button class="btn btn-danger btn-sm" onclick="markAccountBlownPermanent()">💀 Confirmar Quemada (definitivo)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── RENAME ACCOUNT MODAL ───────── -->
+<div class="modal-backdrop" id="renameAccountModal" onclick="closeModal(&#39;renameAccountModal&#39;,event)">
+  <div class="modal" style="width:420px" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;renameAccountModal&#39;)">✕</button>
+    <div class="modal-title">✏ Renombrar Cuenta</div>
+    <div class="modal-sub" id="rename-modal-sub">Cambia el nombre visible de la cuenta. Todos los registros se actualizarán automáticamente.</div>
+    <div class="form-group" style="margin-top:1rem">
+      <label class="form-label">Nombre actual</label>
+      <div id="rename-current-name" style="font-size:13px;font-weight:600;color:var(--muted2);padding:6px 0">BACKTESTING2 1k</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nuevo nombre</label>
+      <input class="form-input" type="text" id="rename-new-name" placeholder="Escribe el nuevo nombre..." maxlength="60">
+    </div>
+    <div style="background:var(--amber-dim);border:1px solid #3a2000;border-radius:6px;padding:8px 12px;font-size:10px;color:var(--amber);margin-bottom:1rem">
+      ⚠ Este cambio afecta también los registros de operaciones, certificados y estadísticas de firma vinculados a esta cuenta.
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;renameAccountModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveRenameAccount()">✅ Guardar nombre</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── GOAL MILESTONES EDIT MODAL ───────── -->
+<div class="modal-backdrop" id="goalMilestonesModal" onclick="closeModal(&#39;goalMilestonesModal&#39;,event)">
+  <div class="modal" style="width:460px" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(&#39;goalMilestonesModal&#39;)">✕</button>
+    <div class="modal-title">🎯 Metas por nivel</div>
+    <div class="modal-sub">Define qué se desbloquea en cada monto. Se actualiza solo con tus retiros reales.</div>
+    <div id="goal-milestones-edit-list" style="margin-top:1rem;max-height:50vh;overflow-y:auto;padding-right:4px"><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$5K</div>
+      <input class="form-input" type="text" id="gme-emoji-5000" value="💪" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-5000" value="Fondo de emergencia" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$10K</div>
+      <input class="form-input" type="text" id="gme-emoji-10000" value="🔁" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-10000" value="Reinversión en cuentas" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$15K</div>
+      <input class="form-input" type="text" id="gme-emoji-15000" value="🎉" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-15000" value="Distracción / gusto" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$20K</div>
+      <input class="form-input" type="text" id="gme-emoji-20000" value="🏆" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-20000" value="Meta Sprint cumplida" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$30K</div>
+      <input class="form-input" type="text" id="gme-emoji-30000" value="📈" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-30000" value="Inversión a largo plazo" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$50K</div>
+      <input class="form-input" type="text" id="gme-emoji-50000" value="🏠" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-50000" value="Meta patrimonial" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$70K</div>
+      <input class="form-input" type="text" id="gme-emoji-70000" value="✈️" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-70000" value="Libertad financiera parcial" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$100K</div>
+      <input class="form-input" type="text" id="gme-emoji-100000" value="👑" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-100000" value="Meta $100K cumplida" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$150K</div>
+      <input class="form-input" type="text" id="gme-emoji-150000" value="💎" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-150000" value="Constructor de Riqueza" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$170K</div>
+      <input class="form-input" type="text" id="gme-emoji-170000" value="🏦" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-170000" value="Generador de Activos" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$200K</div>
+      <input class="form-input" type="text" id="gme-emoji-200000" value="🌍" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-200000" value="Libertad Financiera" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div><div class="goal-milestone-edit-row">
+      <div class="gme-amount">$240K</div>
+      <input class="form-input" type="text" id="gme-emoji-240000" value="👑" maxlength="4" style="text-align:center;padding:4px">
+      <input class="form-input" type="text" id="gme-label-240000" value="Imperio Personal" placeholder="Ej: Inversión, Distracción..." style="padding:4px 8px">
+    </div></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:0.75rem">
+      <button class="btn btn-ghost" onclick="closeModal(&#39;goalMilestonesModal&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveGoalMilestonesModal()">✅ Guardar metas</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── PAGE: FAQs & DIARIO ───────── -->
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE: CONTROL DEL TRADER
+══════════════════════════════════════════════════════════════ -->
 
 <!-- ───────── PAGE: VINCULACIÓN AUTO ───────── -->
 
@@ -10428,7 +10428,7 @@ function initGoalsDragDrop() {
 }
 
 // ─── GOALS POSITION TOGGLE ───
-let goalsPosition = _lsGet('fp_goals_position_sale') || 'bottom'; // 'top' | 'bottom'
+let goalsPosition = _lsGet('fp_goals_position_sale') || 'top'; // 'top' | 'bottom' — antes 'bottom' por defecto, quedaba oculto abajo
 
 function applyGoalsPosition() {
   const topBlock    = document.getElementById('goals-block-top');
