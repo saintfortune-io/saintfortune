@@ -4759,6 +4759,14 @@ function pnlClass(n) { return n>0?'green':n<0?'red':'neutral'; }
 // ═══════════════════════════════════════════
 const PAGES = ['overview','equity','calendar','certificates','groups','account','faqs','trader','coach'];
 
+function _sfResetScroll() {
+  var main = document.getElementById('sf-main');
+  if (main) main.scrollTop = 0;
+  if (document.documentElement) document.documentElement.scrollTop = 0;
+  if (document.body) document.body.scrollTop = 0;
+  if (typeof window.scrollTo === 'function') window.scrollTo(0, 0);
+}
+
 function showPage(page) {
   PAGES.forEach(p => {
     const el = document.getElementById('page-' + p);
@@ -4766,11 +4774,12 @@ function showPage(page) {
   });
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-  // El contenedor #sf-main tiene su propio scroll interno y no se reseteaba
-  // al cambiar de página — por eso la página nueva aparecía "scrolleada"
-  // a la misma altura que la anterior, mostrando un hueco vacío arriba.
-  const _mainScroll = document.getElementById('sf-main');
-  if (_mainScroll) _mainScroll.scrollTop = 0;
+  // El scroll no se reseteaba al cambiar de página — la página nueva aparecía
+  // ya "scrolleada" a la misma altura que la anterior, mostrando un hueco
+  // vacío arriba. Se resetea aquí (antes de render) y otra vez al final
+  // (después de render, vía requestAnimationFrame) por si algún render()
+  // interno reintroduce scroll o desplaza foco.
+  _sfResetScroll();
 
   if(page === 'overview') {
     document.getElementById('page-overview').classList.remove('hidden');
@@ -4826,6 +4835,11 @@ function showPage(page) {
     if(page === 'groups' && txt.includes('Grupos')) el.classList.add('active');
     if(page !== 'overview' && el.onclick && el.onclick.toString().includes(`'${page}'`)) el.classList.add('active');
   });
+
+  // Segundo reset, después de que el render de la página termine (por si
+  // algún render() interno reintrodujo scroll o movió el foco a un input).
+  requestAnimationFrame(_sfResetScroll);
+  requestAnimationFrame(function(){ requestAnimationFrame(_sfResetScroll); });
 }
 
 // ═══════════════════════════════════════════
