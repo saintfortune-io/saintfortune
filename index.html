@@ -3282,7 +3282,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
   </div>
   <div id="coach-week-pnl" style="font-size:12px;font-weight:800;color:var(--muted2);">PnL: —</div>
 </div>
-<div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn active" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="perfil" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ff6eb4;"></span>🧠 Perfil</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane active" style=""><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="padding:1.2rem 0.5rem;text-align:center;"><div style="font-size:22px;margin-bottom:8px;">📈</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber)">4</b> entradas más para activar correlaciones</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">1 días con PnL · Mínimo: 5</div><div style="margin-top:10px;background:var(--bg3);border-radius:8px;overflow:hidden;height:6px;"><div style="height:100%;width:20%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div><div id="coach-tab-perfil" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div></div>
+<div class="coach-tabs-nav" id="coach-tabs-nav"><button class="coach-tab-btn active" data-tab="correlaciones" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📊 Correlaciones</button><button class="coach-tab-btn" data-tab="errores" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#ffae30;"></span>💸 Errores</button><button class="coach-tab-btn" data-tab="protegidos" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#27d97a;"></span>🛡 Protegidos</button><button class="coach-tab-btn" data-tab="semanal" onclick="coachSwitchTab(this.dataset.tab)"><span class="ctb-dot" style="background:#4a9eff;"></span>📅 Semanal</button></div><div id="coach-tab-correlaciones" class="coach-tab-pane active" style=""><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"><div style="padding:1.2rem 0.5rem;text-align:center;"><div style="font-size:22px;margin-bottom:8px;">📈</div><div style="font-size:12px;font-weight:700;color:var(--muted2);">Necesitas <b style="color:var(--amber)">4</b> entradas más para activar correlaciones</div><div style="font-size:10px;color:var(--muted);margin-top:4px;">1 días con PnL · Mínimo: 5</div><div style="margin-top:10px;background:var(--bg3);border-radius:8px;overflow:hidden;height:6px;"><div style="height:100%;width:20%;background:var(--amber);transition:width 0.4s;"></div></div></div></div></div><div id="coach-tab-errores" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"><div class="coach-insight-label" style="margin-bottom:8px;">💸 Coste de tus errores</div><div id="coach-error-costs-module"><div class="ec-period-tabs"><div class="ec-tab" onclick="coachRenderErrorCosts(7)">7 días</div><div class="ec-tab active" onclick="coachRenderErrorCosts(30)">30 días</div><div class="ec-tab" onclick="coachRenderErrorCosts(90)">90 días</div></div><div class="ec-empty">✅ Sin errores registrados en este período<br><span style="font-size:10px;color:var(--muted);">Registra tus sesiones con etiquetas de error para ver el impacto económico</span></div></div></div></div><div id="coach-tab-protegidos" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div><div id="coach-protected-days-module"><div class="coach-insight green" style="border:1.5px solid rgba(39,217,122,0.4);background:linear-gradient(135deg,rgba(39,217,122,0.07),rgba(0,212,255,0.04));"><div class="coach-insight-label">🏆 Días que protegiste tu cuenta</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;"><div style="display:flex;align-items:center;gap:10px;"><div style="font-size:36px;font-weight:900;color:var(--green);line-height:1;">1</div><div><div style="font-size:12px;font-weight:700;color:var(--green);">días en junio de 2026</div><div style="font-size:10.5px;color:var(--muted2);">Capital estimado protegido:</div></div></div><div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:var(--green);">~$150</div><div style="font-size:9px;color:var(--muted);text-align:right;">estimación basada en tus correlaciones</div></div></div><div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:5px;"><div style="font-size:18px;line-height:1;flex-shrink:0;">🔴</div><div style="flex:1;min-width:0;"><div style="font-size:10.5px;font-weight:700;color:var(--text);">vie, 19 jun · <span style="color:var(--amber);">cansada</span></div><div style="font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic;">"Hoy el día no era apto. Lo viste a tiempo."</div></div><div style="font-size:12px;font-weight:800;color:var(--green);white-space:nowrap;">~$150 prot.</div></div></div></div></div></div><div id="coach-tab-semanal" class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"><div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Registra al menos 3 días para ver el informe semanal</div><div id="coach-weekly-report-module"></div></div></div></div>
 
     </div><!-- /col derecha -->
   </div><!-- /coach-grid -->
@@ -6129,7 +6129,7 @@ function fpNormalizeMT5Date(s) {
   m = t.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return `${m[1]}-${m[2]}-${m[3]}`;
   const d = new Date(t);
-  if (!isNaN(d)) return d.toISOString().slice(0, 10);
+  if (!isNaN(d)) return localDateStr(d); // fecha LOCAL — antes usaba toISOString() (UTC) y podía desfasar el día vs. el check-in
   return '';
 }
 
@@ -13615,6 +13615,61 @@ function coachRenderInsights() {
 // SAINT FORTUNE™ · MOTOR DE CORRELACIONES EMOCIONAL ↔ PnL REAL  v1.0
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// ── DIAGNÓSTICO TEMPORAL · vinculación check-in × trade real ──────────────────
+// No toca ninguna lógica existente. Lista cada check-in guardado (excluye
+// noTraded) y si existe o no un trade en entries[] con esa misma fecha exacta.
+// Si no hay match, busca fechas cercanas (±3 días) en entries para detectar
+// desfases de zona horaria / timing de importación. Uso: coachDiagnosticoVinculacion()
+// desde consola, o el enlace "🔍 ¿Por qué no vincula?" en el tab Correlaciones.
+function coachDiagnosticoVinculacion() {
+  var all = coachLoad();
+  var checkins = Object.entries(all).filter(function(kv){ return !kv[1].noTraded; });
+  var report = checkins.map(function(kv){
+    var date = kv[0];
+    var dayTrades = entries.filter(function(e){ return e.date === date; });
+    if (dayTrades.length) {
+      var cuentas = dayTrades.map(function(e){ return e.account; })
+        .filter(function(v,i,a){ return a.indexOf(v)===i; }).join(', ');
+      return { fecha: date, vinculado: true, trades: dayTrades.length, cuentas: cuentas, cercanas: '' };
+    }
+    var d0 = new Date(date + 'T00:00:00');
+    var cercanas = [];
+    for (var offset = -3; offset <= 3; offset++) {
+      if (offset === 0) continue;
+      var dd = new Date(d0); dd.setDate(dd.getDate() + offset);
+      var ds = localDateStr(dd);
+      var count = entries.filter(function(e){ return e.date === ds; }).length;
+      if (count) cercanas.push(ds + ' (' + count + ' trade' + (count!==1?'s':'') + ', ' + (offset>0?'+':'') + offset + 'd)');
+    }
+    return { fecha: date, vinculado: false, trades: 0, cuentas: '', cercanas: cercanas.join(' · ') || 'ninguna en ±3 días' };
+  });
+  console.table(report);
+  return report;
+}
+window.coachDiagnosticoVinculacion = coachDiagnosticoVinculacion;
+
+function coachRenderDiagnosticoVinculacion() {
+  var report = coachDiagnosticoVinculacion();
+  var box = document.getElementById('coach-diag-result');
+  if (!box) return;
+  if (!report.length) {
+    box.innerHTML = '<div style="font-size:10px;color:var(--muted);padding:8px;">No hay check-ins guardados todavía (excluyendo "no operé").</div>';
+    return;
+  }
+  var rows = report.map(function(r){
+    return '<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-bottom:1px solid var(--border2);font-size:9.5px;">'
+      + '<span style="color:var(--text);white-space:nowrap;">' + r.fecha + '</span>'
+      + '<span style="color:' + (r.vinculado ? 'var(--green)' : 'var(--red)') + ';flex:1;text-align:right;">'
+        + (r.vinculado ? '✅ ' + r.trades + ' trade(s) · ' + r.cuentas : '❌ sin match · cercanas: ' + r.cercanas)
+      + '</span></div>';
+  }).join('');
+  var linkedCount = report.filter(function(r){ return r.vinculado; }).length;
+  box.innerHTML = '<div style="font-size:9.5px;color:var(--muted2);margin:8px 0 4px;">' + linkedCount + ' de ' + report.length + ' check-ins vinculados</div>'
+    + '<div style="max-height:220px;overflow-y:auto;background:var(--bg3);border-radius:8px;">' + rows + '</div>'
+    + '<div style="font-size:9px;color:var(--muted);margin-top:4px;">También disponible en consola: <code>coachDiagnosticoVinculacion()</code></div>';
+}
+window.coachRenderDiagnosticoVinculacion = coachRenderDiagnosticoVinculacion;
+
 // ── 1. CRUZAR DATOS: Coach entries × entries[] por fecha ──────────────────────
 function coachGetEntriesWithPnL() {
   var all = coachLoad();
@@ -13877,7 +13932,7 @@ function _coachEnsureTabStructure() {
     + '<div id="coach-tab-correlaciones" class="coach-tab-pane active"><div class="coach-tabs-scroll" id="coach-tab-correlaciones-body"></div></div>'
     + '<div id="coach-tab-errores"       class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-errores-body"></div></div>'
     + '<div id="coach-tab-protegidos"    class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-protegidos-body"></div></div>'
-    + '<div id="coach-tab-perfil"        class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-perfil-body"></div></div>'
+    + '<div id="coach-tab-semanal"       class="coach-tab-pane"><div class="coach-tabs-scroll" id="coach-tab-semanal-body"></div></div>'
     + '</div>';
 
   // Render tab nav buttons
@@ -13885,7 +13940,7 @@ function _coachEnsureTabStructure() {
     { id:'correlaciones', icon:'📊', label:'Correlaciones', color:'#4a9eff' },
     { id:'errores',       icon:'💸', label:'Errores',       color:'#ffae30' },
     { id:'protegidos',    icon:'🛡', label:'Protegidos',   color:'#27d97a' },
-    { id:'perfil',        icon:'🧠', label:'Perfil',        color:'#ff6eb4' },
+    { id:'semanal',       icon:'📅', label:'Semanal',       color:'#4a9eff' },
   ];
   var nav = panel.querySelector('#coach-tabs-nav');
   tabs.forEach(function(t) {
@@ -13937,7 +13992,10 @@ function coachRenderInsights() {
         +'<div style="font-size:10px;color:var(--muted);margin-top:4px;">'+linked+' días con PnL · Mínimo: '+corr.meta.minRequired+'</div>'
         +'<div style="margin-top:10px;background:var(--bg3);border-radius:8px;overflow:hidden;height:6px;">'
         +'<div style="height:100%;width:'+Math.round((linked/corr.meta.minRequired)*100)+'%;background:var(--amber);transition:width 0.4s;"></div>'
-        +'</div></div>';
+        +'</div>'
+        +'<div style="margin-top:10px;"><span onclick="coachRenderDiagnosticoVinculacion()" style="font-size:9.5px;color:var(--blue);cursor:pointer;text-decoration:underline;">🔍 ¿Por qué no vincula? Ver diagnóstico</span></div>'
+        +'<div id="coach-diag-result"></div>'
+        +'</div>';
     } else {
       var gAvgFmt = (corr.global.avgPnl>=0?'+$':'-$')+Math.abs(Math.round(corr.global.avgPnl));
       var gWRFmt  = Math.round(corr.global.wr*100)+'%';
@@ -14313,22 +14371,23 @@ coachRenderInsights = function() {
     var dayKeys = ['L','M','X','J','V'];
     var totalPnl = 0;
     var hasPnl = false;
+    var coachAll = (typeof coachLoad === 'function') ? coachLoad() : {};
     for (var i = 0; i < 5; i++) {
       var d = new Date(monday); d.setDate(monday.getDate() + i);
       var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-      var entry = null;
-      try { var raw = _lsGet('diary_'+iso); if(raw) entry = JSON.parse(raw); } catch(e) {}
+      var coachEntry = coachAll[iso] || null;
+      var dayTrades = (typeof entries !== 'undefined') ? entries.filter(function(e){ return e.date === iso; }) : [];
       var el = document.getElementById('cwb-'+dayKeys[i]);
       if (!el) continue;
-      if (!entry) {
+      if (coachEntry && coachEntry.noTraded) {
+        el.textContent = dayKeys[i] + ' 🛡';
+        el.style.color = 'var(--cyan)';
+      } else if (!dayTrades.length) {
         var future = d > now;
         el.textContent = dayKeys[i] + ' —';
         el.style.color = 'var(--muted)';
-      } else if (entry.noTraded) {
-        el.textContent = dayKeys[i] + ' 🛡';
-        el.style.color = 'var(--cyan)';
       } else {
-        var pnl = parseFloat(entry.pnl) || 0;
+        var pnl = dayTrades.reduce(function(s,e){ return s + (parseFloat(e.pnl)||0); }, 0);
         if (!isNaN(pnl)) { totalPnl += pnl; hasPnl = true; }
         var emoji = pnl >= 0 ? '✅' : '❌';
         el.textContent = dayKeys[i] + ' ' + emoji;
@@ -14516,7 +14575,6 @@ coachRenderInsights = function() {
   _coachRenderInsightsPrevS3();
   var tabBody = document.getElementById('coach-tab-protegidos-body');
   if (!tabBody) return;
-  if (document.getElementById('coach-protected-days-module')) return;
 
   var tmpPanel = document.createElement('div');
   var protHtml = coachRenderProtectedDays(tmpPanel, 0);
@@ -14524,10 +14582,22 @@ coachRenderInsights = function() {
     tabBody.innerHTML = '<div style="padding:1rem 0;text-align:center;font-size:11px;color:var(--muted);">Sin días protegidos registrados aún</div>';
     return;
   }
-  var wrapper = document.createElement('div');
-  wrapper.id  = 'coach-protected-days-module';
-  wrapper.innerHTML = protHtml;
-  tabBody.appendChild(wrapper);
+  // Si el módulo ya existe (de un render anterior o de un HTML guardado con
+  // estado congelado), se actualiza en su lugar en vez de saltarse el
+  // render — antes, la guarda de existencia dejaba esto atorado para
+  // siempre en los datos con los que se guardó el archivo. Si no existe,
+  // se limpia primero cualquier placeholder ("Sin días protegidos...")
+  // que pudiera seguir ahí antes de crear el módulo.
+  var existing = document.getElementById('coach-protected-days-module');
+  if (existing) {
+    existing.innerHTML = protHtml;
+  } else {
+    tabBody.innerHTML = '';
+    var wrapper = document.createElement('div');
+    wrapper.id  = 'coach-protected-days-module';
+    wrapper.innerHTML = protHtml;
+    tabBody.appendChild(wrapper);
+  }
 };
 
 // ── FIN SESIÓN 3 · Saint Fortune™ ────────────────────────────────────────────
@@ -14839,7 +14909,6 @@ coachRenderInsights = function() {
   _coachRenderInsightsPrevS4();
   var tabBody = document.getElementById('coach-tab-semanal-body');
   if (!tabBody) return;
-  if (document.getElementById('coach-weekly-report-module')) return;
 
   var all = coachLoad();
   if (Object.keys(all).length < 3) {
@@ -14847,9 +14916,16 @@ coachRenderInsights = function() {
     return;
   }
 
-  var wrapper = document.createElement('div');
-  wrapper.id  = 'coach-weekly-report-module';
-  tabBody.appendChild(wrapper);
+  // Igual que en Protegidos: si el módulo ya existe (posible HTML
+  // congelado de un guardado anterior), no se salta el render — se limpia
+  // el placeholder si seguía ahí y coachRenderWeeklyReport() siempre
+  // recalcula con datos actuales (incluye la sección de errores).
+  if (!document.getElementById('coach-weekly-report-module')) {
+    tabBody.innerHTML = '';
+    var wrapper = document.createElement('div');
+    wrapper.id  = 'coach-weekly-report-module';
+    tabBody.appendChild(wrapper);
+  }
   coachRenderWeeklyReport(0);
 };
 
@@ -15193,23 +15269,28 @@ coachRenderInsights = function() {
   _coachRenderInsightsPrevS5();
   var panel = document.getElementById('coach-insights-panel');
   if (!panel) return;
-  if (document.getElementById('coach-profile-module')) return;
   var all = coachLoad();
   if (Object.keys(all).length < 3) return;
 
-  var wrapper = document.createElement('div');
-  wrapper.id = 'coach-profile-module';
+  // Igual que en Protegidos y Semanal: si el módulo ya existe (posible
+  // HTML congelado de un guardado anterior), no se salta el render — solo
+  // se evita recrear la tarjeta/posición, y coachRenderProfile() siempre
+  // recalcula con datos actuales.
+  if (!document.getElementById('coach-profile-module')) {
+    var wrapper = document.createElement('div');
+    wrapper.id = 'coach-profile-module';
 
-  var card = document.createElement('div');
-  card.className = 'coach-insight blue';
-  card.style.cssText = 'border:1.5px solid rgba(74,158,255,0.35);margin-bottom:8px;';
-  card.appendChild(wrapper);
+    var card = document.createElement('div');
+    card.className = 'coach-insight blue';
+    card.style.cssText = 'border:1.5px solid rgba(74,158,255,0.35);margin-bottom:8px;';
+    card.appendChild(wrapper);
 
-  var firstEl = panel.firstElementChild;
-  if (firstEl && firstEl.nextElementSibling) {
-    panel.insertBefore(card, firstEl.nextElementSibling);
-  } else {
-    panel.appendChild(card);
+    var firstEl = panel.firstElementChild;
+    if (firstEl && firstEl.nextElementSibling) {
+      panel.insertBefore(card, firstEl.nextElementSibling);
+    } else {
+      panel.appendChild(card);
+    }
   }
 
   _profileCacheInvalidate();
@@ -18713,19 +18794,19 @@ async function sbStartAutoSync(licKey) {
     // naturaleza — plantea el propósito del sistema y pasa directo a
     // conocer al trader (segunda mitad del flujo: saintAskTraderName).
     greeting_first: {
-      directo:   'SAINT · Comandante de Rendimiento.<br>Aquí se entrena el criterio, se protege la disciplina, se forja la consistencia — sin excusas.<br><br>Bienvenido a Treyuder.<br>Hoy se abre el frente: la construcción de tu sistema operativo como Treyuder Elite empieza ahora, no mañana.<br>No necesitas una estrategia nueva — necesitas ejecutar la tuya con disciplina de acero y fuego por dentro.<br>Vamos a construir tu imperio, ladrillo a ladrillo, sesión a sesión.<br>Antes de dar la orden de marcha, vamos a conocerte.',
+      directo:   'SAINT · Coach de Alto Rendimiento.<br>Trabaja con datos, no con frases — mide tu plan contra tu ejecución real, sesión a sesión.<br><br>Bienvenido a Treyuder.<br>Acá empieza el seguimiento de tu sistema operativo como Treyuder Elite.<br>No hace falta una estrategia nueva — hace falta ejecutar la tuya con disciplina, y que cada sesión quede registrada.<br>Antes de empezar, vamos a conocerte.',
       cercano:   'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy empieza la construcción de tu sistema operativo como Treyuder Elite.<br>Esto no busca enseñarte una estrategia — busca ayudarte a sostener la tuya, con disciplina y enfoque, cuando aparezca la presión.<br>Vamos a construir tu imperio, juntos.<br>Antes de avanzar, vamos a conocerte.',
       analitico: 'SAINT · Entrenador de Alto Rendimiento.<br>Entrena criterio. Protege disciplina. Construye consistencia.<br><br>Bienvenido a Treyuder.<br>Hoy comienza la construcción de tu sistema operativo como Treyuder Elite.<br>El objetivo no es una estrategia nueva: es ejecutar la tuya con máxima disciplina y enfoque, medible sesión a sesión.<br>Vamos a construir tu imperio.<br>Antes de empezar, vamos a conocerte.'
     },
     // Se dice justo después de que el trader confirma (o no) su nombre.
     // Cierra el primer contacto y da paso a los quick replies.
     onboarded_confirm: {
-      directo:   'Recibido, {name}.<br>A partir de ahora cada sesión que abras es un ladrillo más en tu sistema — nadie construye un imperio de un solo golpe.',
+      directo:   'Recibido.<br>A partir de ahora, cada sesión que abras queda registrada en tu sistema.',
       cercano:   'Bien, {name}.<br>Vamos a construir esto juntos, sesión a sesión.',
       analitico: 'Registrado, {name}.<br>Cada sesión queda documentada dentro de tu sistema.'
     },
     prep_start: {
-      directo:   '{name}, tu sesión arranca en breve.<br>Formación ya — nos preparamos como antes de la batalla, con la cabeza encendida y el plan grabado.',
+      directo:   '{name}, tu sesión arranca en breve.<br>Vamos a prepararnos — checklist, estado y plan, en orden.',
       cercano:   '{name}, antes de tu sesión, vamos a prepararnos juntos, con la calma de un buen calentamiento.',
       analitico: '{name}, antes de operar, revisamos estado y checklist.<br>Todo protocolo de alto rendimiento empieza así.'
     },
@@ -18745,7 +18826,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Verificación de los 6 puntos de proceso — tu checklist previo a la sesión.'
     },
     finish: {
-      directo:   'Preparación completa.<br>Confía en tu sistema como confías en tu entrenamiento — es lo único que te sostiene cuando el mercado aprieta.',
+      directo:   'Preparación completa.<br>Checklist cerrado y estado registrado. Eso es lo que te sostiene cuando el mercado aprieta — el registro, no la intención.',
       cercano:   'Estás listo, {name}.<br>Confía en el proceso — nos vemos al cerrar la sesión.',
       analitico: 'Preparación completa. Checklist al 100%.<br>Análisis disponible al cierre de sesión.'
     },
@@ -18760,12 +18841,12 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Vamos a definir tu rutina operativa.<br>No afecta estrategia, riesgo ni cuentas.<br>Solo estructura cuándo se activa tu preparación.'
     },
     routine_finish: {
-      directo:   'Rutina guardada, {name}.<br>Ya sé cuándo presentarme.<br>Nos vemos antes de tu próxima sesión — puntual, sin excusas.',
+      directo:   'Rutina guardada.<br>Ya sé cuándo presentarme.<br>Nos vemos antes de tu próxima sesión, en punto.',
       cercano:   'Listo, {name}.<br>Tu rutina quedó guardada.<br>Nos vemos antes de tu próxima sesión.',
       analitico: 'Rutina registrada, {name}.<br>Horarios sincronizados.<br>Verificación automática antes de cada sesión.'
     },
     routine_prep_trigger: {
-      directo:   '{name}, faltan {minutes} minutos para {session}.<br>Cuenta regresiva activada — vamos a prepararnos con toda la intensidad que esto merece.',
+      directo:   '{name}, faltan {minutes} minutos para {session}.<br>Vamos a prepararnos.',
       cercano:   '{name}, tu sesión de {session} empieza en {minutes} minutos.<br>Vamos a prepararnos con calma.',
       analitico: 'Faltan {minutes} minutos para tu sesión de {session}, {name}.<br>Inicio del proceso de preparación.'
     },
@@ -18778,7 +18859,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Rutina ya configurada.<br>Selecciona la acción a realizar.'
     },
     routine_add_session_intro: {
-      directo:   'Sumamos una sesión nueva al frente. Las que ya tienes quedan intactas.',
+      directo:   'Sumamos una sesión nueva a tu rutina. Las que ya tienes quedan intactas.',
       cercano:   '{name}, sumemos una sesión nueva — las que ya tienes no se tocan.',
       analitico: 'Se agrega una sesión nueva. Las sesiones existentes permanecen sin cambios.'
     },
@@ -18798,17 +18879,17 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Actualización de horario para la sesión: {session}.'
     },
     routine_session_added: {
-      directo:   'Sesión agregada, {name}.<br>El resto del frente sigue exactamente igual.',
+      directo:   'Sesión agregada.<br>El resto de tu rutina sigue exactamente igual.',
       cercano:   'Listo, {name}.<br>Sumé la sesión sin tocar el resto de tu rutina.',
       analitico: 'Sesión añadida.<br>Resto de la configuración sin cambios.'
     },
     routine_session_updated: {
-      directo:   'Horario actualizado, {name}. Firme.',
+      directo:   'Horario actualizado. Firme.',
       cercano:   'Listo, {name}, quedó actualizado.',
       analitico: 'Sesión actualizada correctamente.'
     },
     routine_edit_cancelled: {
-      directo:   'Sin cambios, {name}. La sesión se mantiene tal cual — a veces la mejor orden es no tocar nada.',
+      directo:   'Sin cambios. La sesión se mantiene tal cual.',
       cercano:   'Tranquilo, {name}, no cambié nada.',
       analitico: 'Edición cancelada. Sesión sin modificaciones.'
     },
@@ -18823,7 +18904,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Sesión {session} eliminada.'
     },
     style_confirm: {
-      directo:   'Directo y al grano.<br>Sin rodeos, sin excusas — así se construye un imperio.',
+      directo:   'Directo y al grano.<br>Sin rodeos — así se sostiene un sistema.',
       cercano:   'Con calma y cercanía.<br>Así vamos a trabajar.',
       analitico: 'Con datos y precisión.<br>Así vamos a trabajar.'
     },
@@ -18885,14 +18966,22 @@ async function sbStartAutoSync(licKey) {
     // reducir el cierre a solo lo que falló. Se añade después de
     // session_close_findings cuando hay algo que reforzar.
     session_close_strength: {
-      directo:   'A tu favor: {strength}. Eso se lleva a la próxima batalla — no se negocia.',
+      directo:   'A tu favor: {strength}. Eso se repite en la próxima sesión — no se negocia.',
       cercano:   'Y algo que sí funcionó: {strength}. Sigue así.',
       analitico: 'Aspecto sostenido: {strength}.'
     },
     session_close_clean: {
-      directo:   '{name}, {session} cerró dentro del plan.<br>Cero desviaciones que reportar — así se opera con convicción.',
+      directo:   '{name}, {session} cerró dentro del plan.<br>Cero desviaciones que reportar. Eso queda registrado.',
       cercano:   '{name}, cerraste tu sesión de {session} y todo se mantuvo dentro de tu plan.',
       analitico: 'Sesión de {session} cerrada.<br>Sin violaciones detectadas respecto al plan configurado.'
+    },
+    // Sin operativa hoy: distinto de session_close_clean (que implica que
+    // sí operaste y no hubo desviaciones). No hace falta que Engine tenga
+    // nada que decir sobre una sesión sin operaciones.
+    session_close_nodata: {
+      directo:   '{name}, hoy no hubo operativa que reportar en {session}.',
+      cercano:   '{name}, hoy no registraste operaciones en tu sesión de {session}.',
+      analitico: 'Sesión de {session}: sin operaciones registradas hoy.'
     },
     // Post-sesión: reemplaza la tarjeta "¿Cómo me siento después de
     // operar?" del Coach Emocional. Se pregunta solo si SAINT confirmó
@@ -18923,12 +19012,12 @@ async function sbStartAutoSync(licKey) {
     // solo (ver SAINT_ERROR_TAGS_REDUNDANT) — nunca se repite lo que el
     // hallazgo de cierre ya comunicó.
     error_tags_question: {
-      directo:   '¿Alguna de estas se coló hoy? Marca lo que aplique, sin excusas, o avanza si ninguna aplica.',
+      directo:   '¿Alguna de estas se coló hoy? Marca lo que aplique, o avanza si ninguna aplica.',
       cercano:   '¿Notaste algo de esto en ti hoy? Marca lo que sientas que aplicó.',
       analitico: '¿Cuáles de estos patrones estuvieron presentes hoy?'
     },
     session_close_thanks: {
-      directo:   'Registrado. Nos vemos en la próxima sesión — con la misma intensidad.',
+      directo:   'Registrado. Nos vemos en la próxima sesión.',
       cercano:   'Quedó guardado, gracias por contarme cómo te fue.',
       analitico: 'Registro cerrado. Disponible para el próximo análisis.'
     },
@@ -18960,12 +19049,12 @@ async function sbStartAutoSync(licKey) {
     // ── Intención del día: UNA sola pregunta, con el enfoque recomendado
     //    por el perfil ya elegido de antemano.
     intent_question: {
-      directo:   'El objetivo de hoy: {focus}. ¿Vamos con toda la artillería a eso, o cambiamos el foco?',
+      directo:   'El objetivo de hoy: {focus}. ¿Seguimos con eso, o cambiamos el foco?',
       cercano:   'Pensé que hoy podríamos poner el foco en: {focus}. ¿Te parece, o prefieres otro enfoque?',
       analitico: 'Enfoque sugerido para hoy: {focus}. ¿Confirmas o seleccionas otro?'
     },
     intent_options_intro: {
-      directo:   'Elige tu objetivo de hoy. Uno solo, con toda la intensidad.',
+      directo:   'Elige tu objetivo de hoy. Uno solo.',
       cercano:   'Elige con calma en qué quieres poner tu atención hoy.',
       analitico: 'Selecciona el enfoque operativo de la sesión.'
     },
@@ -19482,7 +19571,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Acción recomendada: revisar el plan antes de la próxima entrada.'
     },
     proteger: {
-      directo:   'Hoy el objetivo es proteger {focus}, no forzar el resultado — la fuerza mal dirigida se paga cara.',
+      directo:   'Hoy el objetivo es proteger {focus}, no forzar el resultado.',
       cercano:   'Hoy cuidamos {focus} por encima de cualquier resultado puntual.',
       analitico: 'Prioridad operativa de hoy: proteger {focus} por sobre el resultado.'
     },
@@ -20673,7 +20762,7 @@ async function sbStartAutoSync(licKey) {
       '<div class="saint-card-tag">Hora de inicio</div>' +
       '<div class="saint-card-text">¿A qué hora empieza tu sesión de ' + _saintRoutine.current.name + '?</div>' +
       '<div style="display:flex;gap:6px;margin-top:8px;">' +
-        '<input type="text" inputmode="numeric" id="saint-session-start-input" placeholder="Ej: 8:30 am" ' +
+        '<input type="text" inputmode="numeric" id="saint-session-start-input" placeholder="Ej: 08:30" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-start-save">Listo</div>' +
       '</div>' +
@@ -20706,7 +20795,7 @@ async function sbStartAutoSync(licKey) {
       '<div class="saint-card-tag">Hora aproximada de finalización</div>' +
       '<div class="saint-card-text">¿Y a qué hora sueles terminar?</div>' +
       '<div style="display:flex;gap:6px;margin-top:8px;">' +
-        '<input type="text" inputmode="numeric" id="saint-session-end-input" placeholder="Ej: 11:00 am" ' +
+        '<input type="text" inputmode="numeric" id="saint-session-end-input" placeholder="Ej: 11:00" ' +
           'style="flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:7px 9px;outline:none;font-family:inherit;">' +
         '<div class="saint-quick-btn" id="saint-session-end-save">Listo</div>' +
       '</div>' +
@@ -21037,17 +21126,22 @@ async function sbStartAutoSync(licKey) {
     var msg;
     if (isLegacy) {
       // Fallback de compatibilidad: lectura DOM antigua (helpers globales
-      // no disponibles). Mantiene el comportamiento previo.
+      // no disponibles). Mantiene el comportamiento previo. Sin datos hoy
+      // (res.length === 0, mismo caso que tradedToday === false más abajo)
+      // usa session_close_nodata, no session_close_clean — no hubo nada
+      // que cerrar "dentro del plan" si no se operó.
       msg = res.length
         ? saintPick('session_close_findings', {session: session.name, finding: res[0]})
-        : saintPick('session_close_clean', {session: session.name});
-    } else if (res.noData || res.clean) {
+        : saintPick('session_close_nodata', {session: session.name});
+    } else if (res.noData) {
+      // Sin operativa real hoy: no es lo mismo que "cerró limpio" (que
+      // implica que sí hubo operaciones y ninguna violó el plan).
+      msg = saintPick('session_close_nodata', {session: session.name});
+    } else if (res.clean) {
       msg = saintPick('session_close_clean', {session: session.name});
-      if (!res.noData) {
-        var profileC = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
-        var noteC = _saintCloseHistoryNote(true, profileC);
-        if (noteC) msg += '<br>' + noteC;
-      }
+      var profileC = (typeof saintBuildProfile === 'function') ? saintBuildProfile() : null;
+      var noteC = _saintCloseHistoryNote(true, profileC);
+      if (noteC) msg += '<br>' + noteC;
     } else {
       var findingText = res.weak.join('. ') + '.';
       msg = saintPick('session_close_findings', {session: session.name, finding: findingText});
@@ -21062,24 +21156,20 @@ async function sbStartAutoSync(licKey) {
       // comunicó Engine, sin duplicar ningún cálculo.
       if (typeof saintMemoryLogMoment === 'function') saintMemoryLogMoment('finding', session.name, findingText);
     }
-    SAINT.say(msg, {tag:'Cierre · ' + session.name});
-    SAINT.attention(true);
-
     // ── Continúa la conversación hacia el estado emocional post-sesión
     //    solo si hubo operativa real hoy. Migra la tarjeta "¿Cómo me
     //    siento después de operar?" del Coach Emocional (oculta
     //    visualmente, intacta en el DOM) a la voz de SAINT — mismo
     //    patrón que ya se usó con la preparación (saintAskEmoState).
-    if (tradedToday) {
-      setTimeout(function(){ saintAskEmoAfter(); }, 2600);
-    } else {
-      // Sin operativa hoy no hay nada más que preguntar — se cierra solo,
-      // igual que en cualquier otro cierre del flujo (mismo delay que ya
-      // usa la rama de arriba). Antes no se programaba ningún cierre acá
-      // y el panel podía quedar abierto indefinidamente. Fix Fase 1,
-      // Punto 3.
-      setTimeout(function(){ SAINT.close(); }, 2600);
-    }
+    //    Antes avanzaba solo con un setTimeout fijo (2600ms) sin dar
+    //    tiempo real de lectura; ahora el trader decide cuándo seguir
+    //    con el mismo botón "Continuar →" que ya usa saintAskEmoAfter.
+    SAINT.say(msg, {tag:'Cierre · ' + session.name, quickReplies: [
+      { label: 'Continuar →', onClick: function(){
+          if (tradedToday) { saintAskEmoAfter(); } else { SAINT.close(); }
+        } }
+    ]});
+    SAINT.attention(true);
   }
   window.saintStartSessionClose = saintStartSessionClose;
 
