@@ -18954,6 +18954,16 @@ async function sbStartAutoSync(licKey) {
       cercano:   'Quedó registrado como día protegido, {name}. Hoy ya hiciste lo correcto — descansa tranquilo.',
       analitico: 'Registro cerrado: día protegido. Checklist no aplica en esta sesión.'
     },
+    daily_reinforce_am: {
+      directo:   'Chequeo de mitad de día: sostener el plan sigue siendo la prioridad, hayas operado o no.',
+      cercano:   '{name}, un pase rápido para decirte que vas bien — sigue con el mismo criterio.',
+      analitico: 'Punto de control intermedio del día: el criterio operativo se mantiene como variable prioritaria.'
+    },
+    daily_reinforce_pm: {
+      directo:   'Se acerca el cierre del día — sostener el estándar hasta el final es lo que construye el sistema.',
+      cercano:   '{name}, ya casi termina el día — aguanta el mismo enfoque hasta el cierre.',
+      analitico: 'Tramo final del día: el estándar de ejecución debe mantenerse constante hasta el cierre.'
+    },
     finish: {
       directo:   'Preparación completa.<br>Checklist cerrado y estado registrado. Eso es lo que te sostiene cuando el mercado aprieta — el registro, no la intención.',
       cercano:   'Estás listo, {name}.<br>Confía en el proceso — nos vemos al cerrar la sesión.',
@@ -21117,6 +21127,57 @@ async function sbStartAutoSync(licKey) {
   // de cierre recién mostrado (fix Fase 1, punto 1). Ajustable.
   var SAINT_POST_CLOSE_GUARD_MS = 10 * 60 * 1000; // 10 minutos
 
+  // ══════════════════════════════════════════════════════════════
+  // REFUERZO DIARIO — 2 chequeos cortos por día, en horarios
+  // ALEATORIOS (no fijos) dentro de una ventana operativa razonable:
+  // 09:00–16:30. Se eligió ese techo porque la sesión del trader
+  // cierra a las 17:30 — así el segundo refuerzo nunca cae pegado
+  // al cierre real. Se generan una sola vez por día (persistidos en
+  // SAINT.state.dailyReinforce) para que no cambien en cada chequeo
+  // de 60s, y se dividen en dos mitades de la ventana para garantizar
+  // que queden separados entre sí en vez de caer juntos por azar.
+  // Independiente de si hay rutina configurada y de si el día quedó
+  // marcado como protegido — el refuerzo aplica igual en ambos casos.
+  // ══════════════════════════════════════════════════════════════
+  var SAINT_DAILY_REINFORCE_WINDOW = { start: 9 * 60, end: 16 * 60 + 30 }; // 09:00–16:30 en minutos
+
+  function _saintGenDailyReinforceTimes(){
+    var w = SAINT_DAILY_REINFORCE_WINDOW;
+    var half = (w.end - w.start) / 2;
+    var t1 = w.start + Math.floor(Math.random() * half);
+    var t2 = w.start + half + Math.floor(Math.random() * half);
+    return [t1, t2];
+  }
+
+  function saintCheckDailyReinforcement(){
+    try {
+      if (!SAINT.state.onboarded) return;
+      if (_saintPrep.active || _saintRoutine.active || SAINT.isOpen) return;
+      var todayStr = _saintTodayStr();
+      var dr = SAINT.state.dailyReinforce;
+      if (!dr || dr.date !== todayStr) {
+        dr = { date: todayStr, times: _saintGenDailyReinforceTimes(), sent: [false, false] };
+        SAINT.state.dailyReinforce = dr;
+        saveState(SAINT.state);
+      }
+      var now = new Date();
+      var nowMin = now.getHours() * 60 + now.getMinutes();
+      var keys = ['daily_reinforce_am', 'daily_reinforce_pm'];
+      for (var i = 0; i < dr.times.length; i++){
+        if (dr.sent[i]) continue;
+        if (nowMin < dr.times[i]) continue;
+        dr.sent[i] = true;
+        saveState(SAINT.state);
+        var msg = saintPick(keys[i] || 'daily_reinforce_am');
+        var streakLine = _saintStreakLine();
+        if (streakLine) msg += '<br>' + streakLine;
+        _saintSayThenClose(msg, 'verde', 'Check-in');
+        return; // no más de un mensaje por tick
+      }
+    } catch(e){}
+  }
+  window.saintCheckDailyReinforcement = saintCheckDailyReinforcement;
+
   function saintCheckRoutineTrigger(){
     try {
       var r = SAINT.state.routine;
@@ -21753,12 +21814,14 @@ async function sbStartAutoSync(licKey) {
       // minuto sin necesidad.
       setTimeout(function(){
         try { if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger(); } catch(e){}
+        try { if (typeof saintCheckDailyReinforcement === 'function') saintCheckDailyReinforcement(); } catch(e){}
       }, 1200);
       // Revisa cada minuto si toca aparecer según la rutina configurada,
       // y si hay una razón espontánea y nueva para hablar entre sesiones.
       setInterval(function(){
         if (typeof saintCheckRoutineTrigger === 'function') saintCheckRoutineTrigger();
         if (typeof saintCheckSpontaneous === 'function') saintCheckSpontaneous();
+        if (typeof saintCheckDailyReinforcement === 'function') saintCheckDailyReinforcement();
       }, 60000);
     }, 1500);
   });
