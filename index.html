@@ -18934,6 +18934,26 @@ async function sbStartAutoSync(licKey) {
       cercano:   'Ahora revisamos juntos, con calma, que todo esté listo para empezar.',
       analitico: 'Verificación de los 6 puntos de proceso — tu checklist previo a la sesión.'
     },
+    trade_today_question: {
+      directo:   '¿Vas a operar hoy?',
+      cercano:   '{name}, ¿tienes pensado operar hoy?',
+      analitico: '¿Hay actividad operativa prevista para hoy?'
+    },
+    trade_today_yes_ack: {
+      directo:   'Entendido. Seguimos con la preparación completa.',
+      cercano:   'Perfecto, {name} — vamos con la preparación de siempre.',
+      analitico: 'Confirmado. Continúa el protocolo estándar de preparación.'
+    },
+    trade_today_no_ack: {
+      directo:   'Buena decisión. No ejecutar también es una ejecución válida dentro del sistema.',
+      cercano:   'Te escucho, {name}. Elegir no operar hoy también es cuidar tu cuenta.',
+      analitico: 'Decisión registrada: no operar hoy. La abstención es una acción disciplinada, no una omisión.'
+    },
+    trade_today_no_finish: {
+      directo:   'Día marcado como protegido. Hoy el checklist no aplica — no hay nada más que revisar.<br>Nos vemos en la próxima sesión con operativa.',
+      cercano:   'Quedó registrado como día protegido, {name}. Hoy ya hiciste lo correcto — descansa tranquilo.',
+      analitico: 'Registro cerrado: día protegido. Checklist no aplica en esta sesión.'
+    },
     finish: {
       directo:   'Preparación completa.<br>Checklist cerrado y estado registrado. Eso es lo que te sostiene cuando el mercado aprieta — el registro, no la intención.',
       cercano:   'Estás listo, {name}.<br>Confía en el proceso — nos vemos al cerrar la sesión.',
@@ -20333,7 +20353,7 @@ async function sbStartAutoSync(licKey) {
       if (!coachEntry.emoBefore || !coachEntry.emoBefore.length) return;
       card.remove();
       SAINT.say(saintPick('emo_confirm'), {tag:'Preparación'});
-      setTimeout(saintIntroChecklist, 400);
+      setTimeout(saintAskTradeToday, 400);
     });
 
     body.scrollTop = body.scrollHeight;
@@ -20383,6 +20403,65 @@ async function sbStartAutoSync(licKey) {
       if (semEl) coachSelectSem(semEl);
       return chosen;
     } catch(e){ return null; }
+  }
+
+  // ── Pregunta quirúrgica añadida tras el estado emocional: si el
+  //    trader decide NO operar hoy, el checklist de preparación pierde
+  //    sentido (no hay sesión que preparar) y en cambio se refuerza la
+  //    decisión y se marca el día como protegido — mismo dato/checkbox
+  //    que "🛡 Decidí NO operar hoy" del formulario manual, no se inventa
+  //    un campo nuevo. Si sí va a operar, el flujo sigue exactamente
+  //    igual que antes (directo al checklist).
+  function saintAskTradeToday(){
+    SAINT.say(saintPick('trade_today_question'), {
+      tag: 'Antes de empezar',
+      quickReplies: [
+        { label: '✅ Sí, voy a operar', onClick: function(){ saintAnswerTradeToday(true); } },
+        { label: '🛡 No, hoy no opero', onClick: function(){ saintAnswerTradeToday(false); } }
+      ]
+    });
+  }
+
+  function saintAnswerTradeToday(willTrade){
+    if (willTrade) {
+      SAINT.say(saintPick('trade_today_yes_ack'), {tag:'Preparación'});
+      setTimeout(saintIntroChecklist, 400);
+      return;
+    }
+    // Marca el día como protegido con la MISMA función que usa el
+    // checkbox manual del Coach — así "Protegidos" y el cálculo de
+    // días protegidos (saintCalcularDiasProtegidos, etc.) lo detectan
+    // sin ningún cambio adicional.
+    var chk = document.getElementById('coach-no-traded');
+    if (chk) {
+      chk.checked = true;
+      if (typeof coachToggleNoTraded === 'function') coachToggleNoTraded(chk);
+      else chk.dispatchEvent(new Event('change', {bubbles:true}));
+    } else if (typeof coachEntry !== 'undefined') {
+      coachEntry.noTraded = true;
+    }
+    // Sin checklist hoy: se deja en 0 explícitamente para que
+    // saintDeriveSemaforo() no penalice un checklist que no correspondía.
+    _saintPrep.checklistKeys = [];
+    _saintPrep.checklistIdx = 0;
+    _saintPrep.checklistNoCount = 0;
+    var msg = saintPick('trade_today_no_ack');
+    var reinforceBlock = (typeof saintPickBlock === 'function') ? saintPickBlock('reforzar') : null;
+    if (reinforceBlock) msg += '<br>' + reinforceBlock;
+    SAINT.say(msg, {tag:'Día protegido', tone:'verde'});
+    setTimeout(saintFinishPrepNoTraded, 1300);
+  }
+
+  // ── Cierre corto para el día protegido: guarda la entrada (mismo
+  //    guardado exacto que el botón "💾 Guardar día"), calcula el
+  //    semáforo solo con la señal emocional (no hay checklist) y
+  //    cierra sin mencionar checklist ni racha de preparación, ya que
+  //    hoy no aplica ninguna de las dos.
+  function saintFinishPrepNoTraded(){
+    if (typeof coachSaveEntry === 'function') coachSaveEntry();
+    var semColor = saintDeriveSemaforo();
+    SAINT.say(saintPick('trade_today_no_finish'), {tag:'Listo', tone: semColor});
+    _saintPrep.active = false;
   }
 
   function saintIntroChecklist(){
