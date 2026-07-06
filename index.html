@@ -5508,7 +5508,7 @@ function renderCFDFuel(acc, t, cfg, el) {
   const minDailyPnl = todayMinDailyPnl;
   const minDays  = cfg.minProfitDays || 5;
   const daysOk   = profDays >= minDays;
-  const payout   = winsPnl * ((cfg.payoutPct||95)/100);
+  const payout   = computePayout(acc, totalPnl); // FIX: usar P&L neto (totalPnl), no solo ganancias brutas (winsPnl)
   // Cobro habilitado exige AMBAS condiciones — ninguna reemplaza a la otra.
   const cobroOk  = consOk && daysOk;
 
