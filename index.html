@@ -12650,48 +12650,74 @@ function licLoad() {
   try { return JSON.parse(localStorage.getItem(LIC_STORE_KEY) || 'null'); } catch(e) { return null; }
 }
 
-// ── Generar clave para un comprador (desde consola: licGenerarClave(30)) ──
-window.licGenerarClave = function(dias) {
-  dias = dias || LIC_TRIAL_DAYS;
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const seg = n => Array.from({length:n}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-  const diasHex = dias.toString(36).toUpperCase().padStart(2,'0');
-  const clave = `FONDEO-${seg(4)}-${seg(4)}-${diasHex}${seg(2)}`;
-  console.log(`✅ Clave generada (${dias} días): ${clave}`);
-  return clave;
-};
+// ── ETAPA 2 (2026-07-07): licGenerarClave y licCalcChecksum quedan
+// comentados, no borrados. Eran el hueco de seguridad: cualquiera podía
+// generar una clave "válida" desde la consola del navegador, porque la
+// validación era 100% local (un checksum que no dependía de Supabase).
+// La generación real ahora vive en la Edge Function `generar-clave`
+// (solo la invoca el generador privado). Si algún día hay que revertir
+// de emergencia, descomentar este bloque y volver a llamar
+// licCalcChecksum desde licValidarFormato.
+//
+// window.licGenerarClave = function(dias) {
+//   dias = dias || LIC_TRIAL_DAYS;
+//   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+//   const seg = n => Array.from({length:n}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+//   const diasHex = dias.toString(36).toUpperCase().padStart(2,'0');
+//   const clave = `FONDEO-${seg(4)}-${seg(4)}-${diasHex}${seg(2)}`;
+//   console.log(`✅ Clave generada (${dias} días): ${clave}`);
+//   return clave;
+// };
+//
+// function licCalcChecksum(p1, p2, cc) {
+//   let v = 0;
+//   for (const c of (p1 + p2 + cc)) v ^= c.charCodeAt(0);
+//   return (v % 1296).toString(36).toUpperCase().padStart(2, '0');
+// }
 
-// ── Formato/expiración local (validación offline, sin tocar el Sheet) ──
-function licCalcChecksum(p1, p2, cc) {
-  let v = 0;
-  for (const c of (p1 + p2 + cc)) v ^= c.charCodeAt(0);
-  return (v % 1296).toString(36).toUpperCase().padStart(2, '0');
-}
-
+// ── Formato/expiración — ahora consulta Supabase (tabla `licenses`) ──
+// Antes: el checksum se calculaba y verificaba 100% en el navegador, así
+// que cualquiera podía "fabricar" una clave válida sin pasar por el
+// generador. Ahora: solo se acepta si existe una fila con ese
+// license_key en Supabase (creada de antemano por la Edge Function
+// `generar-clave`, nunca por el dashboard). Los "días" ya no van
+// codificados dentro de la clave — se leen de la columna `days`.
 async function licValidarFormato(clave) {
   clave = clave.trim().toUpperCase();
   if (LIC_ADMIN_HASHES.includes(await sha256(clave))) {
     return { ok: true, dias: 36500, admin: true, msg: '👑 Acceso de administrador activado' };
   }
-  const parts = clave.split('-');
-  if (parts.length !== 4 || parts[0] !== 'FONDEO') {
+  if (!/^FONDEO-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(clave)) {
     return { ok: false, msg: '❌ Formato inválido. Debe ser FONDEO-XXXX-XXXX-XXXX' };
   }
-  if (parts[1].length !== 4 || parts[2].length !== 4 || parts[3].length !== 4) {
-    return { ok: false, msg: '❌ Clave incompleta — revisa que tenga 4 bloques' };
+  try {
+    const resp = await fetch(
+      SB_URL + '/rest/v1/licenses?license_key=eq.' + encodeURIComponent(clave) +
+      '&select=days,expires_at,activated_at',
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
+    );
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const rows = await resp.json();
+    if (!rows || !rows[0]) {
+      return { ok: false, msg: '❌ Clave no reconocida. Verifica que la copiaste correctamente o contacta al vendedor.' };
+    }
+    const row = rows[0];
+    // Si ya estaba activada antes (reactivación en otro dispositivo,
+    // o recarga), usamos los días que le quedan según expires_at —
+    // nunca reiniciamos el conteo desde el total original.
+    let dias = row.days;
+    if (row.activated_at && row.expires_at) {
+      const restantes = Math.ceil((new Date(row.expires_at).getTime() - Date.now()) / 86400000);
+      if (restantes <= 0) {
+        return { ok: false, msg: '❌ Esta licencia expiró. Contacta al vendedor para renovarla.' };
+      }
+      dias = restantes;
+    }
+    return { ok: true, dias, admin: false, msg: `✅ Acceso activado · ${dias} días` };
+  } catch (e) {
+    console.warn('SF Licencias: fallo al verificar la clave contra Supabase', e);
+    return { ok: false, msg: '❌ No se pudo verificar la clave — revisa tu conexión a internet e intenta de nuevo.' };
   }
-  const cc = parts[3].substring(0, 2);
-  const ss = parts[3].substring(2, 4);
-  const dias = parseInt(cc, 36);
-  if (isNaN(dias) || dias < 1 || dias > 365) {
-    return { ok: false, msg: '❌ Clave inválida — genera una nueva desde el panel' };
-  }
-  // Verificar checksum
-  const ssEsperado = licCalcChecksum(parts[1], parts[2], cc);
-  if (ss !== ssEsperado) {
-    return { ok: false, msg: '❌ Clave no reconocida. Verifica que la copiaste correctamente o contacta al vendedor.' };
-  }
-  return { ok: true, dias, admin: false, msg: `✅ Acceso activado · ${dias} días` };
 }
 
 // ── Hash SHA-256 (verificación owner sin exponer la clave) ──────
@@ -12757,18 +12783,23 @@ async function licComprobarDispositivo(clave, deviceId) {
 // Así el generador puede encontrarla luego para aprobar renovaciones.
 // Solo toca las columnas enviadas — nunca pisa renewal_approved/renewal_days.
 async function licUpsertRegistro(clave, dias, expiry) {
+  // ETAPA 2: ya NO es un upsert. La fila para esta clave tiene que existir
+  // de antes (la creó la Edge Function `generar-clave`, nunca el
+  // dashboard). Con la policy de insert eliminada, un upsert (POST con
+  // merge-duplicates) fallaría siempre — por eso esto es un PATCH puro.
+  // Tampoco reenviamos `days`: esa columna la define el generador al
+  // crear la licencia y el dashboard no tiene permiso de anon para
+  // tocarla (ver GRANT column-level en el SQL de Etapa 2).
   try {
-    await fetch(SB_URL + '/rest/v1/licenses', {
-      method: 'POST',
+    await fetch(SB_URL + '/rest/v1/licenses?license_key=eq.' + encodeURIComponent(clave), {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SB_KEY,
         'Authorization': 'Bearer ' + SB_KEY,
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
+        'Prefer': 'return=minimal'
       },
       body: JSON.stringify({
-        license_key: clave,
-        days: dias,
         activated_at: new Date().toISOString(),
         expires_at: new Date(expiry).toISOString()
       })
