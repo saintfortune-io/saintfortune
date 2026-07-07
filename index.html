@@ -1048,7 +1048,11 @@ table.data-table tr:hover td{background:var(--bg2);}
 .faqs-goal-marker-label{position:absolute;top:-19px;font-size:8.5px;color:var(--muted);font-weight:700;white-space:nowrap;transform:translateX(-50%);}
 .faqs-goal-step{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--bg1);border:2px solid var(--green);transform:translate(-50%,-50%);z-index:2;transition:box-shadow 0.4s ease,background 0.4s ease;}
 .faqs-goal-step.reached{box-shadow:0 0 10px 2px rgba(39,217,122,0.65),0 0 18px 4px rgba(39,217,122,0.35);}
-.faqs-goal-emoji{position:absolute;top:50%;font-size:21px;line-height:1;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.5));transition:left 0.7s cubic-bezier(.4,0,.2,1);}
+.faqs-goal-emoji{position:absolute;top:50%;font-size:21px;line-height:1;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.5));transition:left 0.7s cubic-bezier(.4,0,.2,1),filter 0.4s ease;}
+.faqs-goal-emoji.reached{filter:drop-shadow(0 0 6px rgba(39,217,122,0.9)) drop-shadow(0 0 14px rgba(39,217,122,0.55)) drop-shadow(0 2px 5px rgba(0,0,0,0.5));animation:goalGlowPulse 1.8s ease-in-out infinite;}
+#adv-walker.reached{filter:drop-shadow(0 0 6px rgba(39,217,122,0.9)) drop-shadow(0 0 14px rgba(39,217,122,0.55)) drop-shadow(0 1px 4px rgba(0,0,0,0.6))!important;animation:goalGlowPulse 1.8s ease-in-out infinite;}
+@keyframes goalGlowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.12);}}
+#adv-walker.reached{transform-origin:center;}
 .faqs-goal-foot{font-size:10.5px;color:var(--muted2);line-height:1.5;}
 .faqs-goal-milestones{display:flex;flex-direction:column;gap:5px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);}
 .goal-milestone-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);padding:5px 8px;border-radius:7px;background:var(--bg2);border:1px solid var(--border);transition:all 0.2s;}
@@ -1691,7 +1695,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--gold-dark)!important;
         <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/FondeoProLogger.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(201,168,76);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,60,10);background:rgba(201,168,76,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(201,168,76,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(201,168,76,0.08)&#39;">
           <span style="font-size:14px">⬇</span> Descargar EA MT5 (FondeoProLogger.ex5)
         </a>
-        <a href="https://github.com/saintfortune-io/saintfortune/releases/latest/download/Guardian.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(220,100,90);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,30,25);background:rgba(220,100,90,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(220,100,90,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(220,100,90,0.08)&#39;">
+        <a href="https://github.com/saintfortune-io/saintfortune/raw/main/Guardian.ex5" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(220,100,90);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(80,30,25);background:rgba(220,100,90,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(220,100,90,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(220,100,90,0.08)&#39;">
           <span style="font-size:14px">🛡</span> Descargar EA MT5 (Guardian.ex5)
         </a>
         <a href="https://github.com/saintfortune-io/saintfortune/raw/main/SaintFortuneSync.zip" style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:rgb(74,158,255);cursor:pointer;padding:6px 8px;border-radius:6px;border:1px solid rgb(10,40,80);background:rgba(74,158,255,0.08);transition:0.15s;text-decoration:none;" onmouseover="this.style.background=&#39;rgba(74,158,255,0.18)&#39;" onmouseout="this.style.background=&#39;rgba(74,158,255,0.08)&#39;">
@@ -3729,7 +3733,6 @@ Cuentas a cobrar este mes: ..."></textarea>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
       <span style="font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.1em">🎯 Mis Metas</span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
       </div>
@@ -3748,10 +3751,6 @@ Cuentas a cobrar este mes: ..."></textarea>
         </div>
       </div>
       <div class="topbar-actions" id="faq-topbar-actions" style="">
-        <div class="faqs-search-wrap">
-          <span class="faqs-search-icon">🔍</span>
-          <input type="text" class="form-input faqs-search-input" id="faq-search" placeholder="Buscar regla..." oninput="filterFAQs()">
-        </div>
       </div>
     </div>
   </div>
@@ -3909,7 +3908,6 @@ Cuentas a cobrar este mes: ..."></textarea>
     </div>
     <div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:-4px">
       <div style="display:flex;gap:6px;align-items:center;">
-        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
       </div>
@@ -3920,8 +3918,12 @@ Cuentas a cobrar este mes: ..."></textarea>
 
 
   <!-- Inner section tabs -->
-  <div class="faqs-tab-bar" style="margin-bottom:1.5rem">
+  <div class="faqs-tab-bar" style="margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
     <button class="tab-btn" id="faqinner-btn-rules" onclick="switchFaqInner(&#39;rules&#39;)"><span class="faqs-tab-ic">📋</span>Reglas por Firma</button>
+    <div class="faqs-search-wrap">
+      <span class="faqs-search-icon">🔍</span>
+      <input type="text" class="form-input faqs-search-input" id="faq-search" placeholder="Buscar regla..." oninput="filterFAQs()">
+    </div>
   </div>
 
   <!-- ── TAB: RULES ── -->
@@ -9714,6 +9716,11 @@ function buildBackupPayload(){
     tpDaily[k] = _lsGet(k);
   });
 
+  // Grupos de certificados colapsados/expandidos (uno por cada grupo que
+  // el usuario haya creado, ej. cert_group_cfd, cert_group_futures, etc.)
+  const certGroupsUI = {};
+  _lsKeys('cert_group_').forEach(k => { certGroupsUI[k] = _lsGet(k); });
+
   return {
     fp_entries_v4_sale:         JSON.parse(_lsGet('fp_entries_v4_sale')         || '[]'),
     fp_accounts_v4_sale:        JSON.parse(_lsGet('fp_accounts_v4_sale')        || 'null'),
@@ -9762,7 +9769,20 @@ function buildBackupPayload(){
     tp_max_streak_end_sale:     _lsGet('tp_max_streak_end_sale') || '',
     sf_saint_v1:                JSON.parse(_lsGet('sf_saint_v1') || 'null'),
     sf_saint_memory_v1:         JSON.parse(_lsGet('sf_saint_memory_v1') || 'null'),
-    sf_intelligence_v1:         JSON.parse(_lsGet('sf_intelligence_v1') || 'null')
+    sf_intelligence_v1:         JSON.parse(_lsGet('sf_intelligence_v1') || 'null'),
+    // ── Añadido: preferencias y datos que antes solo quedaban en
+    //    localStorage (no viajaban entre dispositivos) ──
+    fp_goal_gender_sale:        _lsGet('fp_goal_gender_sale') || '',
+    sf_weekly_reports_v1_sale:  JSON.parse(_lsGet('sf_weekly_reports_v1_sale') || 'null'),
+    sf_guardian_events_last_seen: _lsGet('sf_guardian_events_last_seen') || '',
+    cert_groups_ui:             certGroupsUI,
+    ui_panels_collapsed: {
+      cc_open:                _lsGet('cc_open') || '',
+      ie_card_open:            _lsGet('ie_card_open') || '',
+      coach_history_open:     _lsGet('coach_history_open') || '',
+      coach_corr_collapsed:   _lsGet('coach_corr_collapsed') || '',
+      coach_panel_collapsed:  _lsGet('coach_panel_collapsed') || ''
+    }
   };
 }
 
@@ -10300,6 +10320,9 @@ function renderGoalTrack(trackId, amountId, footId, milestonesId, thresholds, to
   if(amountEl) amountEl.textContent = fmtUSD(clamped) + ' / ' + fmtUSD(max);
 
   const trackEl = document.getElementById(trackId);
+  // Brilla el muñeco apenas se desbloquea el primer hito real (no cuenta
+  // el punto de partida, que siempre está "alcanzado" trivialmente).
+  const anyMilestoneReached = thresholds.some((t, i) => i > 0 && totalWithdrawn >= t);
   if(trackEl) {
     let html = `<div class="faqs-goal-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div>`;
     thresholds.forEach((t) => {
@@ -10311,7 +10334,7 @@ function renderGoalTrack(trackId, amountId, footId, milestonesId, thresholds, to
       }
       html += `<div class="faqs-goal-step${reached?' reached':''}" style="left:${mpct}%;${reached?'border-color:var(--green);background:var(--green)':''}"></div>`;
     });
-    html += `<div class="faqs-goal-emoji" style="left:${pct}%">${goalWalkerSVG(21)}</div>`;
+    html += `<div class="faqs-goal-emoji${anyMilestoneReached?' reached':''}" style="left:${pct}%">${goalWalkerSVG(21)}</div>`;
     trackEl.innerHTML = html;
   }
 
@@ -10380,7 +10403,12 @@ function renderAdvancedGoals() {
 
   // Muñequito
   const walker = document.getElementById('adv-walker');
-  if (walker) { walker.style.left = overallPct + '%'; walker.innerHTML = goalWalkerSVG(18); }
+  if (walker) {
+    walker.style.left = overallPct + '%';
+    walker.innerHTML = goalWalkerSVG(18);
+    const anyReached = MILESTONES.some(m => total >= m.amount);
+    walker.classList.toggle('reached', anyReached);
+  }
 
   // Label principal
   const lbl = document.getElementById('adv-timeline-label');
@@ -19073,7 +19101,7 @@ async function sbStartAutoSync(licKey) {
       analitico: 'Registrado.<br>Rutina pendiente — disponible desde el icono de configuración.'
     },
     routine_session_confirm: {
-      directo:   'Sesión de {session}. Marcada en tu calendario de entrenamiento — cita con vos mismo.',
+      directo:   'Sesión de {session}. Marcada en tu calendario de entrenamiento — cita contigo mismo.',
       cercano:   'Perfecto, {session} queda anotada.',
       analitico: 'Sesión {session} registrada como bloque operativo.'
     },
@@ -19349,12 +19377,24 @@ async function sbStartAutoSync(licKey) {
     },
     risk: {
       OBSERVADA: {
-        directo:   'Tu riesgo de hoy ya superó el máximo que definiste ({riskUsed} de {max}).<br>Alto total — no hace falta arriesgar más para demostrar nada, ya está demostrado.',
+        directo:   [
+          '{name}, ya conoces este dolor — es el mismo que sentiste la última vez que el riesgo se te fue de las manos ({riskUsed} de {max}).<br>No repitas la lección. Corta ahora.',
+          '{name}, tu riesgo ya superó el límite ({riskUsed} de {max}).<br>Acuérdate de lo que costó la última vez que ignoraste esta señal. No lo repitas hoy.',
+          '{name}, esto ya pasó tu máximo ({riskUsed} de {max}).<br>El dolor de una cuenta rota empieza exactamente en momentos como este. Ciérralo ahora.',
+          '{name}, el riesgo de hoy ya está por encima de lo que definiste ({riskUsed} de {max}).<br>Sabes cómo termina esto si sigues. Protégete antes de sentirlo otra vez.',
+          '{name}, ya cruzaste tu propio límite de riesgo ({riskUsed} de {max}).<br>No hace falta vivir esa pérdida de nuevo para aprender la lección. Detente.'
+        ],
         cercano:   '{name}, el riesgo de hoy ya pasó el límite que pusiste ({riskUsed} de {max}).<br>Está bien parar ahora — cuidar la cuenta también es operar bien.',
         analitico: 'Riesgo acumulado: {riskUsed}. Máximo del plan: {max}.<br>El límite ya se superó — se recomienda no agregar exposición nueva hoy.'
       },
       CONFIRMADA: {
-        directo:   'Sigues operando con el riesgo por encima del límite ({riskUsed} de {max}).<br>Esto no es sobre la próxima entrada — es sobre proteger la cuenta, ahora mismo.',
+        directo:   [
+          '{name}, volviste a entrar con el riesgo por encima del límite ({riskUsed} de {max}).<br>Esto es exactamente el patrón que ya te dolió antes. Ciérralo ya.',
+          '{name}, el riesgo sigue excedido y entraste otra vez ({riskUsed} de {max}).<br>Ya sabes qué se siente perder por no parar a tiempo. No lo repitas.',
+          '{name}, esto ya no es un aviso, es una repetición ({riskUsed} de {max}).<br>El dolor real no es cerrar ahora — es mirar la cuenta mañana sabiendo que pudiste evitarlo.',
+          '{name}, confirmado: sigues operando por encima del riesgo ({riskUsed} de {max}).<br>La próxima entrada no borra lo que ya arriesgaste — solo lo aumenta. Para.',
+          '{name}, otra vez por encima del límite ({riskUsed} de {max}).<br>Recuerda la última vez que esto salió mal. Esa fue la lección — hoy es la oportunidad de aplicarla.'
+        ],
         cercano:   '{name}, el riesgo sigue por arriba de lo definido ({riskUsed} de {max}) y entró otra operación.<br>Paremos acá juntos — la cuenta pesa más que esta entrada.',
         analitico: 'El riesgo permanece por encima del límite tras una nueva operación ({riskUsed} de {max}).<br>Patrón confirmado — acción recomendada: cerrar exposición nueva por hoy.'
       },
@@ -19367,7 +19407,7 @@ async function sbStartAutoSync(licKey) {
     session: {
       OBSERVADA: {
         directo:   'Esta operación entró fuera del horario que definiste en tu plan.<br>Vuelve a tu ventana — ahí es donde tu sistema realmente rinde, no fuera de ella.',
-        cercano:   '{name}, esta entrada fue fuera de la sesión que vos mismo elegiste.<br>No pasa nada — solo volvamos al horario en la próxima.',
+        cercano:   '{name}, esta entrada fue fuera de la sesión que tú mismo elegiste.<br>No pasa nada — solo volvamos al horario en la próxima.',
         analitico: 'Operación registrada fuera de la ventana horaria definida en el plan.<br>Desviación puntual — se recomienda retomar el horario planificado.'
       },
       CONFIRMADA: {
@@ -19538,7 +19578,10 @@ async function sbStartAutoSync(licKey) {
       var ruleSet = SAINT_INTEL_MESSAGES[item.rule];
       var stateSet = ruleSet && ruleSet[item.state];
       if (!stateSet) return null;
-      txt = stateSet[p] || stateSet.directo || '';
+      var rawTxt = stateSet[p] || stateSet.directo || '';
+      // Si hay varias variantes para este tono/estado, elige una al azar
+      // cada vez (evita repetir siempre la misma frase).
+      txt = Array.isArray(rawTxt) ? rawTxt[Math.floor(Math.random() * rawTxt.length)] : rawTxt;
       if (!txt) return null;
     }
     var name = (SAINT.state.traderName || '').trim();
