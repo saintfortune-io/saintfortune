@@ -3729,7 +3729,6 @@ Cuentas a cobrar este mes: ..."></textarea>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
       <span style="font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.1em">🎯 Mis Metas</span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
       </div>
@@ -3745,12 +3744,6 @@ Cuentas a cobrar este mes: ..."></textarea>
         <div>
           <div class="page-title" style="margin-bottom:2px">Firmas · Metas</div>
           <div class="page-sub">Reglas clave por firma · Mis metas</div>
-        </div>
-      </div>
-      <div class="topbar-actions" id="faq-topbar-actions" style="">
-        <div class="faqs-search-wrap">
-          <span class="faqs-search-icon">🔍</span>
-          <input type="text" class="form-input faqs-search-input" id="faq-search" placeholder="Buscar regla..." oninput="filterFAQs()">
         </div>
       </div>
     </div>
@@ -3909,7 +3902,6 @@ Cuentas a cobrar este mes: ..."></textarea>
     </div>
     <div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:-4px">
       <div style="display:flex;gap:6px;align-items:center;">
-        <span style="font-size:10px;color:var(--muted);margin-right:2px;">Muñeco:</span>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="male" onclick="setGoalGender('male')">🚹 Hombre</button>
         <button class="btn btn-ghost btn-xs goal-gender-btn" data-gender="female" onclick="setGoalGender('female')">🚺 Mujer</button>
       </div>
@@ -3920,8 +3912,16 @@ Cuentas a cobrar este mes: ..."></textarea>
 
 
   <!-- Inner section tabs -->
-  <div class="faqs-tab-bar" style="margin-bottom:1.5rem">
-    <button class="tab-btn" id="faqinner-btn-rules" onclick="switchFaqInner(&#39;rules&#39;)"><span class="faqs-tab-ic">📋</span>Reglas por Firma</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem;">
+    <div class="faqs-tab-bar" style="margin-bottom:0">
+      <button class="tab-btn" id="faqinner-btn-rules" onclick="switchFaqInner(&#39;rules&#39;)"><span class="faqs-tab-ic">📋</span>Reglas por Firma</button>
+    </div>
+    <div class="topbar-actions" id="faq-topbar-actions" style="">
+      <div class="faqs-search-wrap">
+        <span class="faqs-search-icon">🔍</span>
+        <input type="text" class="form-input faqs-search-input" id="faq-search" placeholder="Buscar regla..." oninput="filterFAQs()">
+      </div>
+    </div>
   </div>
 
   <!-- ── TAB: RULES ── -->
@@ -10314,7 +10314,7 @@ function setGoalGender(g) {
   if (typeof save === 'function') save();
   updateGoalGenderButtons();
   renderGoals();
-  toast(g === 'female' ? '🚺 Muñeco actualizado a mujer' : '🚹 Muñeco actualizado a hombre');
+  toast(g === 'female' ? '🚺 Ilustración cambiada a mujer' : '🚹 Ilustración cambiada a hombre');
 }
 function updateGoalGenderButtons() {
   const g = getGoalGender();
@@ -12970,15 +12970,20 @@ window.licActivar = async function() {
   setTimeout(() => { location.reload(); }, 1400);
 };
 
-// ── Bypass de emergencia desde consola (solo tú) ───────────────────
-window.licBypassAdmin = function() {
-  // Bypass local de emergencia: no depende de ninguna clave en texto plano —
-  // solo vos, desde tu propia consola, podés invocar esta función.
+// ── Activación de admin, SOLO tras verificar contraseña real ───────
+// ANTES: esta función colgaba de `window`, así que cualquiera con la
+// consola abierta podía escribir licBypassAdmin() y volverse admin
+// permanente sin saber ninguna contraseña — el comentario decía "solo
+// vos podés invocarla" pero eso no era cierto para código expuesto en
+// el navegador. Ahora es una función interna (no vive en window),
+// solo alcanzable desde licAdminPrompt() después de comparar el hash
+// de la contraseña ingresada contra LIC_ADMIN_HASHES.
+function _licActivarAdmin() {
   licSave({ key: 'LOCAL-ADMIN-BYPASS', expiry: null, activated: Date.now(), admin: true });
   licOcultar();
   licActualizarPill();
   console.log('✅ Acceso de administrador activado');
-};
+}
 
 window.licCerrar = function() {
   if (confirm('¿Cerrar sesión? Tendrás que introducir la clave de nuevo.')) {
@@ -12989,7 +12994,7 @@ window.licCerrar = function() {
 
 window.licAdminPrompt = async function() {
   const pwd = (prompt('Contraseña de administrador:') || '').toUpperCase();
-  if (LIC_ADMIN_HASHES.includes(await sha256(pwd))) licBypassAdmin();
+  if (LIC_ADMIN_HASHES.includes(await sha256(pwd))) _licActivarAdmin();
 };
 
 window.licShowPanel = async function() {
