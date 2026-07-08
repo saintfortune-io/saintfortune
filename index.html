@@ -12877,7 +12877,18 @@ async function licCheckRenewal(clave) {
     const base = Math.max(Date.now(), rows[0].expires_at ? new Date(rows[0].expires_at).getTime() : Date.now());
     const nuevoExpiry = base + dias * 86400000;
 
-    await fetch(SB_URL + '/rest/v1/licenses?license_key=eq.' + encodeURIComponent(clave), {
+    // IMPORTANTE: antes no se revisaba si este PATCH tenía éxito. Si fallaba
+    // (ej. la clave anon sin permiso de UPDATE en licenses por RLS), la
+    // bandera renewal_approved se quedaba en true PARA SIEMPRE en Supabase
+    // — y como licCheckRenewal se llama en cada inicio del dashboard, cada
+    // apertura le volvía a sumar los mismos días de renovación otra vez,
+    // sin límite. Además, desde el generador, esa clave quedaba bloqueada
+    // ("Ya está aprobada") para aprobar cualquier renovación futura, porque
+    // nunca se reseteaba.
+    // Ahora: si no se puede CONFIRMAR que se marcó como consumida en el
+    // servidor, no se aplica la extensión localmente tampoco — se reintenta
+    // solo en el próximo inicio, sin arriesgar duplicar días.
+    const patchResp = await fetch(SB_URL + '/rest/v1/licenses?license_key=eq.' + encodeURIComponent(clave), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -12887,6 +12898,11 @@ async function licCheckRenewal(clave) {
       },
       body: JSON.stringify({ renewal_approved: false, renewal_days: null, expires_at: new Date(nuevoExpiry).toISOString() })
     });
+
+    if (!patchResp.ok) {
+      console.warn('SF Licencias: no se pudo confirmar el consumo de la renovación (HTTP ' + patchResp.status + '). No se aplica todavía — se reintenta en el próximo inicio.');
+      return null;
+    }
 
     return nuevoExpiry;
   } catch (e) {
