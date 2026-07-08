@@ -12738,6 +12738,14 @@ async function licValidarFormato(clave) {
   if (LIC_ADMIN_HASHES.includes(await sha256(clave))) {
     return { ok: true, dias: 36500, admin: true, msg: '👑 Acceso de administrador activado' };
   }
+  // ── Bypass de owner: misma idea que el de admin, pero sin marcar
+  // admin:true — el resto del sistema ya sabe distinguir "owner" por el
+  // hash de la clave guardada (ver isOwner en licShowPanel y en
+  // licComprobarDispositivo). Antes de este fix, la clave de owner nunca
+  // llegaba a revisarse acá y siempre caía en "Clave no reconocida".
+  if (LIC_OWNER_HASHES.includes(await sha256(clave))) {
+    return { ok: true, dias: 36500, admin: false, owner: true, msg: '⭐ Acceso de owner activado · dispositivos ilimitados' };
+  }
   if (!/^FONDEO-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(clave)) {
     return { ok: false, msg: '❌ Formato inválido. Debe ser FONDEO-XXXX-XXXX-XXXX' };
   }
@@ -12930,9 +12938,12 @@ window.licActivar = async function() {
     return;
   }
 
-  // Las claves de admin NO se registran en el Sheet (acceso libre para ti).
-  if (resultado.admin) {
-    licSave({ key: clave, expiry: null, activated: Date.now(), admin: true });
+  // Las claves de admin y de owner NO se registran en el Sheet/Supabase
+  // (acceso libre, sin límite de dispositivos ni expiración). El flag
+  // admin queda en true solo para admin — el owner se reconoce después
+  // por el hash de la clave guardada (ver isOwner en licShowPanel).
+  if (resultado.admin || resultado.owner) {
+    licSave({ key: clave, expiry: null, activated: Date.now(), admin: !!resultado.admin });
     licSetMsg(resultado.msg, 'ok');
     setTimeout(() => { location.reload(); }, 900);
     return;
