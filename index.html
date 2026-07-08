@@ -4699,32 +4699,54 @@ const DEFAULT_GROUPS = {
 })();
 
 // ══════════════════════════════════════════════════════════════════
-// 🔄 PUSH RÁPIDO GENERALIZADO (Opción A, sync casi en tiempo real)
-// _lsSet es el punto único por el que pasan casi todas las escrituras
-// de datos del dashboard (80 lugares distintos). En vez de agregar un
-// push a cada uno, se envuelve acá una sola vez: sigue guardando local
-// primero (instantáneo, sin esperar red — eso no cambia), y además
-// agenda una subida a Supabase con el mismo debounce corto que ya usa
-// SAINT (60ms), en vez de depender del ciclo general de 30s. Reutiliza
-// sbPush()/buildBackupPayload() ya existentes — no duplica lógica de
-// subida. No reemplaza el ciclo de 30s ni el push en beforeunload/
-// visibilitychange de sbStartAutoSync: esos siguen como red de
-// seguridad adicional, sin tocarse.
+// 🔄 SYNC CON LA NUBE — PUNTO ÚNICO (Fase 2 — reducción de egress)
+//
+// ANTES: había 4 mecanismos de push independientes (este wrapper de
+// _lsSet a 60ms, save() con su propio timer a 400ms, y SAINT con dos
+// timers propios a 60ms para state y memory). Los 4 subían el MISMO
+// buildBackupPayload() completo, muchas veces en paralelo, porque
+// save()/SAINT.saveState()/SAINT.saveMemory() ya llaman a _lsSet()
+// internamente — cada uno disparaba su propio timer ADEMÁS del de
+// este wrapper. Eso multiplicaba por 3-4 la cantidad de subidas
+// completas del estado y fue la causa principal del exceso de egress
+// (8.5GB en un día de una sola persona probando).
+//
+// AHORA: un solo temporizador y una sola bandera "_sfDirty":
+// - Cualquier escritura (_lsSet, desde cualquiera de los ~80 lugares,
+//   incluyendo save() y SAINT) marca _sfDirty = true y reprograma el
+//   push a 4s después del ÚLTIMO cambio (antes: 60ms).
+// - Si no hay cambios reales, NUNCA se sube nada — ni en el ciclo de
+//   30s (ver sbStartAutoSync) ni al cambiar de pestaña: todos pasan
+//   por _sfCloudPushIfDirty(), que revisa la bandera antes de subir.
+// - Al cerrar/ocultar la pestaña se fuerza el push igual (parámetro
+//   force=true) como red de seguridad, para no perder el último
+//   cambio si el debounce de 4s todavía no se cumplió — así se
+//   garantiza "ningún cambio se pierde" sin pagar de más el resto
+//   del tiempo.
 // ══════════════════════════════════════════════════════════════════
+var _sfDirty = false;
+var _sfPushTimer = null;
+function _sfScheduleCloudPush() {
+  _sfDirty = true;
+  clearTimeout(_sfPushTimer);
+  _sfPushTimer = setTimeout(_sfCloudPushIfDirty, 4000);
+}
+async function _sfCloudPushIfDirty(force) {
+  if (!_sfDirty && !force) return;
+  try {
+    var licRaw = localStorage.getItem('fp_lic_v1_sale');
+    if (!licRaw) return;
+    var licData = JSON.parse(licRaw);
+    if (!licData || !licData.key || typeof sbPush !== 'function') return;
+    await sbPush(licData.key);
+    _sfDirty = false;
+  } catch(e) {}
+}
 (function() {
   var _origLsSet = window._lsSet;
-  var _globalPushTimer = null;
   window._lsSet = function(k, v) {
     _origLsSet(k, v);
-    clearTimeout(_globalPushTimer);
-    _globalPushTimer = setTimeout(function() {
-      try {
-        var licRaw = localStorage.getItem('fp_lic_v1_sale');
-        if (!licRaw) return;
-        var licData = JSON.parse(licRaw);
-        if (licData && licData.key && typeof sbPush === 'function') sbPush(licData.key);
-      } catch(e) {}
-    }, 60);
+    _sfScheduleCloudPush();
   };
 })();
 
@@ -4759,24 +4781,14 @@ let activeGroupTab = 'A';
 let editingGroupAssign = null;
 let blownTargetAccount = null; // for blown modal
 
-var _sfPushTimer = null;
 function save() {
+  // El push a la nube ya lo agenda _lsSet() (ver wrapper único más arriba,
+  // _sfScheduleCloudPush) — no se duplica aquí. save() solo escribe local.
   _lsSet('fp_entries_v4_sale', JSON.stringify(entries));
   _lsSet('fp_accounts_v4_sale', JSON.stringify(accounts));
   _lsSet('fp_groups_v4_sale', JSON.stringify(groups));
   _lsSet('fp_certs_v4_sale', JSON.stringify(certs));
   _lsSet('fp_firmstats_v4_sale', JSON.stringify(firmStats));
-  // Subir a la nube con debounce (espera 600ms para asegurar que localStorage está escrito)
-  clearTimeout(_sfPushTimer);
-  _sfPushTimer = setTimeout(function() {
-    try {
-      const licRaw = localStorage.getItem('fp_lic_v1_sale');
-      if (licRaw) {
-        const licData = JSON.parse(licRaw);
-        if (licData && licData.key) sbPush(licData.key);
-      }
-    } catch(e) {}
-  }, 400);
 }
 
 function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2,6); }
@@ -6236,11 +6248,21 @@ async function importarMT5Ahora(acc, silent) {
     // Filtro: user_id = licencia + account = número de cuenta MT5
     const accountNum = cfg.mt5UserID.trim();
     // EA MT5 envía directo a Supabase — ver FondeoProLogger.ex5
-    const url = SB_URL + '/rest/v1/trades'
+    // Fetch incremental: si ya tenemos un cursor de close_time guardado para
+    // esta cuenta (cfg.mt5CloseCursor), solo pedimos trades desde ahí en
+    // adelante (gte, no gt — así el dedupe por ticket de abajo se encarga
+    // de no duplicar el trade justo en el borde del cursor, sin arriesgar
+    // perder ninguno). Antes: se pedían SIEMPRE hasta 1000 trades
+    // completos en cada poll (cada 1-2 min por cuenta), sin filtro de
+    // fecha — la causa principal del exceso de egress junto con NT8.
+    let url = SB_URL + '/rest/v1/trades'
       + '?user_id=eq.' + encodeURIComponent(userLicencia)
       + '&account=eq.' + encodeURIComponent(accountNum)
       + '&order=close_time.asc'
       + '&limit=1000';
+    if (cfg.mt5CloseCursor) {
+      url += '&close_time=gte.' + encodeURIComponent(cfg.mt5CloseCursor);
+    }
 
     const res = await fetch(url, {
       headers: {
@@ -6290,6 +6312,15 @@ async function importarMT5Ahora(acc, silent) {
 
     if (added > 0) {
       entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    // Avanzar el cursor al close_time del último trade recibido (rows viene
+    // ordenado ascendente), sin importar si era nuevo o duplicado — así el
+    // próximo poll ya no vuelve a pedir este rango. Se guarda el valor
+    // CRUDO tal como lo devuelve Supabase (no el normalizado), para que la
+    // comparación gte. en la próxima consulta sea exacta.
+    for (let i = rows.length - 1; i >= 0; i--) {
+      if (rows[i] && rows[i].close_time) { cfg.mt5CloseCursor = rows[i].close_time; break; }
     }
 
     cfg.lastImportAt = Date.now();
@@ -6362,9 +6393,19 @@ async function importarNT8Ahora(acc, silent) {
 
   try {
     const accountNum = cfg.nt8AccountID.trim();
-    const url = SB_URL + '/rest/v1/nt8_trades'
+    // Confirmado en el editor de Supabase: la columna de fecha real es
+    // exit_time (timestamptz) — igual patrón que ya tiene MT5 con
+    // close_time. Fetch incremental con cursor por cuenta
+    // (cfg.nt8ExitCursor): antes se pedían SIEMPRE hasta 1000 trades
+    // completos en cada poll (cada 30-60s por cuenta), sin filtro de
+    // fecha alguno.
+    let url = SB_URL + '/rest/v1/nt8_trades'
       + '?account=eq.' + encodeURIComponent(accountNum)
+      + '&order=exit_time.asc'
       + '&limit=1000';
+    if (cfg.nt8ExitCursor) {
+      url += '&exit_time=gte.' + encodeURIComponent(cfg.nt8ExitCursor);
+    }
 
     const res = await fetch(url, {
       headers: {
@@ -6418,6 +6459,13 @@ async function importarNT8Ahora(acc, silent) {
       entries.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
 
+    // Avanzar el cursor al exit_time del último trade recibido (rows viene
+    // ordenado ascendente por exit_time), igual patrón que MT5: se guarda
+    // el valor crudo devuelto por Supabase para que el próximo gte. sea exacto.
+    for (let i = rows.length - 1; i >= 0; i--) {
+      if (rows[i] && rows[i].exit_time) { cfg.nt8ExitCursor = rows[i].exit_time; break; }
+    }
+
     cfg.nt8LastImportAt = Date.now();
     cfg.nt8LastImportCount = added;
     save();
@@ -6443,6 +6491,9 @@ function scheduleNT8AutoImport(acc) {
   const cfg = accounts[acc];
   if (nt8ImportTimers[acc]) { clearInterval(nt8ImportTimers[acc]); delete nt8ImportTimers[acc]; }
   if (!cfg || cfg.type !== 'futures' || !cfg.nt8AccountID) return;
+  // Ya no hace falta el piso elevado temporal: con el fetch incremental
+  // por exit_time (cfg.nt8ExitCursor) cada poll solo trae trades nuevos,
+  // así que se restaura el intervalo original.
   const seconds = Math.max(10, parseInt(cfg.nt8ImportInterval) || 30);
   nt8ImportTimers[acc] = setInterval(() => importarNT8Ahora(acc, true), seconds * 1000);
 }
@@ -16156,7 +16207,7 @@ window.saveTradingPlan = function(acc) {
     splitRisk:       splitRiskEl ? splitRiskEl.checked : false,
     respectMinHoldTime: minHoldOnEl ? minHoldOnEl.checked : false,
     minHoldSeconds:     parseInt(minHoldSecEl ? minHoldSecEl.value : 130) || 130,
-    guardianMode:       guardianModeEl ? guardianModeEl.value : 'Observador',
+    guardianMode:       guardianModeEl ? guardianModeEl.value : 'observador',
     notes:           notesEl ? notesEl.value.trim() : '',
     chartLink:       chartLinkEl ? chartLinkEl.value.trim() : (prevPlan.chartLink || ''),
     chartImage:      chartImage,
@@ -16347,8 +16398,17 @@ window.renderTradingPlanTab = function(acc) {
 
     + '<div class="tp-field"><label class="tp-field-label">Modo Guardian</label>'
     + '<select class="tp-field-input" id="tp-guardian-mode">'
-    + '<option value="Observador"' + (!plan || plan.guardianMode!=='Guardián' ? ' selected' : '') + '>Observador (solo avisa)</option>'
-    + '<option value="Guardián"' + (plan && plan.guardianMode==='Guardián' ? ' selected' : '') + '>Guardián (avisa y actúa)</option>'
+    // Los VALUES deben ser exactamente "observador"/"estricto" (minúscula, sin
+    // tilde) porque así los compara Guardian.mq5 (EffectiveMode()). Antes se
+    // guardaba "Observador"/"Guardián" (con mayúscula y tilde, solo para lucir
+    // bien en el desplegable) — eso nunca coincidía con lo que el EA esperaba,
+    // así que el modo del Plan NUNCA llegaba a aplicarse en MT5: Guardian se
+    // quedaba siempre en su valor local por defecto (Observador), sin importar
+    // lo que se configurara acá. Se reconoce también el valor viejo
+    // ('Guardián') para que un Plan ya guardado con el bug anterior se siga
+    // mostrando seleccionado correctamente al abrir el modal.
+    + '<option value="observador"' + (!plan || (plan.guardianMode!=='Guardián' && plan.guardianMode!=='estricto') ? ' selected' : '') + '>Observador (solo avisa)</option>'
+    + '<option value="estricto"' + (plan && (plan.guardianMode==='Guardián' || plan.guardianMode==='estricto') ? ' selected' : '') + '>Guardián (avisa y actúa)</option>'
     + '</select></div>'
 
     + '</div>'
@@ -18374,8 +18434,15 @@ async function sbPush(licKey) {
   if (!licKey || typeof SB_URL === 'undefined') return;
   try {
     const payload = buildBackupPayload();
+    const nowIso = new Date().toISOString();
+    // keepalive:true: el navegador garantiza que esta petición se complete
+    // aunque la pestaña se cierre/cambie justo después de llamarla — antes
+    // esto solo lo tenía el push separado de SAINT (_saintCloudPush, ahora
+    // eliminado por duplicado); se traslada acá para no perder esa
+    // protección al unificar todo en sbPush().
     await fetch(SB_URL + '/rest/v1/client_data', {
       method: 'POST',
+      keepalive: true,
       headers: {
         'apikey': SB_KEY,
         'Authorization': 'Bearer ' + SB_KEY,
@@ -18385,10 +18452,37 @@ async function sbPush(licKey) {
       body: JSON.stringify({
         license_key: licKey,
         data: payload,
-        updated_at: new Date().toISOString()
+        updated_at: nowIso
       })
     });
+    // Guardamos el timestamp que acabamos de subir: así el chequeo ligero
+    // (sbHasRemoteChanges) sabe que esta versión ya la conocemos y no hace
+    // falta bajar el paquete completo de vuelta en el próximo ciclo.
+    _sfLastKnownUpdatedAt = nowIso;
   } catch(e) { console.warn('SF Cloud: error al subir datos', e); }
+}
+
+// Guarda el updated_at de la última versión que ya tenemos (local o recién
+// subida/bajada), para poder comparar sin traer el paquete completo cada vez.
+var _sfLastKnownUpdatedAt = null;
+
+// ── Chequeo LIGERO: solo pregunta la fecha de última actualización remota
+//    (payload minúsculo), sin bajar el estado completo. Se usa en el ciclo
+//    de 30s para no gastar egress si nadie más modificó los datos desde
+//    otra sesión/dispositivo. Devuelve true solo si hay algo nuevo remoto.
+async function sbHasRemoteChanges(licKey) {
+  if (!licKey || typeof SB_URL === 'undefined') return false;
+  try {
+    const res = await fetch(
+      SB_URL + '/rest/v1/client_data?license_key=eq.' + encodeURIComponent(licKey) + '&select=updated_at',
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
+    );
+    if (!res.ok) return false;
+    const rows = await res.json();
+    if (!rows || !rows.length || !rows[0].updated_at) return false;
+    if (!_sfLastKnownUpdatedAt) return true; // primera vez: no sabemos, hay que traer
+    return rows[0].updated_at !== _sfLastKnownUpdatedAt;
+  } catch(e) { console.warn('SF Cloud: error al chequear cambios remotos', e); return false; }
 }
 
 // ── Descargar datos de la nube y aplicarlos al localStorage ──────
@@ -18403,6 +18497,7 @@ async function sbPull(licKey) {
     const rows = await res.json();
     if (!rows || !rows.length || !rows[0].data) return false;
     applyBackupPayload(rows[0].data);
+    _sfLastKnownUpdatedAt = rows[0].updated_at || _sfLastKnownUpdatedAt;
     return true;
   } catch(e) { console.warn('SF Cloud: error al descargar datos', e); return false; }
 }
@@ -18482,24 +18577,37 @@ async function sbStartAutoSync(licKey) {
   // 1b. Revisar si Guardian dejó eventos pendientes de mostrar en SAINT
   sbPullGuardianEvents(licKey);
 
-  // 2. Cada 30s: subir cambios locales Y bajar cambios remotos Y revisar Guardian
+  // 2. Cada 30s: subir SOLO si hay cambios locales pendientes (_sfDirty),
+  //    y bajar SOLO si de verdad cambió algo remoto (chequeo ligero antes
+  //    del pull completo). Si el dashboard está abierto sin actividad, este
+  //    ciclo ya no transfiere el estado completo cada 30s — antes sí.
   setInterval(async () => {
-    await sbPush(licKey);
-    // Después del push, hacer pull para detectar cambios de otra sesión
-    const remotePulled = await sbPull(licKey);
-    if (remotePulled) sfApplyCloudData();
+    await _sfCloudPushIfDirty();
+    const hayCambiosRemotos = await sbHasRemoteChanges(licKey);
+    if (hayCambiosRemotos) {
+      const remotePulled = await sbPull(licKey);
+      if (remotePulled) sfApplyCloudData();
+    }
     sbPullGuardianEvents(licKey);
   }, 30000);
 
-  // 3. Guardar al cerrar/cambiar pestaña
-  window.addEventListener('beforeunload', () => sbPush(licKey));
+  // 3. Al cerrar/cambiar pestaña: forzar el push (force=true) aunque el
+  //    debounce de 4s no se haya cumplido todavía, para no perder el
+  //    último cambio — esta es la red de seguridad real contra pérdida
+  //    de datos, y solo transfiere algo si _sfDirty está en true o se
+  //    fuerza explícitamente.
+  window.addEventListener('beforeunload', () => _sfCloudPushIfDirty(true));
   document.addEventListener('visibilitychange', async () => {
     if (document.hidden) {
-      await sbPush(licKey);
+      await _sfCloudPushIfDirty(true);
     } else {
-      // Al volver a la pestaña, descargar cambios que pudo hacer otra sesión
-      const remotePulled = await sbPull(licKey);
-      if (remotePulled) sfApplyCloudData();
+      // Al volver a la pestaña, sí vale la pena chequear cambios remotos
+      // (pudo editar desde otro dispositivo mientras esta estaba oculta)
+      const hayCambiosRemotos = await sbHasRemoteChanges(licKey);
+      if (hayCambiosRemotos) {
+        const remotePulled = await sbPull(licKey);
+        if (remotePulled) sfApplyCloudData();
+      }
     }
   });
 }
@@ -18658,58 +18766,27 @@ async function sbStartAutoSync(licKey) {
     } catch(e){ return Object.assign({}, defaultState); }
   }
 
-  // Guarda local (namespaced por licencia, igual que el resto del sistema)
-  // y sube a la nube casi de inmediato (60ms, antes 400ms) — sin esperar
-  // al ciclo de 30s del sync general. Push propio de SAINT, aislado de
-  // sbPush() general: mismo endpoint y mismo payload completo
-  // (buildBackupPayload) que ya sube todo el sistema — no un fragmento
-  // liviano solo de SAINT, porque el endpoint reemplaza el bloque de datos
-  // completo en la nube (no hace merge parcial), y subir solo el pedazo de
-  // SAINT arriesgaría pisar el resto de la información ya guardada.
-  // Usa fetch con keepalive:true como red de seguridad extra para el caso
-  // límite de cerrar/cambiar de pestaña justo después de guardar; esto no
-  // reemplaza el push periódico general, solo agrega el propio de SAINT.
-  var _saintPushTimer = null;
-  function _saintCloudPush(){
-    try {
-      var licRaw = localStorage.getItem('fp_lic_v1_sale');
-      if (!licRaw) return;
-      var licData = JSON.parse(licRaw);
-      if (!licData || !licData.key) return;
-      if (typeof SB_URL === 'undefined' || typeof buildBackupPayload !== 'function') return;
-      var payload = buildBackupPayload();
-      fetch(SB_URL + '/rest/v1/client_data', {
-        method: 'POST',
-        keepalive: true,
-        headers: {
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + SB_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'resolution=merge-duplicates'
-        },
-        body: JSON.stringify({
-          license_key: licData.key,
-          data: payload,
-          updated_at: new Date().toISOString()
-        })
-      }).catch(function(e){ console.warn('SAINT Cloud: error al subir datos', e); });
-    } catch(e){ console.warn('SAINT Cloud: error al preparar el push', e); }
-  }
-
+  // El push a la nube de SAINT ya no tiene mecanismo propio (antes
+  // _saintCloudPush, con su propio timer a 60ms): todo pasa ahora por el
+  // wrapper único de _lsSet() (_sfScheduleCloudPush, debounce de 4s) y por
+  // sbPush() general, que ya usa keepalive:true. Ver saveState()/saveMemory()
+  // más abajo — solo llaman a _lsSet(), nada más.
   function saveState(s){
+    // El push a la nube ya lo agenda _lsSet() (wrapper único, _sfScheduleCloudPush)
+    // cuando existe; solo si _lsSet no está disponible (caso borde) se usa el
+    // fallback directo a localStorage sin subir a la nube desde aquí.
     try {
       if (typeof _lsSet === 'function') _lsSet(STORAGE_KEY, JSON.stringify(s));
       else localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     } catch(e){}
-    clearTimeout(_saintPushTimer);
-    _saintPushTimer = setTimeout(_saintCloudPush, 60);
   }
 
   // ══════════════════════════════════════════════════════════════
   // MEMORIA EVOLUTIVA — estructura separada de SAINT.state (sf_saint_v1).
   // Vive en su propia clave (sf_saint_memory_v1), con su propio load/save,
-  // pero reutiliza el mismo _saintCloudPush (sube buildBackupPayload
-  // completo — el endpoint reemplaza el bloque entero, así que no hace
+  // y sube a la nube igual que todo lo demás: a través de _lsSet() y el
+  // wrapper único (_sfScheduleCloudPush) — sube buildBackupPayload
+  // completo, porque el endpoint reemplaza el bloque entero (no hace
   // falta un push parcial distinto). Se decidió separada de SAINT.state
   // porque es un tipo de dato distinto: no es configuración ni historial
   // de intención diaria, es memoria acumulativa de largo plazo que NUNCA
@@ -18765,14 +18842,12 @@ async function sbStartAutoSync(licKey) {
     } catch(e){ return JSON.parse(JSON.stringify(defaultMemory)); }
   }
 
-  var _saintMemoryPushTimer = null;
   function saveMemory(m){
+    // Igual que saveState(): el push ya lo agenda _lsSet() (wrapper único).
     try {
       if (typeof _lsSet === 'function') _lsSet(MEMORY_STORAGE_KEY, JSON.stringify(m));
       else localStorage.setItem(MEMORY_STORAGE_KEY, JSON.stringify(m));
     } catch(e){}
-    clearTimeout(_saintMemoryPushTimer);
-    _saintMemoryPushTimer = setTimeout(_saintCloudPush, 60);
   }
 
   window.SAINT_MEMORY = loadMemory();
@@ -18997,10 +19072,63 @@ async function sbStartAutoSync(licKey) {
   function saintReflectGender(){
     var m = document.getElementById('saint-cfg-gender-m');
     var f = document.getElementById('saint-cfg-gender-f');
-    if (!m || !f) return;
-    m.classList.toggle('selected', SAINT.state.gender === 'hombre');
-    f.classList.toggle('selected', SAINT.state.gender === 'mujer');
+    if (m && f) {
+      m.classList.toggle('selected', SAINT.state.gender === 'hombre');
+      f.classList.toggle('selected', SAINT.state.gender === 'mujer');
+    }
+    _saintApplyGenderToEmoPills();
   }
+
+  // ── Adaptar género de las etiquetas de ánimo ──────────────────────────
+  // Los pills de "Coach Emocional" (Tranquila, Confiada, Cansada, etc.)
+  // estaban escritos en femenino de forma fija en el HTML, sin importar
+  // el género elegido en la config de SAINT (SAINT.state.gender, default
+  // 'hombre'). SAINT.saintAskEmoState() lee el texto de estos MISMOS
+  // pills (pill.textContent) para mostrar las opciones en el chat, así
+  // que arreglándolo acá una sola vez se corrige también ahí — no hay
+  // una segunda copia del texto que mantener sincronizada.
+  // IMPORTANTE: esto solo cambia el texto VISIBLE (el emoji + la
+  // palabra). El dato que se guarda en coachEntry.emoBefore/emoAfter
+  // sigue siendo pill.dataset.emo (ver coachToggleEmo), que no se toca
+  // acá — así que el historial ya guardado no se ve afectado en absoluto.
+  var SAINT_EMO_MASC = {
+    'Tranquila':'Tranquilo', 'Concentrada':'Concentrado', 'Confiada':'Confiado',
+    'Motivada':'Motivado', 'Ansiosa':'Ansioso', 'Tensa':'Tenso', 'Cansada':'Cansado',
+    'Insegura':'Inseguro', 'Frustrada':'Frustrado', 'Eufórica':'Eufórico',
+    'Agotada':'Agotado', 'Enojada':'Enojado'
+  };
+  var SAINT_EMO_FEM = {}; // inverso, por si el usuario cambia de 'hombre' a 'mujer' otra vez
+  Object.keys(SAINT_EMO_MASC).forEach(function(fem){ SAINT_EMO_FEM[SAINT_EMO_MASC[fem]] = fem; });
+
+  function _saintApplyGenderToEmoPills(){
+    try {
+      var wantMasc = SAINT && SAINT.state && SAINT.state.gender === 'hombre';
+      document.querySelectorAll('.emo-pill').forEach(function(pill){
+        var emojiSpan = pill.querySelector('.emo-emoji');
+        var full = pill.textContent.trim();
+        var current = emojiSpan ? full.replace(emojiSpan.textContent, '').trim() : full;
+        var next = wantMasc ? (SAINT_EMO_MASC[current] || current)
+                             : (SAINT_EMO_FEM[current] || current);
+        if (next === current) return;
+        // Reconstruye el pill dejando el span del emoji intacto (mismo
+        // elemento, no se recrea) y solo el texto de la palabra al lado.
+        var textNode = document.createTextNode(next);
+        if (emojiSpan) {
+          while (pill.lastChild && pill.lastChild !== emojiSpan) pill.removeChild(pill.lastChild);
+          pill.appendChild(textNode);
+        } else {
+          pill.textContent = next;
+        }
+      });
+    } catch(e) { console.warn('SAINT: error al adaptar género de pills de ánimo', e); }
+  }
+
+  // Aplicar una vez al cargar, con el género guardado (o el default
+  // 'hombre' de SAINT.state) — antes de esto, los pills SIEMPRE se veían
+  // en femenino sin importar la configuración.
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(_saintApplyGenderToEmoPills, 300);
+  });
 
   // ══════════════════════════════════════════════════════════════
   // FASE: Primera migración del Coach Emocional → conversación SAINT
